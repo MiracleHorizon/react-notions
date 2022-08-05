@@ -1,0 +1,27 @@
+import styled from 'styled-components'
+import { bgTransitions, dFlex } from 'styles/variables'
+
+export const Container = styled.div`
+  cursor: pointer;
+  ${dFlex.center};
+  min-width: 18px;
+  width: auto;
+  height: 29px;
+  padding: 0 7px;
+  border-radius: 3px;
+  ${bgTransitions.esIn20};
+
+  &:hover {
+    background: ${props => props.theme.colors['bg-el-hover-primary']};
+  }
+
+  &:active {
+    background: ${props => props.theme.colors['bg-el-active-primary']};
+  }
+`
+
+export const Title = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${props => props.theme.colors['text-secondary']};
+`
