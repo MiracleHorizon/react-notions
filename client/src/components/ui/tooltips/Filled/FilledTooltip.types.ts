@@ -1,9 +1,13 @@
 import { ElementCoords } from 'types'
 
-export default interface FilledTooltipProps {
+export interface FilledTooltipContainerProps {
+  coords: ElementCoords
+  transX?: boolean
+  transY?: boolean
+}
+
+export default interface FilledTooltipProps
+  extends FilledTooltipContainerProps {
   title?: string
   desc?: string
-  coords: ElementCoords
-  trans?: boolean
-  transY?: boolean
 }

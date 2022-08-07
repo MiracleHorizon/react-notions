@@ -15,7 +15,6 @@ export const Container = styled.div<ElementCoords>`
       ? 'rgb(15 15 15 / 5%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 3px 6px, rgb(15 15 15 / 20%) 0 9px 24px;'
       : 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 3px 6px, rgb(15 15 15 / 40%) 0 9px 24px;'};
   background: ${props => props.theme.colors['bg-modal-primary']};
-  transform: translateX(-50%);
 `
 
 export const TopBarContainer = styled.div`

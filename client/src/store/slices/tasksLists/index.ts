@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from 'store'
 import TasksListsState from './tasksLists.types'
 import ITasksList from 'models/tasksList/ITasksList'
 
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 
 const initialState: TasksListsState = {
   tasksLists: [],
@@ -33,19 +32,5 @@ const tasksListsSlice = createSlice({
 
 export const { setTasksLists, setStartList, setStartItem } =
   tasksListsSlice.actions
-
-export const selectHiddenTasksLists = (state: RootState) =>
-  state.tasksLists.tasksLists.filter(list => list.hidden)
-
-export const selectTasksLists = (state: RootState) =>
-  state.tasksLists.tasksLists
-    .filter(list => !list.hidden && list.color !== 'empty')
-    .sort((a, b) => a.order - b.order)
-
-export const selectNoStatusList = (state: RootState): ITasksList => {
-  return state.tasksLists.tasksLists.find(
-    list => list.color === 'empty' && !list.hidden
-  )!
-}
 
 export default tasksListsSlice.reducer

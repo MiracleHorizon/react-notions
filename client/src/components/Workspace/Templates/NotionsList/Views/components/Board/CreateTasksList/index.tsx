@@ -2,7 +2,6 @@ import React, { memo, useRef } from 'react'
 
 import PlusButton from 'components/ui/buttons/Plus'
 import useActions from 'hooks/useActions'
-import { modalsCoordsHandler } from 'utils/coordsHandlers/modals'
 import Container from './CreateTasksListBar.styles'
 
 const CreateTasksListBar = memo(() => {
@@ -11,7 +10,7 @@ const CreateTasksListBar = memo(() => {
 
   const handleOpenCreateTasksListModal = () => {
     openHandleTasksListTitleModal({
-      coords: modalsCoordsHandler.handleTasksListTitle(ref),
+      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
       dest: 'create',
     })
   }

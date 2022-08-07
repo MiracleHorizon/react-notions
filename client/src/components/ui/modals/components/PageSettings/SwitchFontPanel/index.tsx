@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import SwitchFontButton from 'components/ui/buttons/SwitchFont'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import { PAGE_FONTS } from 'models/decor/fonts'
 import * as Panel from './SwitchFontPanel.styles'
 

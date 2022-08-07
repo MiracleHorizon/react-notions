@@ -1,14 +1,15 @@
 import styled from 'styled-components'
 import { txtOflow } from 'styles/variables'
 
-const Title = styled.span`
+const Title = styled.span<{ upCase?: boolean }>`
   align-self: flex-start;
   margin-left: 10px;
   margin-bottom: 5px;
   user-select: none;
-  font-size: 12px;
+  font-size: ${props => (props.upCase ? 11 : 12)}px;
   font-weight: 500;
   ${txtOflow.ell};
+  text-transform: ${props => (props.upCase ? 'uppercase' : 'none')};
   color: ${props => props.theme.colors['text-secondary']};
 `
 

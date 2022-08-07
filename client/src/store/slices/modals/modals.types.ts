@@ -1,5 +1,5 @@
 import { ElementCoords } from 'types'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import ITasksList from 'models/tasksList/ITasksList'
 
 export default interface ModalsState {
@@ -12,46 +12,71 @@ export default interface ModalsState {
   pageOptions: PageOptionsModalState
   pageSettings: PageSettingsModalState
   movePage: MovePageModalState
-  tasksListsOptions: TasksListOptionsModalState
+  tasksListOptions: TasksListOptionsModalState
   handleTasksList: HandleTasksListTitleModalState
   hiddenTasksList: HiddenTasksListModalState
+  notionTask: {
+    isOpen: boolean
+    page: IPage | null
+  }
+  changeStatus: {
+    isOpen: boolean
+    list: ITasksList | null // Дополнить все подобные поля * ... | null *.
+    task: IPage | null
+    coords: ElementCoords
+  }
   dropdown: DropdownPopupState
 }
 
 // Типизация состояния всплывающих окон.
 export interface ModalInitialState {
   isOpen: boolean
+}
+
+export interface IInvokerRect {
+  invokerRect: string
+}
+
+export interface IElementCoords {
   coords: ElementCoords
 }
 
-export interface RenamePageModalState extends ModalInitialState {
+export interface RenamePageModalState extends ModalInitialState, IInvokerRect {
   page: IPage | null
 }
 
-export interface ChangeCoverModalState extends ModalInitialState {
+export interface ChangeCoverModalState extends ModalInitialState, IInvokerRect {
   pageId: string
 }
 
-export interface ChangeIconModalState extends ModalInitialState {
+export interface ChangeIconModalState extends ModalInitialState, IInvokerRect {
   pageId: string
 }
 
-export interface PageOptionsModalState extends ModalInitialState {
+export interface PageOptionsModalState
+  extends ModalInitialState,
+    IElementCoords {
   page: IPage | null
 }
 
-export interface PageSettingsModalState extends ModalInitialState {
+export interface PageSettingsModalState
+  extends ModalInitialState,
+    IInvokerRect {
   page: IPage | null
+  invokerRect: string
 }
 
-export interface MovePageModalState extends ModalInitialState {
+export interface MovePageModalState extends ModalInitialState, IElementCoords {
   pageId: string
 }
 
-export interface TasksListOptionsModalState extends ModalInitialState {
+export interface TasksListOptionsModalState
+  extends ModalInitialState,
+    IInvokerRect {
   listId: string
   color: string
   hidden: boolean | null
+  template: 'default' | 'taskModal' | null
 }
 
 export interface DropdownPopupState {
@@ -60,23 +85,25 @@ export interface DropdownPopupState {
   startOpen: { isOpen: boolean }
 }
 
-export interface HandleTasksListTitleModalState extends ModalInitialState {
+export interface HandleTasksListTitleModalState
+  extends ModalInitialState,
+    IInvokerRect {
   listId: string
   title: string
   dest: 'edit' | 'create'
 }
 
-export interface HiddenTasksListModalState extends ModalInitialState {
+export interface HiddenTasksListModalState
+  extends ModalInitialState,
+    IInvokerRect {
   list: ITasksList | null
 }
 
 // Типизация PayloadAction.
-export interface DecorModalPayload {
+export interface DecorModalPayload extends IInvokerRect {
   pageId: string
-  coords: ElementCoords
 }
 
-export interface PageModalPayload {
+export interface PageModalPayload extends IInvokerRect {
   page: IPage
-  coords: ElementCoords
 }

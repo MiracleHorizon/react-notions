@@ -11,7 +11,7 @@ const CreatePageTooltipSidebar: FC<{ reference: TDivRef }> = ({
     title='Add a page'
     desc='Here your regular pages.'
     coords={tooltipsCoordsHandler.createPageSb(reference)}
-    trans
+    transX
   />
 )
 

@@ -11,10 +11,10 @@ interface PropTypes {
 
 const CloseSidebarTooltip: FC<PropTypes> = ({ location, reference }) => (
   <FilledTooltip
-    trans
     title='Close sidebar'
     desc={`Ctrl${location === 'right' ? '+Shift' : ''}+\\`}
     coords={TooltipsCoordsHandler.closeSb(reference)}
+    transX
   />
 )
 

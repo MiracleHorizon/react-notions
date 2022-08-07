@@ -1,6 +1,4 @@
-export type TToggleButtonDest = 'lOpen' | 'lClose' | 'rClose'
-
 export interface ButtonContainerProps {
-  dest: TToggleButtonDest
+  dest: 'open' | 'close'
   isHovering: boolean
 }

@@ -1,7 +1,6 @@
 import { TPageFont } from 'models/decor/fonts'
-import { IComment } from 'models/IComment'
 
-export interface IPage {
+export default interface IPage {
   readonly _id: string
   parentPageId: string | null
   parentListId: string | null
@@ -17,7 +16,6 @@ export interface IPage {
   iconUrl: string | null
   coverUrl: string | null
   coverPosition: number
-  comments: IComment[]
   content: string[]
   dependencies: IPage[]
   descriptionExpanded: boolean

@@ -6,7 +6,6 @@ export default interface DecorOptionsProps {
   template: TPageTemplate
   iconUrl: string | null
   coverUrl: string | null
-  comments: any[] //!
   description: string
   descriptionExpanded: boolean
 }

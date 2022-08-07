@@ -1,0 +1,19 @@
+import React from 'react'
+
+const CloseThickSvg = () => (
+  <svg
+    viewBox='0 0 8 8'
+    style={{
+      width: 8,
+      height: 8,
+      display: 'block',
+      fill: 'inherit',
+      flexShrink: 0,
+      backfaceVisibility: 'hidden',
+    }}
+  >
+    <polygon points='8 1.01818182 6.98181818 0 4 2.98181818 1.01818182 0 0 1.01818182 2.98181818 4 0 6.98181818 1.01818182 8 4 5.01818182 6.98181818 8 8 6.98181818 5.01818182 4' />
+  </svg>
+)
+
+export default CloseThickSvg

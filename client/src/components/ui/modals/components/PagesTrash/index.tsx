@@ -1,6 +1,5 @@
-import React, { useRef } from 'react'
+import React, { useRef, Suspense, lazy } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
-import Loadable from 'react-loadable'
 
 import ModalWrapper from 'components/ui/modals'
 import OutlineInput from 'components/ui/inputs/Outline'
@@ -10,14 +9,11 @@ import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import * as Modal from './PagesTrashModal.styles'
 
-const DeletedPagesList = Loadable({
-  loader: () => import('./List'),
-  loading: () => <EmptyPagesTrash />,
-})
+const DeletedPagesList = lazy(() => import('./List'))
 
 const PagesTrashModal = () => {
   const isAlertOpen = useTypedSelector(state => state.alerts.deletePage.isOpen)
-  const { width } = useTypedSelector(state => state.app.leftSidebar)
+  const { width } = useTypedSelector(state => state.app.sidebar)
   const { value, handleChangeValue, handleClearValue } = useInput('')
   const { closePagesTrashModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
@@ -41,11 +37,13 @@ const PagesTrashModal = () => {
             onClear={handleClearValue}
           />
         </Modal.InputContainer>
-        {/*{pages.length > 0 ? (*/}
-        {/*  <DeletedPagesList pages={pages} />*/}
-        {/*) : (*/}
-        {/*  <EmptyPagesTrash />*/}
-        {/*)}*/}
+        <Suspense fallback={<EmptyPagesTrash />}>
+          {/*{pages.length > 0 ? (*/}
+          {/*  <DeletedPagesList pages={pages} />*/}
+          {/*) : (*/}
+          {/*  <EmptyPagesTrash />*/}
+          {/*)}*/}
+        </Suspense>
         <EmptyPagesTrash />
       </Modal.Container>
     </ModalWrapper>

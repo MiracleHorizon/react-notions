@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import { IUpdatePageParams } from 'models/api/pages/IUpdatePageParams'
 import ICreatePageBody from 'models/api/pages/ICreatePageBody'
 

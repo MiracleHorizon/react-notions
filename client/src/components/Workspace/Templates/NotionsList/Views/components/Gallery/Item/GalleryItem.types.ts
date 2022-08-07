@@ -1,4 +1,4 @@
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 
 export default interface GalleryItemProps {
   page: IPage

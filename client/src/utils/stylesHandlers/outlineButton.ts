@@ -1,5 +1,5 @@
 import { OutlineButtonPropsStyles } from 'components/ui/buttons/Outline/OutlineButton.types'
-import { ITheme, Theme } from 'themes/theme.model'
+import ITheme, { Theme } from 'themes/theme.model'
 
 const grayColorStyles = {
   light: {

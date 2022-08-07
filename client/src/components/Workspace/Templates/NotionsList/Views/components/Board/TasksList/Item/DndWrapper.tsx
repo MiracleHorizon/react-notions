@@ -5,7 +5,7 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import { useUpdateTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
 import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
 
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import BoardItem from './index'
 
 const dndWrapper = (WrappedComponent: FC<IPage>, props: IPage) => {

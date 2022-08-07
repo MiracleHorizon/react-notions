@@ -11,11 +11,8 @@ const Container = styled.div`
   height: 45px;
   padding: 0 5px;
   z-index: 500;
-  
+
   div[data-btn='toggle-fav'] {
-    svg {
-      fill: ${props => props.theme.svgFills['settings-dots']} !important;
-    }
   }
 
   div[data-btn='options'] {

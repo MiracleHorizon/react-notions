@@ -1,29 +1,17 @@
-import React, { FC, useRef } from 'react'
+import React, { FC, useRef, Suspense, lazy } from 'react'
 import { useHover } from 'usehooks-ts'
-import Loadable from 'react-loadable'
 
 import PageTitle from './Title'
 import DecorOptions from './Options'
 import PageCoverLoader from 'components/ui/loaders/CoverLoader'
 import PageIconLoader from 'components/ui/loaders/IconLoader'
 import PageDescriptionLoader from 'components/ui/loaders/DescriptionLoader'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import * as Panel from './PageDecorPanel.styles'
 
-const PageCover = Loadable({
-  loader: () => import('./Cover'),
-  loading: () => <PageCoverLoader />,
-})
-
-const PageIcon = Loadable({
-  loader: () => import('./Icon'),
-  loading: () => <PageIconLoader />,
-})
-
-const PageDescription = Loadable({
-  loader: () => import('./Description'),
-  loading: () => <PageDescriptionLoader />,
-})
+const PageCover = lazy(() => import('./Cover'))
+const PageIcon = lazy(() => import('./Icon'))
+const PageDescription = lazy(() => import('./Description'))
 
 const PageDecorPanel: FC<IPage> = page => {
   const {
@@ -31,7 +19,6 @@ const PageDecorPanel: FC<IPage> = page => {
     coverUrl,
     coverPosition,
     iconUrl,
-    comments,
     template,
     fullWidth,
     description,
@@ -43,28 +30,37 @@ const PageDecorPanel: FC<IPage> = page => {
   return (
     <Panel.Wrapper ref={ref}>
       {coverUrl && (
-        <PageCover
-          _id={_id}
-          template={template}
-          coverUrl={coverUrl}
-          coverPosition={coverPosition}
-        />
-      )}
-      <Panel.Container template={template} fullWidth={fullWidth}>
-        {template === 'Notion' && iconUrl && (
-          <PageIcon
+        <Suspense fallback={<PageCoverLoader />}>
+          <PageCover
             _id={_id}
             template={template}
-            iconUrl={iconUrl}
             coverUrl={coverUrl}
+            coverPosition={coverPosition}
           />
+        </Suspense>
+      )}
+      <Panel.Container
+        template={template}
+        fullWidth={fullWidth}
+        data-el='decor-panel'
+      >
+        {template === 'Notion' && iconUrl && (
+          <Suspense fallback={<PageIconLoader />}>
+            <PageIcon
+              _id={_id}
+              template={template}
+              iconUrl={iconUrl}
+              coverUrl={coverUrl}
+            />
+          </Suspense>
         )}
         <DecorOptions isHovering={isHovering} {...page} />
         <PageTitle {...page} />
         {template !== 'Notion' && descriptionExpanded && (
-          <PageDescription _id={_id} description={description} />
+          <Suspense fallback={<PageDescriptionLoader />}>
+            <PageDescription _id={_id} description={description} />
+          </Suspense>
         )}
-        {comments.length > 0 && <>eqw</>}
       </Panel.Container>
     </Panel.Wrapper>
   )

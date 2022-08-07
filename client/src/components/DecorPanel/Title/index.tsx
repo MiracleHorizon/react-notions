@@ -1,17 +1,13 @@
-import React, { FC, memo, useRef } from 'react'
+import React, { FC, memo, useRef, Suspense, lazy } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { useOnClickOutside } from 'usehooks-ts'
-import Loadable from 'react-loadable'
 
 import PageIconLoader from 'components/ui/loaders/IconLoader'
 import useContentEditable from 'hooks/useContentEditable'
 import PropTypes from './PageTitle.types'
 import * as Title from './PageTitle.styles'
 
-const PageIcon = Loadable({
-  loader: () => import('../Icon'),
-  loading: () => <PageIconLoader />,
-})
+const PageIcon = lazy(() => import('../Icon'))
 
 const PageTitle: FC<PropTypes> = memo(
   ({ _id, template, title, iconUrl, coverUrl }) => {
@@ -37,12 +33,14 @@ const PageTitle: FC<PropTypes> = memo(
       <Title.Wrapper>
         <Title.Container template={template} iconUrl={iconUrl}>
           {template === 'NotionsList' && iconUrl && (
-            <PageIcon
-              _id={_id}
-              template={template}
-              iconUrl={iconUrl}
-              coverUrl={coverUrl}
-            />
+            <Suspense fallback={<PageIconLoader />}>
+              <PageIcon
+                _id={_id}
+                template={template}
+                iconUrl={iconUrl}
+                coverUrl={coverUrl}
+              />
+            </Suspense>
           )}
           <Title.Test template={template} iconUrl={iconUrl}>
             {title === '' ? 'Untitled' : title}

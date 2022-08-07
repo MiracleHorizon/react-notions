@@ -5,10 +5,10 @@ export const Container = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
-  width: calc(100% - 8px);
+  width: 100%;
   height: 27px;
   border-radius: 3px;
-  margin: 1px 4px;
+  margin: 1px 0;
   padding-left: 5px;
   user-select: none;
   ${bgTransitions.esIn20};
@@ -30,20 +30,20 @@ export const Container = styled.div`
 export const Icon = styled.img`
   width: 22px;
   height: 22px;
-  margin-right: 5px;
-  margin-left: 3px;
+  margin: 0 3px;
   border-radius: 50%;
   object-fit: cover;
 `
 
 export const Title = styled.p`
   font-weight: 400;
-  margin-left: 10px;
+  margin-left: 5px;
   color: ${props => props.theme.colors['text-primary']};
 `
 
 export const Subtitle = styled.span`
   margin-left: 5px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 16px;
   color: ${props => props.theme.colors['text-primary']};

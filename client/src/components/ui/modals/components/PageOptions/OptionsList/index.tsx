@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo, useRef } from 'react'
 import { useCopyToClipboard } from 'usehooks-ts'
 
 import OptionItem from 'components/ui/options/OptionItem'
@@ -17,13 +17,15 @@ import {
 } from 'store/slices/pages/pages.api'
 import PropTypes from './PageOptionsList.types'
 
-const PageOptionsList: FC<PropTypes> = ({ page, coords }) => {
+const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
+  const { _id, favorite } = page
+  const renameOptionRef = useRef<HTMLDivElement>(null)
   const { closePageOptionsModal, openRenamePageModal, openMovePageModal } =
     useActions()
   const [, handleCopy] = useCopyToClipboard()
+
   const [deletePage] = useDeletePageMutation()
   const [updatePage] = useUpdatePageMutation()
-  const { _id, favorite } = page
 
   const handleDelete = async () => {
     await deletePage(_id)
@@ -31,7 +33,10 @@ const PageOptionsList: FC<PropTypes> = ({ page, coords }) => {
   }
 
   const handleOpenRenameModal = () => {
-    openRenamePageModal({ page, coords })
+    openRenamePageModal({
+      invokerRect: renameOptionRef.current?.getBoundingClientRect().toJSON(),
+      page,
+    })
     closePageOptionsModal()
   }
 
@@ -72,10 +77,11 @@ const PageOptionsList: FC<PropTypes> = ({ page, coords }) => {
         title='Rename'
         StartSvg={RenameSvg}
         onClickAction={handleOpenRenameModal}
+        reference={renameOptionRef}
       />
       <MovePageOption onClickAction={handleOpenMovePageModal} />
     </>
   )
-}
+})
 
 export default PageOptionsList

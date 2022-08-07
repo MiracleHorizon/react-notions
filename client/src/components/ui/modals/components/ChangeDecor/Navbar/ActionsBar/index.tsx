@@ -7,7 +7,7 @@ import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
 import {
   randomDecorHandler,
   removeDecorHandler,
-} from 'helpers/decorActionsHandlers'
+} from 'utils/helpers/decorActionsHandlers'
 import PropTypes from './DecorModalActions.types'
 import Bar from './DecorModalActions.styles'
 

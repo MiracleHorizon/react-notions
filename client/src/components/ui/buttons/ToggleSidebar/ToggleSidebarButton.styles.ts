@@ -1,17 +1,16 @@
 import styled from 'styled-components'
-import stylesHandler from 'utils/stylesHandlers/sidebar'
+import SidebarStylesHandler from 'utils/stylesHandlers/sidebar'
 import { ButtonContainerProps } from './ToggleSidebarButton.types'
 import { bgTransitions, dFlex } from 'styles/variables'
 
 const Container = styled.div<ButtonContainerProps>`
   cursor: pointer;
-  ${props => stylesHandler.setToggleButtonParams(props.dest)};
+  ${props => SidebarStylesHandler.setToggleButtonParams(props.dest)};
   ${dFlex.center};
   width: 24px;
   height: 24px;
   border-radius: 3px;
-  opacity: ${props =>
-    props.dest !== 'lOpen' ? (props.isHovering ? 1 : 0) : 1};
+  opacity: ${props => (props.dest !== 'open' ? (props.isHovering ? 1 : 0) : 1)};
   ${bgTransitions.esIn20 + ', opacity 0.15s ease-in-out'};
 
   &:hover {

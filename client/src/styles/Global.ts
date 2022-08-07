@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import { ITheme } from '../themes/theme.model'
+import ITheme from 'themes/theme.model'
 
 const Global = createGlobalStyle<{ theme: ITheme }>`
   html, body {
@@ -56,8 +56,9 @@ const Global = createGlobalStyle<{ theme: ITheme }>`
     text-decoration: none;
   }
 
-  input {
+  input, button {
     border: none;
+    background: none;
   }
 
   *::-webkit-scrollbar {

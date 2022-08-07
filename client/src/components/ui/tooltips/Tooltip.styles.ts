@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { dFlex } from 'styles/variables'
 
-const Container = styled.div`
+const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -10,4 +10,4 @@ const Container = styled.div`
   height: 100vh;
 `
 
-export default Container
+export default Wrapper

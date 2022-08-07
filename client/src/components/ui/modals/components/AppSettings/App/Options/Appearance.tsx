@@ -3,7 +3,7 @@ import { useTheme } from 'styled-components'
 
 import Dropdown from 'components/ui/Dropdown'
 import useActions from 'hooks/useActions'
-import { ITheme } from 'themes/theme.model'
+import ITheme from 'themes/theme.model'
 import * as Option from './AppSettingsOption.styles'
 
 const reducer = (state: string, setLight: () => void, setDark: () => void) => {

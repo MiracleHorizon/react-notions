@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux'
 import BoardItem from '../Item'
 import TasksListTopBar from '../TopBar'
 import CreateNoStatusTaskBar from './CreateNoStatusTaskBar'
-import { selectNoStatusList } from 'store/slices/tasksLists'
+import { selectNotHiddenNoStatusList } from 'store/slices/tasksLists/tasksLists.selectors'
 import { selectNoStatusPages } from 'store/slices/pages/pages.selectors'
 import PropTypes from './NoStatusTasksList.types'
 import * as List from '../TasksList.styles'
 
 const NoStatusTasksList: FC<PropTypes> = memo(
   ({ isHovering, handleListHovering }) => {
-    const list = useSelector(selectNoStatusList)
+    const list = useSelector(selectNotHiddenNoStatusList)
     const tasks = useSelector(selectNoStatusPages)
 
     return (

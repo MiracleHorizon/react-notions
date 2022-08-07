@@ -8,7 +8,7 @@ const NoStatusListTooltip: FC<{ reference: TDivRef }> = ({ reference }) => (
   <FilledTooltip
     title='Any items with an empty Status property will go here. This group cannot be removed.'
     coords={tooltipsCoordsHandler.noStatusList(reference)}
-    trans
+    transX
   />
 )
 

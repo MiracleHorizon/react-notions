@@ -18,5 +18,4 @@ export interface IUpdatePageBody {
   iconUrl?: string | null
   coverUrl?: string | null
   coverPosition?: number
-  comments?: []
 }

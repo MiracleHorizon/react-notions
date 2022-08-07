@@ -1,9 +1,8 @@
 import styled from 'styled-components'
+import { bgTransitions, dFlex } from 'styles/variables'
 
 export const Wrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  ${dFlex['start-center']};
   flex-direction: column;
   width: 100%;
   height: max-content;
@@ -12,18 +11,16 @@ export const Wrapper = styled.div`
 `
 
 export const TitleContainer = styled.div`
-  position: relative;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  ${dFlex.center};
   width: max-content;
   height: 20px;
   margin-bottom: 6px;
   padding: 2px 4px;
   border-radius: 3px;
   user-select: none;
-  transition: background 20ms ease-in;
+  ${bgTransitions.esIn20};
 
   &:hover {
     background: ${props => props.theme.colors['bg-el-hover-primary']};
@@ -51,10 +48,8 @@ export const Link = styled.a`
 `
 
 export const Content = styled.div`
+  ${dFlex['center-start']};
+  flex-wrap: wrap;
   width: 100%;
   height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
 `

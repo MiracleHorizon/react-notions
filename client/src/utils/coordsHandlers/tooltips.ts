@@ -1,12 +1,9 @@
-import { RefObject } from 'react'
-import { ElementCoords } from 'types'
-
-type NodeRef = RefObject<HTMLDivElement>
+import { ElementCoords, TDivRef } from 'types'
 
 // Сделать методы статическими
 
 export class TooltipsCoordsHandler {
-  pagesListTitle(ref: NodeRef): ElementCoords {
+  pagesListTitle(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
     const bodyHeight = document.body.offsetHeight
 
@@ -18,7 +15,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  iconSb(ref: NodeRef): ElementCoords {
+  iconSb(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -29,7 +26,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  createPageSb(ref: NodeRef): ElementCoords {
+  createPageSb(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -40,7 +37,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  createDepPage(ref: NodeRef): ElementCoords {
+  createDepPage(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -51,7 +48,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  createPageBoard(ref: NodeRef): ElementCoords {
+  createPageBoard(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -62,7 +59,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  pageOptions(ref: NodeRef): ElementCoords {
+  pageOptions(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -73,7 +70,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  sidebarOption(ref: NodeRef): ElementCoords {
+  sidebarOption(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -84,7 +81,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  pagesTrash(ref: NodeRef): ElementCoords {
+  pagesTrash(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -95,9 +92,9 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  coverItem(ref: NodeRef) {}
+  coverItem(ref: TDivRef) {}
 
-  noStatusList(ref: NodeRef): ElementCoords {
+  noStatusList(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -108,7 +105,7 @@ export class TooltipsCoordsHandler {
     }
   }
 
-  sbResizer(ref: NodeRef): ElementCoords {
+  sbResizer(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -120,7 +117,7 @@ export class TooltipsCoordsHandler {
   }
 
   // @IsRect()
-  static closeSb(ref: NodeRef): ElementCoords {
+  static closeSb(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -132,7 +129,7 @@ export class TooltipsCoordsHandler {
   }
 
   // @IsRect()
-  static openSb(ref: NodeRef): ElementCoords {
+  static openSb(ref: TDivRef): ElementCoords {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}
@@ -142,12 +139,36 @@ export class TooltipsCoordsHandler {
       left: rect.right + 10,
     }
   }
+
+  // @IsRect()
+  static switchTask(ref: TDivRef): ElementCoords {
+    const rect = ref.current?.getBoundingClientRect()
+
+    if (!rect) return {}
+
+    return {
+      left: rect.left + rect.width / 2,
+      top: rect.top - rect.height * 2,
+    }
+  }
+
+  // @IsRect()
+  static clipboardCopy(ref: TDivRef): ElementCoords {
+    const rect = ref.current?.getBoundingClientRect()
+
+    if (!rect) return {}
+
+    return {
+      left: rect.left + rect.width / 2,
+      top: rect.top - rect.height - 6,
+    }
+  }
 }
 
 const tooltipsCoordsHandler = new TooltipsCoordsHandler()
 
 function IsRect() {
-  return function (ref: NodeRef) {
+  return function (ref: TDivRef) {
     const rect = ref.current?.getBoundingClientRect()
 
     if (!rect) return {}

@@ -5,38 +5,24 @@ import ModalsState, {
   PageModalPayload,
 } from './modals.types'
 import ITasksList from 'models/tasksList/ITasksList'
+import IPage from 'models/page/IPage'
 
 const initialState: ModalsState = {
-  rename: {
-    page: null,
-    isOpen: false,
-    coords: {},
-  },
-  cover: {
-    pageId: '',
-    isOpen: false,
-    coords: {},
-  },
-  icon: {
-    pageId: '',
-    isOpen: false,
-    coords: {},
-  },
-  trash: {
-    isOpen: false,
-  },
   appSettings: {
     isOpen: false,
   },
   quickSearch: {
-    isOpen: false
-  },
-  pageOptions: {
     isOpen: false,
-    page: null,
-    coords: {},
+  },
+  trash: {
+    isOpen: false,
   },
   pageSettings: {
+    isOpen: false,
+    page: null,
+    invokerRect: '',
+  },
+  pageOptions: {
     isOpen: false,
     page: null,
     coords: {},
@@ -46,24 +32,50 @@ const initialState: ModalsState = {
     pageId: '',
     coords: {},
   },
-  tasksListsOptions: {
+  rename: {
+    page: null,
+    isOpen: false,
+    invokerRect: '',
+  },
+  cover: {
+    pageId: '',
+    isOpen: false,
+    invokerRect: '',
+  },
+  icon: {
+    pageId: '',
+    isOpen: false,
+    invokerRect: '',
+  },
+  changeStatus: {
+    isOpen: false,
+    list: null,
+    task: null,
+    coords: {},
+  },
+  tasksListOptions: {
     isOpen: false,
     listId: '',
     color: '',
     hidden: null,
-    coords: {},
+    invokerRect: '',
+    template: null,
   },
   handleTasksList: {
     isOpen: false,
     listId: '',
     title: '',
+    invokerRect: '',
     dest: 'create',
-    coords: {},
   },
   hiddenTasksList: {
     isOpen: false,
-    coords: {},
     list: null,
+    invokerRect: '',
+  },
+  notionTask: {
+    isOpen: false,
+    page: null,
   },
   dropdown: {
     theme: { isOpen: false },
@@ -78,20 +90,23 @@ const modalsSlice = createSlice({
   initialState,
 
   reducers: {
-    openRenamePageModal(state, action: PayloadAction<PageModalPayload>) {
+    openRenamePageModal(
+      state,
+      action: PayloadAction<{ page: IPage; invokerRect: string }>
+    ) {
       state.rename.isOpen = true
       state.rename.page = action.payload.page
-      state.rename.coords = action.payload.coords
+      state.rename.invokerRect = action.payload.invokerRect
     },
     openChangeCoverModal(state, action: PayloadAction<DecorModalPayload>) {
       state.cover.isOpen = true
       state.cover.pageId = action.payload.pageId
-      state.cover.coords = action.payload.coords
+      state.cover.invokerRect = action.payload.invokerRect
     },
     openChangeIconModal(state, action: PayloadAction<DecorModalPayload>) {
       state.icon.isOpen = true
       state.icon.pageId = action.payload.pageId
-      state.icon.coords = action.payload.coords
+      state.icon.invokerRect = action.payload.invokerRect
     },
     openPagesTrashModal(state) {
       state.trash.isOpen = true
@@ -99,7 +114,10 @@ const modalsSlice = createSlice({
     openAppSettingsModal(state) {
       state.appSettings.isOpen = true
     },
-    openPageOptionsModal(state, action: PayloadAction<PageModalPayload>) {
+    openPageOptionsModal(
+      state,
+      action: PayloadAction<{ page: IPage; coords: ElementCoords }>
+    ) {
       state.pageOptions.isOpen = true
       state.pageOptions.page = action.payload.page
       state.pageOptions.coords = action.payload.coords
@@ -107,7 +125,7 @@ const modalsSlice = createSlice({
     openPageSettingsModal(state, action: PayloadAction<PageModalPayload>) {
       state.pageSettings.isOpen = true
       state.pageSettings.page = action.payload.page
-      state.pageSettings.coords = action.payload.coords
+      state.pageSettings.invokerRect = action.payload.invokerRect
     },
     openMovePageModal(
       state,
@@ -123,14 +141,16 @@ const modalsSlice = createSlice({
         listId: string
         color: string
         hidden: boolean
-        coords: ElementCoords
+        invokerRect: string
+        template: 'default' | 'taskModal'
       }>
     ) {
-      state.tasksListsOptions.isOpen = true
-      state.tasksListsOptions.listId = action.payload.listId
-      state.tasksListsOptions.color = action.payload.color
-      state.tasksListsOptions.hidden = action.payload.hidden
-      state.tasksListsOptions.coords = action.payload.coords
+      state.tasksListOptions.isOpen = true
+      state.tasksListOptions.listId = action.payload.listId
+      state.tasksListOptions.color = action.payload.color
+      state.tasksListOptions.hidden = action.payload.hidden
+      state.tasksListOptions.invokerRect = action.payload.invokerRect
+      state.tasksListOptions.template = action.payload.template
     },
     openHandleTasksListTitleModal(
       state,
@@ -138,12 +158,12 @@ const modalsSlice = createSlice({
         listId?: string
         title?: string
         dest: 'edit' | 'create'
-        coords: ElementCoords
+        invokerRect: string
       }>
     ) {
       state.handleTasksList.isOpen = true
       state.handleTasksList.dest = action.payload.dest
-      state.handleTasksList.coords = action.payload.coords
+      state.handleTasksList.invokerRect = action.payload.invokerRect
 
       if (action.payload.listId) {
         state.handleTasksList.listId = action.payload.listId
@@ -155,46 +175,47 @@ const modalsSlice = createSlice({
     },
     openHiddenTasksListModal(
       state,
-      action: PayloadAction<{ list: ITasksList; coords: ElementCoords }>
+      action: PayloadAction<{ list: ITasksList; invokerRect: string }>
     ) {
       state.hiddenTasksList.isOpen = true
       state.hiddenTasksList.list = action.payload.list
-      state.hiddenTasksList.coords = action.payload.coords
+      state.hiddenTasksList.invokerRect = action.payload.invokerRect
     },
     openQuickSearchModal(state) {
       state.quickSearch.isOpen = true
     },
-    openDropdown(
+    openNotionTaskModal(state, action: PayloadAction<IPage>) {
+      state.notionTask.isOpen = true
+      state.notionTask.page = action.payload
+    },
+    openChangeStatusModal(
       state,
-      action: PayloadAction<'theme' | 'comments' | 'startOpen'>
+      action: PayloadAction<{
+        list: ITasksList
+        task: IPage
+        coords: ElementCoords
+      }>
     ) {
-      switch (action.payload) {
-        case 'theme':
-          state.dropdown.theme.isOpen = true
-          break
-        case 'comments':
-          state.dropdown.comments.isOpen = true
-          break
-        case 'startOpen':
-          state.dropdown.startOpen.isOpen = true
-          break
-      }
+      state.changeStatus.isOpen = true
+      state.changeStatus.list = action.payload.list
+      state.changeStatus.task = action.payload.task
+      state.changeStatus.coords = action.payload.coords
     },
 
     closeRenamePageModal(state) {
       state.rename.isOpen = false
       state.rename.page = null
-      state.rename.coords = {}
+      state.rename.invokerRect = ''
     },
     closeChangeCoverModal(state) {
       state.cover.isOpen = false
       state.cover.pageId = ''
-      state.cover.coords = {}
+      state.cover.invokerRect = ''
     },
     closeChangeIconModal(state) {
       state.icon.isOpen = false
       state.icon.pageId = ''
-      state.icon.coords = {}
+      state.icon.invokerRect = ''
     },
     closePagesTrashModal(state) {
       state.trash.isOpen = false
@@ -210,7 +231,7 @@ const modalsSlice = createSlice({
     closePageSettingsModal(state) {
       state.pageSettings.isOpen = false
       state.pageSettings.page = null
-      state.pageSettings.coords = {}
+      state.pageSettings.invokerRect = ''
     },
     closeMovePageModal(state) {
       state.movePage.isOpen = false
@@ -218,26 +239,71 @@ const modalsSlice = createSlice({
       state.movePage.coords = {}
     },
     closeTasksListsOptionsModal(state) {
-      state.tasksListsOptions.isOpen = false
-      state.tasksListsOptions.listId = ''
-      state.tasksListsOptions.color = ''
-      state.tasksListsOptions.hidden = null
-      state.tasksListsOptions.coords = {}
+      state.tasksListOptions.isOpen = false
+      state.tasksListOptions.listId = ''
+      state.tasksListOptions.color = ''
+      state.tasksListOptions.hidden = null
+      state.tasksListOptions.invokerRect = ''
+      state.tasksListOptions.template = null
     },
     closeHandleTasksListTitleModal(state) {
       state.handleTasksList.isOpen = false
       state.handleTasksList.listId = ''
       state.handleTasksList.title = ''
       state.handleTasksList.dest = 'create'
-      state.handleTasksList.coords = {}
+      state.handleTasksList.invokerRect = ''
     },
     closeHiddenTasksListModal(state) {
       state.hiddenTasksList.isOpen = true
       state.hiddenTasksList.list = null
-      state.hiddenTasksList.coords = {}
+      state.hiddenTasksList.invokerRect = ''
     },
     closeQuickSearchModal(state) {
       state.quickSearch.isOpen = true
+    },
+
+    closeChangeStatusModal(state) {
+      state.changeStatus.isOpen = false
+      state.changeStatus.coords = {}
+      state.changeStatus.list = null
+      state.changeStatus.task = null
+    },
+    closeNotionTaskModal(state) {
+      state.notionTask.isOpen = false
+      state.notionTask.page = null
+    },
+
+    toggleAppSettingsModal(state) {
+      state.appSettings.isOpen = !state.appSettings.isOpen
+    },
+    toggleQuickSearchModal(state) {
+      state.quickSearch.isOpen = !state.quickSearch.isOpen
+    },
+
+    setTasksListsOptionsModalColor(state, action: PayloadAction<string>) {
+      state.tasksListOptions.color = action.payload
+    },
+
+    updateNotionTaskModalState(state, action: PayloadAction<IPage>) {
+      state.notionTask.isOpen = true
+      state.notionTask.page = action.payload
+    },
+
+    openDropdown(
+      state,
+      action: PayloadAction<'theme' | 'comments' | 'startOpen'>
+    ) {
+      switch (action.payload) {
+        case 'theme':
+          state.dropdown.theme.isOpen = true
+          break
+        case 'comments':
+          state.dropdown.comments.isOpen = true
+          break
+        case 'startOpen':
+          state.dropdown.startOpen.isOpen = true
+          break
+      }
     },
     closeDropdown(
       state,
@@ -255,17 +321,6 @@ const modalsSlice = createSlice({
           break
       }
     },
-
-    toggleAppSettingsModal(state) {
-      state.appSettings.isOpen = !state.appSettings.isOpen
-    },
-    toggleQuickSearchModal(state) {
-      state.quickSearch.isOpen = !state.quickSearch.isOpen
-    },
-
-    setTasksListsOptionsModalColor(state, action: PayloadAction<string>) {
-      state.tasksListsOptions.color = action.payload
-    },
   },
 })
 
@@ -282,6 +337,8 @@ export const {
   openHandleTasksListTitleModal,
   openHiddenTasksListModal,
   openQuickSearchModal,
+  openNotionTaskModal,
+  openChangeStatusModal,
   closeRenamePageModal,
   closeChangeCoverModal,
   closeChangeIconModal,
@@ -294,11 +351,14 @@ export const {
   closeHandleTasksListTitleModal,
   closeHiddenTasksListModal,
   closeQuickSearchModal,
+  closeNotionTaskModal,
+  closeChangeStatusModal,
   setTasksListsOptionsModalColor,
   openDropdown,
   closeDropdown,
   toggleAppSettingsModal,
   toggleQuickSearchModal,
+  updateNotionTaskModalState,
 } = modalsSlice.actions
 
 export default modalsSlice.reducer

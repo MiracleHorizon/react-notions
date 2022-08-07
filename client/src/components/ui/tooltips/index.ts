@@ -12,3 +12,7 @@ export { default as PagesTrashTooltip } from './Filled/components/PagesTrashTool
 export { default as SidebarResizerTooltip } from './Filled/components/SidebarResizerTooltip'
 export { default as CloseSidebarTooltip } from './Filled/components/CloseSidebarTooltip'
 export { default as OpenSidebarTooltip } from './Filled/components/OpenSidebarTooltip'
+export { default as SwitchTaskTooltip } from './Filled/components/SwitchTaskTooltip'
+export { default as ClipboardCopyTooltip } from './Filled/components/ClipboardCopyTooltip'
+
+// Outgoing.

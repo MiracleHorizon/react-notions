@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { useTheme } from 'styled-components'
-import { ITheme } from 'themes/theme.model'
+import ITheme from 'themes/theme.model'
 
 const TriangleSvg: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const { svgFills } = useTheme() as ITheme

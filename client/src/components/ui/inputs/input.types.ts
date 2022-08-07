@@ -9,5 +9,6 @@ export default interface InputPropTypes
   onClear?: () => void
   reference?: RefObject<HTMLInputElement>
   renderFocusable?: boolean
+  renderSelectable?: boolean
   register?: UseFormRegisterReturn<any>
 }

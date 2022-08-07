@@ -3,7 +3,7 @@ import React, { FC, memo } from 'react'
 import RestorePage from 'components/ui/buttons/RestorePage'
 import PermanentlyDeletePageButton from 'components/ui/buttons/PermanentlyDeletePage'
 import { PageSvg } from 'components/ui/svg'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import * as Item from './DeletedPage.styles'
 
 const DeletedPage: FC<IPage> = memo(page => (

@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import { createPortal } from 'react-dom'
-import Container from './Tooltip.styles'
+import Wrapper from './Tooltip.styles'
 
-const Tooltip: FC<{ children: JSX.Element }> = ({ children }) =>
+const TooltipWrapper: FC<{ children: JSX.Element }> = ({ children }) =>
   createPortal(
-    <Container>{children}</Container>,
+    <Wrapper>{children}</Wrapper>,
     document.getElementById('root') as HTMLElement
   )
 
-export default Tooltip
+export default TooltipWrapper

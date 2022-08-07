@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import ModalWrapper from 'components/ui/modals'
 import MovePageItem from 'components/ui/modals/components/MovePage/Item'
@@ -6,23 +6,46 @@ import OutlineInput from 'components/ui/inputs/Outline'
 import MoveToCommonPagesOption from 'components/ui/options/MovePage/MoveToCommonPages'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
-import useCloseModal from 'hooks/useCloseModal'
+import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
+import modalCoordsByPointerHandler from 'utils/coordsHandlers/modalCoordsByPointerHandler'
+import getFilteredPages from 'utils/helpers/getFilteredPages'
 import { selectMovablePages } from 'store/slices/pages/pages.selectors'
+import IPage from 'models/page/IPage'
 import * as Modal from './MovePageModal.styles'
+import { useDebounce } from 'usehooks-ts'
 
 const MovePageModal = () => {
-  const pages = useTypedSelector(state => selectMovablePages(state, pageId))
   const { pageId, coords } = useTypedSelector(state => state.modals.movePage)
-  const { value, handleChangeValue } = useInput('')
+  // const pages = useTypedSelector(state => selectMovablePages(state, pageId))
+  const { pages } = useTypedSelector(state => state.pages) //! MOCK
   const { closeMovePageModal } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
 
-  useCloseModal(ref, closeMovePageModal)
+  const [filteredPages, setFilteredPage] = useState<IPage[]>(pages)
+  const { value, handleChangeValue } = useInput('')
+  const debouncedValue = useDebounce(value, 200)
+
+  const [ref, setRef] = useState<HTMLDivElement | null>(null)
+  const rect = useRef<DOMRect | null>(null)
+  const handledCoords = useMemo(() => {
+    return modalCoordsByPointerHandler(coords, rect.current)
+  }, [rect.current])
+
+  useOnCloseModal(ref, closeMovePageModal)
+
+  useEffect(() => {
+    setFilteredPage(getFilteredPages(pages, debouncedValue))
+  }, [debouncedValue])
 
   return (
     <ModalWrapper>
-      <Modal.Container ref={ref} {...coords}>
+      <Modal.Container
+        ref={node => {
+          setRef(node)
+          if (node !== null) rect.current = node.getBoundingClientRect()
+        }}
+        {...handledCoords}
+      >
         <Modal.Content>
           <Modal.InputContainer>
             <OutlineInput
@@ -35,9 +58,13 @@ const MovePageModal = () => {
           </Modal.InputContainer>
           <Modal.List>
             <MoveToCommonPagesOption _id={pageId} />
-            {pages.map(page => (
-              <MovePageItem key={page._id} pageId={pageId} {...page} />
-            ))}
+            {filteredPages.length > 0 ? (
+              filteredPages.map(page => (
+                <MovePageItem key={page._id} pageId={pageId} {...page} />
+              ))
+            ) : (
+              <>No results</>
+            )}
           </Modal.List>
         </Modal.Content>
       </Modal.Container>

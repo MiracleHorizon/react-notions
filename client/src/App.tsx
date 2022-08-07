@@ -9,11 +9,10 @@ import Global from 'styles/Global'
 import AppWrapper from 'styles/App.styles'
 
 const App = () => {
-  const theme = useTypedSelector(state => state.app.theme)
   const { loading } = useAuth()
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={useTypedSelector(state => state.app.theme)}>
       <Global />
       <AppWrapper>{loading ? <AppLoader /> : <AppRouter />}</AppWrapper>
     </ThemeProvider>

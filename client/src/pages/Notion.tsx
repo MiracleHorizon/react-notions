@@ -14,8 +14,11 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import { useGetOnePageQuery } from 'store/slices/pages/pages.api'
 import { TLastPage } from 'types'
 
+import BoardView from '../components/Workspace/Templates/NotionsList/Views/components/Board'
+import PageViewsPanel from '../components/ViewsPanel'
+
 const NotionPage = () => {
-  const { setCurrentPage, closeRightSidebar } = useActions()
+  const { setCurrentPage } = useActions()
   const { page } = useTypedSelector(state => state.pages)
   const { user } = useAuth()
 
@@ -26,12 +29,7 @@ const NotionPage = () => {
   const lastPage = useReadLocalStorage('lastPage') as TLastPage
 
   useEffect(() => {
-    if (isSuccess) {
-      setCurrentPage(data)
-
-      if (data.template === 'NotionsList') closeRightSidebar()
-    }
-
+    if (isSuccess) setCurrentPage(data)
     if (isError) navigate(`/workspace/${lastPage ? lastPage._id : ''}`)
 
     return () => {
@@ -44,15 +42,7 @@ const NotionPage = () => {
   return (
     <MainLayout>
       <>
-        {isSuccess && page && (
-          <DocumentTitle title={page.title}>
-            <>
-              <PageDecorPanel {...page} />
-              <NotionContent template={page.template} />
-              {page.iconUrl && <Favicon url={page.iconUrl} />}
-            </>
-          </DocumentTitle>
-        )}
+        {isSuccess && page && <NotionContent {...page} />}
         {isLoading && <NotionPageLoader />}
       </>
     </MainLayout>

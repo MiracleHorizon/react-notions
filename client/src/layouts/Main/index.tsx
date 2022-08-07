@@ -1,33 +1,26 @@
 import React, { FC } from 'react'
-import Loadable from 'react-loadable'
 
-import HotkeysWrapper from 'components/HotkeysWrapper'
+import AppHotkeysWrapper from 'components/AppHotkeysWrapper'
 import LayoutHeader from 'components/Header'
-import LeftSidebar from 'components/Sidebar/Left'
+import Sidebar from 'components/Sidebar'
 import ModalsOverlay from 'components/ui/modals/ModalsOverlay'
 import AlertsOverlay from 'components/ui/alerts/AlertsOverlay'
 import * as Layout from './MainLayout.styles'
 
-const RightSidebar = Loadable({
-  loader: () => import('components/Sidebar/Right'),
-  loading: () => <span>Загрузка правого сайдбара</span>,
-})
-
 const MainLayout: FC<{ children: JSX.Element }> = ({ children }) => (
-  <HotkeysWrapper>
+  <AppHotkeysWrapper>
     <Layout.Wrapper>
       <Layout.Container>
-        <LeftSidebar />
+        <Sidebar />
         <Layout.Main>
           <LayoutHeader />
           <Layout.Content>{children}</Layout.Content>
         </Layout.Main>
-        <RightSidebar />
       </Layout.Container>
       <ModalsOverlay />
       <AlertsOverlay />
     </Layout.Wrapper>
-  </HotkeysWrapper>
+  </AppHotkeysWrapper>
 )
 
 export default MainLayout

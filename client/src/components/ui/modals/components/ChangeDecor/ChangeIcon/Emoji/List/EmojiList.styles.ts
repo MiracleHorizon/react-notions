@@ -1,12 +1,11 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/variables'
 
 export const Wrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  ${dFlex['start-center']}
   flex-direction: column;
   width: 100%;
-  height: max-content;
+  height: auto;
   margin-top: 5px;
   margin-bottom: 10px;
 `
@@ -20,10 +19,8 @@ export const Title = styled.span`
 `
 
 export const Content = styled.div`
+  ${dFlex['center-start']}
+  flex-wrap: wrap;
   width: 100%;
   height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
 `

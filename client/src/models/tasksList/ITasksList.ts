@@ -1,4 +1,4 @@
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import { TasksListTitleColor } from 'models/decor/colors'
 
 export default interface ITasksList {

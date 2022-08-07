@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import fontFamilyHandler from 'helpers/fontFamilyHandler'
+import fontFamilyHandler from 'utils/helpers/fontFamilyHandler'
 import { FontAbbreviationProps } from './SwitchFontButton.types'
 import { bgTransitions, dFlex } from 'styles/variables'
 import { TPageFont } from 'models/decor/fonts'

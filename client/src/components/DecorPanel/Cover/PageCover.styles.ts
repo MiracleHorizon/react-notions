@@ -8,8 +8,9 @@ export const Wrapper = styled.div<CoverWrapperProps>`
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: 0;
   width: 100%;
-  height: ${props => (props.template === 'Notion' ? 290 : 195)}px;
+  height: ${props => (props.template === 'Notion' ? 290 : 195)}px; // Заменить на проценты
 `
 
 export const Image = styled.img<{ imagePosition: number }>`

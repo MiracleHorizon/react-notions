@@ -1,10 +1,11 @@
-import { ITheme, Theme } from './theme.model'
+import ITheme, { Theme } from './theme.model'
 
 export const lightTheme: ITheme = {
   identifier: Theme.LIGHT,
   colors: {
     'text-option-primary': 'rgba(55, 53, 47, 0.65)',
 
+    'text-statuses-modal-title': 'rgba(55, 53, 47, 0.65)',
     'text-primary': 'rgb(55, 53, 47)',
     'text-secondary': 'rgba(55, 53, 47, 0.5)',
     'text-placeholder-primary': 'rgb(230, 229, 229)',
@@ -43,6 +44,8 @@ export const lightTheme: ITheme = {
     'bg-filled-ttip': 'rgb(15, 15, 15)',
     'bg-app-loader': 'rgb(55, 53, 47)',
     'bg-t-list-title-modal': 'rgb(247, 246, 245)',
+    'bg-notion-task-modal': 'white',
+    'bg-curr-task-status': 'rgba(242, 241, 238, 0.6)',
     'br-cover-option': 'rgb(55, 53, 47, 0.09)',
     'br-cover-uploader': 'rgba(55, 53, 47, 0.16)',
     'br-r-sb-header': 'rgba(55, 53, 47, 0.09)',

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/variables'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -12,12 +13,11 @@ export const Container = styled.div`
   flex: 1;
   display: flex;
   justify-content: space-between;
+  min-height: 40px;
 `
 
 export const ViewsList = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  ${dFlex['center-start']}
   min-width: 200px;
   height: 100%;
   background: inherit;

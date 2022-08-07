@@ -1,10 +1,9 @@
 import styled from 'styled-components'
-import { SidebarLocation } from 'store/slices/app/app.types'
 
-export const Container = styled.div<{ location: SidebarLocation }>`
+export const Container = styled.div`
   position: absolute;
   top: 0;
-  ${props => (props.location === 'left' ? 'right: 0px' : 'left: 0px')};
+  right: 0;
   bottom: 0;
   flex-grow: 0;
   width: 1px;

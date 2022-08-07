@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from 'styled-components'
-import { ITheme } from 'themes/theme.model'
+import ITheme from 'themes/theme.model'
 
 const FavoriteStarSvg = () => {
   const { svgFills } = useTheme() as ITheme

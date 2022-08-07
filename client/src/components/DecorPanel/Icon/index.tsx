@@ -1,8 +1,7 @@
 import React, { CSSProperties, memo, useRef } from 'react'
-import { useImageOnLoad } from 'usehooks-ts'
 
 import useActions from 'hooks/useActions'
-import { modalsCoordsHandler } from 'utils/coordsHandlers/modals'
+import useImageOnLoad from 'hooks/useImageOnLoad'
 import PropTypes from './PageIcon.types'
 import * as Icon from './PageIcon.styles'
 
@@ -13,7 +12,7 @@ const PageIcon = memo(({ _id, iconUrl, coverUrl, template }: PropTypes) => {
 
   const handleOpenIconModal = () => {
     openChangeIconModal({
-      coords: modalsCoordsHandler.icon(ref),
+      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
       pageId: _id,
     })
   }
@@ -28,7 +27,7 @@ const PageIcon = memo(({ _id, iconUrl, coverUrl, template }: PropTypes) => {
       <Icon.Image
         src={iconUrl}
         onLoad={handleImageOnLoad}
-        style={{ ...(css.fullSize as CSSProperties) }}
+        style={{ ...(css.loadOpacity as CSSProperties) }}
       />
     </Icon.Container>
   )

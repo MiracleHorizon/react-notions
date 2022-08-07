@@ -1,10 +1,11 @@
-import { ITheme, Theme } from './theme.model'
+import ITheme, { Theme } from './theme.model'
 
 export const darkTheme: ITheme = {
   identifier: Theme.DARK,
   colors: {
     'text-option-primary': 'rgb(155, 155, 155)',
 
+    'text-statuses-modal-title': 'rgba(255, 255, 255, 0.443)',
     'text-primary': 'rgba(255, 255, 255, 0.81)',
     'text-secondary': 'rgba(255, 255, 255, 0.282)',
     'text-lower-titles': 'rgb(155, 155, 155)',
@@ -44,6 +45,8 @@ export const darkTheme: ITheme = {
     'bg-filled-ttip': 'rgb(47, 47, 47)',
     'bg-app-loader': 'white',
     'bg-t-list-title-modal': 'rgb(48, 48, 48)',
+    'bg-notion-task-modal': 'rgb(32, 32, 32)',
+    'bg-curr-task-status': 'rgba(255, 255, 255, 0.03)',
     'br-cover-option': 'rgba(255, 255, 255, 0.094)',
     'br-cover-uploader': 'rgba(255, 255, 255, 0.13)',
     'br-r-sb-header': 'rgba(255, 255, 255, 0.094)',

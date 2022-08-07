@@ -1,49 +1,43 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react'
-import Loadable from 'react-loadable'
+import React, { memo, useMemo, useRef, useState, lazy, Suspense } from 'react'
 
-import ModalWrapper from 'components/ui/modals/index'
+import ModalWrapper from 'components/ui/modals'
+import CustomDecorLoader from 'components/ui/loaders/CustomDecorLoader'
 import DecorModalNavbar from '../Navbar'
 import CoversGallery from './Gallery'
 import useActions from 'hooks/useActions'
-import useCloseModal from 'hooks/useCloseModal'
+import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
+import ModalsCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
 import * as Modal from './ChangeCoverModal.styles'
+import modalCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
 
-const CoverUploader = Loadable({
-  loader: () => import('./Upload'),
-  loading: () => <>Loading...</>,
-})
-
-const CoverLink = Loadable({
-  loader: () => import('./Link'),
-  loading: () => <>Loading...</>,
-})
+const CoverUploader = lazy(() => import('./Upload'))
+const CoverLink = lazy(() => import('./Link'))
 
 const ChangeCoverModal = memo(() => {
   const categories = useMemo(() => ['Gallery', 'Upload', 'Link'], [])
   const [activeCategory, setActiveCategory] = useState<string>('Gallery')
-  const { pageId, coords } = useTypedSelector(state => state.modals.cover)
+  const { pageId, invokerRect } = useTypedSelector(state => state.modals.cover)
   const { closeChangeCoverModal } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
 
-  const categoryHandler = useCallback(() => {
-    switch (activeCategory) {
-      case 'Gallery':
-        return <CoversGallery _id={pageId} />
-      case 'Upload':
-        return <CoverUploader _id={pageId} />
-      case 'Link':
-        return <CoverLink _id={pageId} />
-      default:
-        return <CoversGallery _id={pageId} />
-    }
-  }, [activeCategory, pageId])
+  const [ref, setRef] = useState<HTMLDivElement | null>(null)
+  const rect = useRef<DOMRect | null>(null)
+  const coords = useMemo(() => {
+    return modalCoordsHandler(rect.current, invokerRect).centerBottom
+  }, [rect.current, invokerRect])
 
-  useCloseModal(ref, closeChangeCoverModal)
+  useOnCloseModal(ref, closeChangeCoverModal)
 
   return (
     <ModalWrapper>
-      <Modal.Container ref={ref} {...coords}>
+      <Modal.Container
+        ref={node => {
+          if (node !== null) rect.current = node.getBoundingClientRect()
+          setRef(node)
+        }}
+        activeCategory={activeCategory}
+        coords={coords}
+      >
         <DecorModalNavbar
           _id={pageId}
           dest='cover'
@@ -51,7 +45,11 @@ const ChangeCoverModal = memo(() => {
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
         />
-        {categoryHandler()}
+        {activeCategory === 'Gallery' && <CoversGallery _id={pageId} />}
+        <Suspense fallback={<CustomDecorLoader size='md' />}>
+          {activeCategory === 'Upload' && <CoverUploader _id={pageId} />}
+          {activeCategory === 'Link' && <CoverLink _id={pageId} />}
+        </Suspense>
       </Modal.Container>
     </ModalWrapper>
   )

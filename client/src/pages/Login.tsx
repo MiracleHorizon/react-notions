@@ -1,11 +1,6 @@
 import React from 'react'
-import Loadable from 'react-loadable'
+import Login from 'components/Auth/Login'
 
-const LoginForm = Loadable({
-  loader: () => import('components/Auth/Login'),
-  loading: () => <>Загрузка логина</>,
-})
-
-const LoginPage = () => <LoginForm />
+const LoginPage = () => <Login />
 
 export default LoginPage

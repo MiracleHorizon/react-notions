@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import AppState, { TCommentsFilter, PageView } from './app.types'
-import appStateHandler from 'utils/AppStateHandler'
-import { RootState } from 'store'
+import AppState, { PageView } from './app.types'
+import AppStateHandler from 'utils/AppStateHandler'
+import { lightTheme } from 'themes/light'
+import { darkTheme } from 'themes/dark'
 
 const initialState: AppState = {
-  theme: appStateHandler.getTheme(),
-  commonPagesLists: appStateHandler.getCommonPagesList(),
-  favoritePagesLists: appStateHandler.getFavoritePagesList(),
-  leftSidebar: appStateHandler.getLeftSidebar(),
-  rightSidebar: appStateHandler.getRightSidebar(),
+  theme: AppStateHandler.getTheme(),
+  sidebar: AppStateHandler.getSidebar(),
+  commonPagesLists: AppStateHandler.getCommonPagesList(),
+  favoritePagesLists: AppStateHandler.getFavoritePagesList(),
   selectedView: 'Board',
 }
 
@@ -19,27 +19,16 @@ const appSlice = createSlice({
 
   reducers: {
     setLightTheme(state) {
-      state.theme = appStateHandler.lightTheme
-
-      window.localStorage.setItem(
-        'theme',
-        JSON.stringify(appStateHandler.lightTheme)
-      )
+      state.theme = lightTheme
+      window.localStorage.setItem('theme', JSON.stringify(lightTheme))
     },
     setDarkTheme(state) {
-      state.theme = appStateHandler.darkTheme
-
-      window.localStorage.setItem(
-        'theme',
-        JSON.stringify(appStateHandler.darkTheme)
-      )
+      state.theme = darkTheme
+      window.localStorage.setItem('theme', JSON.stringify(darkTheme))
     },
     setSystemTheme(state) {
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-
-      state.theme = isDark
-        ? appStateHandler.darkTheme
-        : appStateHandler.lightTheme
+      state.theme = isDark ? darkTheme : lightTheme
     },
 
     toggleCommonPagesList(state) {
@@ -57,50 +46,25 @@ const appSlice = createSlice({
       )
     },
 
-    setLeftSidebarWidth(state, action: PayloadAction<number>) {
-      state.leftSidebar.width = action.payload
-    },
-    setRightSidebarWidth(state, action: PayloadAction<number>) {
-      state.rightSidebar.width = action.payload
+    setSidebarWidth(state, action: PayloadAction<number>) {
+      state.sidebar.width = action.payload
     },
 
-    openLeftSidebar(state) {
-      state.leftSidebar.isOpen = true
-      window.localStorage.setItem('lSidebar', JSON.stringify(state.leftSidebar))
+    openSidebar(state) {
+      state.sidebar.isOpen = true
+      window.localStorage.setItem('sidebar', JSON.stringify(state.sidebar))
     },
-    closeLeftSidebar(state) {
-      state.leftSidebar.isOpen = false
-      window.localStorage.setItem('lSidebar', JSON.stringify(state.leftSidebar))
+    closeSidebar(state) {
+      state.sidebar.isOpen = false
+      window.localStorage.setItem('sidebar', JSON.stringify(state.sidebar))
     },
-    closeRightSidebar(state) {
-      state.rightSidebar.isOpen = false
-      window.localStorage.setItem(
-        'rSidebar',
-        JSON.stringify(state.rightSidebar)
-      )
-    },
-
-    toggleLeftSidebar(state) {
-      state.leftSidebar.isOpen = !state.leftSidebar.isOpen
-      window.localStorage.setItem('lSidebar', JSON.stringify(state.leftSidebar))
-    },
-    toggleRightSidebar(state) {
-      state.rightSidebar.isOpen = !state.rightSidebar.isOpen
-      window.localStorage.setItem(
-        'rSidebar',
-        JSON.stringify(state.rightSidebar)
-      )
+    toggleSidebar(state) {
+      state.sidebar.isOpen = !state.sidebar.isOpen
+      window.localStorage.setItem('lSidebar', JSON.stringify(state.sidebar))
     },
 
     setView(state, action: PayloadAction<PageView>) {
       state.selectedView = action.payload
-    },
-    setCommentsFilter(state, action: PayloadAction<TCommentsFilter>) {
-      state.rightSidebar.activeCommentsFilter = action.payload
-      window.localStorage.setItem(
-        'rSidebar',
-        JSON.stringify(state.rightSidebar)
-      )
     },
   },
 })
@@ -111,18 +75,11 @@ export const {
   setSystemTheme,
   toggleCommonPagesList,
   toggleFavoritePagesList,
-  setLeftSidebarWidth,
-  setRightSidebarWidth,
-  openLeftSidebar,
-  closeLeftSidebar,
-  closeRightSidebar,
-  toggleLeftSidebar,
-  toggleRightSidebar,
+  setSidebarWidth,
+  openSidebar,
+  closeSidebar,
+  toggleSidebar,
   setView,
-  setCommentsFilter,
 } = appSlice.actions
-
-export const selectActiveCommentsFilter = (state: RootState): TCommentsFilter =>
-  state.app.rightSidebar.activeCommentsFilter
 
 export default appSlice.reducer

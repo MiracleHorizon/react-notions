@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 
 import AuthLayout from 'layouts/Auth'
-import AuthForm from './Form'
+import AuthFormLoader from 'components/ui/loaders/AuthFormLoader'
 import { useRegisterMutation } from 'store/slices/auth/auth.api'
 import { SubmitAuthParams } from './Form/AuthForm.types'
+
+const AuthForm = lazy(() => import('./Form'))
 
 const Register = () => {
   const [register] = useRegisterMutation()
@@ -12,7 +14,9 @@ const Register = () => {
 
   return (
     <AuthLayout>
-      <AuthForm onSubmit={handleSubmitRegister} />
+      <Suspense fallback={<AuthFormLoader />}>
+        <AuthForm onSubmit={handleSubmitRegister} />
+      </Suspense>
     </AuthLayout>
   )
 }

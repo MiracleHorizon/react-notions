@@ -1,11 +1,7 @@
 import styled from 'styled-components'
-import { ElementCoords } from 'types'
+import { FilledTooltipContainerProps } from './FilledTooltip.types'
 
-export const Container = styled.div<{
-  coords?: ElementCoords
-  trans?: boolean
-  transY?: boolean
-}>`
+export const Container = styled.div<FilledTooltipContainerProps>`
   position: absolute;
   top: ${props => props.coords?.top}px;
   bottom: ${props => props.coords?.bottom}px;
@@ -21,7 +17,7 @@ export const Container = styled.div<{
   border-radius: 3px;
   box-shadow: rgb(0 0 0 / 30%) 0 1px 4px;
   background: ${props => props.theme.colors['bg-filled-ttip']};
-  ${props => props.trans && 'transform: translateX(-50%)'};
+  ${props => props.transX && 'transform: translateX(-50%)'};
   ${props => props.transY && 'transform: translateY(50%)'};
   z-index: 2000;
 

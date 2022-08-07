@@ -4,7 +4,7 @@ export const tablet = '950px'
 export const bgTransitions = {
   esIn20: 'transition: background 20ms ease-in',
   esInOut50: 'transition: background 50ms ease-in-out',
-  esOut100: 'transition: background 0.1s ease-out'
+  esOut100: 'transition: background 0.1s ease-out',
 }
 
 export const dFlex = {
@@ -27,6 +27,17 @@ export const dFlex = {
     display: flex;
     align-items: flex-start;
     justify-content: center;
+  `,
+
+  'center-s-between': `
+    display: flex,
+    align-items: center;
+    justify-content: space-between;
+  `,
+  'start-s-between': `
+    display: flex,
+    align-items: flex-start;
+    justify-content: space-between;
   `,
 }
 

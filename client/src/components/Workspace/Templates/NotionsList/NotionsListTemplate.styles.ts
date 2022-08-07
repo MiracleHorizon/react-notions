@@ -1,12 +1,10 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/variables'
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  ${dFlex['center-start']};
   width: 88%;
   height: auto;
-  //overflow-x: auto;
 `
 
 export default Wrapper

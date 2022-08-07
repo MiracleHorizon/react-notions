@@ -4,16 +4,17 @@ export enum Theme {
   SYSTEM = 'Use system setting',
 }
 
-export interface ITheme {
+export default interface ITheme {
   identifier: Theme
   colors: IThemeColors
   svgFills: ISvgFills
-}
+} // По дефолту.
 
 export interface IThemeColors {
   'text-primary': string
   'text-secondary': string
-  'text-lower-titles'?: string
+  'text-statuses-modal-title': string
+  'text-lower-titles'?: string //!
   'text-placeholder-primary': string
   'text-cover-option': string
   'text-cover-titles': string
@@ -51,6 +52,8 @@ export interface IThemeColors {
   'bg-app-loader': string
   'bg-filled-ttip': string
   'bg-t-list-title-modal': string
+  'bg-notion-task-modal': string
+  'bg-curr-task-status': string
   'br-cover-option': string
   'br-cover-uploader': string
   'br-r-sb-header': string

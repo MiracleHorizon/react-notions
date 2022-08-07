@@ -38,7 +38,6 @@ export class PageService {
       font: 'Default',
       dependencies: [],
       content: [],
-      comments: [],
       sbOrder: null,
       taskOrder: null,
     })

@@ -1,37 +1,41 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState, Suspense, lazy } from 'react'
 
 import ModalWrapper from 'components/ui/modals/index'
+import CustomDecorLoader from 'components/ui/loaders/CustomDecorLoader'
 import DecorModalNavbar from '../Navbar'
 import EmojiLists from './Emoji'
 import useActions from 'hooks/useActions'
-import useCloseModal from 'hooks/useCloseModal'
+import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { Container } from './ChangeIconModal.styles'
-import CustomIcon from './Custom'
+import modalCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
+import Container from './ChangeIconModal.styles'
+
+const CustomIconMenu = lazy(() => import('./Custom'))
 
 const ChangeIconModal = () => {
-  const { pageId, coords } = useTypedSelector(state => state.modals.icon)
+  const { pageId, invokerRect } = useTypedSelector(state => state.modals.icon)
   const [activeCategory, setActiveCategory] = useState<string>('Emoji')
   const categories = useMemo(() => ['Emoji', 'Custom'], [])
-  const ref = useRef<HTMLDivElement>(null)
   const { closeChangeIconModal } = useActions()
 
-  const categoryHandler = () => {
-    switch (activeCategory) {
-      case 'Emoji':
-        return <EmojiLists _id={pageId} />
-      case 'Custom':
-        return <CustomIcon _id={pageId} />
-      default:
-        return <EmojiLists _id={pageId} />
-    }
-  }
+  const [ref, setRef] = useState<HTMLDivElement | null>(null)
+  const rect = useRef<DOMRect | null>(null)
+  const coords = useMemo(() => {
+    return modalCoordsHandler(rect.current, invokerRect).centerBottom
+  }, [rect.current, invokerRect])
 
-  useCloseModal(ref, closeChangeIconModal)
+  useOnCloseModal(ref, closeChangeIconModal)
 
   return (
     <ModalWrapper>
-      <Container ref={ref} {...coords}>
+      <Container
+        ref={node => {
+          if (node !== null) rect.current = node.getBoundingClientRect()
+          setRef(node)
+        }}
+        activeCategory={activeCategory}
+        coords={coords}
+      >
         <DecorModalNavbar
           _id={pageId}
           dest='icon'
@@ -39,7 +43,13 @@ const ChangeIconModal = () => {
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
         />
-        {categoryHandler()}
+        {activeCategory === 'Emoji' ? (
+          <EmojiLists _id={pageId} />
+        ) : (
+          <Suspense fallback={<CustomDecorLoader size='lg' />}>
+            <CustomIconMenu _id={pageId} />
+          </Suspense>
+        )}
       </Container>
     </ModalWrapper>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from 'styled-components'
-import { ITheme, Theme } from 'themes/theme.model'
+import ITheme, { Theme } from 'themes/theme.model'
 
 const LoupeSvg = () => {
   const { identifier, svgFills } = useTheme() as ITheme

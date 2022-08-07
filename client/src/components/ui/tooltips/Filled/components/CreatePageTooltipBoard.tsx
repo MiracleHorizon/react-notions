@@ -8,7 +8,7 @@ const CreatePageTooltipBoard: FC<{ reference: TDivRef }> = ({ reference }) => (
   <FilledTooltip
     title='Create new page'
     coords={tooltipsCoordsHandler.createPageBoard(reference)}
-    trans
+    transX
   />
 )
 

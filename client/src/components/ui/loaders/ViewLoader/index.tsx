@@ -2,7 +2,7 @@ import React from 'react'
 import { ScaleLoader } from 'react-spinners'
 import { useTheme } from 'styled-components'
 
-import { ITheme, Theme } from 'themes/theme.model'
+import ITheme, { Theme } from 'themes/theme.model'
 import Wrapper from './TemplateViewLoader.styles'
 
 const TemplateViewLoader = () => {

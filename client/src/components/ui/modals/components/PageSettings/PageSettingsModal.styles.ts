@@ -5,7 +5,7 @@ import { Theme } from 'themes/theme.model'
 export const Container = styled.div<ElementCoords>`
   position: absolute;
   top: ${props => props.top}px;
-  right: ${props => props.right}px;
+  left: ${props => props.left}px;
   max-height: 70vh;
   width: 220px;
   height: auto;
@@ -19,7 +19,7 @@ export const Container = styled.div<ElementCoords>`
   background: ${props => props.theme.colors['bg-modal-primary']};
   overflow: auto;
 
-  div[data-el='option-item']  {
+  div[data-el='option-item'] {
     padding: 10px;
 
     span {

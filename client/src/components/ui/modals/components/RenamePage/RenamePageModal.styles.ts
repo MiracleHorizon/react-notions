@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { mobile } from 'styles/variables'
+import { dFlex, mobile } from 'styles/variables'
 import { ElementCoords } from 'types'
 
 export const Container = styled.div<ElementCoords>`
@@ -24,9 +24,7 @@ export const Container = styled.div<ElementCoords>`
 
 export const IconContainer = styled.div`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   width: 28px;
   height: 28px;
   border-radius: 4px;

@@ -59,9 +59,6 @@ export class Page {
   content: [] //*
 
   @Prop()
-  comments: [] //*
-
-  @Prop()
   sbOrder: number | null
 
   @Prop()

@@ -5,7 +5,7 @@ import PageDecorPanel from 'components/DecorPanel'
 import { PageSvg, EmptyPageSvg } from 'components/ui/svg'
 import * as Page from './EmptyPage.styles'
 
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import { views } from '../../../../ViewsPanel'
 
 const page: IPage = {
@@ -27,7 +27,6 @@ const page: IPage = {
   descriptionExpanded: false,
   description: '',
   content: [],
-  comments: [],
   dependencies: [],
   sbOrder: null,
   taskOrder: null,

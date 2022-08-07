@@ -1,30 +1,14 @@
-import React, { useState } from 'react'
-import Loadable from 'react-loadable'
+import React, { useState, Suspense, lazy } from 'react'
 
 import PageViewsPanelLoader from 'components/ui/loaders/PageViewsPanelLoader'
 import TemplateViewLoader from 'components/ui/loaders/ViewLoader'
 import useTypedSelector from 'hooks/useTypedSelector'
 import Wrapper from './NotionsListTemplate.styles'
 
-const PageViewsPanel = Loadable({
-  loader: () => import('components/ViewsPanel'),
-  loading: () => <PageViewsPanelLoader />,
-})
-
-const BoardView = Loadable({
-  loader: () => import('./Views/components/Board'),
-  loading: () => <TemplateViewLoader />,
-})
-
-const GalleryView = Loadable({
-  loader: () => import('./Views/components/Gallery'),
-  loading: () => <TemplateViewLoader />,
-})
-
-const SoonTitle = Loadable({
-  loader: () => import('./Views/Soon'),
-  loading: () => <TemplateViewLoader />,
-})
+const PageViewsPanel = lazy(() => import('components/ViewsPanel'))
+const BoardView = lazy(() => import('./Views/components/Board'))
+const GalleryView = lazy(() => import('./Views/components/Gallery'))
+const SoonTitle = lazy(() => import('./Views/Soon'))
 
 const NotionsListTemplate = () => {
   const { selectedView } = useTypedSelector(state => state.app)
@@ -32,13 +16,17 @@ const NotionsListTemplate = () => {
 
   return (
     <>
-      <PageViewsPanel />
+      <Suspense fallback={<PageViewsPanelLoader />}>
+        <PageViewsPanel />
+      </Suspense>
       <Wrapper>
-        {selectedView === 'Board' && <BoardView />}
-        {selectedView === 'Gallery' && <GalleryView />}
-        {(selectedView === 'List' || selectedView === 'Calendar') && (
-          <SoonTitle />
-        )}
+        <Suspense fallback={<TemplateViewLoader />}>
+          {selectedView === 'Board' && <BoardView />}
+          {selectedView === 'Gallery' && <GalleryView />}
+          {(selectedView === 'List' || selectedView === 'Calendar') && (
+            <SoonTitle />
+          )}
+        </Suspense>
       </Wrapper>
     </>
   )

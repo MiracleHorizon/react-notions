@@ -5,7 +5,7 @@ import {
   ToggleFullWidthOption,
 } from 'components/ui/options/ToggleOption'
 import Divider from 'components/ui/Divider'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 
 const ToggleOptionsList: FC<IPage> = ({ _id, smallText, fullWidth }) => (
   <>

@@ -1,5 +1,6 @@
 import { RootState } from 'store'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
+import { _ } from 'react-hook-form/dist/__typetest__/__fixtures__'
 
 export const selectFavoritePages = (state: RootState): IPage[] => {
   return state.pages.pages.filter(
@@ -24,14 +25,23 @@ export const selectCommonPages = (state: RootState): IPage[] => {
 export const selectNoStatusPages = (state: RootState) =>
   state.pages.pages.filter(page => page.status === 'NO_STATUS')
 
-export const selectedDependencies = (state: RootState, id: string): IPage[] =>
+export const selectedDependencies = (state: RootState, _id: string): IPage[] =>
   state.pages.pages.filter(
-    page => page.parentPageId === id && page.status === null
+    page => page.parentPageId === _id && page.status === null
   )
 
-export const selectMovablePages = (state: RootState, id: string) => {
+export const selectMovablePages = (state: RootState, _id: string) => {
   return state.pages.pages.filter(
     page =>
-      page._id !== id && page.status === null && page.parentListId === null
+      page._id !== _id && page.status === null && page.parentListId === null
   )
+}
+
+export const selectPagesByListId = (
+  state: RootState,
+  _id: string | undefined
+) => {
+  if (!_id) return []
+
+  return state.pages.pages.filter(page => page.parentListId === _id)
 }

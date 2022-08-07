@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex, txtOflow } from 'styles/variables'
 import { TasksListTitleColor } from 'models/decor/colors'
-import colorsHandler from 'utils/stylesHandlers/colors'
+import ColorsHandler from 'utils/stylesHandlers/colors'
 
 export const Container = styled.div`
   cursor: pointer;
@@ -41,7 +41,7 @@ export const TitleContainer = styled.div<{ color: TasksListTitleColor }>`
   padding: 0 4px;
   border-radius: 3px;
   background: ${props =>
-    colorsHandler.tasksListTitle(props.color, props.theme)};
+    ColorsHandler.tasksListTitle(props.color, props.theme)};
 `
 
 export const Title = styled.p`

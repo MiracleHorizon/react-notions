@@ -6,8 +6,7 @@ import useAuth from 'hooks/useAuth'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useCreatePageMutation } from 'store/slices/pages/pages.api'
-import { modalsCoordsHandler } from 'utils/coordsHandlers/modals'
-import { Page } from 'models/page/Page'
+import Page from 'models/page/Page'
 import PropTypes from './TasksListActionButtons.types'
 import * as Bar from './TasksListActionButtons.styles'
 
@@ -25,7 +24,8 @@ const TasksListActionButtons: FC<PropTypes> = ({
 
   const handleOpenListOptionModal = () => {
     openTasksListsOptionsModal({
-      coords: modalsCoordsHandler.tasksListOptions(optionsBtnRef),
+      invokerRect: optionsBtnRef.current?.getBoundingClientRect().toJSON(),
+      template: 'default',
       listId: _id,
       hidden,
       color,

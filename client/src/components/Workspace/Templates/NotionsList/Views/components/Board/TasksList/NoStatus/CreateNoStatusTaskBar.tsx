@@ -4,7 +4,7 @@ import CreateTaskBar from 'components/Workspace/Templates/NotionsList/Views/Crea
 import useAuth from 'hooks/useAuth'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useCreatePageMutation } from 'store/slices/pages/pages.api'
-import { Page } from 'models/page/Page'
+import Page from 'models/page/Page'
 import Container from '../Item/CreateTaskBar/BoardCreateTaskBar.styles'
 
 const CreateNoStatusTaskBar = () => {

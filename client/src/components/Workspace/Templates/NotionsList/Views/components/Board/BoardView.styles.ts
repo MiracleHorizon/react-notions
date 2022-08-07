@@ -1,11 +1,8 @@
 import styled from 'styled-components'
-import { mobile, tablet } from 'styles/variables'
+import { dFlex, mobile, tablet } from 'styles/variables'
 
 const Container = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
+  ${dFlex.start};
   width: 100%;
   height: auto;
   margin-bottom: 100px;

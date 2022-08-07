@@ -1,14 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import OptionItem from 'components/ui/options/OptionItem'
+import RenameTasksListOption from './RenameList'
 import { DeleteTrashSvg, EyeHideSvg, EyeShowSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useUpdateTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
 import PropTypes from './TasksListOptions.types'
 
-const TasksListOptions: FC<PropTypes> = ({ hidden, color }) => {
-  const { listId } = useTypedSelector(state => state.modals.tasksListsOptions)
+const TasksListOptions: FC<PropTypes> = memo(({ hidden, color, template }) => {
+  const { listId } = useTypedSelector(state => state.modals.tasksListOptions)
   const [updateTasksList] = useUpdateTasksListMutation()
   const {
     closeTasksListsOptionsModal,
@@ -29,12 +30,15 @@ const TasksListOptions: FC<PropTypes> = ({ hidden, color }) => {
 
   return (
     <>
-      <OptionItem
-        title={hidden ? 'Show' : 'Hide'}
-        StartSvg={hidden ? EyeShowSvg : EyeHideSvg}
-        onClickAction={handleToggleHideList}
-        margY={color === 'empty'}
-      />
+      {template === 'taskModal' && <RenameTasksListOption _id={listId} />}
+      {template === 'default' && (
+        <OptionItem
+          title={hidden ? 'Show' : 'Hide'}
+          StartSvg={hidden ? EyeShowSvg : EyeHideSvg}
+          onClickAction={handleToggleHideList}
+          margY={color === 'empty'}
+        />
+      )}
       {color !== 'empty' && (
         <OptionItem
           title='Delete'
@@ -44,6 +48,6 @@ const TasksListOptions: FC<PropTypes> = ({ hidden, color }) => {
       )}
     </>
   )
-}
+})
 
 export default TasksListOptions

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import useTypedSelector from 'hooks/useTypedSelector'
 import PageOptionsModal from './components/PageOptions'
 import PageSettingsModal from './components/PageSettings'
 import MovePageModal from './components/MovePage'
@@ -10,31 +11,41 @@ import HiddenTasksListModal from './components/NotionsListTemplate/HiddenTasksLi
 import RenamePageModal from './components/RenamePage'
 import AppSettingsModal from './components/AppSettings'
 import PagesTrashModal from './components/PagesTrash'
-import useTypedSelector from 'hooks/useTypedSelector'
+import NotionTask from 'components/Workspace/Templates/NotionsList/NotionTask'
+import ChangeCoverModal from './components/ChangeDecor/ChangeCover'
+import ChangeStatusModal from './components/NotionsListTemplate/ChangeStatus'
 
 const ModalsOverlay = () => {
   const {
     icon: { isOpen: isIconModalOpen },
+    cover: { isOpen: isCoverModalOpen },
     rename: { isOpen: isRenameModalOpen },
     trash: { isOpen: isPagesTrashModalOpen },
     movePage: { isOpen: isMovePageModalOpen },
+    notionTask: { isOpen: isNotionTaskModalOpen },
     appSettings: { isOpen: isAppSettingsModalOpen },
     pageOptions: { isOpen: isPageOptionsModalOpen },
+    changeStatus: { isOpen: isChangeStatusModalOpen },
     pageSettings: { isOpen: isPageSettingsModalOpen },
     hiddenTasksList: { isOpen: isHiddenTasksListModalOpen },
-    tasksListsOptions: { isOpen: isTasksListOptionsModalOpen },
+    tasksListOptions: { isOpen: isTasksListOptionsModalOpen },
     handleTasksList: { isOpen: isHandleTasksListTitleModalOpen },
   } = useTypedSelector(state => state.modals)
 
+  // Suspense
+
   return (
     <>
+      {isNotionTaskModalOpen && <NotionTask />}
       {isIconModalOpen && <ChangeIconModal />}
+      {isCoverModalOpen && <ChangeCoverModal />}
       {isRenameModalOpen && <RenamePageModal />}
       {isMovePageModalOpen && <MovePageModal />}
       {isPagesTrashModalOpen && <PagesTrashModal />}
       {isAppSettingsModalOpen && <AppSettingsModal />}
       {isPageOptionsModalOpen && <PageOptionsModal />}
       {isPageSettingsModalOpen && <PageSettingsModal />}
+      {isChangeStatusModalOpen && <ChangeStatusModal />}
       {isHiddenTasksListModalOpen && <HiddenTasksListModal />}
       {isTasksListOptionsModalOpen && <TasksListOptionsModal />}
       {isHandleTasksListTitleModalOpen && <HandleTasksListTitleModal />}

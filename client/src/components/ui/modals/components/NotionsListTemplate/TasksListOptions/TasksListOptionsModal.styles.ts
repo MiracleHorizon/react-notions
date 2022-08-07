@@ -3,14 +3,20 @@ import { dFlex, mobile } from 'styles/variables'
 import { ElementCoords } from 'types'
 import { Theme } from 'themes/theme.model'
 
-export const Container = styled.div<ElementCoords>`
+export const transitionName = 'modal'
+export const appearDuration = 750
+
+const Container = styled.div<{
+  coords: ElementCoords
+  template: 'default' | 'taskModal'
+}>`
   position: absolute;
-  top: ${props => props.top}px;
-  left: ${props => props.left}px;
+  top: ${props => props.coords.top}px;
+  left: ${props => props.coords.left}px;
   ${dFlex.center};
   flex-direction: column;
   min-height: 40px;
-  width: 180px;
+  width: ${props => (props.template === 'default' ? 180 : 220)}px;
   height: auto;
   padding: 6px 0;
   border-radius: 4px;
@@ -20,27 +26,47 @@ export const Container = styled.div<ElementCoords>`
       : 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 3px 6px, rgb(15 15 15 / 40%) 0 9px 24px;'};
   background: ${props => props.theme.colors['bg-modal-primary']};
   overflow-y: auto;
-  transform: translateX(-50%);
-  
-  @media(max-width: ${mobile}) {
+
+  &.modal-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  &.modal-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity ${appearDuration}ms, transform ${appearDuration}ms;
+  }
+
+  &.modal-exit {
+    opacity: 1;
+  }
+
+  &.modal-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity ${appearDuration}ms, transform ${appearDuration}ms;
+  }
+
+  @media (max-width: ${mobile}) {
     left: 50%;
     right: 50%;
     top: 6%;
     max-height: 300px;
   }
-  
+
   div[data-el='option-item'] {
     padding: 0 6px;
-    
+
     span {
       font-weight: 400;
       color: ${props => props.theme.colors['text-primary']};
     }
-    
+
     svg {
       fill: ${props => props.theme.colors['text-primary']} !important;
     }
   }
 `
 
-export const List = styled.div``
+export default Container

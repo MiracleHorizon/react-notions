@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 
 import AuthLayout from 'layouts/Auth'
-import AuthForm from './Form'
+import AuthFormLoader from 'components/ui/loaders/AuthFormLoader'
 import { useLoginMutation } from 'store/slices/auth/auth.api'
 import { SubmitAuthParams } from './Form/AuthForm.types'
+
+const AuthForm = lazy(() => import('./Form'))
 
 const Login = () => {
   const [login] = useLoginMutation()
@@ -12,7 +14,9 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <AuthForm onSubmit={handleSubmitLogin} />
+      <Suspense fallback={<AuthFormLoader />}>
+        <AuthForm onSubmit={handleSubmitLogin} />
+      </Suspense>
     </AuthLayout>
   )
 }

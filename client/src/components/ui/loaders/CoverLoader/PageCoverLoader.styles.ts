@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { ITheme } from 'themes/theme.model'
+import ITheme from 'themes/theme.model'
 import { TPageTemplate } from 'models/page/IPage'
 import { lightTheme } from 'themes/light'
 import { dFlex } from 'styles/variables'

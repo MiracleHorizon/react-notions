@@ -6,7 +6,6 @@ import CountButton from 'components/ui/buttons/CountButton'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { selectNoStatusPages } from 'store/slices/pages/pages.selectors'
-import { modalsCoordsHandler } from 'utils/coordsHandlers/modals'
 import ITasksList from 'models/tasksList/ITasksList'
 import * as Item from './HiddenTasksListItem.styles'
 
@@ -23,7 +22,7 @@ const HiddenTasksListItem: FC<ITasksList> = list => {
 
   const handleOpenHiddenListModal = () => {
     openHiddenTasksListModal({
-      coords: modalsCoordsHandler.hiddenTasksList(ref),
+      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
       list,
     })
   }

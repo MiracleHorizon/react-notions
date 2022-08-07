@@ -3,7 +3,7 @@ import { useEventListener } from 'usehooks-ts'
 
 import ModalWrapper from 'components/ui/modals'
 import PropTypes from './ClassicAlert.types'
-import handleCloseAlert from 'helpers/handleCloseAlert'
+import handleCloseAlert from 'utils/helpers/handleCloseAlert'
 import * as Alert from './ClassicAlert.styles'
 
 const ClassicAlert: FC<PropTypes> = ({

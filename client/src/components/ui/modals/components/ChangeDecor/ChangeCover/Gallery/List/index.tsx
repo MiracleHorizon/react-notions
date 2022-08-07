@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import GalleryItem from '../Item'
 import PropTypes from './GalleryList.types'
-import coverLinkHandler from 'helpers/coverLinkHandler'
+import coverLinkHandler from 'utils/helpers/coverLinkHandler'
 import * as List from './GalleryList.styles'
 
 const GalleryList: FC<PropTypes> = ({ _id, list: { title, content } }) => (

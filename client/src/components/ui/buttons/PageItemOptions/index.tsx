@@ -4,8 +4,8 @@ import { useHover } from 'usehooks-ts'
 import { PageOptionsTooltip } from 'components/ui/tooltips'
 import { DotsSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
-import { setCoordsByPointer } from 'helpers/setCoordsByPointer'
-import { IPage } from 'models/page/IPage'
+import setCoordsByPointer from 'utils/helpers/setCoordsByPointer'
+import IPage from 'models/page/IPage'
 import Container from './PageItemOptionsButton.styles'
 
 const PageItemOptionsButton: FC<IPage> = page => {

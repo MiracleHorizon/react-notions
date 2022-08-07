@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { dFlex } from 'styles/variables'
-import { ITheme } from 'themes/theme.model'
 import { lightTheme } from 'themes/light'
+import ITheme from 'themes/theme.model'
 
 const Wrapper = styled.div<{ appTheme: ITheme | undefined }>`
   ${dFlex.center};

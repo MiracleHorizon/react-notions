@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, RefObject } from 'react'
 import { TButtonSize } from 'types'
 
 export interface OptionsButtonContainerProps {
@@ -9,4 +9,5 @@ export interface OptionsButtonContainerProps {
 export default interface OptionsButtonProps
   extends OptionsButtonContainerProps {
   onClickAction: (() => void) | ((e: MouseEvent) => void)
+  innerRef?: RefObject<HTMLDivElement> //!
 }

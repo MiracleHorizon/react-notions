@@ -1,60 +1,30 @@
-import {
-  PagesListState,
-  RightSidebarState,
-  SidebarState,
-} from 'store/slices/app/app.types'
-import { ITheme } from 'themes/theme.model'
+import { PagesListState, SidebarState } from 'store/slices/app/app.types'
 import { lightTheme } from 'themes/light'
-import { darkTheme } from 'themes/dark'
+import ITheme from 'themes/theme.model'
 
-export class AppStateHandler {
-  constructor(
-    public lightTheme: ITheme,
-    public darkTheme: ITheme,
-    private leftSidebar: SidebarState,
-    private rightSidebar: RightSidebarState
-  ) {}
+const defaultSidebarState = {
+  isOpen: true,
+  width: 300,
+}
 
-  getTheme(): ITheme {
+export default class AppStateHandler {
+  static getTheme(): ITheme {
     const themeJson = window.localStorage.getItem('theme')
-    return themeJson ? JSON.parse(themeJson) : this.lightTheme
+    return themeJson ? JSON.parse(themeJson) : lightTheme
   }
 
-  getLeftSidebar(): SidebarState {
-    const sidebarJsonData = window.localStorage.getItem('lSidebar')
-    return sidebarJsonData ? JSON.parse(sidebarJsonData) : this.leftSidebar
+  static getSidebar(): SidebarState {
+    const sidebarJsonData = window.localStorage.getItem('sidebar')
+    return sidebarJsonData ? JSON.parse(sidebarJsonData) : defaultSidebarState
   }
 
-  getRightSidebar(): RightSidebarState {
-    const sidebarJsonData = window.localStorage.getItem('rSidebar')
-    return sidebarJsonData ? JSON.parse(sidebarJsonData) : this.rightSidebar
-  }
-
-  getCommonPagesList(): PagesListState {
-    const listJson = window.localStorage.getItem('commonPagesList')
-    return listJson ? JSON.parse(listJson) : { isOpen: true }
-  }
-
-  getFavoritePagesList(): PagesListState {
+  static getFavoritePagesList(): PagesListState {
     const listJson = window.localStorage.getItem('favoritePagesList')
     return listJson ? JSON.parse(listJson) : { isOpen: true }
   }
-}
 
-const appStateHandler = new AppStateHandler(
-  lightTheme,
-  darkTheme,
-  {
-    width: 300,
-    isOpen: true,
-    location: 'left',
-  },
-  {
-    width: 380,
-    isOpen: false,
-    location: 'right',
-    activeCommentsFilter: 'Open',
+  static getCommonPagesList(): PagesListState {
+    const listJson = window.localStorage.getItem('commonPagesList')
+    return listJson ? JSON.parse(listJson) : { isOpen: true }
   }
-)
-
-export default appStateHandler
+}

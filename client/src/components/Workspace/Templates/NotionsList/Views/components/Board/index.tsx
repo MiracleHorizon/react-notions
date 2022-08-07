@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, Suspense, lazy } from 'react'
 import { useSelector } from 'react-redux'
 import { useHover } from 'usehooks-ts'
-import Loadable from 'react-loadable'
 
 import TasksList from './TasksList'
 import CreateTasksListBar from './CreateTasksList'
@@ -13,13 +12,10 @@ import { useGetTasksListsQuery } from 'store/slices/tasksLists/tasksLists.api'
 import {
   selectHiddenTasksLists,
   selectTasksLists,
-} from 'store/slices/tasksLists'
+} from 'store/slices/tasksLists/tasksLists.selectors'
 import Container from './BoardView.styles'
 
-const HiddenTasksLists = Loadable({
-  loader: () => import('./Hidden'),
-  loading: () => <HiddenTasksListsLoader />,
-})
+const HiddenTasksLists = lazy(() => import('./Hidden'))
 
 const BoardView = () => {
   const [hoveredList, setHoveredList] = useState<string>('')
@@ -42,8 +38,6 @@ const BoardView = () => {
     !isHovering && setHoveredList('')
   }, [isHovering])
 
-  // const hoveredList = useRef<string>('')
-
   return (
     <Container ref={ref}>
       {isSuccess && (
@@ -62,7 +56,9 @@ const BoardView = () => {
           />
           <CreateTasksListBar />
           {hiddenTasksLists.length > 0 && (
-            <HiddenTasksLists lists={hiddenTasksLists} />
+            <Suspense fallback={<HiddenTasksListsLoader />}>
+              <HiddenTasksLists lists={hiddenTasksLists} />
+            </Suspense>
           )}
         </>
       )}

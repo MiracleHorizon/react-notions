@@ -3,12 +3,12 @@ import { useHover } from 'usehooks-ts'
 
 import HeaderPageTitle from './PageTitle'
 import PageSettingsPanel from './PageSettingsPanel'
-import { OpenLeftSidebarButton } from 'components/ui/buttons/ToggleSidebar'
+import OpenSidebarButton from 'components/ui/buttons/ToggleSidebar/Open'
 import useTypedSelector from 'hooks/useTypedSelector'
 import * as Header from './Header.styles'
 
 const LayoutHeader = memo(() => {
-  const { isOpen } = useTypedSelector(state => state.app.leftSidebar)
+  const { isOpen } = useTypedSelector(state => state.app.sidebar)
   const page = useTypedSelector(state => state.pages.page)
 
   const ref = useRef<HTMLHeadElement>(null)
@@ -16,7 +16,7 @@ const LayoutHeader = memo(() => {
 
   return (
     <Header.Wrapper ref={ref}>
-      {!isOpen && <OpenLeftSidebarButton isHeaderHovering={isHovering} />}
+      {!isOpen && <OpenSidebarButton isHeaderHovering={isHovering} />}
       <Header.Container>
         <Header.Panel isOpen={isOpen}>
           {page && (

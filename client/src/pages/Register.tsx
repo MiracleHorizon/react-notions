@@ -1,11 +1,11 @@
-import React from 'react'
-import Loadable from 'react-loadable'
+import React, { lazy, Suspense } from 'react'
 
-const RegisterForm = Loadable({
-  loader: () => import('components/Auth/Register'),
-  loading: () => <>Загрузка регистрации</>,
-})
+const Register = lazy(() => import('components/Auth/Register'))
 
-const RegisterPage = () => <RegisterForm />
+const RegisterPage = () => (
+  <Suspense fallback={<>Loading...</>}>
+    <Register />
+  </Suspense>
+)
 
 export default RegisterPage

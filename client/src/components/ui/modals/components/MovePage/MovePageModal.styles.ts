@@ -7,8 +7,10 @@ export const Container = styled.div<ElementCoords>`
   top: ${props => props.top}px;
   right: ${props => props.right}px;
   left: ${props => props.left}px;
-  max-height: 70vh;
+  max-height: 40vh;
   width: 220px;
+  //height: auto;
+  height: 100%;
   border-radius: 4px;
   box-shadow: ${props =>
     props.theme.identifier === Theme.LIGHT
@@ -19,16 +21,20 @@ export const Container = styled.div<ElementCoords>`
 `
 
 export const Content = styled.div`
-  flex: 1;
-  overflow: hidden auto;
+  height: 100%;
+  width: 100%;
 `
 
 export const InputContainer = styled.div`
   margin: 8px 6px 0 6px;
+  height: 40px;
   padding: 4px;
 `
 
 export const List = styled.ul`
+  width: 100%;
+  height: calc(100% - 48px);
   margin-bottom: 1px;
   padding: 4px;
+  overflow: hidden auto;
 `

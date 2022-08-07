@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import ModalWrapper from 'components/ui/modals/index'
 import TasksListTopBar from 'components/Workspace/Templates/NotionsList/Views/components/Board/TasksList/TopBar'
@@ -6,28 +6,43 @@ import BoardItem from 'components/Workspace/Templates/NotionsList/Views/componen
 import OutlineInput from 'components/ui/inputs/Outline'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
-import useCloseModal from 'hooks/useCloseModal'
+import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
+import modalCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
+import getFilteredPages from 'utils/helpers/getFilteredPages'
 import * as Modal from './HiddenTasksListModal.styles'
 
-const HiddenTasksListModal = memo(() => {
+import {
+  selectCommonPages,
+  selectPagesByListId,
+} from 'store/slices/pages/pages.selectors'
+import { useSelector } from 'react-redux'
+import IPage from 'models/page/IPage'
+
+const HiddenTasksListModal = () => {
   const {
-    hiddenTasksList: { list, coords },
+    hiddenTasksList: { list, invokerRect },
     pageOptions: { isOpen: isPageOptionsModalOpen },
     handleTasksList: { isOpen: isHandleTasksListTitleModalOpen },
-    tasksListsOptions: { isOpen: isTasksListOptionsModalOpen },
+    tasksListOptions: { isOpen: isTasksListOptionsModalOpen },
   } = useTypedSelector(state => state.modals)
   const {
     deleteTasksList: { isOpen: isDeleteTasksListAlertOpen },
   } = useTypedSelector(state => state.alerts)
-  const pages = useTypedSelector(state =>
-    state.pages.pages.filter(page => page.parentListId === list?._id)
-  )
+
+  const pages = useSelector(selectCommonPages) //! MOCK
+  const [filteredPage, setFilteredPages] = useState<IPage[]>(pages)
+
   const { value, handleChangeValue, handleClearValue } = useInput('')
   const { closeHiddenTasksListModal } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
 
-  useCloseModal(
+  const [ref, setRef] = useState<HTMLDivElement | null>(null)
+  const rect = useRef<DOMRect | null>(null)
+  const coords = useMemo(() => {
+    return modalCoordsHandler(rect.current, invokerRect).centerBottom
+  }, [rect.current, invokerRect])
+
+  useOnCloseModal(
     ref,
     !isTasksListOptionsModalOpen &&
       !isHandleTasksListTitleModalOpen &&
@@ -37,11 +52,19 @@ const HiddenTasksListModal = memo(() => {
       : null
   )
 
+  useEffect(() => setFilteredPages(getFilteredPages(pages, value)), [value])
+
   if (!list) return null
 
   return (
     <ModalWrapper>
-      <Modal.Container ref={ref} {...coords}>
+      <Modal.Container
+        ref={node => {
+          setRef(node)
+          if (node !== null) rect.current = node.getBoundingClientRect()
+        }}
+        {...coords}
+      >
         <Modal.TopBarContainer>
           <TasksListTopBar
             totalTasks={pages.length}
@@ -58,13 +81,13 @@ const HiddenTasksListModal = memo(() => {
           />
         </Modal.TopBarContainer>
         <Modal.List>
-          {pages.map(item => (
+          {filteredPage.map(item => (
             <BoardItem key={item._id} {...item} />
           ))}
         </Modal.List>
       </Modal.Container>
     </ModalWrapper>
   )
-})
+}
 
 export default HiddenTasksListModal

@@ -8,7 +8,7 @@ const PageOptionsTooltip: FC<{ reference: TDivRef }> = ({ reference }) => (
   <FilledTooltip
     title='Remove, rename, and more...'
     coords={tooltipsCoordsHandler.pageOptions(reference)}
-    trans
+    transX
   />
 )
 

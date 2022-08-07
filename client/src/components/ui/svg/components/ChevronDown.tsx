@@ -1,6 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import { useTheme } from 'styled-components'
-import { ITheme } from 'themes/theme.model'
+import ITheme from 'themes/theme.model'
 
 const ChevronDownSvg = () => {
   const { svgFills } = useTheme() as ITheme

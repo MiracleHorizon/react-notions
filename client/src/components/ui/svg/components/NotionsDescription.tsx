@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from 'styled-components'
-import { ITheme } from 'themes/theme.model'
+import ITheme from 'themes/theme.model'
 
 const NotionsDescriptionSvg = () => {
   const { svgFills } = useTheme() as ITheme

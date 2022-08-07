@@ -19,12 +19,13 @@ export const Container = styled.div`
 
 export const Main = styled.div`
   width: 100%;
-  min-height: calc(100vh - 45px);
-  height: 100vh;
+  height: 100%;
+  //transition: width 0.25s;
 `
 
 export const Content = styled.div`
-  ${dFlex.center};
+  ${dFlex['center-start']};
+  height: calc(100% - 45px);
   flex-direction: column;
-  overflow: auto !important;
+  overflow: auto;
 `

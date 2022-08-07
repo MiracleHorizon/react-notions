@@ -1,4 +1,4 @@
-import { ITheme, Theme } from 'themes/theme.model'
+import ITheme, { Theme } from 'themes/theme.model'
 
 const galleryItemStylesHandler = (primary: boolean, theme: ITheme): string => {
   if (primary) {

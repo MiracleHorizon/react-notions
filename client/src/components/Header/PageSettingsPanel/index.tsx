@@ -1,13 +1,9 @@
 import React, { FC, memo, useRef } from 'react'
 
-import {
-  ToggleRightSidebarButton,
-  ToggleFavoriteButton,
-} from 'components/ui/buttons/HeaderAction'
+import ToggleFavoriteButton from 'components/ui/buttons/ToggleFavorite'
 import OptionsButton from 'components/ui/buttons/Options'
 import useActions from 'hooks/useActions'
-import { IPage } from 'models/page/IPage'
-import { modalsCoordsHandler } from 'utils/coordsHandlers/modals'
+import IPage from 'models/page/IPage'
 import Container from './PageSettingsPanel.styles'
 
 const PageSettingsPanel: FC<IPage> = memo(page => {
@@ -16,14 +12,13 @@ const PageSettingsPanel: FC<IPage> = memo(page => {
 
   const handleOpenPageSettingsModal = () => {
     openPageSettingsModal({
-      coords: modalsCoordsHandler.pageSettings(ref),
+      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
       page,
     })
   }
 
   return (
-    <Container ref={ref}>
-      {page.template === 'Notion' && <ToggleRightSidebarButton />}
+    <Container ref={ref} data-el='sgs-panel'>
       <ToggleFavoriteButton {...page} />
       <OptionsButton
         size='large'

@@ -5,18 +5,20 @@ import PropTypes from '../input.types'
 import { Wrapper, Input } from './OutlineInput.styles'
 
 const OutlineInput: FC<PropTypes> = ({
-  inputMode,
-  placeholder,
-  renderFocusable,
   value,
   onChange,
   onClear,
+  inputMode,
+  placeholder,
+  renderFocusable,
+  renderSelectable,
 }) => {
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     renderFocusable && ref.current?.focus()
-  }, [renderFocusable])
+    renderSelectable && ref.current?.select()
+  }, [renderFocusable, renderSelectable])
 
   return (
     <Wrapper>

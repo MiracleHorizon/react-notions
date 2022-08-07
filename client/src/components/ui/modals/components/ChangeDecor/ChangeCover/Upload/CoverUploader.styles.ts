@@ -1,11 +1,11 @@
 import styled from 'styled-components'
+import { bgTransitions, dFlex } from 'styles/variables'
 
 export const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex['center-start']};
   flex-direction: column;
-  padding: 10px 0;
+  height: 130px;
+  padding: 13px 0;
   user-select: none;
 
   p {
@@ -17,9 +17,7 @@ export const Wrapper = styled.div`
 
 export const Button = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   width: 95%;
   height: 32px;
   border: 1px solid ${props => props.theme.colors['br-cover-uploader']};
@@ -27,7 +25,7 @@ export const Button = styled.div`
   font-size: 14px;
   line-height: 24px;
   color: ${props => props.theme.colors['text-primary']};
-  transition: background 50ms ease-in;
+  ${bgTransitions.esInOut50};
 
   &:hover {
     background: ${props => props.theme.colors['bg-cover-uploader-hover']};

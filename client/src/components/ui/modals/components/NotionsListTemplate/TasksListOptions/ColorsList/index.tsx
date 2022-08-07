@@ -7,10 +7,15 @@ import { tasksListTitleColors } from 'models/decor/colors'
 import { Theme } from 'themes/theme.model'
 import PropTypes from './TasksListModalColors.types'
 
-const TasksListModalColors: FC<PropTypes> = ({ _id, selectedColor, theme }) => (
+const TasksListModalColors: FC<PropTypes> = ({
+  _id,
+  selectedColor,
+  theme,
+  template,
+}) => (
   <>
     <Divider />
-    <ModalTitle title='Colors' />
+    <ModalTitle title='Colors' upCase={template === 'taskModal'} />
     {Object.entries(tasksListTitleColors).map(([key, value]) => (
       <TasksListColorOption
         key={value.title}

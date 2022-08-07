@@ -1,8 +1,8 @@
-import { ITheme, Theme } from 'themes/theme.model'
+import ITheme, { Theme } from 'themes/theme.model'
 import { TasksListTitleColor, tasksListTitleColors } from 'models/decor/colors'
 
-class ColorsHandler {
-  tasksListTitle(color: TasksListTitleColor, theme: ITheme): string {
+export default class ColorsHandler {
+  static tasksListTitle(color: TasksListTitleColor, theme: ITheme): string {
     const colors = tasksListTitleColors
 
     switch (color) {
@@ -51,7 +51,3 @@ class ColorsHandler {
     }
   }
 }
-
-const colorsHandler = new ColorsHandler()
-
-export default colorsHandler

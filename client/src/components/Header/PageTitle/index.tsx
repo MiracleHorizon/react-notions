@@ -3,8 +3,7 @@ import React, { FC, useRef } from 'react'
 import { LockedFilledSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
-import { modalsCoordsHandler } from 'utils/coordsHandlers/modals'
-import { IPage } from 'models/page/IPage'
+import IPage from 'models/page/IPage'
 import * as Title from './PageTitle.styles'
 
 const HeaderPageTitle: FC<IPage> = page => {
@@ -14,14 +13,10 @@ const HeaderPageTitle: FC<IPage> = page => {
   const [updatePage] = useUpdatePageMutation()
 
   const handleOpenRenameModal = () => {
-    if (document.documentElement.scrollTop > 0) {
-      window.scrollTo(0, 0)
-    } else {
-      openRenamePageModal({
-        coords: modalsCoordsHandler.renamePage(ref),
-        page,
-      })
-    }
+    openRenamePageModal({
+      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
+      page,
+    })
   }
 
   const handleUnlockPage = () => {

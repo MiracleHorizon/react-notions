@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import PageDecorButton from '../index'
 import { CoverSvg } from 'components/ui/svg'
 import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
-import getRandomCover from 'helpers/getRandomCover'
+import getRandomCover from 'utils/helpers/getRandomCover'
 
 const AddCoverButton: FC<{ _id: string }> = ({ _id }) => {
   const [updatePage] = useUpdatePageMutation()
