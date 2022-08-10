@@ -1,6 +1,8 @@
 import sample from 'lodash.sample'
-import { TasksListTitleColor } from 'models/decor/colors'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 
 export default function getRandomListColor() {
-  return sample(Object.values(TasksListTitleColor).filter(c => c !== 'empty'))
+  return sample(
+    Object.values(TasksListTitleColorsEnum).filter(c => c !== 'empty')
+  )
 }

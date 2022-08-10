@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, mobile, tablet } from 'styles/variables'
+import { dFlex, mobile, tablet } from 'styles/uiKit'
 
 const Container = styled.div`
   ${dFlex.start};

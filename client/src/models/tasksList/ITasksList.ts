@@ -1,11 +1,10 @@
-import IPage from 'models/page/IPage'
-import { TasksListTitleColor } from 'models/decor/colors'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 
 export default interface ITasksList {
   readonly _id: string
   parentPageId: string
   title: string
-  color: TasksListTitleColor
+  color: TasksListTitleColorsEnum
   hidden: boolean
   order: number
   dependencies: string[] // IPage[]

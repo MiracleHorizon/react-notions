@@ -5,6 +5,7 @@ import { PageModule } from './page/page.module'
 import { PagesTrashModule } from './pagesTrash/pagesTrash.module'
 import { TasksListModule } from './tasksList/tasksList.module'
 import * as path from 'path'
+import NotionContentItemModule from './notionContentItem/notionContentItem.module'
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import * as path from 'path'
     PageModule,
     PagesTrashModule,
     TasksListModule,
+    NotionContentItemModule,
   ],
 })
 export class AppModule {}

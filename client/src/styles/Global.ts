@@ -61,21 +61,22 @@ const Global = createGlobalStyle<{ theme: ITheme }>`
     background: none;
   }
 
-  *::-webkit-scrollbar {
+
+  ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
+    background: transparent;
   }
 
-  *::-webkit-scrollbar-track {
-    background: ${props => props.theme.colors['scroll-track']};
+  ::-webkit-scrollbar-track {
+    background: ${p => p.theme.colors['scroll-track']};
   }
-
-  *::-webkit-scrollbar-thumb {
-    background: ${props => props.theme.colors['scroll-thumb']};
+  
+  ::-webkit-scrollbar-thumb {
+    background: ${p => p.theme.colors['scroll-thumb']};
 
     &:hover {
-      background: ${props => props.theme.colors['scroll-thumb-hover']};
-      transition: background-color 0.1s ease-out;
+      background: ${p => p.theme.colors['scroll-thumb-hover']};
     }
   }
 

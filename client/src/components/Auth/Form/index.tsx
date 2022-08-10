@@ -6,6 +6,7 @@ import FirebaseAuth from './FirebaseAuth'
 import Divider from 'components/ui/Divider'
 import OutlineInput from 'components/ui/inputs/Outline'
 import OutlineButton from 'components/ui/buttons/Outline'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
 import PropTypes from './AuthForm.types'
 import * as Auth from './AuthForm.styles'
 
@@ -56,7 +57,7 @@ const AuthForm: FC<PropTypes> = ({ onSubmit }) => {
         </Auth.InputContainer>
         <OutlineButton
           title='Continue'
-          color='red'
+          color={OutlineButtonColorsEnum.RED}
           onClickAction={handleSubmit(onSubmit)}
         />
       </Auth.Form>

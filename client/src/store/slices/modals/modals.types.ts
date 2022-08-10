@@ -19,6 +19,16 @@ export default interface ModalsState {
     isOpen: boolean
     page: IPage | null
   }
+  notionItemOptions: {
+    isOpen: boolean
+    itemId: string
+    invokerRect: string
+  }
+  notionItemDecor: {
+    isOpen: boolean
+    itemId: string
+    invokerRect: string
+  }
   changeStatus: {
     isOpen: boolean
     list: ITasksList | null // Дополнить все подобные поля * ... | null *.

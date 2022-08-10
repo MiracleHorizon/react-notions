@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import { CheckSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import PropTypes from './DropdownPopup.types'

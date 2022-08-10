@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import stylesHandler from 'utils/stylesHandlers/galleryItem'
-import { bgTransitions } from 'styles/variables'
+import { bgTransitions } from 'styles/uiKit'
 
 export const Wrapper = styled.div<{ primary: boolean; isSelected?: boolean }>`
   cursor: pointer;

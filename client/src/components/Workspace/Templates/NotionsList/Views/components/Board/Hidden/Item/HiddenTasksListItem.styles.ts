@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/variables'
-import { TasksListTitleColor } from 'models/decor/colors'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import ColorsHandler from 'utils/stylesHandlers/colors'
 
 export const Container = styled.div`
@@ -33,7 +33,7 @@ export const Container = styled.div`
   }
 `
 
-export const TitleContainer = styled.div<{ color: TasksListTitleColor }>`
+export const TitleContainer = styled.div<{ color: TasksListTitleColorsEnum }>`
   max-width: 180px;
   width: max-content;
   height: 20px;
@@ -48,5 +48,5 @@ export const Title = styled.p`
   font-size: 14px;
   font-weight: 500;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-primary']};  
+  color: ${props => props.theme.colors['text-primary']};
 `

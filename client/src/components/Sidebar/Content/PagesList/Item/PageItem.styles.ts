@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ItemContainerProps } from './PageItem.types'
-import { txtOflow } from 'styles/variables'
+import { txtOflow } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   display: flex;

@@ -8,6 +8,7 @@ const ChevronDownSvg = () => {
   return (
     <svg
       viewBox='0 0 30 30'
+      data-svg='chevron'
       style={{
         width: 10,
         height: '100%',

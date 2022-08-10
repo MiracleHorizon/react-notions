@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { txtOflow } from 'styles/variables'
+import { txtOflow } from 'styles/uiKit'
 
 export const Container = styled.div<{ pLeft: number }>`
   width: 100%;

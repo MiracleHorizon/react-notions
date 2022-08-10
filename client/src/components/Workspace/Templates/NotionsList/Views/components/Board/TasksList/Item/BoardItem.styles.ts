@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions } from 'styles/variables'
+import { bgTransitions } from 'styles/uiKit'
 import { Theme } from 'themes/theme.model'
 
 export const Wrapper = styled.div`

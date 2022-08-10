@@ -7,7 +7,11 @@ const ModalTitle: FC<{ title: string; upCase?: boolean }> = ({
 }) => {
   // console.log('render')
 
-  return <Title upCase={upCase}>{title}</Title>
+  return (
+    <Title data-el='modal-title' upCase={upCase}>
+      {title}
+    </Title>
+  )
 }
 
 export default ModalTitle

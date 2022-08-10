@@ -1,6 +1,7 @@
 import { TPageFont } from 'models/decor/fonts'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
 
-export interface IUpdatePageBody {
+export default interface IUpdatePageBody {
   parentPageId?: string | null
   parentListId?: string | null
   title?: string
@@ -18,4 +19,5 @@ export interface IUpdatePageBody {
   iconUrl?: string | null
   coverUrl?: string | null
   coverPosition?: number
+  content?: INotionContentItem[]
 }

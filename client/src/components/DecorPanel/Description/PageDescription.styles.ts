@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, mobile, tablet } from 'styles/variables'
+import { dFlex, mobile, tablet } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   ${dFlex['center-start']};

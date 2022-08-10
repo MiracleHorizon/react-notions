@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/variables'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   cursor: pointer;

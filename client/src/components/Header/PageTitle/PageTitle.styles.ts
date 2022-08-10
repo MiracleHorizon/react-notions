@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, txtOflow } from 'styles/variables'
+import { dFlex, txtOflow } from 'styles/uiKit'
 
 export const Container = styled.div`
   cursor: pointer;

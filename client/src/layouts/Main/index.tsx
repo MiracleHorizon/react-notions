@@ -9,17 +9,19 @@ import * as Layout from './MainLayout.styles'
 
 const MainLayout: FC<{ children: JSX.Element }> = ({ children }) => (
   <AppHotkeysWrapper>
-    <Layout.Wrapper>
-      <Layout.Container>
-        <Sidebar />
-        <Layout.Main>
-          <LayoutHeader />
-          <Layout.Content>{children}</Layout.Content>
-        </Layout.Main>
-      </Layout.Container>
+    <>
+      <Layout.Wrapper>
+        <Layout.Container>
+          <Sidebar />
+          <Layout.Main>
+            <LayoutHeader />
+            <Layout.Content>{children}</Layout.Content>
+          </Layout.Main>
+        </Layout.Container>
+      </Layout.Wrapper>
       <ModalsOverlay />
       <AlertsOverlay />
-    </Layout.Wrapper>
+    </>
   </AppHotkeysWrapper>
 )
 

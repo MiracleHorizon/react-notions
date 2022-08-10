@@ -1,10 +1,10 @@
 import React, { useRef } from 'react'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import CurrentTaskStatus from './CurrentStatus'
 import StatusesList from './StatusesList'
 import useActions from 'hooks/useActions'
-import useCloseModal from 'hooks/useCloseModal'
+import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import * as Modal from './ChangeStatusModal.styles'
 
@@ -16,8 +16,8 @@ const ChangeStatusModal = () => {
   const { closeChangeStatusModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
 
-  useCloseModal(
-    ref,
+  useOnCloseModal(
+    ref.current,
     !isTasksListOptionsModalOpen ? closeChangeStatusModal : null
   )
 

@@ -8,13 +8,13 @@ export default interface ITheme {
   identifier: Theme
   colors: IThemeColors
   svgFills: ISvgFills
-} // По дефолту.
+}
 
 export interface IThemeColors {
   'text-primary': string
   'text-secondary': string
   'text-statuses-modal-title': string
-  'text-lower-titles'?: string //!
+  'text-lower-titles'?: string // !
   'text-placeholder-primary': string
   'text-cover-option': string
   'text-cover-titles': string
@@ -26,6 +26,7 @@ export interface IThemeColors {
   'text-option-primary': string
   'text-ttip-title': string
   'text-ttip-desc': string
+  'text-completed-todo': string
   'bg-primary': string
   'bg-el-hover-primary': string
   'bg-el-active-primary': string
@@ -91,4 +92,6 @@ export interface ISvgFills {
   'locked-filled': string
   'fav-star': string
   'settings-dots': string
+  'toggle-list-triangle': string
+  'toggle-empty-list-triangle': string
 }

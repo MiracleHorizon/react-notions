@@ -1,31 +1,34 @@
-import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useMemo, useRef } from 'react'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import CommonInput from 'components/ui/inputs/Common'
 import { EmptyPageSvg, PageSvg } from 'components/ui/svg'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
+import useSetModalPosition from 'hooks/useSetModalPosition'
 import ModalsCoordsHandler from 'utils/coordsHandlers/modals'
+import nodeRefHandler from 'utils/nodeRefHandler'
 import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
 import * as Modal from './RenamePageModal.styles'
 
 const RenamePageModal = () => {
   const isIconModalOpen = useTypedSelector(state => state.modals.icon.isOpen)
   const { page, invokerRect } = useTypedSelector(state => state.modals.rename)
-  const { value, handleChangeValue } = useInput(page?.title ? page.title : '')
+  const { value, handleChangeValue } = useInput(page ? page.title : '')
   const { closeRenamePageModal, openChangeIconModal } = useActions()
   const [updatedPage] = useUpdatePageMutation()
 
   const inputRef = useRef<HTMLInputElement>(null)
   const ref = useRef<HTMLDivElement>(null)
 
-  const [iconRef, setIconRef] = useState<HTMLDivElement | null>(null)
-  const rect = useRef<DOMRect | null>(null)
-  const coords = useMemo(() => {
-    return ModalsCoordsHandler.rename(rect.current, invokerRect)
-  }, [rect.current, invokerRect])
+  const {
+    ref: iconRef,
+    setRef: setIconRef,
+    rect,
+    coords,
+  } = useSetModalPosition({ pos: 'rename', invokerRect }) // useMemo ?
 
   const handleSubmitChanges = (e: FormEvent) => {
     if (!page) return
@@ -52,10 +55,7 @@ const RenamePageModal = () => {
     <ModalWrapper>
       <Modal.Container ref={ref} {...coords}>
         <Modal.IconContainer
-          ref={node => {
-            setIconRef(node)
-            if (node !== null) rect.current = node.getBoundingClientRect()
-          }}
+          ref={node => nodeRefHandler(node, rect, setIconRef)}
           onClick={handleOpenIconModal}
         >
           {page?.iconUrl ? (

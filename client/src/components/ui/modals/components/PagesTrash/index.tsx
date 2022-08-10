@@ -1,7 +1,7 @@
 import React, { useRef, Suspense, lazy } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import OutlineInput from 'components/ui/inputs/Outline'
 import EmptyPagesTrash from './Empty'
 import useInput from 'hooks/useInput'

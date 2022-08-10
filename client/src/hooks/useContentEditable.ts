@@ -13,13 +13,15 @@ export default function useContentEditable(initialValue: string, func: TFunc) {
   }
 
   const handleEnterKey = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.code === 'Enter') {
+    if (e.code === 'Enter' && value.current !== initialValue) {
       e.preventDefault()
       func(value.current)
     }
   }
 
-  const handleBlur = () => func(value.current)
+  const handleBlur = () => {
+    if (value.current !== initialValue) func(value.current)
+  }
 
   return {
     value: value.current,

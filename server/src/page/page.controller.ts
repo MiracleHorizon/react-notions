@@ -12,7 +12,7 @@ import { PageService } from './page.service'
 import CreatePageDto from './dto/create-page.dto'
 import UpdatePageDto from './dto/update-page.dto'
 
-@Controller('workspace/pages')
+@Controller('workspace/pages') //! Убрать workspace
 export class PageController {
   constructor(private pageService: PageService) {}
 
@@ -43,6 +43,7 @@ export class PageController {
 
   @Delete(':id')
   delete(@Param('id') id: ObjectId) {
+    // При удалении страницы, удалять все страницы - таски.
     return this.pageService.delete(id).then(() => id)
   }
 

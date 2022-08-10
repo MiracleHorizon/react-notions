@@ -1,7 +1,7 @@
 import React, { useState, Suspense, lazy } from 'react'
 
-import PageViewsPanelLoader from 'components/ui/loaders/PageViewsPanelLoader'
-import TemplateViewLoader from 'components/ui/loaders/ViewLoader'
+import PageViewsPanelLoader from 'components/ui/loaders/PageViewsPanel'
+import TemplateViewLoader from 'components/ui/loaders/View'
 import useTypedSelector from 'hooks/useTypedSelector'
 import Wrapper from './NotionsListTemplate.styles'
 

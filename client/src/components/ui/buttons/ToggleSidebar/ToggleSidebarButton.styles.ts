@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import SidebarStylesHandler from 'utils/stylesHandlers/sidebar'
 import { ButtonContainerProps } from './ToggleSidebarButton.types'
-import { bgTransitions, dFlex } from 'styles/variables'
+import { bgTransitions, dFlex } from 'styles/uiKit'
 
 const Container = styled.div<ButtonContainerProps>`
   cursor: pointer;

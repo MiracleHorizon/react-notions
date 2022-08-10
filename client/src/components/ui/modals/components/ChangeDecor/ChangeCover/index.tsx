@@ -1,40 +1,37 @@
-import React, { memo, useMemo, useRef, useState, lazy, Suspense } from 'react'
+import React, { memo, useState, lazy, Suspense } from 'react'
 
-import ModalWrapper from 'components/ui/modals'
-import CustomDecorLoader from 'components/ui/loaders/CustomDecorLoader'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
+import CustomDecorLoader from 'components/ui/loaders/CustomDecor'
 import DecorModalNavbar from '../Navbar'
 import CoversGallery from './Gallery'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import ModalsCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
+import nodeRefHandler from 'utils/nodeRefHandler'
+import useSetModalPosition from 'hooks/useSetModalPosition'
 import * as Modal from './ChangeCoverModal.styles'
-import modalCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
 
 const CoverUploader = lazy(() => import('./Upload'))
 const CoverLink = lazy(() => import('./Link'))
 
+const categories = ['Gallery', 'Upload', 'Link'] // В константы.
+
 const ChangeCoverModal = memo(() => {
-  const categories = useMemo(() => ['Gallery', 'Upload', 'Link'], [])
   const [activeCategory, setActiveCategory] = useState<string>('Gallery')
   const { pageId, invokerRect } = useTypedSelector(state => state.modals.cover)
   const { closeChangeCoverModal } = useActions()
 
-  const [ref, setRef] = useState<HTMLDivElement | null>(null)
-  const rect = useRef<DOMRect | null>(null)
-  const coords = useMemo(() => {
-    return modalCoordsHandler(rect.current, invokerRect).centerBottom
-  }, [rect.current, invokerRect])
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'centerBottom',
+    invokerRect,
+  }) // useMemo ?
 
   useOnCloseModal(ref, closeChangeCoverModal)
 
   return (
     <ModalWrapper>
       <Modal.Container
-        ref={node => {
-          if (node !== null) rect.current = node.getBoundingClientRect()
-          setRef(node)
-        }}
+        ref={node => nodeRefHandler(node, rect, setRef)}
         activeCategory={activeCategory}
         coords={coords}
       >

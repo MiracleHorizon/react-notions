@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import useAuth from 'hooks/useAuth'
-import { privateRoutes, publicRoutes } from 'router'
+import { privateRoutes, publicRoutes } from 'routes'
 
 const AppRouter = () => {
   const { user } = useAuth()

@@ -4,11 +4,9 @@ import { FilledTooltipContainerProps } from './FilledTooltip.types'
 export const Container = styled.div<FilledTooltipContainerProps>`
   position: absolute;
   top: ${props => props.coords?.top}px;
-  bottom: ${props => props.coords?.bottom}px;
   left: ${props => props.coords?.left}px;
-  right: ${props => props.coords?.right}px;
   display: flex;
-  align-items: flex-start;
+  align-items: ${p => (p.itemsCenter ? 'center' : 'flex-start')};
   flex-direction: column;
   max-width: 200px;
   width: max-content;
@@ -19,7 +17,7 @@ export const Container = styled.div<FilledTooltipContainerProps>`
   background: ${props => props.theme.colors['bg-filled-ttip']};
   ${props => props.transX && 'transform: translateX(-50%)'};
   ${props => props.transY && 'transform: translateY(50%)'};
-  z-index: 2000;
+  z-index: 2000 !important;
 
   span,
   p {

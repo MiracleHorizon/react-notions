@@ -2,7 +2,7 @@ import React, { FC, memo, useRef, Suspense, lazy } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { useOnClickOutside } from 'usehooks-ts'
 
-import PageIconLoader from 'components/ui/loaders/IconLoader'
+import PageIconLoader from 'components/ui/loaders/Icon'
 import useContentEditable from 'hooks/useContentEditable'
 import PropTypes from './PageTitle.types'
 import * as Title from './PageTitle.styles'

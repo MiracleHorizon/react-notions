@@ -3,8 +3,9 @@ import firebase from 'firebase/compat/app'
 
 import OutlineButton from 'components/ui/buttons/Outline'
 import AppTitle from 'components/Auth/AppTitle'
-import { GoogleLogoSvg, AppleLogoSvg } from 'components/ui/svg'
+import { AppleLogoSvg, GoogleLogoSvg } from 'components/ui/svg'
 import { AuthContext } from 'context/AuthContext'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
 import * as Auth from './FirebaseAuth.styles'
 
 const FirebaseAuth = () => {
@@ -26,14 +27,14 @@ const FirebaseAuth = () => {
       <AppTitle />
       <Auth.Container>
         <OutlineButton
-          color='gray'
+          color={OutlineButtonColorsEnum.GRAY}
           title='Continue with Google'
           StartSvg={GoogleLogoSvg}
           onClickAction={handleGoogleAuth}
         />
         <OutlineButton
           disabled
-          color='gray'
+          color={OutlineButtonColorsEnum.RED}
           title='Continue with Apple'
           StartSvg={AppleLogoSvg}
           onClickAction={handleAppleAuth}

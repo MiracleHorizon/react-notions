@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { bgTransitions } from 'styles/variables'
+import { bgTransitions } from 'styles/uiKit'
 
 export const Container = styled.div<{ margY?: boolean }>`
   cursor: pointer;
   display: flex;
   align-items: center;
   width: calc(100% - 8px);
-  height: 27px;
+  height: 28px;
   border-radius: 3px;
   margin: ${props => (!props.margY ? 1 : 0)}px 4px;
   padding-left: 15px;

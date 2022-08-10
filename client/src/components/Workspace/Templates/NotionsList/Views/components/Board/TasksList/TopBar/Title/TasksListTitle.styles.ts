@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import colorsHandler from 'utils/stylesHandlers/colors'
-import { bgTransitions, dFlex, txtOflow } from 'styles/variables'
-import { TasksListTitleColor } from 'models/decor/colors'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 
 export const Wrapper = styled.div`
   ${dFlex.center};
@@ -25,7 +25,7 @@ export const Container = styled.div`
   }
 `
 
-export const Content = styled.div<{ color: TasksListTitleColor }>`
+export const Content = styled.div<{ color: TasksListTitleColorsEnum }>`
   ${dFlex.center};
   width: 100%;
   min-height: 20px;

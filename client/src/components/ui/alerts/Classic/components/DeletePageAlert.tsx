@@ -5,6 +5,7 @@ import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useDeletePageMutation } from 'store/slices/pages/pages.api'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
 
 const DeletePageAlert = () => {
   const { pageId } = useTypedSelector(state => state.alerts.deletePage)
@@ -25,13 +26,13 @@ const DeletePageAlert = () => {
     >
       <>
         <OutlineButton
-          color='red'
           title='Yes. Delete this page'
+          color={OutlineButtonColorsEnum.GRAY}
           onClickAction={handleSubmitDelete}
         />
         <OutlineButton
-          color='gray'
           title='Cancel'
+          color={OutlineButtonColorsEnum.GRAY}
           onClickAction={handleHideAlert}
         />
       </>

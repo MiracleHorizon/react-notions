@@ -33,7 +33,7 @@ export class PageService {
       iconUrl: null,
       coverUrl: null,
       coverPosition: 50,
-      descriptionExpanded: false,
+      descriptionExpanded: true,
       description: defaultDescription,
       font: 'Default',
       dependencies: [],
@@ -79,7 +79,10 @@ export class PageService {
   }
 
   async getOne(id: ObjectId): Promise<Page | string> {
-    return this.pageModel.findById(id).populate('dependencies')
+    return this.pageModel
+      .findById(id)
+      .populate('dependencies')
+      .populate('content')
   }
 
   async delete(id: ObjectId): Promise<ObjectId> {
@@ -87,6 +90,7 @@ export class PageService {
 
     if (page.parentListId !== null) {
       const list = await this.tasksListModel.findById(page.parentListId)
+
       list.dependencies = list.dependencies.filter(
         _id => _id.toString() !== id.toString()
       ) //!
@@ -98,14 +102,15 @@ export class PageService {
       { parentPageId: null }
     )
 
+    await this.tasksListModel.deleteMany({ parentPageId: id })
+    await this.pageModel.find({ sbOrder: null }).deleteMany()
+
     return this.pageModel.findByIdAndDelete(id)
   }
 
   async deleteAll() {
     return this.pageModel.deleteMany()
   }
-
-  // async addComment() {}
 
   async update(id: ObjectId, updateData: UpdatePageDto) {
     const page = await this.pageModel.findByIdAndUpdate({ _id: id }, updateData)

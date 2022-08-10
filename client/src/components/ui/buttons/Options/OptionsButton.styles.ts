@@ -2,29 +2,29 @@ import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { OptionsButtonContainerProps } from './OptionsButton.types'
 import { buttonSizesHandler } from 'utils/stylesHandlers/button'
-import { bgTransitions, dFlex } from 'styles/variables'
+import { bgTransitions, dFlex } from 'styles/uiKit'
 
 const Container = styled.div<OptionsButtonContainerProps>`
   cursor: pointer;
   position: absolute;
   ${dFlex.center};
-  ${props => buttonSizesHandler(props.size)};
+  ${p => buttonSizesHandler(p.size)};
   border-radius: 3px;
-  box-shadow: ${props =>
-    props.type === 'outlined'
-      ? props.theme.identifier === Theme.LIGHT
+  box-shadow: ${p =>
+    p.type === 'outlined'
+      ? p.theme.identifier === Theme.LIGHT
         ? 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 2px 4px'
         : 'rgb(15 15 15 / 20%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 2px 4px;'
       : 'none'};
-  background: ${props => props.theme.colors['bg-primary']};
+  background: ${p => p.theme.colors['bg-primary']};
   ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-option-hover']};
+    background: ${p => p.theme.colors['bg-option-hover']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-option-active']};
+    background: ${p => p.theme.colors['bg-option-active']};
   }
 `
 

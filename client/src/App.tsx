@@ -1,7 +1,7 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import AppLoader from 'components/ui/loaders/AppLoader'
+import AppLoader from 'components/ui/loaders/App'
 import AppRouter from 'components/AppRouter'
 import useAuth from 'hooks/useAuth'
 import useTypedSelector from 'hooks/useTypedSelector'

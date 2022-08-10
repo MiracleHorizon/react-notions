@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/variables'
+import { dFlex } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   ${dFlex['start-center']}

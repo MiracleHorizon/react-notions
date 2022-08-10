@@ -1,9 +1,9 @@
-import { TasksListTitleColor } from 'models/decor/colors'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 
 export default interface TasksListTopBarProps {
   _id: string
   title: string
-  color: TasksListTitleColor
+  color: TasksListTitleColorsEnum
   totalTasks: number
   hidden: boolean
   isHovering: boolean

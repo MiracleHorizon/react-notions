@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useEventListener } from 'usehooks-ts'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import PropTypes from './ClassicAlert.types'
 import handleCloseAlert from 'utils/helpers/handleCloseAlert'
 import * as Alert from './ClassicAlert.styles'

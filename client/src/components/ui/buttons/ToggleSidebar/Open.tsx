@@ -10,7 +10,7 @@ const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = memo(
   ({ isHeaderHovering }) => {
     const { openSidebar } = useActions()
     const ref = useRef<HTMLDivElement>(null)
-    const isHovering = useHover(ref)
+    // const isHovering = useHover(ref)
 
     const handleOpenSidebar = () => openSidebar()
 
@@ -19,7 +19,7 @@ const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = memo(
         ref={ref}
         role='button'
         dest='open'
-        data-btn='lSbOpen'
+        data-btn='sbOpen'
         isHovering={true}
         onClick={handleOpenSidebar}
       >

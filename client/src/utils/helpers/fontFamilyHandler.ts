@@ -1,13 +1,13 @@
-import { PageFont, TPageFont } from 'models/decor/fonts'
+import { PageFonts, TPageFont } from 'models/decor/fonts'
 
 export default function fontFamilyHandler(fontFamily: TPageFont): string {
   switch (fontFamily) {
     case 'Default':
-      return PageFont.DEFAULT
+      return PageFonts.DEFAULT
     case 'Serif':
-      return PageFont.SERIF
+      return PageFonts.SERIF
     case 'Mono':
-      return PageFont.MONO
+      return PageFonts.MONO
     default:
       throw new Error('Ошибка выбора шрифта.')
   }

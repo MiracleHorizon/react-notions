@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/variables'
 import { Theme } from 'themes/theme.model'
-import ColorsHandler from '../../../../../../../utils/stylesHandlers/colors'
-import { TasksListTitleColor } from '../../../../../../../models/decor/colors'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import ColorsHandler from 'utils/stylesHandlers/colors'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -65,7 +65,7 @@ export const ValueContainer = styled.div<{ styleEvents?: boolean }>`
   flex: 1;
   padding-right: 30px;
   padding-left: 7px;
-  
+
   ${props =>
     props.styleEvents &&
     `
@@ -81,7 +81,9 @@ export const ValueContainer = styled.div<{ styleEvents?: boolean }>`
   `};
 `
 
-export const StatusContainer = styled.div<{ bgColor: TasksListTitleColor }>`
+export const StatusContainer = styled.div<{
+  bgColor: TasksListTitleColorsEnum
+}>`
   ${dFlex.center};
   width: max-content;
   height: 20px;

@@ -1,15 +1,18 @@
 import ITheme, { Theme } from 'themes/theme.model'
 
 const galleryItemStylesHandler = (primary: boolean, theme: ITheme): string => {
-  if (primary) {
-    return theme.identifier === Theme.DARK
-      ? 'rgb(15 15 15 / 20%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 2px 4px'
-      : 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 2px 4px'
-  } else {
-    return theme.identifier === Theme.DARK
-      ? 'rgb(255 255 255 / 13%) 0 0 0 1px inset'
-      : 'rgb(55 53 47 / 9%) 0 0 0 1px inset'
-  }
+  const primaryStyleColor = `rgb(15 15 15 / ${
+    theme.identifier === Theme.LIGHT ? 10 : 20
+  }%)`
+
+  const secondaryStyleColor =
+    theme.identifier === Theme.LIGHT
+      ? 'rgb(55 53 47 / 9%)'
+      : 'rgb(255 255 255 / 13%)'
+
+  return primary
+    ? `${primaryStyleColor} 0 0 0 1px, ${primaryStyleColor} 0 2px 4px`
+    : `${secondaryStyleColor} 0 0 0 1px inset`
 }
 
 export default galleryItemStylesHandler

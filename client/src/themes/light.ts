@@ -4,13 +4,12 @@ export const lightTheme: ITheme = {
   identifier: Theme.LIGHT,
   colors: {
     'text-option-primary': 'rgba(55, 53, 47, 0.65)',
-
     'text-statuses-modal-title': 'rgba(55, 53, 47, 0.65)',
     'text-primary': 'rgb(55, 53, 47)',
     'text-secondary': 'rgba(55, 53, 47, 0.5)',
     'text-placeholder-primary': 'rgb(230, 229, 229)',
     'text-cover-option': 'rgba(55, 53, 47, 0.65)',
-    'text-cover-titles': 'rgba(55, 53, 47, 0.65)', //! Можно объединить
+    'text-cover-titles': 'rgba(55, 53, 47, 0.65)', // ! Можно объединить
     'text-sb-page-item-selected': 'rgba(55, 53, 47, 0.65)',
     'text-sb-list-active-title': 'rgba(55, 53, 47, 0.8)',
     'text-sb-option-title': 'rgba(55, 53, 47, 0.65)',
@@ -18,6 +17,7 @@ export const lightTheme: ITheme = {
     'text-view-btn': 'rgba(55, 53, 47, 0.65)',
     'text-ttip-title': 'rgba(255, 255, 255, 0.9)',
     'text-ttip-desc': 'rgba(206, 205, 202, 0.6)',
+    'text-completed-todo': 'rgba(55, 53, 47, 0.25)',
     'bg-primary': 'white',
     'bg-el-hover-primary': 'rgba(53, 53, 47, 0.08)',
     'bg-el-active-primary': 'rgba(53, 53, 47, 0.16)',
@@ -56,9 +56,9 @@ export const lightTheme: ITheme = {
     'b-shadow-sb-new-page-panel': 'rgb(55 53 47 / 9%)',
     'b-shadow-views-panel': 'rgb(233 233 231)',
     'b-shadow-soon-title': 'rgb(55 53 47 / 9%)',
-    'scroll-thumb': 'rgb(211,209,203)',
-    'scroll-thumb-hover': 'rgb(183, 182, 181)',
-    'scroll-track': 'rgb(237,236,233)',
+    'scroll-thumb': '#D3D1CB',
+    'scroll-thumb-hover': '#AEACA6',
+    'scroll-track': '#EDECE9',
     'caret-primary': 'rgb(55, 53, 47)',
     'caret-secondary': '',
     'modal-inset': 'rgba(15, 15, 15, 0.365)',
@@ -82,5 +82,7 @@ export const lightTheme: ITheme = {
     'locked-filled': 'rgb(185, 184, 182)',
     'fav-star': 'rgb(246, 192, 80)',
     'settings-dots': 'rgba(55, 53, 47, 0.85)',
+    'toggle-list-triangle': 'rgb(55, 53, 47)',
+    'toggle-empty-list-triangle': 'rgb(155 ,154, 151)',
   },
 }

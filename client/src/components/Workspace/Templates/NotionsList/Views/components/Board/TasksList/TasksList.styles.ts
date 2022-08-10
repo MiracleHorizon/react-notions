@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { tablet } from 'styles/variables'
+import { tablet } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   min-width: 270px;

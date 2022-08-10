@@ -1,38 +1,35 @@
-import React, { useMemo, useRef, useState, Suspense, lazy } from 'react'
+import React, { useMemo, useState, Suspense, lazy } from 'react'
 
-import ModalWrapper from 'components/ui/modals/index'
-import CustomDecorLoader from 'components/ui/loaders/CustomDecorLoader'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
+import CustomDecorLoader from 'components/ui/loaders/CustomDecor'
 import DecorModalNavbar from '../Navbar'
 import EmojiLists from './Emoji'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import modalCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
+import useSetModalPosition from 'hooks/useSetModalPosition'
+import nodeRefHandler from 'utils/nodeRefHandler'
 import Container from './ChangeIconModal.styles'
 
 const CustomIconMenu = lazy(() => import('./Custom'))
 
-const ChangeIconModal = () => {
-  const { pageId, invokerRect } = useTypedSelector(state => state.modals.icon)
-  const [activeCategory, setActiveCategory] = useState<string>('Emoji')
-  const categories = useMemo(() => ['Emoji', 'Custom'], [])
-  const { closeChangeIconModal } = useActions()
+const categories = ['Emoji', 'Custom'] // В константы
 
-  const [ref, setRef] = useState<HTMLDivElement | null>(null)
-  const rect = useRef<DOMRect | null>(null)
-  const coords = useMemo(() => {
-    return modalCoordsHandler(rect.current, invokerRect).centerBottom
-  }, [rect.current, invokerRect])
+const ChangeIconModal = () => {
+  const [activeCategory, setActiveCategory] = useState<string>('Emoji')
+  const { pageId, invokerRect } = useTypedSelector(state => state.modals.icon)
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'centerBottom',
+    invokerRect,
+  }) // useMemo ?
+  const { closeChangeIconModal } = useActions()
 
   useOnCloseModal(ref, closeChangeIconModal)
 
   return (
     <ModalWrapper>
       <Container
-        ref={node => {
-          if (node !== null) rect.current = node.getBoundingClientRect()
-          setRef(node)
-        }}
+        ref={node => nodeRefHandler(node, rect, setRef)}
         activeCategory={activeCategory}
         coords={coords}
       >

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { mobile, tablet } from 'styles/variables'
+import { mobile, tablet } from 'styles/uiKit'
 import { PanelContainerProps } from './PageDecorPanel.types'
 
 export const Wrapper = styled.div`

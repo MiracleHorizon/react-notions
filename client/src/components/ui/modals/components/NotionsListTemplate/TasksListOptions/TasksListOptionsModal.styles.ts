@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, mobile } from 'styles/variables'
+import { dFlex, mobile } from 'styles/uiKit'
 import { ElementCoords } from 'types'
 import { Theme } from 'themes/theme.model'
 

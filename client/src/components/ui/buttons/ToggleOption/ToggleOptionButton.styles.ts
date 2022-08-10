@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/variables'
+import { dFlex } from 'styles/uiKit'
 
 export const Container = styled.div<{ isActive: boolean }>`
   ${dFlex.center};

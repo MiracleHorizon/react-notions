@@ -9,7 +9,7 @@ export const Wrapper = styled.header`
   z-index: 100;
   background: ${props => props.theme.colors['bg-primary']};
 
-  div[data-btn='lSbOpen'] {
+  div[data-btn='sbOpen'] {
     margin-right: 15px;
   }
 `

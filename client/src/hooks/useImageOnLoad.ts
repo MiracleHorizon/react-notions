@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo, useState } from 'react'
+import { CSSProperties, useState } from 'react'
 
 interface ImageStyle {
   loadOpacity: CSSProperties

@@ -77,6 +77,16 @@ const initialState: ModalsState = {
     isOpen: false,
     page: null,
   },
+  notionItemOptions: {
+    isOpen: false,
+    itemId: '',
+    invokerRect: '',
+  },
+  notionItemDecor: {
+    isOpen: false,
+    itemId: '',
+    invokerRect: '',
+  },
   dropdown: {
     theme: { isOpen: false },
     comments: { isOpen: false },
@@ -201,6 +211,22 @@ const modalsSlice = createSlice({
       state.changeStatus.task = action.payload.task
       state.changeStatus.coords = action.payload.coords
     },
+    openNotionContentItemOptionsModal(
+      state,
+      action: PayloadAction<{ itemId: string; invokerRect: string }>
+    ) {
+      state.notionItemOptions.isOpen = true
+      state.notionItemOptions.itemId = action.payload.itemId
+      state.notionItemOptions.invokerRect = action.payload.invokerRect
+    },
+    openNotionContentItemDecorModal(
+      state,
+      action: PayloadAction<{ itemId: string; invokerRect: string }>
+    ) {
+      state.notionItemDecor.isOpen = true
+      state.notionItemDecor.itemId = action.payload.itemId
+      state.notionItemDecor.invokerRect = action.payload.invokerRect
+    },
 
     closeRenamePageModal(state) {
       state.rename.isOpen = false
@@ -273,6 +299,17 @@ const modalsSlice = createSlice({
       state.notionTask.page = null
     },
 
+    closeNotionContentItemOptionsModal(state) {
+      state.notionItemOptions.isOpen = false
+      state.notionItemOptions.itemId = ''
+      state.notionItemOptions.invokerRect = ''
+    },
+    closeNotionContentItemDecorModal(state) {
+      state.notionItemDecor.isOpen = false
+      state.notionItemDecor.itemId = ''
+      state.notionItemDecor.invokerRect = ''
+    },
+
     toggleAppSettingsModal(state) {
       state.appSettings.isOpen = !state.appSettings.isOpen
     },
@@ -339,6 +376,8 @@ export const {
   openQuickSearchModal,
   openNotionTaskModal,
   openChangeStatusModal,
+  openNotionContentItemOptionsModal,
+  openNotionContentItemDecorModal,
   closeRenamePageModal,
   closeChangeCoverModal,
   closeChangeIconModal,
@@ -353,6 +392,8 @@ export const {
   closeQuickSearchModal,
   closeNotionTaskModal,
   closeChangeStatusModal,
+  closeNotionContentItemOptionsModal,
+  closeNotionContentItemDecorModal,
   setTasksListsOptionsModalColor,
   openDropdown,
   closeDropdown,

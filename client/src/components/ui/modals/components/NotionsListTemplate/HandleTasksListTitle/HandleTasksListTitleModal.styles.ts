@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
 import { Theme } from 'themes/theme.model'
-import { mobile } from 'styles/variables'
+import { mobile } from 'styles/uiKit'
 
 export const Container = styled.div<ElementCoords>`
   position: absolute;

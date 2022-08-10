@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/variables'
+import { bgTransitions, dFlex } from 'styles/uiKit'
 
 const Wrapper = styled.div`
   position: absolute;

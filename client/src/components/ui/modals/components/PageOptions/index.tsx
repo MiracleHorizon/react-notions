@@ -1,23 +1,24 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React from 'react'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import ChangesBar from 'components/ui/ChangesBar'
 import PageOptionsList from './OptionsList'
 import useActions from 'hooks/useActions'
-import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import modalCoordsByPointerHandler from 'utils/coordsHandlers/modalCoordsByPointerHandler'
+import useTypedSelector from 'hooks/useTypedSelector'
+import useSetModalPosition from 'hooks/useSetModalPosition'
 import * as Modal from './PageOptionsModal.styles'
 
 const PageOptionsModal = () => {
-  const { page, coords } = useTypedSelector(state => state.modals.pageOptions)
+  const { page, coords: pointerCoords } = useTypedSelector(
+    state => state.modals.pageOptions
+  )
   const { closePageOptionsModal } = useActions()
 
-  const [ref, setRef] = useState<HTMLDivElement | null>(null)
-  const rect = useRef<DOMRect | null>(null)
-  const handledCoords = useMemo(() => {
-    return modalCoordsByPointerHandler(coords, rect.current)
-  }, [rect.current])
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'pointer',
+    pointerCoords,
+  }) // useMemo ?
 
   useOnCloseModal(ref, closePageOptionsModal)
 
@@ -30,9 +31,9 @@ const PageOptionsModal = () => {
           setRef(node)
           if (node !== null) rect.current = node.getBoundingClientRect()
         }}
-        {...handledCoords}
+        {...coords}
       >
-        <PageOptionsList page={page} coords={coords} />
+        <PageOptionsList page={page} coords={pointerCoords} />
         <ChangesBar author={page.author} updatedAt={page.updatedAt} />
       </Modal.Container>
     </ModalWrapper>

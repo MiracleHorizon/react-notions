@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-
 import PropTypes from './FileUploader.types'
 import * as Uploader from './FileUploader.styles'
 

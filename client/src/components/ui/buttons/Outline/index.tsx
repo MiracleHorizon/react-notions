@@ -11,7 +11,7 @@ const OutlineButton: FC<PropTypes> = ({
   onClickAction,
   StartSvg,
   color,
-  disabled
+  disabled,
 }) => (
   <Button
     role='button'

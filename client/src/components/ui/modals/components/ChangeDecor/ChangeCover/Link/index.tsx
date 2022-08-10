@@ -13,9 +13,13 @@ const CoverLink: FC<{ _id: string }> = ({ _id }) => {
   const [updatePage] = useUpdatePageMutation()
 
   const handleSubmitLink = () => {
+    if (value === '') return
+
     updatePage({ _id, body: { coverUrl: value } })
     closeChangeCoverModal()
   }
+
+  // Добавить форму.
 
   return (
     <Link.Wrapper>

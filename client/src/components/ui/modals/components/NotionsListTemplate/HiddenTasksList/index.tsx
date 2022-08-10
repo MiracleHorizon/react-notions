@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import ModalWrapper from 'components/ui/modals/index'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import TasksListTopBar from 'components/Workspace/Templates/NotionsList/Views/components/Board/TasksList/TopBar'
 import BoardItem from 'components/Workspace/Templates/NotionsList/Views/components/Board/TasksList/Item'
 import OutlineInput from 'components/ui/inputs/Outline'
@@ -8,8 +8,9 @@ import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import modalCoordsHandler from 'utils/coordsHandlers/modalCoordsHandler'
+import useSetModalPosition from 'hooks/useSetModalPosition'
 import getFilteredPages from 'utils/helpers/getFilteredPages'
+import nodeRefHandler from 'utils/nodeRefHandler'
 import * as Modal from './HiddenTasksListModal.styles'
 
 import {
@@ -29,18 +30,14 @@ const HiddenTasksListModal = () => {
   const {
     deleteTasksList: { isOpen: isDeleteTasksListAlertOpen },
   } = useTypedSelector(state => state.alerts)
-
   const pages = useSelector(selectCommonPages) //! MOCK
   const [filteredPage, setFilteredPages] = useState<IPage[]>(pages)
-
   const { value, handleChangeValue, handleClearValue } = useInput('')
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'centerBottom',
+    invokerRect,
+  }) // useMemo ?
   const { closeHiddenTasksListModal } = useActions()
-
-  const [ref, setRef] = useState<HTMLDivElement | null>(null)
-  const rect = useRef<DOMRect | null>(null)
-  const coords = useMemo(() => {
-    return modalCoordsHandler(rect.current, invokerRect).centerBottom
-  }, [rect.current, invokerRect])
 
   useOnCloseModal(
     ref,
@@ -59,10 +56,7 @@ const HiddenTasksListModal = () => {
   return (
     <ModalWrapper>
       <Modal.Container
-        ref={node => {
-          setRef(node)
-          if (node !== null) rect.current = node.getBoundingClientRect()
-        }}
+        ref={node => nodeRefHandler(node, rect, setRef)}
         {...coords}
       >
         <Modal.TopBarContainer>

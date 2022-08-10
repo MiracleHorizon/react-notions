@@ -5,6 +5,7 @@ import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useDeleteTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
 
 const DeleteTasksListAlert = () => {
   const { listId } = useTypedSelector(state => state.alerts.deleteTasksList)
@@ -26,12 +27,12 @@ const DeleteTasksListAlert = () => {
     >
       <>
         <OutlineButton
-          color='red'
+          color={OutlineButtonColorsEnum.RED}
           title='Delete'
           onClickAction={handleSubmitDelete}
         />
         <OutlineButton
-          color='gray'
+          color={OutlineButtonColorsEnum.GRAY}
           title='Cancel'
           onClickAction={handleHideAlert}
         />

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { useDebounce } from 'usehooks-ts'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import MovePageItem from 'components/ui/modals/components/MovePage/Item'
 import OutlineInput from 'components/ui/inputs/Outline'
 import MoveToCommonPagesOption from 'components/ui/options/MovePage/MoveToCommonPages'
@@ -8,15 +9,17 @@ import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import modalCoordsByPointerHandler from 'utils/coordsHandlers/modalCoordsByPointerHandler'
+import useSetModalPosition from 'hooks/useSetModalPosition'
 import getFilteredPages from 'utils/helpers/getFilteredPages'
+import nodeRefHandler from 'utils/nodeRefHandler'
 import { selectMovablePages } from 'store/slices/pages/pages.selectors'
 import IPage from 'models/page/IPage'
 import * as Modal from './MovePageModal.styles'
-import { useDebounce } from 'usehooks-ts'
 
 const MovePageModal = () => {
-  const { pageId, coords } = useTypedSelector(state => state.modals.movePage)
+  const { pageId, coords: pointerCoords } = useTypedSelector(
+    state => state.modals.movePage
+  )
   // const pages = useTypedSelector(state => selectMovablePages(state, pageId))
   const { pages } = useTypedSelector(state => state.pages) //! MOCK
   const { closeMovePageModal } = useActions()
@@ -25,11 +28,10 @@ const MovePageModal = () => {
   const { value, handleChangeValue } = useInput('')
   const debouncedValue = useDebounce(value, 200)
 
-  const [ref, setRef] = useState<HTMLDivElement | null>(null)
-  const rect = useRef<DOMRect | null>(null)
-  const handledCoords = useMemo(() => {
-    return modalCoordsByPointerHandler(coords, rect.current)
-  }, [rect.current])
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'pointer',
+    pointerCoords,
+  }) // useMemo ?
 
   useOnCloseModal(ref, closeMovePageModal)
 
@@ -40,11 +42,8 @@ const MovePageModal = () => {
   return (
     <ModalWrapper>
       <Modal.Container
-        ref={node => {
-          setRef(node)
-          if (node !== null) rect.current = node.getBoundingClientRect()
-        }}
-        {...handledCoords}
+        ref={node => nodeRefHandler(node, rect, setRef)}
+        {...coords}
       >
         <Modal.Content>
           <Modal.InputContainer>

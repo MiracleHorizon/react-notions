@@ -4,7 +4,6 @@ export const darkTheme: ITheme = {
   identifier: Theme.DARK,
   colors: {
     'text-option-primary': 'rgb(155, 155, 155)',
-
     'text-statuses-modal-title': 'rgba(255, 255, 255, 0.443)',
     'text-primary': 'rgba(255, 255, 255, 0.81)',
     'text-secondary': 'rgba(255, 255, 255, 0.282)',
@@ -19,6 +18,7 @@ export const darkTheme: ITheme = {
     'text-view-btn': 'rgba(255, 255, 255, 0.443)',
     'text-ttip-title': 'rgb(211, 211, 211)',
     'text-ttip-desc': 'rgb(127, 127, 127)',
+    'text-completed-todo': 'rgba(255, 255, 255, 0.282)',
     'bg-primary': 'rgb(25, 25, 25)',
     'bg-el-hover-primary': 'rgba(255, 255, 255, 0.055)',
     'bg-el-active-primary': 'rgba(255, 255, 255, 0.03)',
@@ -59,8 +59,8 @@ export const darkTheme: ITheme = {
     'b-shadow-soon-title': 'rgb(255 255 255 / 10%)',
     'caret-primary': 'rgba(255, 255, 255, 0.81)',
     'caret-secondary': '',
-    'scroll-thumb': 'rgb(71, 76, 80)',
-    'scroll-thumb-hover': 'rgb(88, 92, 95)',
+    'scroll-thumb': '#474c50',
+    'scroll-thumb-hover': 'rgba(202, 204, 206, 0.3)',
     'scroll-track': 'rgba(202, 204, 206, 0.04)',
     'modal-inset': 'rgba(15, 15, 15, 0.8)',
     divider: 'rgb(255 255 255 / 9%)',
@@ -83,5 +83,7 @@ export const darkTheme: ITheme = {
     'locked-filled': 'rgb(89, 89, 89)',
     'fav-star': 'rgb(202, 152, 73)',
     'settings-dots': 'rgba(255, 255, 255, 0.81)',
+    'toggle-list-triangle': 'rgb(211, 211, 211)',
+    'toggle-empty-list-triangle': 'rgb(117, 117, 117)',
   },
 }

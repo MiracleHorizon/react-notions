@@ -1,13 +1,19 @@
-import React, { useRef } from 'react'
+import React, { useRef, lazy, Suspense, useMemo } from 'react'
 
-import ModalWrapper from 'components/ui/modals'
+import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import PageDecorPanel from 'components/DecorPanel'
+import NotionTaskContentLoader from 'components/ui/loaders/NotionTaskContent'
 import NotionTaskHeader from './Header'
 import TaskStatusPanel from './StatusPanel'
 import useActions from 'hooks/useActions'
-import useCloseModal from 'hooks/useCloseModal'
+import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import * as Task from './NotionTask.styles'
+import NotionContentItem from '../../Notion/Items'
+
+const EmptyPage = lazy(
+  () => import('components/Workspace/Templates/Notion/EmptyPage')
+)
 
 const NotionTask = () => {
   const {
@@ -22,8 +28,12 @@ const NotionTask = () => {
   const ref = useRef<HTMLDivElement>(null)
   const { closeNotionTaskModal } = useActions()
 
-  useCloseModal(
-    ref,
+  const sortedContent = useMemo(() => {
+    return page ? [...page.content].sort((a, b) => a.order - b.order) : []
+  }, [page?.content]) // Лишний рендер
+
+  useOnCloseModal(
+    ref.current,
     !isCoverModalOpen &&
       !isPageSettingsModalOpen &&
       !isIconModalOpen &&
@@ -43,6 +53,18 @@ const NotionTask = () => {
         <Task.Content fullWidth={page.fullWidth}>
           <PageDecorPanel {...page} />
           <TaskStatusPanel {...page} />
+          {!page.iconUrl && !page.coverUrl && page.content.length === 0 ? (
+            <Suspense fallback={<NotionTaskContentLoader />}>
+              <EmptyPage {...page} />
+            </Suspense>
+          ) : (
+            <>
+              {/*{sortedContent.map(item => (*/}
+              {/*  <NotionContentItem key={item._id} {...item} />*/}
+              {/*))}*/}
+              content
+            </>
+          )}
         </Task.Content>
       </Task.Container>
     </ModalWrapper>

@@ -1,20 +1,17 @@
 import { FC } from 'react'
+import {
+  IOutlineButtonColors,
+  OutlineButtonColorsEnum,
+} from 'models/decor/outlineButton/outlineButton.models'
 
 export default interface OutlineButtonProps {
   title: string
-  color: 'red' | 'gray'
+  color: OutlineButtonColorsEnum
   onClickAction: () => void
   StartSvg?: FC
   disabled?: boolean
 }
 
-export interface OutlineButtonPropsStyles {
-  color: string
-  borderColor: string
-  hoverColor: string
-  activeColor: string
-}
-
-export interface OutlineButtonContainerProps extends OutlineButtonPropsStyles {
+export interface OutlineButtonContainerProps extends IOutlineButtonColors {
   disabled?: boolean
 }

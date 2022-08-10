@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 
 import AuthLayout from 'layouts/Auth'
-import AuthFormLoader from 'components/ui/loaders/AuthFormLoader'
+import AuthFormLoader from 'components/ui/loaders/AuthForm'
 import { useLoginMutation } from 'store/slices/auth/auth.api'
 import { SubmitAuthParams } from './Form/AuthForm.types'
 

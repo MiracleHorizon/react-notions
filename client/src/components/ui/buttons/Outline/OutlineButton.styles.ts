@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { OutlineButtonContainerProps } from './OutlineButton.types'
-import { bgTransitions, dFlex, txtOflow } from 'styles/variables'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
 const Button = styled.div<OutlineButtonContainerProps>`
   cursor: pointer;
@@ -8,18 +8,18 @@ const Button = styled.div<OutlineButtonContainerProps>`
   width: 100%;
   height: 32px;
   margin-top: 8px;
-  border: 1px solid ${props => props.borderColor};
+  border: 1px solid ${props => props.brColor};
   border-radius: 4px;
   user-select: none;
-  ${bgTransitions.esIn20};
   ${props => props.disabled && 'pointer-events: none; opacity: 0.5'};
+  ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.hoverColor};
+    background: ${props => props.hover};
   }
 
   &:active {
-    background: ${props => props.activeColor};
+    background: ${props => props.active};
   }
 
   p {

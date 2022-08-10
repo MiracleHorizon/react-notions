@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
-import { bgTransitions, dFlex } from 'styles/variables'
+import { bgTransitions, dFlex } from 'styles/uiKit'
 
 const Container = styled.div<{ coords?: ElementCoords; absolute?: boolean }>`
   cursor: pointer;

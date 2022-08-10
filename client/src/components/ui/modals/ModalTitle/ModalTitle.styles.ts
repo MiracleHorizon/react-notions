@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { txtOflow } from 'styles/variables'
+import { txtOflow } from 'styles/uiKit'
 
-const Title = styled.span<{ upCase?: boolean }>`
+const Title = styled.h4<{ upCase?: boolean }>`
   align-self: flex-start;
   margin-left: 10px;
   margin-bottom: 5px;

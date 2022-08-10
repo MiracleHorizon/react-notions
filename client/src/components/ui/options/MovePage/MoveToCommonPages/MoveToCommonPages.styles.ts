@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions } from 'styles/variables'
+import { bgTransitions } from 'styles/uiKit'
 
 export const Container = styled.div`
   cursor: pointer;

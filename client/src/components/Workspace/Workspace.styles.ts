@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/variables'
+import { dFlex } from 'styles/uiKit'
 
 export const Container = styled.div`
   ${dFlex['center-start']};
@@ -7,8 +7,9 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   user-select: none;
-  
-  h1, p {
+
+  h1,
+  p {
     color: ${props => props.theme.colors['text-primary']};
   }
 `

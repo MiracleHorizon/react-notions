@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { TasksListTitleColor } from 'models/decor/colors'
 import { Theme } from 'themes/theme.model'
-import { dFlex, txtOflow } from 'styles/variables'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
+import { dFlex, txtOflow } from 'styles/uiKit'
 import ColorsHandler from 'utils/stylesHandlers/colors'
 
 export const Wrapper = styled.div`
@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
 `
 
 export const Container = styled.div<{
-  bgColor: TasksListTitleColor
+  bgColor: TasksListTitleColorsEnum
 }>`
   display: flex;
   align-items: center;

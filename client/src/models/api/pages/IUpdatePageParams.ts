@@ -1,6 +1,6 @@
-import { IUpdatePageBody } from './IUpdatePageBody'
+import IUpdatePageBody from './IUpdatePageBody'
 
-export interface IUpdatePageParams {
+export default interface IUpdatePageParams {
   _id: string
   body: IUpdatePageBody
 }

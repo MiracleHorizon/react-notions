@@ -7,6 +7,7 @@ const CheckSvg = () => {
 
   return (
     <svg
+      data-svg='check'
       viewBox='0 0 14 14'
       style={{
         width: '100%',

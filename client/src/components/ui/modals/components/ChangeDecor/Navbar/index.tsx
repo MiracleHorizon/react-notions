@@ -23,7 +23,7 @@ const DecorModalNavbar: FC<PropTypes> = ({
           action={handleSelectCategory}
         />
       ))}
-      <DecorModalActionsBar {...actionsProps} />
+      <DecorModalActionsBar {...actionsProps} activeCategory={activeCategory} />
     </Wrapper>
   )
 }

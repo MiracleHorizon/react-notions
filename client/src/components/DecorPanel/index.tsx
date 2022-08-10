@@ -3,9 +3,9 @@ import { useHover } from 'usehooks-ts'
 
 import PageTitle from './Title'
 import DecorOptions from './Options'
-import PageCoverLoader from 'components/ui/loaders/CoverLoader'
-import PageIconLoader from 'components/ui/loaders/IconLoader'
-import PageDescriptionLoader from 'components/ui/loaders/DescriptionLoader'
+import PageCoverLoader from 'components/ui/loaders/Cover'
+import PageIconLoader from 'components/ui/loaders/Icon'
+import PageDescriptionLoader from 'components/ui/loaders/Description'
 import IPage from 'models/page/IPage'
 import * as Panel from './PageDecorPanel.styles'
 
@@ -16,11 +16,11 @@ const PageDescription = lazy(() => import('./Description'))
 const PageDecorPanel: FC<IPage> = page => {
   const {
     _id,
-    coverUrl,
-    coverPosition,
-    iconUrl,
     template,
     fullWidth,
+    iconUrl,
+    coverUrl,
+    coverPosition,
     description,
     descriptionExpanded,
   } = page

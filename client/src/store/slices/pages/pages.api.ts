@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import IPage from 'models/page/IPage'
-import { IUpdatePageParams } from 'models/api/pages/IUpdatePageParams'
 import ICreatePageBody from 'models/api/pages/ICreatePageBody'
+import IUpdatePageParams from 'models/api/pages/IUpdatePageParams'
+import ICreatePageContentItemBody from 'models/api/pageContent/ICreatePageContentItemBody'
+import IUpdatePageContentItemParams from 'models/api/pageContent/IUpdatePageContentItemParams'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
 
 export const pagesApi = createApi({
   reducerPath: 'pages/api',
@@ -10,9 +13,10 @@ export const pagesApi = createApi({
     baseUrl: 'http://localhost:5000/workspace/pages',
   }),
 
-  tagTypes: ['Pages'],
+  tagTypes: ['Pages', 'Page'], //!
 
   endpoints: build => ({
+    // Page.
     createPage: build.mutation<IPage, ICreatePageBody>({
       query: body => ({
         url: '',
@@ -23,7 +27,7 @@ export const pagesApi = createApi({
     }),
 
     getAllPages: build.query<IPage[], string>({
-      query: (userId) => `/user/${userId}`,
+      query: userId => `/user/${userId}`,
       providesTags: result => ['Pages'],
     }),
 
@@ -34,7 +38,8 @@ export const pagesApi = createApi({
       providesTags: result => ['Pages'],
     }),
 
-    updatePage: build.mutation<any, IUpdatePageParams>({
+    //!
+    updatePage: build.mutation<string, IUpdatePageParams>({
       query: ({ _id, body }) => ({
         url: `/${_id}`,
         method: 'PATCH',
@@ -50,6 +55,34 @@ export const pagesApi = createApi({
       }),
       invalidatesTags: ['Pages'],
     }),
+
+    // Notion(page) content items.
+    createItem: build.mutation<INotionContentItem, ICreatePageContentItemBody>({
+      query: body => ({
+        url: `/content`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Pages'],
+    }),
+
+    //! any
+    updateItem: build.mutation<string, IUpdatePageContentItemParams>({
+      query: ({ _id, body }) => ({
+        url: `/content/${_id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Pages'],
+    }),
+
+    deleteItem: build.mutation<string, string>({
+      query: _id => ({
+        url: `content/${_id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Pages'],
+    }),
   }),
 })
 
@@ -59,4 +92,7 @@ export const {
   useGetOnePageQuery,
   useUpdatePageMutation,
   useDeletePageMutation,
+  useCreateItemMutation,
+  useUpdateItemMutation,
+  useDeleteItemMutation,
 } = pagesApi

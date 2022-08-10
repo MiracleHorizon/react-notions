@@ -14,5 +14,7 @@ export { default as CloseSidebarTooltip } from './Filled/components/CloseSidebar
 export { default as OpenSidebarTooltip } from './Filled/components/OpenSidebarTooltip'
 export { default as SwitchTaskTooltip } from './Filled/components/SwitchTaskTooltip'
 export { default as ClipboardCopyTooltip } from './Filled/components/ClipboardCopyTooltip'
+export { default as NotionContentItemOptionsTooltip } from './Filled/components/NotionContentItemOptionsTooltip'
+export { default as AddBlockBelowTooltip } from './Filled/components/AddBlockBelowTooltip'
 
 // Outgoing.

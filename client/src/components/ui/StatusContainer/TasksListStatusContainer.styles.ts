@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { TasksListTitleColor } from 'models/decor/colors'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import ColorsHandler from 'utils/stylesHandlers/colors'
-import { txtOflow } from 'styles/variables'
+import { txtOflow } from 'styles/uiKit'
 
 export const Container = styled.div<{
-  bgColor: TasksListTitleColor
+  bgColor: TasksListTitleColorsEnum
 }>`
   display: flex;
   align-items: center;

@@ -1,13 +1,19 @@
-const IMAGES_SUPER_FAMOUS_LINK = 'https://images.superfamous.com/36-Gradients'
-const NASA_ARCHIVE_LINK = 'https://www.flickr.com/photos/nasacommons/'
-const MET_MUSEUM_LINK = 'https://www.metmuseum.org/art/collection'
+import {
+  SUPER_FAMOUS_URL,
+  NASA_ARCHIVE_URL,
+  WEBB_TELESCOPE_URL,
+  MET_MUSEUM_URL,
+} from 'utils/constants/app'
 
 export default function coverLinkHandler(listTitle: string): string {
-  if (listTitle.startsWith('NASA')) {
-    return NASA_ARCHIVE_LINK
-  } else if (listTitle.startsWith('The Met Museum')) {
-    return MET_MUSEUM_LINK
-  } else {
-    return IMAGES_SUPER_FAMOUS_LINK
+  switch (listTitle) {
+    case 'Color & Gradient':
+      return SUPER_FAMOUS_URL
+    case 'NASA Archive':
+      return NASA_ARCHIVE_URL
+    case 'James Webb Telescope':
+      return WEBB_TELESCOPE_URL
+    default:
+      return MET_MUSEUM_URL
   }
 }

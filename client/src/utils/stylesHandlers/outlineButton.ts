@@ -1,52 +1,27 @@
-import { OutlineButtonPropsStyles } from 'components/ui/buttons/Outline/OutlineButton.types'
 import ITheme, { Theme } from 'themes/theme.model'
+import {
+  IOutlineButtonColors,
+  OutlineButtonColorsEnum,
+} from 'models/decor/outlineButton/outlineButton.models'
+import {
+  grayOutlineButtonStyles,
+  redOutlineButtonStyles,
+} from 'models/decor/outlineButton/outlineButton.colors'
 
-const grayColorStyles = {
-  light: {
-    color: '#000',
-    borderColor: 'rgba(55, 53, 47, 0.16)',
-    hoverColor: 'rgb(225, 225, 225)',
-    activeColor: 'rgba(55, 53, 47, 0.16)',
-  },
-  dark: {
-    color: 'rgba(255, 255, 255, 0.81)',
-    borderColor: 'rgba(255, 255, 255, 0.13)',
-    hoverColor: 'rgb(47, 47, 47)',
-    activeColor: 'rgba(255, 255, 255, 0.03)',
-  },
-}
-
-const redColorStyles = {
-  light: {
-    color: 'rgb(235, 87, 87)',
-    borderColor: 'rgba(235, 87, 87, 0.5)',
-    hoverColor: 'rgba(235, 87, 87, 0.1)',
-    activeColor: 'rgba(235, 87, 87, 0.2)',
-  },
-  dark: {
-    color: 'rgb(235, 87, 87)',
-    borderColor: 'rgb(110, 54, 48)',
-    hoverColor: 'rgba(235, 87, 87, 0.1)',
-    activeColor: 'rgba(235, 87, 87, 0.2)',
-  },
-}
-
-const outlineButtonStylesHandler = (
-  color: 'red' | 'gray',
+export default function outlineButtonStylesHandler(
+  color: OutlineButtonColorsEnum,
   theme: ITheme
-): OutlineButtonPropsStyles => {
+): IOutlineButtonColors {
   switch (color) {
-    case 'gray':
+    case OutlineButtonColorsEnum.GRAY:
       return theme.identifier === Theme.LIGHT
-        ? grayColorStyles.light
-        : grayColorStyles.dark
-    case 'red':
+        ? grayOutlineButtonStyles.light
+        : grayOutlineButtonStyles.dark
+    case OutlineButtonColorsEnum.RED:
       return theme.identifier === Theme.LIGHT
-        ? redColorStyles.light
-        : redColorStyles.dark
+        ? redOutlineButtonStyles.light
+        : redOutlineButtonStyles.dark
     default:
       throw new Error('Ошибка установки цвета.')
   }
 }
-
-export default outlineButtonStylesHandler

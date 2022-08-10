@@ -5,7 +5,7 @@ import PropTypes from './ToggleButton.types'
 import Container from './ToggleButton.styles'
 
 const ToggleButton: FC<PropTypes> = ({ expanded, handleToggleExpanded }) => (
-  <Container role='button' onClick={handleToggleExpanded}>
+  <Container role='button' data-btn='toggle' onClick={handleToggleExpanded}>
     <TriangleSvg isOpen={expanded} />
   </Container>
 )
