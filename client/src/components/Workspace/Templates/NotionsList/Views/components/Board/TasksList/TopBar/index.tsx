@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+
 import TasksListTitle from './Title'
 import TasksListActionButtons from './ActionButtons'
 import PropTypes from './TasksListTopBar.types'

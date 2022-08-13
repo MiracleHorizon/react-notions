@@ -20,13 +20,14 @@ const HiddenTasksLists = lazy(() => import('./Hidden'))
 const BoardView = () => {
   const [hoveredList, setHoveredList] = useState<string>('')
   const { page } = useTypedSelector(state => state.pages)
-  const hiddenTasksLists = useSelector(selectHiddenTasksLists)
-  const taskLists = useSelector(selectTasksLists)
-  const { isSuccess, data } = useGetTasksListsQuery(page?._id!)
+  const { data, isSuccess } = useGetTasksListsQuery(page?._id!)
   const { setTasksLists } = useActions()
 
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
+
+  const hiddenTasksLists = useSelector(selectHiddenTasksLists)
+  const taskLists = useSelector(selectTasksLists)
 
   const handleListHovering = (_id: string) => setHoveredList(_id)
 

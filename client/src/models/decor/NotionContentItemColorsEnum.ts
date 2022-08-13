@@ -1,4 +1,4 @@
-export enum NotionContentItemColorsEnum {
+enum NotionContentItemColorsEnum {
   DEFAULT = 'default',
   GRAY = 'gray',
   BROWN = 'brown',
@@ -10,3 +10,5 @@ export enum NotionContentItemColorsEnum {
   PINK = 'pink',
   RED = 'red',
 }
+
+export default NotionContentItemColorsEnum

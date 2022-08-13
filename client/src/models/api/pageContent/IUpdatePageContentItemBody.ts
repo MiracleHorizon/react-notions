@@ -1,8 +1,10 @@
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 
 export default interface IUpdatePageContentItemBody {
   parentPageId?: string
   parentItemId?: string | null
+  type?: NotionContentItemTypes
   content?: string
   order?: number
   color?: NotionContentItemColorsEnum
@@ -12,5 +14,3 @@ export default interface IUpdatePageContentItemBody {
   iconUrl?: string | null
   pageId?: string | null
 }
-
-// type?:

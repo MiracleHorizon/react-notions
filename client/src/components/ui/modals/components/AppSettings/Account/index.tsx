@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
 import useActions from 'hooks/useActions'
-import { AuthContext } from 'context/AuthContext'
+import { AuthContext } from 'context/Auth'
 
 const AccountSettings = () => {
   const authCtx = useContext(AuthContext)

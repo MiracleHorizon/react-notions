@@ -14,9 +14,12 @@ import AppSettingsModal from './components/AppSettings'
 import PagesTrashModal from './components/PagesTrash'
 import NotionTask from 'components/Workspace/Templates/NotionsList/NotionTask'
 import ChangeCoverModal from './components/ChangeDecor/ChangeCover'
-import ChangeStatusModal from './components/NotionsListTemplate/ChangeStatus'
+import ChangeStatusModal from './components/ChangeStatus'
 import NotionContentItemDecorModal from './components/NotionContentItemDecor'
 import NotionContentItemOptionsModal from './components/NotionContentItemOptions'
+import CreateNotionContentItemModal from './components/CreateNotionContentItem'
+import QuickSearchModal from './components/QuickSearch'
+import CreateWebBookmarkModal from './components/CreateWebBookmark'
 
 const ModalsOverlay = () => {
   const {
@@ -27,6 +30,8 @@ const ModalsOverlay = () => {
     movePage: { isOpen: isMovePageModalOpen },
     notionTask: { isOpen: isNotionTaskModalOpen },
     appSettings: { isOpen: isAppSettingsModalOpen },
+    quickSearch: { isOpen: isQuickSearchModalOpen },
+    webBookmark: { isOpen: isWebBookmarkModalOpen },
     pageOptions: { isOpen: isPageOptionsModalOpen },
     changeStatus: { isOpen: isChangeStatusModalOpen },
     pageSettings: { isOpen: isPageSettingsModalOpen },
@@ -35,6 +40,7 @@ const ModalsOverlay = () => {
     handleTasksList: { isOpen: isHandleTasksListTitleModalOpen },
     notionItemDecor: { isOpen: isNotionContentItemDecorModalOpen },
     notionItemOptions: { isOpen: isNotionContentItemOptionsModalOpen },
+    createNotionContentItem: { isOpen: isCreateNotionContentItemModalOpen },
   } = useTypedSelector(state => state.modals)
 
   // Suspense
@@ -48,6 +54,8 @@ const ModalsOverlay = () => {
       {isMovePageModalOpen && <MovePageModal />}
       {isPagesTrashModalOpen && <PagesTrashModal />}
       {isAppSettingsModalOpen && <AppSettingsModal />}
+      {isWebBookmarkModalOpen && <CreateWebBookmarkModal />}
+      {isQuickSearchModalOpen && <QuickSearchModal />}
       {isPageOptionsModalOpen && <PageOptionsModal />}
       {isPageSettingsModalOpen && <PageSettingsModal />}
       {isChangeStatusModalOpen && <ChangeStatusModal />}
@@ -56,6 +64,7 @@ const ModalsOverlay = () => {
       {isHandleTasksListTitleModalOpen && <HandleTasksListTitleModal />}
       {isNotionContentItemDecorModalOpen && <NotionContentItemDecorModal />}
       {isNotionContentItemOptionsModalOpen && <NotionContentItemOptionsModal />}
+      {isCreateNotionContentItemModalOpen && <CreateNotionContentItemModal />}
     </>
   )
 }

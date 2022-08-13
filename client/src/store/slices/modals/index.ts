@@ -2,10 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ElementCoords } from 'types'
 import ModalsState, {
   DecorModalPayload,
+  IUpdatePageSettingsModalState,
   PageModalPayload,
 } from './modals.types'
 import ITasksList from 'models/tasksList/ITasksList'
 import IPage from 'models/page/IPage'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 
 const initialState: ModalsState = {
   appSettings: {
@@ -51,7 +54,7 @@ const initialState: ModalsState = {
     isOpen: false,
     list: null,
     task: null,
-    coords: {},
+    invokerRect: '',
   },
   tasksListOptions: {
     isOpen: false,
@@ -79,7 +82,8 @@ const initialState: ModalsState = {
   },
   notionItemOptions: {
     isOpen: false,
-    itemId: '',
+    _id: '',
+    type: NotionContentItemTypes.TEXT,
     invokerRect: '',
   },
   notionItemDecor: {
@@ -87,9 +91,18 @@ const initialState: ModalsState = {
     itemId: '',
     invokerRect: '',
   },
+  createNotionContentItem: {
+    isOpen: true,
+    invokerRect: '',
+    item: null,
+  },
+  webBookmark: {
+    isOpen: false,
+    _id: '',
+    invokerRect: '',
+  },
   dropdown: {
     theme: { isOpen: false },
-    comments: { isOpen: false },
     startOpen: { isOpen: false },
   },
 }
@@ -100,6 +113,14 @@ const modalsSlice = createSlice({
   initialState,
 
   reducers: {
+    openCreateWebBookmarkModal(
+      state,
+      payload: PayloadAction<{ _id: string; invokerRect: string }>
+    ) {
+      state.webBookmark.isOpen = true
+      state.webBookmark._id = payload.payload._id
+      state.webBookmark.invokerRect = payload.payload.invokerRect
+    },
     openRenamePageModal(
       state,
       action: PayloadAction<{ page: IPage; invokerRect: string }>
@@ -201,22 +222,27 @@ const modalsSlice = createSlice({
     openChangeStatusModal(
       state,
       action: PayloadAction<{
-        list: ITasksList
+        list: ITasksList | null
         task: IPage
-        coords: ElementCoords
+        invokerRect: string
       }>
     ) {
       state.changeStatus.isOpen = true
       state.changeStatus.list = action.payload.list
       state.changeStatus.task = action.payload.task
-      state.changeStatus.coords = action.payload.coords
+      state.changeStatus.invokerRect = action.payload.invokerRect
     },
     openNotionContentItemOptionsModal(
       state,
-      action: PayloadAction<{ itemId: string; invokerRect: string }>
+      action: PayloadAction<{
+        _id: string
+        type: NotionContentItemTypes
+        invokerRect: string
+      }>
     ) {
       state.notionItemOptions.isOpen = true
-      state.notionItemOptions.itemId = action.payload.itemId
+      state.notionItemOptions._id = action.payload._id
+      state.notionItemOptions.type = action.payload.type
       state.notionItemOptions.invokerRect = action.payload.invokerRect
     },
     openNotionContentItemDecorModal(
@@ -227,7 +253,25 @@ const modalsSlice = createSlice({
       state.notionItemDecor.itemId = action.payload.itemId
       state.notionItemDecor.invokerRect = action.payload.invokerRect
     },
+    openCreateNotionContentItemModal(
+      state,
+      action: PayloadAction<{
+        invokerRect: string
+        item: INotionContentItem
+        parentItemId?: string
+      }>
+    ) {
+      state.createNotionContentItem.isOpen = true
+      state.createNotionContentItem.item = action.payload.item
+      state.createNotionContentItem.parentItemId = action.payload.parentItemId
+      state.createNotionContentItem.invokerRect = action.payload.invokerRect
+    },
 
+    closeCreateWebBookmarkModal(state) {
+      state.webBookmark.isOpen = false
+      state.webBookmark._id = ''
+      state.webBookmark.invokerRect = ''
+    },
     closeRenamePageModal(state) {
       state.rename.isOpen = false
       state.rename.page = null
@@ -285,14 +329,14 @@ const modalsSlice = createSlice({
       state.hiddenTasksList.invokerRect = ''
     },
     closeQuickSearchModal(state) {
-      state.quickSearch.isOpen = true
+      state.quickSearch.isOpen = false
     },
 
     closeChangeStatusModal(state) {
       state.changeStatus.isOpen = false
-      state.changeStatus.coords = {}
       state.changeStatus.list = null
       state.changeStatus.task = null
+      state.changeStatus.invokerRect = ''
     },
     closeNotionTaskModal(state) {
       state.notionTask.isOpen = false
@@ -301,13 +345,20 @@ const modalsSlice = createSlice({
 
     closeNotionContentItemOptionsModal(state) {
       state.notionItemOptions.isOpen = false
-      state.notionItemOptions.itemId = ''
+      state.notionItemOptions._id = ''
+      state.notionItemOptions.type = NotionContentItemTypes.TEXT
       state.notionItemOptions.invokerRect = ''
     },
     closeNotionContentItemDecorModal(state) {
       state.notionItemDecor.isOpen = false
       state.notionItemDecor.itemId = ''
       state.notionItemDecor.invokerRect = ''
+    },
+    closeCreateNotionContentItemModal(state) {
+      state.createNotionContentItem.item = null
+      state.createNotionContentItem.isOpen = false
+      state.createNotionContentItem.invokerRect = ''
+      state.createNotionContentItem.parentItemId = ''
     },
 
     toggleAppSettingsModal(state) {
@@ -322,8 +373,29 @@ const modalsSlice = createSlice({
     },
 
     updateNotionTaskModalState(state, action: PayloadAction<IPage>) {
-      state.notionTask.isOpen = true
       state.notionTask.page = action.payload
+    },
+    updatePageSettingsModalState(
+      state,
+      action: PayloadAction<IUpdatePageSettingsModalState>
+    ) {
+      if (!state.pageSettings.page) return
+
+      if (action.payload.font) {
+        state.pageSettings.page.font = action.payload.font
+      }
+
+      if (action.payload.smallText !== undefined) {
+        state.pageSettings.page.smallText = action.payload.smallText
+      }
+
+      if (action.payload.fullWidth !== undefined) {
+        state.pageSettings.page.fullWidth = action.payload.fullWidth
+      }
+
+      if (action.payload.locked !== undefined) {
+        state.pageSettings.page.locked = action.payload.locked
+      }
     },
 
     openDropdown(
@@ -333,9 +405,6 @@ const modalsSlice = createSlice({
       switch (action.payload) {
         case 'theme':
           state.dropdown.theme.isOpen = true
-          break
-        case 'comments':
-          state.dropdown.comments.isOpen = true
           break
         case 'startOpen':
           state.dropdown.startOpen.isOpen = true
@@ -349,9 +418,6 @@ const modalsSlice = createSlice({
       switch (action.payload) {
         case 'theme':
           state.dropdown.theme.isOpen = false
-          break
-        case 'comments':
-          state.dropdown.comments.isOpen = false
           break
         case 'startOpen':
           state.dropdown.startOpen.isOpen = false
@@ -378,6 +444,8 @@ export const {
   openChangeStatusModal,
   openNotionContentItemOptionsModal,
   openNotionContentItemDecorModal,
+  openCreateNotionContentItemModal,
+  openCreateWebBookmarkModal,
   closeRenamePageModal,
   closeChangeCoverModal,
   closeChangeIconModal,
@@ -394,12 +462,15 @@ export const {
   closeChangeStatusModal,
   closeNotionContentItemOptionsModal,
   closeNotionContentItemDecorModal,
+  closeCreateNotionContentItemModal,
+  closeCreateWebBookmarkModal,
   setTasksListsOptionsModalColor,
   openDropdown,
   closeDropdown,
   toggleAppSettingsModal,
   toggleQuickSearchModal,
   updateNotionTaskModalState,
+  updatePageSettingsModalState,
 } = modalsSlice.actions
 
 export default modalsSlice.reducer

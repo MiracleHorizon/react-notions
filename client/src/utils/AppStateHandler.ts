@@ -2,7 +2,7 @@ import { PagesListState, SidebarState } from 'store/slices/app/app.types'
 import { lightTheme } from 'themes/light'
 import ITheme from 'themes/theme.model'
 
-const defaultSidebarState = {
+const DEFAULT_SIDEBAR_STATUS = {
   isOpen: true,
   width: 300,
 }
@@ -14,8 +14,8 @@ export default class AppStateHandler {
   }
 
   static getSidebar(): SidebarState {
-    const sidebarJsonData = window.localStorage.getItem('sidebar')
-    return sidebarJsonData ? JSON.parse(sidebarJsonData) : defaultSidebarState
+    const sbJsonData = window.localStorage.getItem('sidebar')
+    return sbJsonData ? JSON.parse(sbJsonData) : DEFAULT_SIDEBAR_STATUS
   }
 
   static getFavoritePagesList(): PagesListState {

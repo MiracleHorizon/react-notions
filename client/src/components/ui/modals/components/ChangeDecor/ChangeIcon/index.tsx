@@ -8,7 +8,7 @@ import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import Container from './ChangeIconModal.styles'
 
 const CustomIconMenu = lazy(() => import('./Custom'))

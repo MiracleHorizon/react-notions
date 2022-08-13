@@ -4,6 +4,7 @@ import TasksListTopBar from './TopBar'
 import BoardCreateTaskBar from './Item/CreateTaskBar'
 import BoardItem from './Item'
 import useTypedSelector from 'hooks/useTypedSelector'
+import { selectListTasks } from 'store/slices/pages/pages.selectors'
 import PropTypes from './TasksList.types'
 import * as List from './TasksList.styles'
 
@@ -11,11 +12,9 @@ import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
 import { useUpdateTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
 
 const TasksList: FC<PropTypes> = ({ list, isHovering, handleListHovering }) => {
-  const tasks = useTypedSelector(state =>
-    state.pages.pages.filter(page => page.parentListId === list._id)
-  ).sort((a, b) => a?.taskOrder! - b?.taskOrder!)
-
+  const tasks = useTypedSelector(state => selectListTasks(state, list._id))
   const { startItem } = useTypedSelector(state => state.tasksLists)
+
   const [updateTasksList] = useUpdateTasksListMutation()
   const [updatePage] = useUpdatePageMutation()
 
@@ -31,10 +30,9 @@ const TasksList: FC<PropTypes> = ({ list, isHovering, handleListHovering }) => {
     if (!startItem || startItem.parentListId === list._id) return
 
     const dependencies = list.dependencies.filter(id => id !== startItem._id)
-    await updatePage({
-      _id: startItem._id,
-      body: { parentListId: list._id, taskOrder: list.dependencies.length },
-    })
+    const body = { parentListId: list._id, taskOrder: list.dependencies.length }
+
+    await updatePage({ _id: startItem._id, body })
     await updateTasksList({ _id: list._id, body: { dependencies } })
   }
 

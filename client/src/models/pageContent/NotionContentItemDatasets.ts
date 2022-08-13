@@ -1,4 +1,4 @@
-export enum NotionContentItemDatasets {
+enum NotionContentItemDatasets {
   TEXT = 'text-item',
   TODO = 'todo-item',
   H1 = 'h1-item',
@@ -17,3 +17,5 @@ export enum NotionContentItemDatasets {
   DIVIDER = 'divider-item',
   PAGE_URL = 'page-url-item',
 }
+
+export default NotionContentItemDatasets

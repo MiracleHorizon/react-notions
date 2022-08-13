@@ -1,21 +1,20 @@
-import React, { lazy, Suspense, useMemo } from 'react'
+import React, { useMemo, lazy, Suspense } from 'react'
 import { useNavigate } from 'react-router'
 
+import TaskStatusPanel from 'components/PagePanels/Status'
 import CreateNotionItemBar from './CreateItemBar'
 import NotionContentItem from './Items'
 import NotionPageLoader from 'components/ui/loaders/NotionPage'
 import useTypedSelector from 'hooks/useTypedSelector'
+import pageContentSorter from 'utils/helpers/pageContentSorter'
 import * as Template from './NotionTemplate.styles'
+import NotionContent from './Content'
 
 const EmptyPage = lazy(() => import('./EmptyPage'))
 
 const NotionTemplate = () => {
   const { page } = useTypedSelector(state => state.pages)
   const navigate = useNavigate()
-
-  const sortedContent = useMemo(() => {
-    return page ? [...page.content].sort((a, b) => a.order - b.order) : []
-  }, [page?.content]) // Лишний рендер
 
   if (!page) return null // TODO navigate('*')
 
@@ -28,11 +27,10 @@ const NotionTemplate = () => {
   }
 
   return (
-    <Template.Wrapper fullWidth={page.fullWidth}>
-      <Template.Container>
-        {sortedContent.map(item => (
-          <NotionContentItem key={item._id} {...item} />
-        ))}
+    <Template.Wrapper>
+      <Template.Container fullWidth={page.fullWidth}>
+        {page.status !== null && <TaskStatusPanel {...page} />}
+        <NotionContent {...page} />
         <CreateNotionItemBar {...page} />
       </Template.Container>
     </Template.Wrapper>

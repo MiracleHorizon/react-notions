@@ -1,10 +1,13 @@
 import styled from 'styled-components'
 import { dFlex } from 'styles/uiKit'
 
-const Wrapper = styled.div`
-  ${dFlex['center-start']};
-  width: 88%;
-  height: auto;
+export const Wrapper = styled.div`
+  width: 100%;
+  padding: 0 90px;
 `
 
-export default Wrapper
+export const Content = styled.div`
+  ${dFlex['center-start']};
+  width: 100%;
+  height: auto;
+`

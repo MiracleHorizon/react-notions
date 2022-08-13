@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex } from 'styles/uiKit'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
 
 const Container = styled.div<{

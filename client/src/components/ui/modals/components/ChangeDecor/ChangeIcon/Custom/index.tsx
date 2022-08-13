@@ -14,6 +14,7 @@ const CustomIcon: FC<{ _id: string }> = memo(({ _id }) => {
   const [updatePage] = useUpdatePageMutation()
 
   const handleSubmitLink = () => {
+    if (value === '') return
     updatePage({ _id, body: { iconUrl: value } })
     closeChangeIconModal()
   }

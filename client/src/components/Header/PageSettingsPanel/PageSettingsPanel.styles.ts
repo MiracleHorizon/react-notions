@@ -1,12 +1,11 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 const Container = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  ${dFlex['center-s-around']};
   width: max-content;
   height: 45px;
   padding: 0 5px;

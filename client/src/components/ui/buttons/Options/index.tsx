@@ -4,10 +4,11 @@ import { DotsSvg } from 'components/ui/svg'
 import PropTypes from './OptionsButton.types'
 import Container from './OptionsButton.styles'
 
-const OptionsButton: FC<PropTypes> = ({ onClickAction, ...styles }) => (
+const OptionsButton: FC<PropTypes> = ({ onClickAction, reference, ...styles }) => (
   <Container
     {...styles}
     data-btn='options'
+    ref={reference}
     onClick={onClickAction}
     onContextMenu={onClickAction}
   >

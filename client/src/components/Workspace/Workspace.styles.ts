@@ -2,15 +2,14 @@ import styled from 'styled-components'
 import { dFlex } from 'styles/uiKit'
 
 export const Container = styled.div`
-  ${dFlex['center-start']};
-  flex-direction: column;
+  ${dFlex['center-start-col']};
   width: 100%;
   height: 100%;
   user-select: none;
 
   h1,
   p {
-    color: ${props => props.theme.colors['text-primary']};
+    color: ${p => p.theme.colors['text-primary']};
   }
 `
 
@@ -25,6 +24,6 @@ export const Description = styled.p`
 
 export const List = styled.ul`
   span {
-    color: ${props => props.theme.colors['text-primary']};
+    color: ${p => p.theme.colors['text-primary']};
   }
 `

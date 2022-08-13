@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { ElementCoords } from 'types'
-import ModalCoordsHandler from 'utils/coordsHandlers/ModalCoordsHandler'
+import ModalCoordsHandler from 'utils/ModalCoordsHandler'
 
 type TPos =
   | 'centerBottom'
@@ -9,6 +9,8 @@ type TPos =
   | 'rightCenter'
   | 'pointer'
   | 'rename'
+  | 'createNotionItem'
+  | 'changeStatus'
 
 interface Params {
   pos: TPos
@@ -44,6 +46,8 @@ export default function useSetModalPosition({
         return modalCoords.pointer
       case 'rename':
         return modalCoords.rename
+      case 'changeStatus':
+        return modalCoords.changeStatus
       default:
         throw new Error()
     }

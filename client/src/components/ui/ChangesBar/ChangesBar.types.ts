@@ -1,4 +1,4 @@
 export default interface ChangesBarProps {
-  author: string
+  createdAt: string
   updatedAt: string
 }

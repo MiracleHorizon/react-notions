@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app'
 import OutlineButton from 'components/ui/buttons/Outline'
 import AppTitle from 'components/Auth/AppTitle'
 import { AppleLogoSvg, GoogleLogoSvg } from 'components/ui/svg'
-import { AuthContext } from 'context/AuthContext'
+import { AuthContext } from 'context/Auth'
 import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
 import * as Auth from './FirebaseAuth.styles'
 

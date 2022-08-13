@@ -5,12 +5,13 @@ import MovePageOption from 'components/ui/options/MovePage'
 import ChangesBar from 'components/ui/ChangesBar'
 import Divider from 'components/ui/Divider'
 import {
+  ChevronDownSvg,
   ColorOptionSvg,
   DeleteTrashSvg,
   DuplicateSvg,
-  ChevronDownSvg,
 } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import {
   useCreateItemMutation,
   useDeleteItemMutation,
@@ -18,9 +19,10 @@ import {
 } from 'store/slices/pages/pages.api'
 
 const NotionContentItemOptionsList: FC<{
-  itemId: string
+  _id: string
+  type: NotionContentItemTypes
   rect: MutableRefObject<DOMRect | null>
-}> = ({ itemId, rect }) => {
+}> = ({ _id, type, rect }) => {
   const {
     openNotionContentItemDecorModal,
     closeNotionContentItemOptionsModal,
@@ -31,7 +33,7 @@ const NotionContentItemOptionsList: FC<{
   const [deleteContentItem] = useDeleteItemMutation()
 
   const handleDeleteItem = async () => {
-    await deleteContentItem(itemId)
+    await deleteContentItem(_id)
     closeNotionContentItemOptionsModal()
   }
 
@@ -47,11 +49,9 @@ const NotionContentItemOptionsList: FC<{
 
   const handleOpenContentItemDecorModal = useCallback(() => {
     // closeNotionContentItemOptionsModal()
-    openNotionContentItemDecorModal({
-      invokerRect: rect.current?.toJSON(),
-      itemId,
-    })
-  }, [rect, itemId])
+    const invokerRect = rect.current?.toJSON()
+    openNotionContentItemDecorModal({ invokerRect, itemId: _id })
+  }, [rect, _id])
 
   return (
     <>
@@ -68,15 +68,19 @@ const NotionContentItemOptionsList: FC<{
       <MovePageOption
         onClickAction={() => closeNotionContentItemOptionsModal()}
       />
-      <Divider />
-      <OptionItem
-        title='Color'
-        StartSvg={ColorOptionSvg}
-        EndSvg={ChevronDownSvg}
-        onClickAction={handleOpenContentItemDecorModal}
-        // onMouseOverAction={handleOpenContentItemDecorModal}
-      />
-      <ChangesBar author='' updatedAt='HZ Kogda' />
+      {type !== NotionContentItemTypes.DIVIDER && (
+        <>
+          <Divider />
+          <OptionItem
+            title='Color'
+            StartSvg={ColorOptionSvg}
+            EndSvg={ChevronDownSvg}
+            onClickAction={handleOpenContentItemDecorModal}
+            // onMouseOverAction={handleOpenContentItemDecorModal}
+          />
+        </>
+      )}
+      <ChangesBar createdAt='Hz kogda' updatedAt='Tozhe hz' />
     </>
   )
 }

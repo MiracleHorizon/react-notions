@@ -1,4 +1,4 @@
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 
 export default interface ToggleTodoButtonProps {
   isActive: boolean

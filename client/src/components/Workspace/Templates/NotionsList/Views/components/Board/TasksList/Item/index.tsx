@@ -10,11 +10,12 @@ import * as Item from './BoardItem.styles'
 
 const BoardItem: FC<IPage> = memo(page => {
   const { title, iconUrl } = page
+  const href = useHref('')
   const { openPageOptionsModal, openNotionTaskModal, setStartItem } =
     useActions()
+
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
-  const href = useHref('')
 
   const handleDragStart = () => {
     // setStartList(parentList)

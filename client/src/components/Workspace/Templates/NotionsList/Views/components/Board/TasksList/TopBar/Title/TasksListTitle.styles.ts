@@ -17,22 +17,21 @@ export const Container = styled.div`
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
 export const Content = styled.div<{ color: TasksListTitleColorsEnum }>`
   ${dFlex.center};
-  width: 100%;
   min-height: 20px;
+  width: 100%;
   padding: 1px 4px;
   border-radius: 3px;
-  background: ${props =>
-    colorsHandler.tasksListTitle(props.color, props.theme)};
+  background: ${p => colorsHandler.tasksListTitle(p.color, p.theme)};
 `
 
 export const Text = styled.p`
@@ -40,5 +39,5 @@ export const Text = styled.p`
   font-weight: 500;
   line-height: 18px;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `

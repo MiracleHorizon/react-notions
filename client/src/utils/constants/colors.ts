@@ -1,5 +1,5 @@
 import INotionContentItemColors from 'models/decor/INotionContentItemColors'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 
 export const TASKS_LIST_TITLE_COLORS = {
   lightGray: {

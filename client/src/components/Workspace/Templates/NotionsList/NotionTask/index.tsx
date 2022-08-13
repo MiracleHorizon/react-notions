@@ -1,15 +1,18 @@
-import React, { useRef, lazy, Suspense, useMemo } from 'react'
+import React, { useRef, useMemo, lazy, Suspense } from 'react'
+import { useNavigate } from 'react-router'
+import { useEventListener } from 'usehooks-ts'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import PageDecorPanel from 'components/DecorPanel'
+import PageDecorPanel from 'components/PagePanels/Decor'
 import NotionTaskContentLoader from 'components/ui/loaders/NotionTaskContent'
+import NotionContent from 'components/Workspace/Templates/Notion/Content'
 import NotionTaskHeader from './Header'
-import TaskStatusPanel from './StatusPanel'
+import TaskStatusPanel from 'components/PagePanels/Status'
 import useActions from 'hooks/useActions'
-import useOnCloseModal from 'hooks/useOnCloseModal'
+import useCloseModal from 'hooks/useCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
+import pageContentSorter from 'utils/helpers/pageContentSorter'
 import * as Task from './NotionTask.styles'
-import NotionContentItem from '../../Notion/Items'
 
 const EmptyPage = lazy(
   () => import('components/Workspace/Templates/Notion/EmptyPage')
@@ -26,14 +29,22 @@ const NotionTask = () => {
     tasksListOptions: { isOpen: isTasksListNotionsModalOpen },
   } = useTypedSelector(state => state.modals)
   const ref = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
   const { closeNotionTaskModal } = useActions()
 
-  const sortedContent = useMemo(() => {
-    return page ? [...page.content].sort((a, b) => a.order - b.order) : []
-  }, [page?.content]) // Лишний рендер
+  const sortedContent = useMemo(() => pageContentSorter(page), [page?.content]) // Лишний рендер
 
-  useOnCloseModal(
-    ref.current,
+  const handleOpenFullWidth = (e: KeyboardEvent) => {
+    if (!page) return
+
+    if (e.code === 'Enter' && e.ctrlKey) {
+      navigate(`/workspace/${page._id}`)
+      closeNotionTaskModal()
+    }
+  }
+
+  useCloseModal(
+    ref,
     !isCoverModalOpen &&
       !isPageSettingsModalOpen &&
       !isIconModalOpen &&
@@ -44,29 +55,30 @@ const NotionTask = () => {
       : null
   )
 
+  useEventListener('keydown', handleOpenFullWidth)
+
   if (!page) return null
 
   return (
     <ModalWrapper inset>
-      <Task.Container ref={ref}>
+      <Task.Wrapper ref={ref}>
         <NotionTaskHeader {...page} />
-        <Task.Content fullWidth={page.fullWidth}>
+        <Task.Container fullWidth={page.fullWidth}>
           <PageDecorPanel {...page} />
-          <TaskStatusPanel {...page} />
-          {!page.iconUrl && !page.coverUrl && page.content.length === 0 ? (
-            <Suspense fallback={<NotionTaskContentLoader />}>
-              <EmptyPage {...page} />
-            </Suspense>
-          ) : (
-            <>
-              {/*{sortedContent.map(item => (*/}
-              {/*  <NotionContentItem key={item._id} {...item} />*/}
-              {/*))}*/}
-              content
-            </>
-          )}
-        </Task.Content>
-      </Task.Container>
+          <Task.Content>
+            {!page.iconUrl && !page.coverUrl && page.content.length === 0 ? (
+              <Suspense fallback={<NotionTaskContentLoader />}>
+                <EmptyPage {...page} />
+              </Suspense>
+            ) : (
+              <>
+                <TaskStatusPanel {...page} />
+                <NotionContent {...page} />
+              </>
+            )}
+          </Task.Content>
+        </Task.Container>
+      </Task.Wrapper>
     </ModalWrapper>
   )
 }

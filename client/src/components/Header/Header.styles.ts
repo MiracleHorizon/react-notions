@@ -1,13 +1,14 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 export const Wrapper = styled.header`
   display: flex;
   justify-content: flex-start;
   max-width: 100vw;
   width: 100%;
+  background: ${p => p.theme.colors['bg-primary']};
   user-select: none;
   z-index: 100;
-  background: ${props => props.theme.colors['bg-primary']};
 
   div[data-btn='sbOpen'] {
     margin-right: 15px;
@@ -21,8 +22,6 @@ export const Container = styled.div`
 `
 
 export const Panel = styled.div<{ isOpen: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${dFlex['center-s-between']}
   padding-left: 10px;
 `

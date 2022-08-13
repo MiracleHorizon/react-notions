@@ -11,19 +11,33 @@ export const Wrapper = styled.div`
 `
 
 export const Container = styled.div<{ fullWidth: boolean; isTask: boolean }>`
-  ${p =>
-    p.isTask
-      ? `
-  width: 74%;
-  `
-      :`
-  width: ${p.fullWidth ? 90 : 47}%;
-
-  @media (max-width: ${tablet}) {
-    width: ${p.fullWidth ? 95 : 70}%;
-  }
-
-  @media (max-width: ${mobile}) {
-    width: 95%;
-  }`}
+  width: ${p => (p.fullWidth ? '100%' : '900px')};
+  padding: 0 90px;
+  transition: width ease-in-out 0.25s;
+  
+  // @media (max-width: 1200px) {
+  //   width: ${p => (p.fullWidth ? '100%' : '800px')};
+  //   padding: 0 70px;
+  // }
+  //
+  // @media (max-width: ${tablet}) {
+  //   width: ${p => (p.fullWidth ? '100%' : '800px')};
+  //   padding: 0 70px;
+  // }
 `
+
+// ${p =>
+//   p.isTask
+//     ? `
+// width: 74%;
+// `
+//     :`
+// width: ${p.fullWidth ? 90 : 47}%;
+//
+// @media (max-width: ${tablet}) {
+//   width: ${p.fullWidth ? 95 : 70}%;
+// }
+//
+// @media (max-width: ${mobile}) {
+//   width: 95%;
+// }`}

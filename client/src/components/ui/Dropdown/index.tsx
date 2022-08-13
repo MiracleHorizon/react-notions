@@ -5,7 +5,6 @@ import { ChevronDownSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import PropTypes from './Dropdown.types'
-import { dropdownCoordsHandler } from 'utils/coordsHandlers/dropdown'
 import * as Bar from './Dropdown.styles'
 
 // Проверить необходимость мемоизации
@@ -26,11 +25,11 @@ const Dropdown: FC<PropTypes> = memo(
         </Bar.Container>
         {isOpen && (
           <DropdownPopup
+            invokerRef={ref}
             options={options}
             activeOption={activeOption}
             setOption={setOption}
             type={type}
-            coords={dropdownCoordsHandler(ref, pos)}
           />
         )}
       </Bar.Wrapper>

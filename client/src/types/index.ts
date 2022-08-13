@@ -21,3 +21,8 @@ export interface ElementCoords {
 export interface IVoidClick {
   onClickAction: () => void
 }
+
+export interface ISelectItemParams<T> {
+  isSelected: boolean
+  handleSelectItem: (item: T) => void
+}

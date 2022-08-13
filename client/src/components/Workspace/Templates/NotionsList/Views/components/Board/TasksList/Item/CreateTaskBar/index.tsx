@@ -8,13 +8,12 @@ import Page from 'models/page/Page'
 import Container from './BoardCreateTaskBar.styles'
 
 const BoardCreateTaskBar: FC<{ listId: string }> = ({ listId }) => {
+  const { user } = useAuth()
   const { page } = useTypedSelector(state => state.pages)
   const [createPage] = useCreatePageMutation()
-  const { user } = useAuth()
 
   const handleCreatePage = () => {
     if (!page || !user) return
-
     createPage({ ...Page.createTask(page._id, listId), author: user.uid })
   }
 

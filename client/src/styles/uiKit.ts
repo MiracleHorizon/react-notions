@@ -33,14 +33,24 @@ export const dFlex = {
   `,
 
   'center-s-between': `
-    display: flex,
+    display: flex;
     align-items: center;
     justify-content: space-between;
+  `,
+  'center-s-around': `
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   `,
   'start-s-between': `
     display: flex,
     align-items: flex-start;
     justify-content: space-between;
+  `,
+  'start-s-around': `
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
   `,
 
   // With flex-direction = column.
@@ -66,6 +76,12 @@ export const dFlex = {
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    flex-direction: column;
+  `,
+  'center-s-between-col': `
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-direction: column;
   `,
 }

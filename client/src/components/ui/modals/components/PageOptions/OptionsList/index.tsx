@@ -19,10 +19,10 @@ import PropTypes from './PageOptionsList.types'
 
 const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
   const { _id, favorite } = page
-  const renameOptionRef = useRef<HTMLDivElement>(null)
+  const renameRef = useRef<HTMLDivElement>(null)
+  const [, handleCopy] = useCopyToClipboard()
   const { closePageOptionsModal, openRenamePageModal, openMovePageModal } =
     useActions()
-  const [, handleCopy] = useCopyToClipboard()
 
   const [deletePage] = useDeletePageMutation()
   const [updatePage] = useUpdatePageMutation()
@@ -33,10 +33,8 @@ const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
   }
 
   const handleOpenRenameModal = () => {
-    openRenamePageModal({
-      invokerRect: renameOptionRef.current?.getBoundingClientRect().toJSON(),
-      page,
-    })
+    const invokerRect = renameRef.current?.getBoundingClientRect().toJSON()
+    openRenamePageModal({ invokerRect, page })
     closePageOptionsModal()
   }
 
@@ -77,7 +75,7 @@ const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
         title='Rename'
         StartSvg={RenameSvg}
         onClickAction={handleOpenRenameModal}
-        reference={renameOptionRef}
+        reference={renameRef}
       />
       <MovePageOption onClickAction={handleOpenMovePageModal} />
     </>

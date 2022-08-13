@@ -103,7 +103,7 @@ export class PageService {
     )
 
     await this.tasksListModel.deleteMany({ parentPageId: id })
-    await this.pageModel.find({ sbOrder: null }).deleteMany()
+    await this.pageModel.deleteMany({ parentPageId: id })
 
     return this.pageModel.findByIdAndDelete(id)
   }
@@ -122,7 +122,7 @@ export class PageService {
       // const oldParent = await this.pageModel.findById(page.parentPageId)
     }
 
-    if ('parentListId' in updateData) {
+    if ('parentListId' in updateData && updateData.parentListId) {
       const list = await this.tasksListModel.findById(updateData.parentListId)
       list.dependencies.push(page._id)
     }

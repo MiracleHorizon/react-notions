@@ -7,6 +7,7 @@ import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './PageOptionsModal.styles'
 
 const PageOptionsModal = () => {
@@ -27,24 +28,14 @@ const PageOptionsModal = () => {
   return (
     <ModalWrapper>
       <Modal.Container
-        ref={node => {
-          setRef(node)
-          if (node !== null) rect.current = node.getBoundingClientRect()
-        }}
+        ref={node => nodeRefHandler(node, rect, setRef)}
         {...coords}
       >
         <PageOptionsList page={page} coords={pointerCoords} />
-        <ChangesBar author={page.author} updatedAt={page.updatedAt} />
+        <ChangesBar createdAt={page.createdAt} updatedAt={page.updatedAt} />
       </Modal.Container>
     </ModalWrapper>
   )
 }
 
 export default PageOptionsModal
-
-// useEffect(() => {
-//   setLocked(true)
-//   const [locked, setLocked] = useLockedBody()
-//
-//   return setLocked(false)
-// }, [setLocked])

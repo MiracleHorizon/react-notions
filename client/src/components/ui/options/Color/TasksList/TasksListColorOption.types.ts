@@ -1,7 +1,10 @@
-export default interface TasksListColorOptionProps {
+import { ISelectItemParams } from 'types'
+
+export default interface TasksListColorOptionProps
+  extends ISelectItemParams<string> {
   _id: string
   color: string
   reqColor: string
   title: string
-  isSelected: boolean
+  isActive: boolean
 }

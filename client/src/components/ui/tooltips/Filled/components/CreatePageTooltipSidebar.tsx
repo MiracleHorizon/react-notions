@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
-
 import FilledTooltip from 'components/ui/tooltips/Filled'
-import tooltipsCoordsHandler from 'utils/coordsHandlers/tooltips'
 import { TDivRef } from 'types'
 
 const CreatePageTooltipSidebar: FC<{ reference: TDivRef }> = ({
@@ -10,8 +8,8 @@ const CreatePageTooltipSidebar: FC<{ reference: TDivRef }> = ({
   <FilledTooltip
     title='Add a page'
     desc='Here your regular pages.'
-    coords={tooltipsCoordsHandler.createPageSb(reference)}
-    transX
+    pos='centerBottom'
+    invokerRef={reference}
   />
 )
 

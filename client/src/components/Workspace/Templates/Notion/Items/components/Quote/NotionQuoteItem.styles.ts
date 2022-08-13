@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 import { dFlex } from 'styles/uiKit'
 
 export const Wrapper = styled.div<{ bgColor: NotionContentItemColorsEnum }>`

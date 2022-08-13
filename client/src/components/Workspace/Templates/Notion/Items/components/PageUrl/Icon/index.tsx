@@ -12,12 +12,14 @@ const NotionPageUrlItemIcon: FC<PropTypes> = ({ _id, iconUrl }) => {
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
+  // updateContentItem({ _id, body: { content: value } })
+
   const handleOpenChangeIconModal = (e: MouseEvent) => {
-    e.preventDefault()
     e.stopPropagation()
 
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
     openChangeIconModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
+      invokerRect,
       pageId: _id,
     })
   }

@@ -8,4 +8,5 @@ export default interface OptionItemProps extends IVoidClick {
   reference?: TDivRef
   margY?: boolean
   onMouseOverAction?: () => void
+  isSelected?: boolean
 }

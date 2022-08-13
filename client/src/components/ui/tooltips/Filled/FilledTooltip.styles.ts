@@ -1,23 +1,22 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 import { FilledTooltipContainerProps } from './FilledTooltip.types'
 
 export const Container = styled.div<FilledTooltipContainerProps>`
   position: absolute;
-  top: ${props => props.coords?.top}px;
-  left: ${props => props.coords?.left}px;
+  top: ${p => p.coords?.top}px;
+  left: ${p => p.coords?.left}px;
   display: flex;
   align-items: ${p => (p.itemsCenter ? 'center' : 'flex-start')};
   flex-direction: column;
-  max-width: 200px;
-  width: max-content;
+  max-width: 250px;
   min-width: 0;
+  width: max-content;
   padding: 3px 6px;
   border-radius: 3px;
   box-shadow: rgb(0 0 0 / 30%) 0 1px 4px;
-  background: ${props => props.theme.colors['bg-filled-ttip']};
-  ${props => props.transX && 'transform: translateX(-50%)'};
-  ${props => props.transY && 'transform: translateY(50%)'};
-  z-index: 2000 !important;
+  background: ${p => p.theme.colors['bg-filled-ttip']};
+  z-index: 2000;
 
   span,
   p {
@@ -28,21 +27,19 @@ export const Container = styled.div<FilledTooltipContainerProps>`
 `
 
 export const TextContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  white-space: nowrap;
-  overflow: hidden;
+  ${dFlex['center-s-between']};
 
   span {
+    white-space: nowrap;
+    overflow: hidden;
     margin-right: 4px;
   }
 `
 
 export const Title = styled.span`
-  color: ${props => props.theme.colors['text-ttip-title']};
+  color: ${p => p.theme.colors['text-ttip-title']};
 `
 
 export const Description = styled.p`
-  color: ${props => props.theme.colors['text-ttip-desc']};
+  color: ${p => p.theme.colors['text-ttip-desc']};
 `

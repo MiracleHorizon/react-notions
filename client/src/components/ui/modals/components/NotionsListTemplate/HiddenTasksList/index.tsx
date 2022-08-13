@@ -10,7 +10,7 @@ import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
 import getFilteredPages from 'utils/helpers/getFilteredPages'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './HiddenTasksListModal.styles'
 
 import {

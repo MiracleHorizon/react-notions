@@ -66,14 +66,17 @@ export default class NotionContentItemService {
     id: ObjectId,
     updateData: UpdateNotionContentItemDto
   ): Promise<NotionContentItem> {
-    const item = await this.notionContentItem.findOneAndUpdate(updateData)
+    const item = await this.notionContentItem.findOneAndUpdate(
+      { _id: id },
+      updateData
+    )
 
-    if (updateData.order) {
-      const parentPage = await this.pageModel.findById(item.parentPageId)
-      const contentItems = await this.notionContentItem.find({
-        parentPageId: item.parentPageId,
-      })
-    }
+    // if (updateData.order) {
+    //   const parentPage = await this.pageModel.findById(item.parentPageId)
+    //   const contentItems = await this.notionContentItem.find({
+    //     parentPageId: item.parentPageId,
+    //   })
+    // }
 
     if (!item) throw new NotFoundException()
 

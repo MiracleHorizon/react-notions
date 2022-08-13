@@ -26,6 +26,7 @@ export const Container = styled.div<{ isEmpty: boolean }>`
       }
       `};
   width: 100%;
+  margin: 0 1px;
   border-radius: 3px;
   user-select: none;
   ${bgTransitions.esIn20};

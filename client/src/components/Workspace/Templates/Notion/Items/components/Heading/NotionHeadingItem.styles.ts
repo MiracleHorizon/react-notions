@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { dFlex } from 'styles/uiKit'
-import { NotionContentItemTypes } from 'models/pageContent/NotionContentItemTypes'
-import { INotionContentItemStyles } from '../../NotionContentItem.types'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import NotionHeadingItemStylesHandler from 'utils/stylesHandlers/NotionHeadingItemStylesHandler'
 import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
+import INotionContentItemStyles from '../../NotionContentItem.types'
 
 const Container = styled.div<
   INotionContentItemStyles & {
@@ -14,13 +14,12 @@ const Container = styled.div<
   min-height: ${p =>
     NotionHeadingItemStylesHandler.getContainerStyles(p.type).containerHeight};
   width: 100%;
-  margin-bottom: ${p => NotionHeadingItemStylesHandler.getContainerStyles(p.type).marginBottom};
+  margin-bottom: ${p =>
+    NotionHeadingItemStylesHandler.getContainerStyles(p.type).marginBottom};
   padding: 3px 2px;
   background: ${p => ContentItemColorsHandler.setBgColor(p.bgColor, p.theme)};
 
   div[contenteditable] {
-    min-height: ${p =>
-      NotionHeadingItemStylesHandler.getContentStyles(p.type).height};
     width: 100%;
     font-size: ${p =>
       NotionHeadingItemStylesHandler.getContentStyles(p.type).fontSize};
@@ -39,3 +38,5 @@ const Container = styled.div<
 `
 
 export default Container
+// min-height: ${p =>
+//   NotionHeadingItemStylesHandler.getContentStyles(p.type).height};

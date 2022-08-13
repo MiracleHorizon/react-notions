@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
-
 import FilledTooltip from 'components/ui/tooltips/Filled'
-import { TooltipsCoordsHandler } from 'utils/coordsHandlers/tooltips'
 import { TDivRef } from 'types'
 
 const SwitchTaskTooltip: FC<{
@@ -11,8 +9,8 @@ const SwitchTaskTooltip: FC<{
   <FilledTooltip
     title={`${dest === 'prev' ? 'Previous' : 'Next'} page`}
     desc={`Alt+${dest === 'prev' ? 'K' : 'J'}`}
-    coords={TooltipsCoordsHandler.switchTask(reference)}
-    transX
+    invokerRef={reference}
+    pos='centerTop'
   />
 )
 

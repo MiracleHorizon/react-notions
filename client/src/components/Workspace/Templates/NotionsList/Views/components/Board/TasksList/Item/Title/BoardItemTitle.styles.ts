@@ -7,12 +7,11 @@ const Container = styled.div`
     white-space: pre-wrap;
     word-break: break-word;
     line-height: 1.5;
-    color: ${props => props.theme.colors['text-primary']};
+    color: ${p => p.theme.colors['text-primary']};
 
     &:empty:after {
       content: attr(placeholder);
-      -webkit-text-fill-color: ${props =>
-        props.theme.colors['text-secondary']};
+      -webkit-text-fill-color: ${p => p.theme.colors['text-secondary']};
     }
   }
 `

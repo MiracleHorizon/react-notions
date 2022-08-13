@@ -3,7 +3,7 @@ import SidebarStylesHandler from 'utils/stylesHandlers/sidebar'
 import { ButtonContainerProps } from './ToggleSidebarButton.types'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 
-const Container = styled.div<ButtonContainerProps>`
+export const Wrapper = styled.div<ButtonContainerProps>`
   cursor: pointer;
   ${props => SidebarStylesHandler.setToggleButtonParams(props.dest)};
   ${dFlex.center};
@@ -22,4 +22,4 @@ const Container = styled.div<ButtonContainerProps>`
   }
 `
 
-export default Container
+export const Container = styled.div``

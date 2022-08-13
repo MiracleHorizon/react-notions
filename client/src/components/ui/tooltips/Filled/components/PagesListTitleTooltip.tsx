@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
-
 import FilledTooltip from 'components/ui/tooltips/Filled'
-import tooltipsCoordsHandler from 'utils/coordsHandlers/tooltips'
 import { TDivRef } from 'types'
 
 const PagesListTitleTooltip: FC<{
@@ -16,7 +14,8 @@ const PagesListTitleTooltip: FC<{
         ? 'Here your regular pages.'
         : 'Pages you have favorite.'
     }
-    coords={tooltipsCoordsHandler.pagesListTitle(reference)}
+    pos='centerBottom'
+    invokerRef={reference}
   />
 )
 

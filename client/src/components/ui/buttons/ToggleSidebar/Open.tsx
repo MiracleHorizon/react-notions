@@ -1,10 +1,11 @@
 import React, { FC, memo, useRef } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import { useHover } from 'usehooks-ts'
 
 import { DoubleChevronSvg, HamburgerMenuSvg } from 'components/ui/svg'
 import { OpenSidebarTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
-import Container from './ToggleSidebarButton.styles'
+import * as Button from './ToggleSidebarButton.styles'
 
 const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = memo(
   ({ isHeaderHovering }) => {
@@ -15,7 +16,7 @@ const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = memo(
     const handleOpenSidebar = () => openSidebar()
 
     return (
-      <Container
+      <Button.Wrapper
         ref={ref}
         role='button'
         dest='open'
@@ -23,9 +24,13 @@ const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = memo(
         isHovering={true}
         onClick={handleOpenSidebar}
       >
-        {isHeaderHovering ? <DoubleChevronSvg /> : <HamburgerMenuSvg />}
+        <CSSTransition in={true} unmountOnExit timeout={300}>
+          <Button.Container>
+            {isHeaderHovering ? <DoubleChevronSvg /> : <HamburgerMenuSvg />}
+          </Button.Container>
+        </CSSTransition>
         {/*{isHovering && <OpenSidebarTooltip reference={ref} />}*/}
-      </Container>
+      </Button.Wrapper>
     )
   }
 )

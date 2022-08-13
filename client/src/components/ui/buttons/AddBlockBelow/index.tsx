@@ -21,8 +21,7 @@ const AddBlockBelowButton: FC<{ order: number; parentItemId?: string }> = ({
   const handleCreateItem = () => {
     if (!page) return
 
-    const body = { parentPageId: page._id, parentItemId, order }
-    const item = NotionContentItem.createText(body)
+    const item = NotionContentItem.createText(page._id, parentItemId, order)
     createContentItem(item)
   }
 

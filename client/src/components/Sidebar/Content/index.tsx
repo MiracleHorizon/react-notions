@@ -2,7 +2,7 @@ import React, { FC, memo, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { ClipLoader } from 'react-spinners'
 
-import FavoritePagesList from './PagesList/components/Favorite'
+import FavoritesPagesList from './PagesList/components/Favorites'
 import CommonPagesList from './PagesList/components/Common'
 import useAuth from 'hooks/useAuth'
 import useActions from 'hooks/useActions'
@@ -36,7 +36,7 @@ const SidebarContent: FC<{ isHovering: boolean }> = memo(({ isHovering }) => {
       {isSuccess && (
         <>
           {favoritePages.length > 0 && (
-            <FavoritePagesList pages={favoritePages} />
+            <FavoritesPagesList pages={favoritePages} />
           )}
           <CommonPagesList pages={commonPages} isHovering={isHovering} />
         </>

@@ -1,4 +1,4 @@
-import { IGalleryList } from 'store/slices/decor'
+import { IGalleryList } from 'utils/constants/decor'
 
 export default interface GalleryListProps {
   _id: string

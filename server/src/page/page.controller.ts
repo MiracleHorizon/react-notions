@@ -44,6 +44,7 @@ export class PageController {
   @Delete(':id')
   delete(@Param('id') id: ObjectId) {
     // При удалении страницы, удалять все страницы - таски.
+    // И notion content итемы.
     return this.pageService.delete(id).then(() => id)
   }
 

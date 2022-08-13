@@ -9,6 +9,8 @@ import { useCreatePageMutation } from 'store/slices/pages/pages.api'
 import Page from 'models/page/Page'
 import PropTypes from './TasksListActionButtons.types'
 import * as Bar from './TasksListActionButtons.styles'
+import { useHover } from 'usehooks-ts'
+import { CreatePageTooltipBoard } from '../../../../../../../../../ui/tooltips'
 
 const TasksListActionButtons: FC<PropTypes> = ({
   _id,
@@ -16,15 +18,19 @@ const TasksListActionButtons: FC<PropTypes> = ({
   hidden,
   isHovering,
 }) => {
+  const { user } = useAuth()
   const { page } = useTypedSelector(state => state.pages)
-  const { openTasksListsOptionsModal } = useActions()
   const [createPage] = useCreatePageMutation()
   const optionsBtnRef = useRef<HTMLDivElement>(null)
-  const { user } = useAuth()
+  const { openTasksListsOptionsModal } = useActions()
+
+  const newPageBtnRef = useRef<HTMLDivElement>(null)
+  const isNewPageButtonHovering = useHover(newPageBtnRef)
 
   const handleOpenListOptionModal = () => {
+    const invokerRect = optionsBtnRef.current?.getBoundingClientRect().toJSON()
     openTasksListsOptionsModal({
-      invokerRect: optionsBtnRef.current?.getBoundingClientRect().toJSON(),
+      invokerRect,
       template: 'default',
       listId: _id,
       hidden,
@@ -34,7 +40,6 @@ const TasksListActionButtons: FC<PropTypes> = ({
 
   const handleCreateNewTask = () => {
     if (!page || !user) return
-
     createPage({ ...Page.createTask(page._id, _id), author: user.uid })
   }
 
@@ -47,11 +52,11 @@ const TasksListActionButtons: FC<PropTypes> = ({
           onClickAction={handleOpenListOptionModal}
         />
       </Bar.ButtonContainer>
-      <Bar.ButtonContainer>
+      <Bar.ButtonContainer ref={newPageBtnRef}>
         <PlusButton onClickAction={handleCreateNewTask} />
-        {/*{isNewPageButtonHovering && (*/}
-        {/*  <CreatePageTooltipBoard reference={newPageBtnRef} />*/}
-        {/*)}*/}
+        {isNewPageButtonHovering && (
+          <CreatePageTooltipBoard reference={newPageBtnRef} />
+        )}
       </Bar.ButtonContainer>
     </Bar.Wrapper>
   )

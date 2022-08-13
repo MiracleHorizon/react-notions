@@ -11,8 +11,9 @@ const TasksListTitle: FC<PropTypes> = ({ _id, title, color, totalTasks }) => {
   const { openHandleTasksListTitleModal } = useActions()
 
   const handleOpenHandleListTitleModal = () => {
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
     openHandleTasksListTitleModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
+      invokerRect,
       listId: _id,
       dest: 'edit',
       title,

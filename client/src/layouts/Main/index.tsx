@@ -3,25 +3,22 @@ import React, { FC } from 'react'
 import AppHotkeysWrapper from 'components/AppHotkeysWrapper'
 import LayoutHeader from 'components/Header'
 import Sidebar from 'components/Sidebar'
-import ModalsOverlay from 'components/ui/modals/ModalsOverlay'
-import AlertsOverlay from 'components/ui/alerts/AlertsOverlay'
+import WorkspaceScrollContext, { defaultValue } from 'context/WorkspaceScroll'
 import * as Layout from './MainLayout.styles'
 
 const MainLayout: FC<{ children: JSX.Element }> = ({ children }) => (
   <AppHotkeysWrapper>
-    <>
-      <Layout.Wrapper>
-        <Layout.Container>
-          <Sidebar />
-          <Layout.Main>
+    <Layout.Wrapper>
+      <Layout.Container>
+        <Sidebar />
+        <Layout.Main>
+          <WorkspaceScrollContext.Provider value={defaultValue}>
             <LayoutHeader />
-            <Layout.Content>{children}</Layout.Content>
-          </Layout.Main>
-        </Layout.Container>
-      </Layout.Wrapper>
-      <ModalsOverlay />
-      <AlertsOverlay />
-    </>
+            {children}
+          </WorkspaceScrollContext.Provider>
+        </Layout.Main>
+      </Layout.Container>
+    </Layout.Wrapper>
   </AppHotkeysWrapper>
 )
 

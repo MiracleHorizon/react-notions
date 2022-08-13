@@ -1,10 +1,9 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 const Container = styled.div`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${dFlex['center-s-between']};
   width: 100%;
   height: 30px;
   margin-bottom: 2px;

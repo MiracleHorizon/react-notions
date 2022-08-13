@@ -25,7 +25,11 @@ const PageSettingsOptionsList: FC<PropTypes> = ({
   locked,
   coords,
 }) => {
-  const { closePageSettingsModal, openMovePageModal } = useActions()
+  const {
+    closePageSettingsModal,
+    openMovePageModal,
+    updatePageSettingsModalState,
+  } = useActions()
   const [, handleCopy] = useCopyToClipboard()
   const [deletePage] = useDeletePageMutation()
   const [updatePage] = useUpdatePageMutation()
@@ -40,8 +44,10 @@ const PageSettingsOptionsList: FC<PropTypes> = ({
     closePageSettingsModal()
   }
 
-  const handleToggleLocked = () => {
-    updatePage({ _id, body: { locked: !locked } })
+  const handleToggleLocked = async () => {
+    const body = { locked: !locked }
+    await updatePage({ _id, body })
+    updatePageSettingsModalState(body)
   }
 
   const handleCopyLink = () => {

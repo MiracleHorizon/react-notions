@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
 
 export const Container = styled.div`

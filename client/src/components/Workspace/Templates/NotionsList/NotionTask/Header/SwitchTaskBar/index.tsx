@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import { useNavigate } from 'react-router'
 
+import OpenFullPageButton from 'components/ui/buttons/OpenFullPage'
 import SwitchTaskButton from 'components/ui/buttons/SwitchTask'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { selectFilteredTasks } from 'store/slices/tasksLists/tasksLists.selectors'
@@ -10,14 +11,11 @@ import Container from './SwitchTaskBar.styles'
 // Лишние перерисовки.
 
 const SwitchTaskBar: FC<PropTypes> = ({ _id, parentPageId, parentListId }) => {
+  const navigate = useNavigate()
   const tasks = useTypedSelector(state =>
     selectFilteredTasks(state, parentListId)
   )
-  const taskIndex = useMemo(
-    () => tasks.indexOf(tasks.find(page => page._id === _id)!),
-    [tasks, _id]
-  )
-  const navigate = useNavigate()
+  const taskIndex = tasks.indexOf(tasks.find(page => page._id === _id)!)
 
   const handleNextPage = useCallback(() => {
     console.log(`workspace/${parentPageId}/task/${tasks[taskIndex + 1]._id}`)
@@ -29,6 +27,7 @@ const SwitchTaskBar: FC<PropTypes> = ({ _id, parentPageId, parentListId }) => {
 
   return (
     <Container>
+      <OpenFullPageButton _id={_id} />
       <SwitchTaskButton
         dest='prev'
         isActive={taskIndex > 0}

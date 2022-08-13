@@ -1,21 +1,20 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
 
   svg {
     width: 16px !important;
     height: 16px !important;
     margin-right: 5px;
-    fill: ${props => props.theme.colors['text-secondary']} !important;
+    fill: ${p => p.theme.colors['text-secondary']} !important;
   }
 
   span {
     font-size: 14px;
     font-weight: 400;
-    color: ${props => props.theme.colors['text-secondary']};
+    color: ${p => p.theme.colors['text-secondary']};
   }
 `
 

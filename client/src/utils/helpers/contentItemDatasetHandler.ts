@@ -1,5 +1,5 @@
-import { NotionContentItemTypes } from 'models/pageContent/NotionContentItemTypes'
-import { NotionContentItemDatasets } from 'models/pageContent/NotionContentItemDatasets'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItemDatasets from 'models/pageContent/NotionContentItemDatasets'
 
 export default function contentItemDatasetHandler(
   type: NotionContentItemTypes

@@ -22,10 +22,3 @@ export const Main = styled.div`
   height: 100%;
   //transition: width 0.25s;
 `
-
-export const Content = styled.div`
-  ${dFlex['center-start']};
-  height: calc(100% - 45px);
-  flex-direction: column;
-  overflow: auto;
-`

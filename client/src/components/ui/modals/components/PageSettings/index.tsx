@@ -9,19 +9,17 @@ import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './PageSettingsModal.styles'
 
 const PageSettingsModal = () => {
   const { page, invokerRect } = useTypedSelector(
     state => state.modals.pageSettings
   )
-  const { ref, setRef, rect, coords } = useSetModalPosition(
-    {
-      pos: 'centerBottom',
-      invokerRect,
-    }
-  ) // useMemo ?
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'centerBottom',
+    invokerRect,
+  }) // useMemo ?
   const { closePageSettingsModal } = useActions()
 
   useOnCloseModal(ref, closePageSettingsModal)
@@ -41,7 +39,7 @@ const PageSettingsModal = () => {
           </>
         )}
         <PageSettingsOptionsList {...page} coords={coords} />
-        <ChangesBar author='Удали меня' updatedAt={page.updatedAt} />
+        <ChangesBar createdAt={page.createdAt} updatedAt={page.updatedAt} />
       </Modal.Container>
     </ModalWrapper>
   )

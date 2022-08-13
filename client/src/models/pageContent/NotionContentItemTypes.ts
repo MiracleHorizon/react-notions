@@ -1,4 +1,4 @@
-export enum NotionContentItemTypes {
+enum NotionContentItemTypes {
   TEXT = 'text',
   TODO = 'todo',
   H1 = 'h1',
@@ -17,3 +17,5 @@ export enum NotionContentItemTypes {
   DIVIDER = 'divider',
   PAGE_URL = 'pageUrl',
 }
+
+export default NotionContentItemTypes

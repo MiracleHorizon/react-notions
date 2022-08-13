@@ -12,9 +12,9 @@ import {
   useCreateTasksListMutation,
   useUpdateTasksListMutation,
 } from 'store/slices/tasksLists/tasksLists.api'
-import AlreadyExistHandler from 'utils/helpers/handleAlreadyExist'
-import getRandomListColor from 'utils/helpers/getRandomListColor'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import AlreadyExistHandler from 'utils/AlreadyExistHandler'
+import GetRandom from 'utils/GetRandom'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import { TasksList } from 'models/tasksList/TasksList'
 import * as Modal from './HandleTasksListTitleModal.styles'
 
@@ -40,7 +40,7 @@ const HandleTasksListTitleModal = () => {
   const handleTasksListTitle = () => {
     if (dest === 'create' && page && value !== title) {
       if (!AlreadyExistHandler.handleCreate(value, lists)) {
-        const color = getRandomListColor()!
+        const color = GetRandom.listColor()!
         createTasksList({ ...TasksList.create(page._id, value, color) })
         closeHandleTasksListTitleModal()
       } else {

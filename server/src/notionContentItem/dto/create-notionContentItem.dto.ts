@@ -9,6 +9,6 @@ export default class CreateNotionContentItemDto {
   readonly completed: boolean | null
   readonly iconUrl: string | null
   readonly pageId: string | null
-  readonly author: string
+  readonly author: string // ! Убрать.
   readonly order?: number
 }

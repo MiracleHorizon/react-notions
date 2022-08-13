@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { InputEvent } from 'types'
 
 export default function useInput(initialValue: string) {
   const [value, setValue] = useState<string>(initialValue)
 
-  const handleChangeValue = (e: InputEvent) => setValue(e.target.value)
+  const handleChangeValue = useCallback(
+    (e: InputEvent) => setValue(e.target.value),
+    []
+  )
 
-  const handleClearValue = () => setValue('')
+  const handleClearValue = useCallback(() => setValue(''), [])
 
   return {
     value,

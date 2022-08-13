@@ -7,7 +7,7 @@ import CoversGallery from './Gallery'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import useSetModalPosition from 'hooks/useSetModalPosition'
 import * as Modal from './ChangeCoverModal.styles'
 

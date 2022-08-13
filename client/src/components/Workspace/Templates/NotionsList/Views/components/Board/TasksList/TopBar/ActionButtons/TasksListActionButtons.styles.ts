@@ -7,7 +7,7 @@ export const Wrapper = styled.div<{ isHovering: boolean }>`
   align-items: center;
   padding-left: 1px;
   height: 100%;
-  opacity: ${props => (props.isHovering ? 1 : 0)};
+  opacity: ${p => (p.isHovering ? 1 : 0)};
   transition: opacity 0.2s ease-in-out;
 
   div {
@@ -26,8 +26,7 @@ export const ButtonContainer = styled.div`
     border-radius: 3px;
 
     svg {
-      fill: ${props =>
-        props.theme.svgFills['plus-tasks-list-new-item']} !important;
+      fill: ${p => p.theme.svgFills['plus-tasks-list-new-item']} !important;
     }
   }
 
@@ -36,11 +35,11 @@ export const ButtonContainer = styled.div`
     ${bgTransitions.esIn20};
 
     &:hover {
-      background: ${props => props.theme.colors['bg-el-hover-primary']};
+      background: ${p => p.theme.colors['bg-el-hover-primary']};
     }
 
     &:active {
-      background: ${props => props.theme.colors['bg-el-active-primary']};
+      background: ${p => p.theme.colors['bg-el-active-primary']};
     }
   }
 `

@@ -3,7 +3,7 @@ import Favicon from 'react-favicon'
 import DocumentTitle from 'react-document-title'
 
 import NotionLoader from 'components/ui/loaders/Notion'
-import PageDecorPanel from 'components/DecorPanel'
+import PageDecorPanel from 'components/PagePanels/Decor'
 import IPage from 'models/page/IPage'
 import { NOTION_LOGO_URL } from 'utils/constants/app'
 

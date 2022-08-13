@@ -1,6 +1,9 @@
 import { ElementCoords } from 'types'
 import IPage from 'models/page/IPage'
 import ITasksList from 'models/tasksList/ITasksList'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import { TPageFont } from 'models/decor/fonts'
 
 export default interface ModalsState {
   rename: RenamePageModalState
@@ -21,7 +24,8 @@ export default interface ModalsState {
   }
   notionItemOptions: {
     isOpen: boolean
-    itemId: string
+    _id: string
+    type: NotionContentItemTypes
     invokerRect: string
   }
   notionItemDecor: {
@@ -33,7 +37,18 @@ export default interface ModalsState {
     isOpen: boolean
     list: ITasksList | null // Дополнить все подобные поля * ... | null *.
     task: IPage | null
-    coords: ElementCoords
+    invokerRect: string
+  }
+  createNotionContentItem: {
+    isOpen: boolean
+    invokerRect: string
+    item: INotionContentItem | null
+    parentItemId?: string
+  }
+  webBookmark: {
+    isOpen: boolean
+    _id: string
+    invokerRect: string
   }
   dropdown: DropdownPopupState
 }
@@ -91,7 +106,6 @@ export interface TasksListOptionsModalState
 
 export interface DropdownPopupState {
   theme: { isOpen: boolean }
-  comments: { isOpen: boolean }
   startOpen: { isOpen: boolean }
 }
 
@@ -116,4 +130,11 @@ export interface DecorModalPayload extends IInvokerRect {
 
 export interface PageModalPayload extends IInvokerRect {
   page: IPage
+}
+
+export interface IUpdatePageSettingsModalState {
+  font?: TPageFont
+  smallText?: boolean
+  fullWidth?: boolean
+  locked?: boolean
 }

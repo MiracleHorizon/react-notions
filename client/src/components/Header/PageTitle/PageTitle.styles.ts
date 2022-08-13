@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
 export const Container = styled.div`
   cursor: pointer;
@@ -9,18 +9,18 @@ export const Container = styled.div`
   margin-left: 3px;
   padding: 2px 6px;
   border-radius: 3px;
-  transition: background 50ms ease-in;
+  ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   svg {
-    fill: ${props => props.theme.svgFills['locked-filled']} !important;
+    fill: ${p => p.theme.svgFills['locked-filled']} !important;
   }
 `
 
@@ -46,5 +46,13 @@ export const Locked = styled.span`
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
+`
+
+export const TitlesDivider = styled.div`
+  ${dFlex.center};
+  height: 45px;
+  width: 10px;
+  margin-left: 3px;
+  color: ${p => p.theme.colors['text-secondary']};
 `

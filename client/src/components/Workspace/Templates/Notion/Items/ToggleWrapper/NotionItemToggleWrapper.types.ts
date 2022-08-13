@@ -1,5 +1,5 @@
-import { NotionContentItemTypes } from 'models/pageContent/NotionContentItemTypes'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 
 export default interface NotionItemToggleWrapperProps {
   _id: string

@@ -8,6 +8,7 @@ const UnfavoriteStarSvg = () => {
   return (
     <svg
       viewBox='0 0 20 20'
+      data-svg='unfav-star'
       style={{
         width: 20,
         height: 20,

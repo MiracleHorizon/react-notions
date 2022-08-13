@@ -15,11 +15,11 @@ export const Container = styled.div`
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   div[data-btn='count'] {
@@ -40,13 +40,12 @@ export const TitleContainer = styled.div<{ color: TasksListTitleColorsEnum }>`
   margin-right: 3px;
   padding: 0 4px;
   border-radius: 3px;
-  background: ${props =>
-    ColorsHandler.tasksListTitle(props.color, props.theme)};
+  background: ${p => ColorsHandler.tasksListTitle(p.color, p.theme)};
 `
 
 export const Title = styled.p`
   font-size: 14px;
   font-weight: 500;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `

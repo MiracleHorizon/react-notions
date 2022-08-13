@@ -1,19 +1,19 @@
-interface Sizes {
+interface ISidebarSizes {
   maxWidth: number
   minWidth: number
 }
 
-export const desktopSizes: Sizes = {
+export const SIDEBAR_DESKTOP_SIZER: ISidebarSizes = {
   maxWidth: 480,
   minWidth: 180,
 }
 
-export const tabletSizes: Sizes = {
+export const SIDEBAR_TABLET_SIZER: ISidebarSizes = {
   maxWidth: 400,
   minWidth: 140,
 }
 
-export const mobileSizes: Sizes = {
+export const SIDEBAR_MOBILE_SIZER: ISidebarSizes = {
   maxWidth: 200,
   minWidth: 120,
 }
@@ -22,11 +22,11 @@ export default class SidebarStylesHandler {
   static setMaxWidth(deviceType: string): number {
     switch (deviceType) {
       case 'tablet':
-        return tabletSizes.maxWidth
+        return SIDEBAR_TABLET_SIZER.maxWidth
       case 'mobile':
-        return mobileSizes.maxWidth
+        return SIDEBAR_MOBILE_SIZER.maxWidth
       default:
-        return desktopSizes.maxWidth
+        return SIDEBAR_DESKTOP_SIZER.maxWidth
     }
   }
 

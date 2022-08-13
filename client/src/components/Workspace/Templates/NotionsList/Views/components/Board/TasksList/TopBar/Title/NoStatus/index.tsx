@@ -13,7 +13,7 @@ const NoStatusTasksListTitle = memo(() => {
     <Title.Container ref={ref}>
       <InboxSvg />
       <Title.Text>No status</Title.Text>
-      {/*{isHovering && <NoStatusListTooltip reference={ref} />}*/}
+      {isHovering && <NoStatusListTooltip reference={ref} />}
     </Title.Container>
   )
 })

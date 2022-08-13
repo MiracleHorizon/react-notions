@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 import { Theme } from 'themes/theme.model'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   position: relative;
   ${dFlex['center-start']};
@@ -11,20 +11,17 @@ export const Wrapper = styled.div`
   margin: 1px 0;
   border-radius: 3px;
   user-select: none;
+  background: ${p => p.isSelected && p.theme.colors['bg-el-hover-primary']};
   ${bgTransitions.esIn20};
 
-  &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
-  }
-
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   svg {
     position: absolute;
     right: 12px;
-    fill: ${props => props.theme.colors['text-primary']} !important;
+    fill: ${p => p.theme.colors['text-primary']} !important;
   }
 `
 
@@ -33,16 +30,16 @@ export const Container = styled.div<{ color: string }>`
   height: 18px;
   margin: 0 6px;
   border-radius: 3px;
-  box-shadow: ${props =>
-    props.theme.identifier === Theme.LIGHT
+  box-shadow: ${p =>
+    p.theme.identifier === Theme.LIGHT
       ? 'rgb(15 15 15 / 10%) 0 0 0 1px inset'
       : 'none'};
-  background: ${props => props.color};
+  background: ${p => p.color};
 `
 
 export const Title = styled.span`
   margin-left: 4px;
   font-size: 14px;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `

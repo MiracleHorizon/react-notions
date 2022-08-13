@@ -4,12 +4,11 @@ import Container from './ChangesBar.styles'
 
 //TODO Проверить перерисовки.
 
-const ChangesBar: FC<PropTypes> = ({ author, updatedAt }) => (
+const ChangesBar: FC<PropTypes> = ({ createdAt, updatedAt }) => (
   <Container>
-    <p>Last edited by {author}</p>
-    <p>{updatedAt}</p>
+    <p>Created at: {createdAt}</p>
+    <p>Last update: {updatedAt}</p>
   </Container>
 )
 
 export default ChangesBar
-

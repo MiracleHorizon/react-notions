@@ -6,12 +6,12 @@ import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import Container from './NotionContentItemOptionsModal.styles'
 
 const NotionContentItemOptionsModal = () => {
   const {
-    notionItemOptions: { itemId, invokerRect },
+    notionItemOptions: { invokerRect, ...itemParams },
     notionItemDecor: { isOpen: isContentItemDecorModalOpen },
   } = useTypedSelector(state => state.modals)
   const { closeNotionContentItemOptionsModal } = useActions()
@@ -29,7 +29,7 @@ const NotionContentItemOptionsModal = () => {
   return (
     <ModalWrapper>
       <Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
-        <NotionContentItemOptionsList itemId={itemId} rect={rect} />
+        <NotionContentItemOptionsList {...itemParams} rect={rect} />
       </Container>
     </ModalWrapper>
   )

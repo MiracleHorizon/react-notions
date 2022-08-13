@@ -5,12 +5,13 @@ import useActions from 'hooks/useActions'
 import Container from './CreateTasksListBar.styles'
 
 const CreateTasksListBar = memo(() => {
-  const { openHandleTasksListTitleModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
+  const { openHandleTasksListTitleModal } = useActions()
 
   const handleOpenCreateTasksListModal = () => {
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
     openHandleTasksListTitleModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
+      invokerRect,
       dest: 'create',
     })
   }

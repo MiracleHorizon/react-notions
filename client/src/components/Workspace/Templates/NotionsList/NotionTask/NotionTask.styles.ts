@@ -1,21 +1,19 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex, modalBoxShadowPrimary } from 'styles/uiKit'
 
-export const Container = styled.div`
+export const Wrapper = styled.div`
   position: absolute;
   top: 72px;
   min-height: 45px;
   width: 960px;
   height: calc(100% - 144px);
   border-radius: 3px;
-  box-shadow: rgb(15 15 15 / 2%) 0 0 0 1px, rgb(15 15 15 / 3%) 0 3px 6px,
-    rgb(15 15 15 / 6%) 0 9px 24px;
-  background: ${props => props.theme.colors['bg-notion-task-modal']};
+  box-shadow: ${p => modalBoxShadowPrimary(p.theme)};
+  background: ${p => p.theme.colors['bg-notion-task-modal']};
 `
 
-export const Content = styled.div<{ fullWidth: boolean }>`
-  ${dFlex['center-start']};
-  flex-direction: column;
+export const Container = styled.div<{ fullWidth: boolean }>`
+  ${dFlex['center-start-col']};
   min-height: 0;
   height: calc(100% - 45px);
   padding-bottom: 40px;
@@ -26,6 +24,12 @@ export const Content = styled.div<{ fullWidth: boolean }>`
   }
 
   div[data-el='decor-panel'] {
-    width: 74%;
+    width: 100%;
+    padding-left: 120px;
   }
+`
+
+export const Content = styled.div`
+  width: 100%;
+  padding: 0 120px;
 `

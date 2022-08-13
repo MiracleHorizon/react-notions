@@ -1,8 +1,8 @@
 import React from 'react'
 
-import DeletePageAlert from './Classic/components/DeletePageAlert'
-import AlreadyExistAlert from './Classic/components/AlreadyExistAlert'
-import DeleteTasksListAlert from './Classic/components/DeleteTasksListAlert'
+import DeletePageAlert from './Default/components/DeletePageAlert'
+import AlreadyExistAlert from './Default/components/AlreadyExistAlert'
+import DeleteTasksListAlert from './Default/components/DeleteTasksListAlert'
 import useTypedSelector from 'hooks/useTypedSelector'
 
 const AlertsOverlay = () => {

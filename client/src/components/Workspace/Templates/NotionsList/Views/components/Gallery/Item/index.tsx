@@ -11,11 +11,11 @@ import * as Item from './GalleryItem.styles'
 const GalleryItem: FC<PropTypes> = ({ primary, page }) => {
   const { title, iconUrl, coverUrl } = page
   const { openPageOptionsModal, openNotionTaskModal } = useActions()
+
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
   const handleOpenOptionsModal = (e: MouseEvent) => {
-    e.preventDefault()
     e.stopPropagation()
     openPageOptionsModal({ coords: setCoordsByPointer(e), page })
   }

@@ -4,6 +4,7 @@ import Container from './BoardItemTitle.styles'
 
 const BoardItemTitle: FC<{ title: string }> = ({ title }) => {
   const [disabled, setDisabled] = useState<boolean>(true)
+
   const ref = useRef<HTMLDivElement>(null)
   const titleValue = useRef<string>(title)
 

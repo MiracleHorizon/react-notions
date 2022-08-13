@@ -10,4 +10,5 @@ export default interface OptionsButtonProps
   extends OptionsButtonContainerProps {
   onClickAction: (() => void) | ((e: MouseEvent) => void)
   innerRef?: RefObject<HTMLDivElement> //!
+  reference?: RefObject<HTMLDivElement>
 }

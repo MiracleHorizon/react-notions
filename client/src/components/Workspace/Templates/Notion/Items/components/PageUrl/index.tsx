@@ -6,16 +6,19 @@ import NotionPageUrlItemIcon from './Icon'
 import OptionsButton from 'components/ui/buttons/Options'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
+import { selectPageById } from 'store/slices/pages/pages.selectors'
 import setCoordsByPointer from 'utils/helpers/setCoordsByPointer'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
 import * as Item from './NotionPageUrlItem.styles'
 
-const NotionPageUrlItem: FC<INotionContentItem> = item => {
-  const { pageId, content, iconUrl } = item
+const NotionPageUrlItem: FC<INotionContentItem> = ({
+  pageId,
+  content,
+  iconUrl,
+}) => {
+  const page = useTypedSelector(state => selectPageById(state, pageId))
   const { openPageOptionsModal } = useActions()
-  const page = useTypedSelector(state =>
-    state.pages.pages.find(page => page._id === pageId)
-  )
+
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 

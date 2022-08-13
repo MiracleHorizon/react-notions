@@ -11,28 +11,26 @@ export const Wrapper = styled.header`
 
 export const Container = styled.div`
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${dFlex['center-s-between']};
 
   div[data-btn='close-r-sb'] {
     pointer-events: none;
     opacity: 0.5;
   }
-  
+
   div[data-el='sgs-panel'] {
     right: 7px;
   }
-  
+
   div[data-btn='options'] {
-    background: ${props => props.theme.colors['bg-notion-task-modal']};
-    
+    background: ${p => p.theme.colors['bg-notion-task-modal']};
+
     &:hover {
-      background: ${props => props.theme.colors['bg-el-hover-primary']};
+      background: ${p => p.theme.colors['bg-el-hover-primary']};
     }
 
     &:active {
-      background: ${props => props.theme.colors['bg-el-active-primary']};
+      background: ${p => p.theme.colors['bg-el-active-primary']};
     }
   }
 `

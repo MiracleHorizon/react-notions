@@ -1,33 +1,33 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, memo, useCallback } from 'react'
 
 import EmptyPageItem from '../Item'
-import Divider from 'components/ui/Divider'
 import { PageSvg } from 'components/ui/svg'
 import {
   useCreateItemMutation,
   useUpdatePageMutation,
 } from 'store/slices/pages/pages.api'
+import useSelectItem from 'hooks/useSelectItem'
+import handleUpdatePageTemplate from 'utils/helpers/handleUpdatePageTemplate'
 import { NOTIONS_LIST_VIEWS, UPDATE_PAGE_TEMPLATES } from 'utils/constants/app'
-import updatePageTemplateReducer from 'utils/updatePageTemplateReducer'
 import NotionContentItem from 'models/pageContent/NotionContentItem.class'
 import IUpdatePageBody from 'models/api/pages/IUpdatePageBody'
 import IPage from 'models/page/IPage'
 import * as Content from './EmptyPageContent.styles'
 
-const EmptyPageContent: FC<IPage> = page => {
+const EmptyPageContent: FC<IPage> = memo(page => {
+  const { selectedItem, handleSelectItem } = useSelectItem('')
   const [updatePage] = useUpdatePageMutation()
   const [createContentItem] = useCreateItemMutation()
 
   const handleSelectTemplate = useCallback(
     async (template: string) => {
       if (template === 'Empty page') {
-        const body = NotionContentItem.createText({ parentPageId: page._id })
-
+        const body = NotionContentItem.createText(page._id)
         await createContentItem(body)
         return
       }
 
-      const body: IUpdatePageBody = updatePageTemplateReducer(template)
+      const body: IUpdatePageBody = handleUpdatePageTemplate(template)
       updatePage({ _id: page._id, body })
     },
     [page._id]
@@ -35,22 +35,25 @@ const EmptyPageContent: FC<IPage> = page => {
 
   return (
     <>
-      <Divider />
       <Content.Description>
         Start with an empty page, or pick a Notions template.
       </Content.Description>
       {UPDATE_PAGE_TEMPLATES.map(template => (
         <EmptyPageItem
           key={template.title}
+          isSelected={selectedItem === template.title}
+          handleSelectItem={handleSelectItem}
           onClickAction={handleSelectTemplate}
           {...template}
         />
       ))}
       {page.status === null && (
         <EmptyPageItem
-          onClickAction={handleSelectTemplate}
           title='Notions List'
           StartSvg={PageSvg}
+          isSelected={selectedItem === 'Notions List'}
+          handleSelectItem={handleSelectItem}
+          onClickAction={handleSelectTemplate}
         />
       )}
       {/* <Content.Description>*/}
@@ -66,6 +69,6 @@ const EmptyPageContent: FC<IPage> = page => {
       {/* </Content.ViewsList>*/}
     </>
   )
-}
+})
 
 export default EmptyPageContent

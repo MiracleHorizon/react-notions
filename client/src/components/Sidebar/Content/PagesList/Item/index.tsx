@@ -66,7 +66,9 @@ const PageItem: FC<PropTypes> = ({ page, pLeft }) => {
           />
           <Item.Content>
             <PageItemIcon {...page} />
-            <Item.Title isSelected={isSelected}>{title}</Item.Title>
+            <Item.Title isSelected={isSelected}>
+              {title !== '' ? title : 'Untitled'}
+            </Item.Title>
           </Item.Content>
           {isHovering && <PageItemOptions {...page} />}
         </Item.Container>

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 
-export const Container = styled.div`
+export const Container = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   ${dFlex['center-start']};
   width: 100%;
@@ -10,11 +10,8 @@ export const Container = styled.div`
   padding: 3px 0;
   border-radius: 3px;
   user-select: none;
+  background: ${p => p.isSelected && 'rgba(46, 170, 220, 0.15)'};
   ${bgTransitions.esIn20};
-
-  &:hover {
-    background: rgba(46, 170, 220, 0.15);
-  }
 
   &:active {
     background: rgba(46, 170, 220, 0.25);
@@ -31,5 +28,6 @@ export const Container = styled.div`
 export const Title = styled.p`
   margin-left: 8px;
   font-size: 16px;
+  line-height: 24px;
   color: ${p => p.theme.colors['text-secondary']};
 `

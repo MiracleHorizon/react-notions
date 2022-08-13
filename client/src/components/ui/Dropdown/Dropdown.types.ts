@@ -5,5 +5,5 @@ export default interface DropdownProps {
   activeOption: string
   setOption: SetState<string>
   pos: 'center' | 'bottom'
-  type: 'theme' | 'comments' | 'startOpen'
+  type: 'theme' | 'startOpen'
 }

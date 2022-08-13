@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
-import { INotionContentItemStyles } from '../../NotionContentItem.types'
+import { dFlex, txtOflow } from 'styles/uiKit'
+import INotionContentItemStyles from '../../NotionContentItem.types'
 import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
 
 const Container = styled.div<INotionContentItemStyles>`
+  cursor: text;
   ${dFlex['center-start']};
   width: 100%;
   height: auto;
@@ -13,9 +14,12 @@ const Container = styled.div<INotionContentItemStyles>`
   caret-color: ${p => p.theme.colors['caret-primary']};
 
   div {
+    max-width: 100%;
     width: 100%;
     height: 100%;
     line-height: 24px;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   div[contenteditable]:empty:focus:after {

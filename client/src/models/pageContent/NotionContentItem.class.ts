@@ -1,6 +1,7 @@
-import { NotionContentItemTypes } from './NotionContentItemTypes'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 import ICreatePageContentItemBody from 'models/api/pageContent/ICreatePageContentItemBody'
+import IUpdatePageContentItemParams from 'models/api/pageContent/IUpdatePageContentItemParams'
 
 interface CreateParams {
   parentPageId: string
@@ -17,66 +18,155 @@ interface CreateDefaultParams extends CreateParams {
   order?: number
 }
 
-interface CreatePageUrlParams extends CreateParams {
-  iconUrl: string | null
-  pageId: string
-}
+const toggleTypes = [
+  NotionContentItemTypes.TGL_H1,
+  NotionContentItemTypes.TGL_H2,
+  NotionContentItemTypes.TGL_H3,
+  NotionContentItemTypes.TGL_LIST,
+]
 
 export default class NotionContentItem {
-  private static create = ({
+  static create = ({
     parentPageId,
     parentItemId,
     type,
-    expanded,
-    completed,
+    order,
     pageId,
     iconUrl,
-    order,
   }: CreateDefaultParams): ICreatePageContentItemBody => {
     const item = {
       parentPageId,
-      parentItemId: parentItemId ? parentItemId : null,
       type,
       content: '',
       color: NotionContentItemColorsEnum.DEFAULT,
       bgColor: NotionContentItemColorsEnum.DEFAULT,
-      expanded: expanded !== undefined ? expanded : null,
-      completed: completed !== undefined ? completed : null,
-      pageId: pageId ? pageId : null,
-      iconUrl: iconUrl ? iconUrl : null,
+      expanded: null,
+      completed: null,
+      // pageId: pageId ? pageId : null,
+      // iconUrl: iconUrl ? iconUrl : null,
     } as ICreatePageContentItemBody
+
+    item.parentItemId = parentItemId ? parentItemId : null
+
+    if (toggleTypes.includes(type)) {
+      item.expanded = false
+    }
+
+    if (type === NotionContentItemTypes.TODO) {
+      item.completed = false
+    }
 
     if (order !== undefined) item.order = order
 
     return item
   }
 
-  static createText = ({ parentPageId, parentItemId, order }: CreateParams) =>
-    this.create({
+  static update(
+    type: NotionContentItemTypes,
+    _id: string,
+    parentItemId?: string,
+    pageId?: string,
+    iconUrl?: string | null
+  ) {
+    switch (type) {
+      case NotionContentItemTypes.TODO:
+        return this.updateToTodo(_id, parentItemId)
+      case NotionContentItemTypes.H1:
+        return this.updateToHeading(_id, 1, parentItemId)
+      case NotionContentItemTypes.H2:
+        return this.updateToHeading(_id, 2, parentItemId)
+      case NotionContentItemTypes.H3:
+        return this.updateToHeading(_id, 3, parentItemId)
+      case NotionContentItemTypes.PAGE_URL:
+        return this.updateToPageUrl(_id, iconUrl!, pageId!, parentItemId)
+      case NotionContentItemTypes.TGL_H1:
+        return this.updateToToggleHeading(_id, 1, parentItemId)
+      case NotionContentItemTypes.TGL_H2:
+        return this.updateToToggleHeading(_id, 2, parentItemId)
+      case NotionContentItemTypes.TGL_H3:
+        return this.updateToToggleHeading(_id, 3, parentItemId)
+      case NotionContentItemTypes.QUOTE:
+        return this.updateToQuote(_id, parentItemId)
+      case NotionContentItemTypes.WEB_BOOKMARK:
+        return this.updateToWebBookmark(_id, parentItemId)
+      case NotionContentItemTypes.DIVIDER:
+        return this.updateToDivider(_id, parentItemId)
+      default:
+        // throw new Error('')
+        return this.updateToQuote(_id, parentItemId)
+    }
+  }
+
+  static createText(
+    parentPageId: string,
+    parentItemId?: string,
+    order?: number
+  ): ICreatePageContentItemBody {
+    const body = {
       parentPageId,
-      parentItemId,
+      parentItemId: parentItemId ? parentItemId : null,
       type: NotionContentItemTypes.TEXT,
-      order,
-    })
+      content: '',
+      color: NotionContentItemColorsEnum.DEFAULT,
+      bgColor: NotionContentItemColorsEnum.DEFAULT,
+      completed: null,
+      expanded: null,
+      iconUrl: null,
+      pageId: null,
+    } as ICreatePageContentItemBody
 
-  static createTodo = ({ parentPageId, parentItemId, order }: CreateParams) =>
-    this.create({
-      parentPageId,
-      parentItemId,
+    if (order !== undefined) body.order = order
+
+    return body
+  }
+
+  private static updateToPageUrl(
+    _id: string,
+    iconUrl: string | null,
+    pageId: string,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    const data = {
+      type: NotionContentItemTypes.PAGE_URL,
+      // content: '',
+      completed: null,
+      expanded: null,
+      iconUrl,
+      pageId,
+    }
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
+
+    return { _id, body }
+  }
+
+  private static updateToTodo(
+    _id: string,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    const data = {
       type: NotionContentItemTypes.TODO,
-      order,
+      // content: '',
       completed: false,
-    })
+      expanded: null,
+      iconUrl: null,
+      pageId: null,
+    }
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
 
-  static createHeading = ({
-    parentPageId,
-    parentItemId,
-    level,
-    order,
-  }: CreateParams & { level: 2 | 3 | undefined }) => {
-    let type = NotionContentItemTypes.H1
+    return { _id, body }
+  }
 
-    switch (level) {
+  private static updateToHeading(
+    _id: string,
+    hLevel: 1 | 2 | 3,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    let type
+
+    switch (hLevel) {
+      case 1:
+        type = NotionContentItemTypes.H1
+        break
       case 2:
         type = NotionContentItemTypes.H2
         break
@@ -85,59 +175,101 @@ export default class NotionContentItem {
         break
     }
 
-    return this.create({
-      parentPageId,
-      parentItemId,
+    const data = {
       type,
-      order,
-    })
+      // content: '',
+      expanded: null,
+      completed: null,
+      iconUrl: null,
+      pageId: null,
+    }
+
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
+
+    return { _id, body }
   }
 
-  static createPageUrl = ({
-    parentPageId,
-    parentItemId,
-    pageId,
-    iconUrl,
-    order,
-  }: CreatePageUrlParams) =>
-    this.create({
-      parentPageId,
-      parentItemId,
-      type: NotionContentItemTypes.PAGE_URL,
-      order,
-      pageId,
-      iconUrl,
-    })
+  private static updateToToggleHeading(
+    _id: string,
+    hLevel: 1 | 2 | 3,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    let type
 
-  static createQuote = ({ parentPageId, parentItemId, order }: CreateParams) =>
-    this.create({
-      parentPageId,
-      parentItemId,
+    switch (hLevel) {
+      case 1:
+        type = NotionContentItemTypes.TGL_H1
+        break
+      case 2:
+        type = NotionContentItemTypes.TGL_H3
+        break
+      case 3:
+        type = NotionContentItemTypes.TGL_H3
+        break
+    }
+
+    const data = {
+      type,
+      // content: '',
+      expanded: false,
+      completed: null,
+      iconUrl: null,
+      pageId: null,
+    }
+
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
+
+    return { _id, body }
+  }
+
+  private static updateToQuote(
+    _id: string,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    const data = {
       type: NotionContentItemTypes.QUOTE,
-      order,
-    })
+      // content: '',
+      completed: null,
+      expanded: null,
+      iconUrl: null,
+      pageId: null,
+    }
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
 
-  static createDivider = ({
-    parentPageId,
-    parentItemId,
-    order,
-  }: CreateParams) =>
-    this.create({
-      parentPageId,
-      parentItemId,
+    return { _id, body }
+  }
+
+  private static updateToDivider(
+    _id: string,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    const data = {
       type: NotionContentItemTypes.DIVIDER,
-      order,
-    })
+      // content: '',
+      completed: null,
+      expanded: null,
+      iconUrl: null,
+      pageId: null,
+    }
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
 
-  static createWebBookmark = ({
-    parentPageId,
-    parentItemId,
-    order,
-  }: CreateParams) =>
-    this.create({
-      parentPageId,
-      parentItemId,
+    return { _id, body }
+  }
+
+  private static updateToWebBookmark(
+    _id: string,
+    parentItemId?: string
+  ): IUpdatePageContentItemParams {
+    const data = {
       type: NotionContentItemTypes.WEB_BOOKMARK,
-      order,
-    })
+      content: '',
+      completed: null,
+      expanded: null,
+      iconUrl: null,
+      pageId: null,
+    }
+    const body = parentItemId ? { ...data, parentItemId: parentItemId } : data
+
+    return { _id, body }
+  }
 }

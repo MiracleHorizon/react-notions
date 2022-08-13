@@ -20,6 +20,11 @@ export default class UpdateNotionContentItemDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
+  type?: string
+
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
   content?: string
 
   @IsOptional()

@@ -4,7 +4,7 @@ import { useHover } from 'usehooks-ts'
 import { DoubleChevronSvg } from 'components/ui/svg'
 import { CloseSidebarTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
-import Container from './ToggleSidebarButton.styles'
+import { Wrapper } from './ToggleSidebarButton.styles'
 
 const CloseSidebarButton: FC<{ isSidebarHovering: boolean }> = memo(
   ({ isSidebarHovering }) => {
@@ -15,7 +15,7 @@ const CloseSidebarButton: FC<{ isSidebarHovering: boolean }> = memo(
     const handleOpenSidebar = () => closeSidebar()
 
     return (
-      <Container
+      <Wrapper
         ref={ref}
         role='button'
         dest='close'
@@ -23,8 +23,8 @@ const CloseSidebarButton: FC<{ isSidebarHovering: boolean }> = memo(
         onClick={handleOpenSidebar}
       >
         <DoubleChevronSvg />
-        {isHovering && <CloseSidebarTooltip location='left' reference={ref} />}
-      </Container>
+        {isHovering && <CloseSidebarTooltip reference={ref} />}
+      </Wrapper>
     )
   }
 )

@@ -5,26 +5,23 @@ import NoStatusTasksListTitle from '../../TasksList/TopBar/Title/NoStatus'
 import CountButton from 'components/ui/buttons/CountButton'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { selectNoStatusPages } from 'store/slices/pages/pages.selectors'
+import {
+  selectListDependencies,
+  selectNoStatusPages,
+} from 'store/slices/pages/pages.selectors'
 import ITasksList from 'models/tasksList/ITasksList'
 import * as Item from './HiddenTasksListItem.styles'
 
 const HiddenTasksListItem: FC<ITasksList> = list => {
-  const { title, color } = list
-  const { openHiddenTasksListModal } = useActions()
+  const { _id, title, color } = list
+  const deps = useTypedSelector(state => selectListDependencies(state, _id))
+  const noStatusPages = useSelector(selectNoStatusPages)
   const ref = useRef<HTMLDivElement>(null)
-
-  const deps = useTypedSelector(state =>
-    state.pages.pages.filter(page => page.parentListId === list._id)
-  ) //*
-
-  const noStatus = useSelector(selectNoStatusPages)
+  const { openHiddenTasksListModal } = useActions()
 
   const handleOpenHiddenListModal = () => {
-    openHiddenTasksListModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
-      list,
-    })
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
+    openHiddenTasksListModal({ invokerRect, list })
   }
 
   return (
@@ -36,7 +33,9 @@ const HiddenTasksListItem: FC<ITasksList> = list => {
           <Item.Title>{title}</Item.Title>
         </Item.TitleContainer>
       )}
-      <CountButton count={color === 'empty' ? noStatus.length : deps.length} />
+      <CountButton
+        count={color === 'empty' ? noStatusPages.length : deps.length}
+      />
     </Item.Container>
   )
 }

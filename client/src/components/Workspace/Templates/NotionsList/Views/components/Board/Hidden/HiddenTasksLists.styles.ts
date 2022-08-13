@@ -10,5 +10,5 @@ export const Title = styled.span`
   user-select: none;
   font-size: 14px;
   line-height: 24px;
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
 `

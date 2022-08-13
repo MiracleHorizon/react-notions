@@ -6,7 +6,7 @@ import useActions from 'hooks/useActions'
 import useSetModalPosition from 'hooks/useSetModalPosition'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import nodeRefHandler from 'utils/nodeRefHandler'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './NotionContentItemDecorModal.styles'
 
 const NotionContentItemDecorModal = () => {

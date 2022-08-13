@@ -8,21 +8,20 @@ const Container = styled.div<{ isOpen?: boolean }>`
   margin: 0 1px;
   padding: 4px 8px;
   border-radius: 3px;
-  background: ${props =>
-    props.isOpen && props.theme.colors['bg-el-hover-primary']};
+  background: ${p => p.isOpen && p.theme.colors['bg-el-hover-primary']};
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
-  //svg {
-  //  fill: ${props => props.theme.svgFills.primary} !important;
-  //}
+  svg[data-svg='unfav-star'] {
+    fill: ${p => p.theme.svgFills['page-settings-panel']} !important;
+  }
 `
 
 export default Container

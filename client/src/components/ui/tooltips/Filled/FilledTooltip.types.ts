@@ -1,14 +1,19 @@
 import { ElementCoords } from 'types'
+import { RefObject } from 'react'
 
 export interface FilledTooltipContainerProps {
-  coords: ElementCoords
-  transX?: boolean
-  transY?: boolean
+  coords?: ElementCoords
   itemsCenter?: boolean
 }
 
 export default interface FilledTooltipProps
-  extends FilledTooltipContainerProps {
+  extends FilledTooltipContainerProps,
+    NodeRef<HTMLDivElement> {
   title?: string
   desc?: string
+  pos: 'centerBottom' | 'centerTop' | 'rightCenter' | 'leftCenter'
+}
+
+export interface NodeRef<T extends HTMLElement> {
+  invokerRef: RefObject<HTMLDivElement>
 }

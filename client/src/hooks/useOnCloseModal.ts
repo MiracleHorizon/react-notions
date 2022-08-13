@@ -1,30 +1,23 @@
-import { useEventListener, useOnClickOutside } from 'usehooks-ts'
+import { useEventListener } from 'usehooks-ts'
 import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit'
-import { RefObject } from 'react'
-import useClickOutside from './useClickOutside'
 
 type Handler = (event: MouseEvent) => void
 
-const useHandleClickOutside = (
-  node: HTMLDivElement | null,
+function useHandleClickOutside<T extends HTMLElement>(
+  node: T | null,
   handler: Handler,
   mouseEvent: 'mousedown' | 'mouseup' = 'mousedown'
-) => {
+) {
   useEventListener(mouseEvent, event => {
     const el = node
-
-    if (!el || el.contains(event.target as Node)) {
-      return
-    }
-
+    if (!el || el.contains(event.target as Node)) return
     handler(event)
   })
 }
 
-// ref: HTMLDivElement | null | RefObject<HTMLDivElement>,
-export default function useOnCloseModal(
-  ref: HTMLDivElement | null,
-  action: ActionCreatorWithoutPayload | null | (() => void)
+export default function useOnCloseModal<T extends HTMLElement>(
+  ref: T | null,
+  action: ActionCreatorWithoutPayload | null
 ) {
   const handleKeydownClose = (e: KeyboardEvent) => {
     if (e.code === 'Escape' && action) action()
@@ -36,12 +29,4 @@ export default function useOnCloseModal(
 
   useHandleClickOutside(ref, handleCloseModal)
   useEventListener('keydown', handleKeydownClose)
-
-  // if (ref instanceof HTMLElement) {
-  //   handleClickOutside(ref, handleCloseModal)
-  // }
-
-  // if (!ref) return
-  //
-  // useOnClickOutside(ref, handleCloseModal)
 }

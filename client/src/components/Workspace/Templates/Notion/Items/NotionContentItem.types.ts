@@ -1,6 +1,6 @@
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 
-export interface INotionContentItemStyles {
+export default interface INotionContentItemStyles {
   color: NotionContentItemColorsEnum
   bgColor: NotionContentItemColorsEnum
 }

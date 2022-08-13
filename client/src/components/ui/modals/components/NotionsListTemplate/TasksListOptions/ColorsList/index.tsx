@@ -9,9 +9,11 @@ import PropTypes from './TasksListModalColors.types'
 
 const TasksListModalColors: FC<PropTypes> = ({
   _id,
-  selectedColor,
   theme,
   template,
+  activeColor,
+  selectedItem,
+  handleSelectItem,
 }) => (
   <>
     <Divider />
@@ -22,8 +24,10 @@ const TasksListModalColors: FC<PropTypes> = ({
         _id={_id}
         reqColor={key}
         title={value.title}
-        isSelected={selectedColor === key}
+        isActive={activeColor === key}
+        isSelected={selectedItem === key}
         color={theme.identifier === Theme.LIGHT ? value.light : value.dark}
+        handleSelectItem={handleSelectItem}
       />
     ))}
   </>

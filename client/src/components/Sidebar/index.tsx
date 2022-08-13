@@ -25,13 +25,13 @@ const PagesSidebar = () => {
   const handleCloseSidebar = () => closeSidebar()
 
   return (
-    <CSSTransition
-      in={sidebarState.isOpen}
-      timeout={appearDuration}
-      classNames={transitionName}
-      unmountOnExit
-      mountOnEnter
-    >
+    // <CSSTransition
+    //   in={sidebarState.isOpen}
+    //   timeout={appearDuration}
+    //   classNames={transitionName}
+    //   unmountOnExit
+    //   mountOnEnter
+    // >
       <Sidebar.Wrapper
         ref={ref}
         deviceType={device.type}
@@ -50,7 +50,7 @@ const PagesSidebar = () => {
         </Sidebar.Container>
         {/*{isResizerHovering && <SidebarResizerTooltip reference={resizerRef} />}*/}
       </Sidebar.Wrapper>
-    </CSSTransition>
+    // </CSSTransition>
   )
 }
 

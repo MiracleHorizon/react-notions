@@ -8,13 +8,12 @@ import Page from 'models/page/Page'
 import Container from '../Item/CreateTaskBar/BoardCreateTaskBar.styles'
 
 const CreateNoStatusTaskBar = () => {
+  const { user } = useAuth()
   const { page } = useTypedSelector(state => state.pages)
   const [createPage] = useCreatePageMutation()
-  const { user } = useAuth()
 
   const handleCreateNoStatusPage = () => {
     if (!page || !user) return
-
     createPage({ ...Page.createNoStatusTask(page._id), author: user.uid })
   }
 

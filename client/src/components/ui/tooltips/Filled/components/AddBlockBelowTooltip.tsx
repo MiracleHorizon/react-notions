@@ -1,22 +1,30 @@
 import React, { FC } from 'react'
 
 import TooltipWrapper from 'components/ui/tooltips/Tooltip'
-import tooltipsCoordsHandler from 'utils/coordsHandlers/tooltips'
+import useSetModalPosition from 'hooks/useSetModalPosition'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import { TDivRef } from 'types'
 import * as Tooltip from '../FilledTooltip.styles'
 
-const AddBlockBelowTooltip: FC<{ reference: TDivRef }> = ({ reference }) => (
-  <TooltipWrapper>
-    <Tooltip.Container
-      coords={tooltipsCoordsHandler.createPageBoard(reference)}
-      transX
-    >
-      <Tooltip.TextContainer>
-        <Tooltip.Title>Click</Tooltip.Title>
-        <Tooltip.Description>to add block below</Tooltip.Description>
-      </Tooltip.TextContainer>
-    </Tooltip.Container>
-  </TooltipWrapper>
-)
+const AddBlockBelowTooltip: FC<{ reference: TDivRef }> = ({ reference }) => {
+  const { setRef, rect, coords } = useSetModalPosition({
+    invokerRect: reference.current?.getBoundingClientRect().toJSON(),
+    pos: 'centerBottom',
+  })
+
+  return (
+    <TooltipWrapper>
+      <Tooltip.Container
+        ref={node => nodeRefHandler(node, rect, setRef)}
+        coords={coords}
+      >
+        <Tooltip.TextContainer>
+          <Tooltip.Title>Click</Tooltip.Title>
+          <Tooltip.Description>to add block below</Tooltip.Description>
+        </Tooltip.TextContainer>
+      </Tooltip.Container>
+    </TooltipWrapper>
+  )
+}
 
 export default AddBlockBelowTooltip

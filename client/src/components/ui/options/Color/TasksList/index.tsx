@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import { ThinCheckSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
@@ -6,28 +6,28 @@ import { useUpdateTasksListMutation } from 'store/slices/tasksLists/tasksLists.a
 import PropTypes from './TasksListColorOption.types'
 import * as Option from './TasksListColorOption.styles'
 
-const TasksListColorOption: FC<PropTypes> = ({
-  _id,
-  color,
-  title,
-  reqColor,
-  isSelected,
-}) => {
-  const { setTasksListsOptionsModalColor } = useActions()
-  const [updateTasksList] = useUpdateTasksListMutation()
+const TasksListColorOption: FC<PropTypes> = memo(
+  ({ _id, color, title, reqColor, isActive, isSelected, handleSelectItem }) => {
+    const { setTasksListsOptionsModalColor } = useActions()
+    const [updateTasksList] = useUpdateTasksListMutation()
 
-  const handleSelectColor = async () => {
-    await updateTasksList({ _id, body: { color: reqColor } })
-    setTasksListsOptionsModalColor(reqColor)
+    const handleSelectColor = async () => {
+      await updateTasksList({ _id, body: { color: reqColor } })
+      setTasksListsOptionsModalColor(reqColor)
+    }
+
+    return (
+      <Option.Wrapper
+        isSelected={isSelected}
+        onClick={handleSelectColor}
+        onMouseEnter={() => handleSelectItem(reqColor)}
+      >
+        <Option.Container color={color} />
+        <Option.Title>{title}</Option.Title>
+        {isActive && <ThinCheckSvg />}
+      </Option.Wrapper>
+    )
   }
-
-  return (
-    <Option.Wrapper onClick={handleSelectColor}>
-      <Option.Container color={color} />
-      <Option.Title>{title}</Option.Title>
-      {isSelected && <ThinCheckSvg />}
-    </Option.Wrapper>
-  )
-}
+)
 
 export default TasksListColorOption

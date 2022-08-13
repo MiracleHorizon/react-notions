@@ -1,6 +1,6 @@
-import { NotionContentItemTypes } from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 
-const headingStyles = {
+const NOTION_ITEM_HEADING_STYLES = {
   h1: {
     container: {
       containerHeight: '46px',
@@ -55,50 +55,50 @@ export default class NotionHeadingItemStylesHandler {
   static getContainerStyles(headingLevel: NotionContentItemTypes) {
     switch (headingLevel) {
       case NotionContentItemTypes.H1:
-        return headingStyles.h1.container
+        return NOTION_ITEM_HEADING_STYLES.h1.container
 
       case NotionContentItemTypes.H2:
-        return headingStyles.h2.container
+        return NOTION_ITEM_HEADING_STYLES.h2.container
 
       case NotionContentItemTypes.H3:
-        return headingStyles.h3.container
+        return NOTION_ITEM_HEADING_STYLES.h3.container
 
       case NotionContentItemTypes.TGL_H1:
-        return headingStyles.tglH1.container
+        return NOTION_ITEM_HEADING_STYLES.tglH1.container
 
       case NotionContentItemTypes.TGL_H2:
-        return headingStyles.tglH2.container
+        return NOTION_ITEM_HEADING_STYLES.tglH2.container
 
       case NotionContentItemTypes.TGL_H3:
-        return headingStyles.tglH3.container
+        return NOTION_ITEM_HEADING_STYLES.tglH3.container
 
       default:
-        return headingStyles.h1.container
+        return NOTION_ITEM_HEADING_STYLES.h1.container
     }
   }
 
   static getContentStyles(headingLevel: NotionContentItemTypes) {
     switch (headingLevel) {
       case NotionContentItemTypes.H1:
-        return headingStyles.h1.content
+        return NOTION_ITEM_HEADING_STYLES.h1.content
 
       case NotionContentItemTypes.H2:
-        return headingStyles.h2.content
+        return NOTION_ITEM_HEADING_STYLES.h2.content
 
       case NotionContentItemTypes.H3:
-        return headingStyles.h3.content
+        return NOTION_ITEM_HEADING_STYLES.h3.content
 
       case NotionContentItemTypes.TGL_H1:
-        return headingStyles.h1.content
+        return NOTION_ITEM_HEADING_STYLES.h1.content
 
       case NotionContentItemTypes.TGL_H2:
-        return headingStyles.h2.content
+        return NOTION_ITEM_HEADING_STYLES.h2.content
 
       case NotionContentItemTypes.TGL_H3:
-        return headingStyles.h3.content
+        return NOTION_ITEM_HEADING_STYLES.h3.content
 
       default:
-        return headingStyles.h1.content
+        return NOTION_ITEM_HEADING_STYLES.h1.content
     }
   }
 

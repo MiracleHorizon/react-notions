@@ -17,8 +17,10 @@ export const selectNotHiddenNoStatusList = (
     list => list.color === 'empty' && !list.hidden
   )
 
-export const selectNoStatusList = (state: RootState): ITasksList | undefined =>
-  state.tasksLists.tasksLists.find(list => list.color === 'empty')
+export const selectNoStatusList = (state: RootState): ITasksList | null => {
+  const list = state.tasksLists.tasksLists.find(list => list.color === 'empty')
+  return list ? list : null
+}
 
 export const selectListById = (state: RootState, _id: string) =>
   state.tasksLists.tasksLists.find(list => list._id === _id)

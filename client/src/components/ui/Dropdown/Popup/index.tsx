@@ -1,21 +1,25 @@
-import React, { FC, useRef } from 'react'
-import { useOnClickOutside } from 'usehooks-ts'
+import React, { FC } from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import { CheckSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import useSetModalPosition from 'hooks/useSetModalPosition'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import PropTypes from './DropdownPopup.types'
 import * as Popup from './DropdownPopup.styles'
 
 const DropdownPopup: FC<PropTypes> = ({
+  invokerRef,
   activeOption,
   setOption,
   options,
-  coords,
   type,
 }) => {
-  const ref = useRef<HTMLDivElement>(null)
   const { closeDropdown } = useActions()
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    invokerRect: invokerRef.current?.getBoundingClientRect().toJSON(),
+    pos: 'rightCenter',
+  })
 
   const handleClickOutside = () => closeDropdown(type)
 
@@ -24,11 +28,15 @@ const DropdownPopup: FC<PropTypes> = ({
     closeDropdown(type)
   }
 
-  useOnClickOutside(ref, handleClickOutside)
+  // useCloseModal(ref, handleClickOutside)
+  // useOnCloseModal(ref, handleClickOutside)
 
   return (
     <ModalWrapper>
-      <Popup.Container ref={ref} {...coords}>
+      <Popup.Container
+        ref={node => nodeRefHandler(node, rect, setRef)}
+        {...coords}
+      >
         {options.map(option => (
           <Popup.Option key={option} onClick={() => handleSelectOption(option)}>
             <Popup.OptionTitle>{option}</Popup.OptionTitle>

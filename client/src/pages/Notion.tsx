@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { useReadLocalStorage } from 'usehooks-ts'
 
-import MainLayout from 'layouts/Main'
+import WorkspaceContent from 'components/Workspace/Content'
 import TemplateContent from 'components/Workspace/Templates/TemplateContent'
 import NotionPageLoader from 'components/ui/loaders/NotionPage'
 import useAuth from 'hooks/useAuth'
@@ -32,12 +32,12 @@ const NotionPage = () => {
   if (data && user && user.uid !== data.author) return null
 
   return (
-    <MainLayout>
+    <WorkspaceContent>
       <>
         {isSuccess && <TemplateContent {...data} />}
         {isLoading && <NotionPageLoader />}
       </>
-    </MainLayout>
+    </WorkspaceContent>
   )
 }
 

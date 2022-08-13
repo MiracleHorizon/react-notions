@@ -1,44 +1,42 @@
 import styled from 'styled-components'
-import stylesHandler from 'utils/stylesHandlers/galleryItem'
-import { bgTransitions } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'styles/uiKit'
+import ITheme, { Theme } from 'themes/theme.model'
 
 export const Wrapper = styled.div<{ primary: boolean; isSelected?: boolean }>`
   cursor: pointer;
   position: static;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
+  min-height: 190px;
   width: 100%;
   height: 100%;
-  min-height: 190px;
   border-radius: 3px;
-  box-shadow: ${props => stylesHandler(props.primary, props.theme)};
-  background: ${props =>
-    props.primary
-      ? props.isSelected
-        ? props.theme.colors['bg-selection']
-        : props.theme.colors['bg-gallery-item']
+  box-shadow: ${p => stylesHandler(p.primary, p.theme)};
+  background: ${p =>
+    p.primary
+      ? p.isSelected
+        ? p.theme.colors['bg-selection']
+        : p.theme.colors['bg-gallery-item']
       : 'inherit'};
   user-select: none;
   ${bgTransitions.esInOut50};
 
   &:hover {
     position: relative;
-    background: ${props =>
-      !props.isSelected
-        ? props.primary
-          ? props.theme.colors['bg-gallery-item-hover']
-          : props.theme.colors['bg-el-hover-primary']
-        : props.theme.colors['bg-selection']};
+    background: ${p =>
+      !p.isSelected
+        ? p.primary
+          ? p.theme.colors['bg-gallery-item-hover']
+          : p.theme.colors['bg-el-hover-primary']
+        : p.theme.colors['bg-selection']};
   }
 
   &:active {
-    background: ${props =>
-      !props.isSelected
-        ? props.primary
-          ? props.theme.colors['bg-gallery-item-active']
-          : props.theme.colors['bg-el-active-primary']
-        : props.theme.colors['bg-selection']};
+    background: ${p =>
+      !p.isSelected
+        ? p.primary
+          ? p.theme.colors['bg-gallery-item-active']
+          : p.theme.colors['bg-el-active-primary']
+        : p.theme.colors['bg-selection']};
   }
 `
 
@@ -53,7 +51,7 @@ export const Container = styled.div`
   div[data-btn='options'] {
     top: 8px;
     right: 8px;
-    width: 26px !important;
+    width: 26px;
   }
 `
 
@@ -64,7 +62,7 @@ export const Cover = styled.div<{ coverUrl: string }>`
   padding: 1px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  background-image: url(${props => props.coverUrl});
+  background-image: url(${p => p.coverUrl});
   background-size: cover;
   object-position: center 50%;
 `
@@ -72,9 +70,7 @@ export const Cover = styled.div<{ coverUrl: string }>`
 export const TitleContainer = styled.div`
   align-self: flex-end;
   justify-self: flex-end;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  ${dFlex['center-start']};
   width: 100%;
   height: max-content;
   margin-top: auto;
@@ -89,20 +85,18 @@ export const Title = styled.p`
   line-height: 24px;
   white-space: pre-wrap;
   word-break: break-word;
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `
 
 export const Untitled = styled.span`
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
 `
 
 export const IconContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   min-width: 18px;
   width: 18px;
   height: 18px;
@@ -114,3 +108,18 @@ export const Icon = styled.img`
   height: 100%;
   object-fit: cover;
 `
+
+const stylesHandler = (primary: boolean, theme: ITheme): string => {
+  const primaryStyleColor = `rgb(15 15 15 / ${
+    theme.identifier === Theme.LIGHT ? 10 : 20
+  }%)`
+
+  const secondaryStyleColor =
+    theme.identifier === Theme.LIGHT
+      ? 'rgb(55 53 47 / 9%)'
+      : 'rgb(255 255 255 / 13%)'
+
+  return primary
+    ? `${primaryStyleColor} 0 0 0 1px, ${primaryStyleColor} 0 2px 4px`
+    : `${secondaryStyleColor} 0 0 0 1px inset`
+}

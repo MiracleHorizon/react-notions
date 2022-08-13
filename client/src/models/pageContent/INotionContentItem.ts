@@ -1,5 +1,5 @@
-import { NotionContentItemTypes } from './NotionContentItemTypes'
-import { NotionContentItemColorsEnum } from 'models/decor/NotionContentItemColorsEnum'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 
 // Чтобы уменьшить затраты времени на создание моделей и структур данных на
 // стороне сервера было решено создать одну схема для всех типов контента страницы.
@@ -15,7 +15,7 @@ export default interface INotionContentItem {
   order: number
   // Toggle.
   expanded: boolean | null
-  // dependencies: string[]
+  dependencies: INotionContentItem[]
   // Todo.
   completed: boolean | null
   // Page url.

@@ -4,29 +4,33 @@ import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import OutlineInput from 'components/ui/inputs/Outline'
 import FilledButton from 'components/ui/buttons/Filled'
 import useInput from 'hooks/useInput'
+import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
+import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import nodeRefHandler from 'utils/nodeRefHandler'
-import PropTypes from './CreateWebBookmarkModal.types'
+import { useUpdateItemMutation } from 'store/slices/pages/pages.api'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './CreateWebBookmarkModal.styles'
 
-const CreateWebBookmarkModal: FC<PropTypes> = ({
-  itemId,
-  invokerRect,
-  handleCloseModal,
-}) => {
-  // const [updateContentItem] = use...
+const CreateWebBookmarkModal = () => {
+  const { _id, invokerRect } = useTypedSelector(
+    state => state.modals.webBookmark
+  )
+  const [updateContentItem] = useUpdateItemMutation()
   const { value, handleChangeValue, handleClearValue } = useInput('')
+  const { closeCreateWebBookmarkModal } = useActions()
+
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'centerBottom',
     invokerRect,
   }) // useMemo ?
 
   const handleSubmitCreate = () => {
-    console.log()
+    updateContentItem({ _id, body: { content: value } })
+    closeCreateWebBookmarkModal()
   }
 
-  useOnCloseModal(ref, handleCloseModal)
+  useOnCloseModal(ref, closeCreateWebBookmarkModal)
 
   return (
     <ModalWrapper>

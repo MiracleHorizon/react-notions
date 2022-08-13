@@ -12,3 +12,8 @@ export default interface InputPropTypes
   renderSelectable?: boolean
   register?: UseFormRegisterReturn<any>
 }
+
+export interface IInputParams {
+  value: string
+  handleChangeValue: (e: InputEvent) => void
+}

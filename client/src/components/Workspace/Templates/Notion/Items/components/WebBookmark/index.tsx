@@ -1,18 +1,21 @@
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useRef } from 'react'
 
-import CreateWebBookmarkModal from 'components/ui/modals/components/CreateWebBookmark'
 import { BookSvg } from 'components/ui/svg'
+import useActions from 'hooks/useActions'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
 import * as Item from './NotionWebBookmarkItem.styles'
 
 const NotionWebBookmarkItem: FC<INotionContentItem> = ({ _id, content }) => {
-  const [isModalOpen, setModalOpen] = useState<boolean>(false)
+  const { openCreateWebBookmarkModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
   const isEmpty = content === ''
 
-  const handleOpenCreateWebBookmarkModal = () => isEmpty && setModalOpen(true)
+  const handleOpenCreateWebBookmarkModal = () => {
+    if (!isEmpty) return
 
-  const handleCloseCreateWebBookmarkModal = () => setModalOpen(false)
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
+    openCreateWebBookmarkModal({ _id, invokerRect })
+  }
 
   return (
     <Item.Container
@@ -34,13 +37,6 @@ const NotionWebBookmarkItem: FC<INotionContentItem> = ({ _id, content }) => {
           </Item.DomainTitle>
           <Item.UrlTitle>{content}</Item.UrlTitle>
         </Item.UrlContainer>
-      )}
-      {isModalOpen && (
-        <CreateWebBookmarkModal
-          itemId={_id}
-          invokerRect={ref.current?.getBoundingClientRect().toJSON()}
-          handleCloseModal={handleCloseCreateWebBookmarkModal}
-        />
       )}
     </Item.Container>
   )

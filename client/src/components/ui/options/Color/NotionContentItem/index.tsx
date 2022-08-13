@@ -16,8 +16,8 @@ const NotionContentItemDecorOption: FC<PropTypes> = ({
 
   const handleChangeItemDecor = () => {
     const body = dest === 'color' ? { color: decor } : { bgColor: decor }
-
     updateContentItem({ _id: itemId, body })
+    closeNotionContentItemDecorModal()
   }
 
   return (
