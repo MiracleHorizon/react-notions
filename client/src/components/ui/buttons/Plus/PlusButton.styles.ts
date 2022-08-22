@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { dFlex } from 'styles/uiKit'
 
-const Container = styled.div`
+const Button = styled.div`
   cursor: pointer;
   ${dFlex.center};
   width: 16px;
@@ -14,4 +14,4 @@ const Container = styled.div`
   }
 `
 
-export default Container
+export default Button

@@ -7,14 +7,11 @@ export const Container = styled.div<{ isActive: boolean }>`
   height: 18px;
   padding: 0 2px;
   border-radius: 10px;
-  background: ${props =>
-    props.isActive
-      ? 'rgb(47, 170, 220)'
-      : props.theme.colors['bg-toggle-button']};
+  background: ${p => p.isActive ? 'rgb(47, 170, 220)' : p.theme.colors['bg-toggle-button']};
   transition: background 0.2s ease-in-out;
 
   div {
-    transform: translateX(${props => (props.isActive ? 6 : -6)}px);
+    transform: translateX(${p => (p.isActive ? 6 : -6)}px);
   }
 `
 

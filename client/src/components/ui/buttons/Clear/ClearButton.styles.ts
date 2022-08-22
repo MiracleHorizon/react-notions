@@ -1,11 +1,9 @@
 import styled from 'styled-components'
-import { bgTransitions, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
 export const Container = styled.div`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   height: 20px;
   padding: 0 4px;
   border-radius: 3px;

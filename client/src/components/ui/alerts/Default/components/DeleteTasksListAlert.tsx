@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
-import DefaultAlert from 'components/ui/alerts/Default'
+import DefaultAlert from 'components/ui/alerts - Checked/Default/index'
 import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useDeleteTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
-import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
+import { useDeleteTasksListMutation } from 'services/tasksLists.api'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton'
 
 const DeleteTasksListAlert = () => {
-  const { listId } = useTypedSelector(state => state.alerts.deleteTasksList)
-  const [deleteTasksList] = useDeleteTasksListMutation()
   const { hideDeleteTasksListAlert, closeHiddenTasksListModal } = useActions()
+  const { listId } = useTypedSelector(s => s.alerts.deleteTasksList)
+  const [deleteTasksList] = useDeleteTasksListMutation()
 
-  const handleSubmitDelete = async () => {
-    await deleteTasksList(listId)
+  const handleSubmitDelete = useCallback(() => {
+    deleteTasksList(listId)
     hideDeleteTasksListAlert()
     closeHiddenTasksListModal()
-  }
+  }, [
+    listId,
+    deleteTasksList,
+    hideDeleteTasksListAlert,
+    closeHiddenTasksListModal,
+  ])
 
   const handleHideAlert = () => hideDeleteTasksListAlert()
 
@@ -27,13 +32,13 @@ const DeleteTasksListAlert = () => {
     >
       <>
         <OutlineButton
-          color={OutlineButtonColorsEnum.RED}
           title='Delete'
+          color={OutlineButtonColorsEnum.RED}
           onClickAction={handleSubmitDelete}
         />
         <OutlineButton
-          color={OutlineButtonColorsEnum.GRAY}
           title='Cancel'
+          color={OutlineButtonColorsEnum.GRAY}
           onClickAction={handleHideAlert}
         />
       </>

@@ -23,5 +23,7 @@ export { default as AddBlockBelowTooltip } from './Filled/components/AddBlockBel
 export { default as OpenFullPageTooltip } from './Filled/components/OpenFullPageTooltip'
 export { default as ToggleFavoriteTooltip } from './Filled/components/ToggleFavoriteTooltip'
 export { default as FontTooltip } from './Filled/components/FontTooltip'
+export { default as RestorePageTooltip } from './Filled/components/RestorePageTooltip'
+export { default as PermanentlyDeletePageTooltip } from './Filled/components/PermanentlyDeletePageTooltip'
 
 // Outgoing.

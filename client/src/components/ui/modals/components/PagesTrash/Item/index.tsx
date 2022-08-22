@@ -1,20 +1,31 @@
 import React, { FC, memo } from 'react'
 
-import RestorePage from 'components/ui/buttons/RestorePage'
+import RestorePageButton from 'components/ui/buttons/RestorePage'
 import PermanentlyDeletePageButton from 'components/ui/buttons/PermanentlyDeletePage'
 import { PageSvg } from 'components/ui/svg'
+import handleImageUrl from 'utils/helpers/handleImageUrl'
 import IPage from 'models/page/IPage'
+import { ISelectItemParams } from 'types'
 import * as Item from './DeletedPage.styles'
 
-const DeletedPage: FC<IPage> = memo(page => (
-  <Item.Wrapper>
-    {page.iconUrl ? <Item.Icon src={page.iconUrl} /> : <PageSvg />}
-    <Item.Title>{page.title}</Item.Title>
-    <Item.ButtonsContainer>
-      <RestorePage _id={page._id} />
-      <PermanentlyDeletePageButton _id={page._id} />
-    </Item.ButtonsContainer>
-  </Item.Wrapper>
-))
+const DeletedPageItem: FC<IPage & ISelectItemParams<string>> = memo(
+  ({ _id, title, iconUrl, isSelected, handleSelectItem }) => (
+    <Item.Wrapper
+      isSelected={isSelected}
+      onMouseEnter={() => handleSelectItem(_id)}
+    >
+      {iconUrl ? (
+        <Item.Icon src={handleImageUrl(iconUrl)} alt='icon' />
+      ) : (
+        <PageSvg />
+      )}
+      <Item.Title>{title}</Item.Title>
+      <Item.ButtonsContainer>
+        <RestorePageButton _id={_id} />
+        <PermanentlyDeletePageButton _id={_id} />
+      </Item.ButtonsContainer>
+    </Item.Wrapper>
+  )
+)
 
-export default DeletedPage
+export default DeletedPageItem

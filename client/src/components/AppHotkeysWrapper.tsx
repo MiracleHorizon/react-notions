@@ -1,23 +1,34 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useEventListener } from 'usehooks-ts'
 
 import ModalsOverlay from 'components/ui/modals/ModalsOverlay'
-import AlertsOverlay from 'components/ui/alerts/AlertsOverlay'
+import AlertsOverlay from 'components/ui/alerts - Checked/AlertsOverlay'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import { useUpdatePageMutation } from 'services/pages.api'
 
 const AppHotkeysWrapper: FC<{ children: JSX.Element }> = ({ children }) => {
-  const { page: currentPage } = useTypedSelector(state => state.pages)
-  const { page: task } = useTypedSelector(state => state.modals.notionTask)
-  const [updatePage] = useUpdatePageMutation()
-  const { toggleQuickSearchModal, toggleAppSettingsModal, toggleSidebar } =
-    useActions()
+  const { page: currentPage } = useTypedSelector(s => s.pages)
+  const { savePage: isSavePageLoading } = useTypedSelector(s => s.app.loadings)
+  const [updatePage, { isLoading }] = useUpdatePageMutation()
+  const [searchParams] = useSearchParams()
+  const {
+    toggleQuickSearchModal,
+    toggleAppSettingsModal,
+    toggleSidebar,
+    setSavePageLoading,
+  } = useActions()
 
   const handleSavePageChanges = (e: KeyboardEvent) => {
-    if (currentPage && e.code === 'KeyS' && e.ctrlKey) {
+    const _id = searchParams.get('p') ? searchParams.get('p') : currentPage?._id
+
+    // const body =
+
+    if (_id && e.code === 'KeyS' && e.ctrlKey && !isSavePageLoading) {
       e.preventDefault()
-      updatePage({ _id: currentPage._id, body: { ...currentPage } })
+      setSavePageLoading(true)
+      // updatePage({ _id, body: { ...currentPage } }) //!
     }
   }
 
@@ -43,21 +54,32 @@ const AppHotkeysWrapper: FC<{ children: JSX.Element }> = ({ children }) => {
   }
 
   const handleToggleFavorite = (e: KeyboardEvent) => {
-    const page = task ? task : currentPage
+    const _id = currentPage?._id
 
-    if (page && e.code === 'KeyF' && e.ctrlKey && e.altKey && e.shiftKey) {
+    if (
+      _id &&
+      !searchParams.get('p') &&
+      e.code === 'KeyF' &&
+      e.ctrlKey &&
+      e.altKey &&
+      e.shiftKey
+    ) {
       const body = {
-        favorite: !page.favorite,
+        favorite: !currentPage.favorite,
         parentPageId: null,
         parentListId: null,
         status: null,
       }
 
-      updatePage({ _id: page._id, body })
+      updatePage({ _id, body })
     }
   }
 
-  // useEventListener('keydown', handleSavePage())
+  useEffect(() => {
+    if (!isLoading) setSavePageLoading(false)
+  }, [isLoading, setSavePageLoading])
+
+  useEventListener('keydown', handleSavePageChanges)
   useEventListener('keydown', handleToggleSidebar)
   useEventListener('keydown', handleOpenQuickSearchModal)
   useEventListener('keydown', handleOpenAppSettingsModal)

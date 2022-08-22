@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ItemContainerProps } from './PageItem.types'
-import { txtOflow } from 'styles/uiKit'
+import { bgTransitions, txtOflow } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   display: flex;
@@ -15,22 +15,21 @@ export const Container = styled.div<ItemContainerProps>`
   align-items: center;
   width: 100%;
   height: 27px;
-  padding-left: ${props => props.pLeft}px;
+  padding-left: ${p => p.pLeft}px;
   border-radius: 3px;
-  background: ${props =>
-    props.isSelected ? props.theme.colors['bg-el-hover-primary'] : 'inherit'};
-  transition: background 50ms ease-in-out;
+  background: ${p => p.isSelected ? p.theme.colors['bg-el-hover-primary'] : 'inherit'};
+  ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   p {
-    max-width: ${props => (props.isHovering ? 65 : 85)}%;
+    max-width: ${p => (p.isHovering ? 65 : 85)}%;
   }
 `
 
@@ -48,8 +47,5 @@ export const Title = styled.p<{ isSelected: boolean }>`
   font-weight: 500;
   line-height: 24px;
   ${txtOflow.ell};
-  color: ${props =>
-    props.theme.colors[
-      !props.isSelected ? 'text-sb-page-item-selected' : 'text-primary'
-    ]};
+  color: ${p => p.theme.colors[!p.isSelected ? 'text-sb-page-item-selected' : 'text-primary']};
 `

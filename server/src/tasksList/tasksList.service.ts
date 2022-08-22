@@ -28,7 +28,9 @@ export class TasksListService {
   }
 
   async getAll(id: ObjectId): Promise<TasksList[]> {
-    return this.tasksListModel.find({ parentPageId: id })
+    return this.tasksListModel
+      .find({ parentPageId: id })
+      .populate('dependencies')
   }
 
   async delete(id: ObjectId): Promise<ObjectId> {

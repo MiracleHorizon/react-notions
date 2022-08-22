@@ -1,22 +1,18 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
-export const Label = styled.label`
+const Container = styled.label`
   cursor: pointer;
   position: absolute;
   left: 0;
   top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${dFlex.center};
   width: 100%;
   height: 100%;
+
+  input {
+    display: none;
+  }
 `
 
-export const Input = styled.input`
-  position: absolute;
-  width: 0.4px;
-  height: 0.4px;
-  opacity: 0;
-  overflow: hidden;
-  z-index: -1;
-`
+export default Container

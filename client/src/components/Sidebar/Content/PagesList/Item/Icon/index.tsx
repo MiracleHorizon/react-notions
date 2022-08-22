@@ -1,38 +1,39 @@
-import React, { FC, useRef, MouseEvent } from 'react'
+import React, { FC, useRef, MouseEvent, memo, useCallback } from 'react'
 import { useHover } from 'usehooks-ts'
 
+import SmallPageIcon from 'components/ui/SmallPageIcon - Checked'
 import { ChangeIconTooltip } from 'components/ui/tooltips'
-import { EmptyPageSvg, PageSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import IPage from 'models/page/IPage'
-import * as Icon from './PageItemIcon.styles'
+import Container from './PageItemIcon.styles'
 
-const PageItemIcon: FC<IPage> = ({ _id, iconUrl, content }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
-  const { openChangeIconModal } = useActions()
+const PageItemIcon: FC<IPage> = memo(
+  ({ _id, iconUrl, coverUrl, content, locked }) => {
+    const { openChangeIconModal } = useActions()
+    const ref = useRef<HTMLDivElement>(null)
+    const isHovering = useHover(ref)
 
-  const handleOpenIconModal = (e: MouseEvent) => {
-    e.preventDefault()
+    const handleOpenIconModal = useCallback(
+      (e: MouseEvent) => {
+        e.preventDefault()
 
-    openChangeIconModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
-      pageId: _id,
-    })
+        const invokerRect = ref.current?.getBoundingClientRect().toJSON()
+        openChangeIconModal({ invokerRect, pageId: _id })
+      },
+      [_id, openChangeIconModal]
+    )
+
+    return (
+      <Container ref={ref} locked={locked} onClick={handleOpenIconModal}>
+        <SmallPageIcon
+          iconUrl={iconUrl}
+          coverUrl={coverUrl}
+          content={content}
+        />
+        {isHovering && <ChangeIconTooltip reference={ref} />}
+      </Container>
+    )
   }
-
-  return (
-    <Icon.Container ref={ref} onClick={handleOpenIconModal}>
-      {iconUrl ? (
-        <Icon.Image src={iconUrl} />
-      ) : content.length === 0 ? (
-        <EmptyPageSvg />
-      ) : (
-        <PageSvg />
-      )}
-      {isHovering && <ChangeIconTooltip reference={ref} />}
-    </Icon.Container>
-  )
-}
+)
 
 export default PageItemIcon

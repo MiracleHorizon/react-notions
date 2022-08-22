@@ -1,36 +1,40 @@
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, memo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
 
 import { ToggleFavoriteTooltip } from 'components/ui/tooltips'
 import { FavoriteStarSvg, UnfavoriteStarSvg } from 'components/ui/svg'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import useActions from 'hooks/useActions'
+import { useUpdatePageMutation } from 'services/pages.api'
 import IPage from 'models/page/IPage'
-import Container from './ToggleFavoriteButton.styles'
+import Button from './ToggleFavoriteButton.styles'
 
-// Хук useHover не используется, так как было необходимо несколько изменить ожидаемое поведение.
-const ToggleFavoriteButton: FC<IPage> = ({ _id, favorite }) => {
-  const [updatePage] = useUpdatePageMutation()
+const ToggleFavoriteButton: FC<IPage> = memo(({ _id, favorite }) => {
+  const { closeNotionTaskModal } = useActions()
   const [isHovering, setHovering] = useState<boolean>(false)
+  const [updatePage] = useUpdatePageMutation()
   const ref = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
   const handleMouseEnter = () => setHovering(true)
 
   const handleMouseLeave = () => setHovering(false)
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = async () => {
+    const body = {
+      parentPageId: null,
+      parentListId: null,
+      status: null,
+      favorite: !favorite,
+    }
+
     setHovering(false)
-    updatePage({
-      _id,
-      body: {
-        parentPageId: null,
-        parentListId: null,
-        status: null,
-        favorite: !favorite,
-      },
-    })
+    await updatePage({ _id, body })
+    navigate(`/workspace/${_id}`)
+    closeNotionTaskModal()
   }
 
   return (
-    <Container
+    <Button
       ref={ref}
       role='button'
       data-btn='toggle-fav'
@@ -42,8 +46,8 @@ const ToggleFavoriteButton: FC<IPage> = ({ _id, favorite }) => {
       {isHovering && (
         <ToggleFavoriteTooltip reference={ref} favorite={favorite} />
       )}
-    </Container>
+    </Button>
   )
-}
+})
 
 export default ToggleFavoriteButton

@@ -1,11 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import GalleryItem from '../Item'
-import PropTypes from './GalleryList.types'
 import coverLinkHandler from 'utils/helpers/coverLinkHandler'
+import { IGalleryList } from 'utils/constants/decor'
 import * as List from './GalleryList.styles'
 
-const GalleryList: FC<PropTypes> = ({ _id, list: { title, content } }) => (
+const GalleryList: FC<{
+  _id: string
+  list: IGalleryList
+}> = memo(({ _id, list: { title, content } }) => (
   <List.Wrapper>
     <List.TitleContainer>
       <List.Title>{title}</List.Title>
@@ -17,6 +20,6 @@ const GalleryList: FC<PropTypes> = ({ _id, list: { title, content } }) => (
       ))}
     </List.Content>
   </List.Wrapper>
-)
+))
 
 export default GalleryList

@@ -2,13 +2,15 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div<{ isOpen: boolean }>`
   position: relative;
+  width: 100%;
   margin-top: 10px;
-  margin-bottom: ${props => (props.isOpen ? 10 : 0)}px;
+  margin-bottom: ${p => (p.isOpen ? 10 : 0)}px;
 `
 
 export const Container = styled.ul`
-  flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
+  width: 100%;
+  height: 100%;
 `

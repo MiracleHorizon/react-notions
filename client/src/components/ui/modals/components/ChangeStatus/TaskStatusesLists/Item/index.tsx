@@ -1,29 +1,24 @@
-import React, { FC, useRef, MouseEvent, useCallback } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC, useRef, MouseEvent, useCallback, memo } from 'react'
 
-import TasksListStatusContainer from 'components/ui/StatusContainer'
+import TasksListStatusContainer from 'components/ui/StatusContainer - Checked'
 import OptionsButton from 'components/ui/buttons/Options'
 import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import { useUpdatePageMutation } from 'services/pages.api'
+import IPage from 'models/page/IPage'
+import ITasksList from 'models/tasksList/ITasksList'
 import { ISelectItemParams } from 'types'
-import PropTypes from '../../ChangeStatusModal.types'
 import * as Item from './StatusListItem.styles'
 
-const StatusListItem: FC<PropTypes & ISelectItemParams<string>> = ({
-  list,
-  task,
-  isSelected,
-  handleSelectItem,
-}) => {
-  const {
-    closeChangeStatusModal,
-    openTasksListsOptionsModal,
-    updateNotionTaskModalState,
-  } = useActions()
+const StatusListItem: FC<
+  {
+    task: IPage
+    list: ITasksList
+  } & ISelectItemParams<string>
+> = memo(({ list, task, isSelected, handleSelectItem }) => {
+  const { closeChangeStatusModal, openTasksListsOptionsModal } = useActions()
   const [updatePage] = useUpdatePageMutation()
-  const ref = useRef<HTMLDivElement>(null)
-  const inHovering = useHover(ref)
   const optionsBtnRef = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   const handleChangeTaskStatus = useCallback(async () => {
     if (task.parentListId !== list._id) {
@@ -32,11 +27,10 @@ const StatusListItem: FC<PropTypes & ISelectItemParams<string>> = ({
       updatedTask.status = list._id
 
       await updatePage({ _id: task._id, body: updatedTask })
-      updateNotionTaskModalState(updatedTask) //! Костыль.
     }
 
     closeChangeStatusModal()
-  }, [task, list._id])
+  }, [task, list._id, updatePage, closeChangeStatusModal])
 
   const handleOpenTasksListOptionsModal = useCallback(
     (e: MouseEvent) => {
@@ -50,7 +44,7 @@ const StatusListItem: FC<PropTypes & ISelectItemParams<string>> = ({
         color: list.color,
       })
     },
-    [list]
+    [list, openTasksListsOptionsModal]
   )
 
   return (
@@ -72,6 +66,6 @@ const StatusListItem: FC<PropTypes & ISelectItemParams<string>> = ({
       </Item.Container>
     </Item.Wrapper>
   )
-}
+})
 
 export default StatusListItem

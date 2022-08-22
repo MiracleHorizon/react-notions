@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react'
 
 import ClearInputButton from 'components/ui/buttons/ClearInput'
-import PropTypes from '../input.types'
+import PropTypes from '../types'
 import { Wrapper, Input } from './OutlineInput.styles'
 
 const OutlineInput: FC<PropTypes> = ({
@@ -9,6 +9,7 @@ const OutlineInput: FC<PropTypes> = ({
   onChange,
   onClear,
   inputMode,
+  register,
   placeholder,
   renderFocusable,
   renderSelectable,
@@ -29,13 +30,9 @@ const OutlineInput: FC<PropTypes> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        {...register}
       />
-      {value !== '' && onClear && (
-        <ClearInputButton
-          onClickAction={onClear}
-          coords={{ right: 8, top: 8 }}
-        />
-      )}
+      {value !== '' && onClear && <ClearInputButton onClickAction={onClear} />}
     </Wrapper>
   )
 }

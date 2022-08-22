@@ -9,7 +9,7 @@ const DefaultAlert: FC<PropTypes> = ({
   children,
   title,
   closeAction,
-  textAlignCenter,
+  textCenter,
 }) => {
   useEventListener('keydown', e => {
     if (e.code === 'Enter') closeAction()
@@ -18,7 +18,7 @@ const DefaultAlert: FC<PropTypes> = ({
   return (
     <ModalWrapper inset>
       <Alert.Container>
-        <Alert.TitleContainer textAlignCenter={textAlignCenter}>
+        <Alert.TitleContainer textCenter={textCenter}>
           <Alert.Title>{title}</Alert.Title>
         </Alert.TitleContainer>
         <Alert.Buttons>{children}</Alert.Buttons>

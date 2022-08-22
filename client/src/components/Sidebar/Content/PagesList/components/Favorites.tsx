@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react'
+import React, { FC, memo } from 'react'
 
 import PagesList from '../index'
 import PagesListTitle from '../Title'
@@ -7,23 +7,22 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import IPage from 'models/page/IPage'
 import { Wrapper } from '../PagesList.styles'
 
-const FavoritesPagesList: FC<{ pages: IPage[] }> = ({ pages }) => {
-  const { isOpen } = useTypedSelector(state => state.app.favoritePagesLists)
+const FavoritesPagesList: FC<{ pages: IPage[] }> = memo(({ pages }) => {
+  const { isOpen } = useTypedSelector(s => s.app.favoritePagesLists)
   const { toggleFavoritePagesList } = useActions()
 
-  // eslint-disable-next-line
-  const handleToggleList = useCallback(() => toggleFavoritePagesList(), [])
+  const handleToggleList = () => toggleFavoritePagesList()
 
   return (
     <Wrapper isOpen={isOpen}>
       <PagesListTitle
-        title='Favorites'
         isOpen={isOpen}
-        handleToggleList={handleToggleList}
+        title='Favorites'
+        onClickAction={handleToggleList}
       />
       {isOpen && <PagesList pages={pages} pLeft={10} />}
     </Wrapper>
   )
-}
+})
 
 export default FavoritesPagesList

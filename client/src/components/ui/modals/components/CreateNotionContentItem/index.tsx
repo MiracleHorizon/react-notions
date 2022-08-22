@@ -11,18 +11,17 @@ import { NOTION_CONTENT_ITEM_TYPE_OPTIONS } from 'utils/constants/notionContentI
 import Wrapper from './CreateNotionContentItemModal.styles'
 
 const CreateNotionContentItemModal = () => {
-  const { item, parentItemId, invokerRect } = useTypedSelector(
-    state => state.modals.createNotionContentItem
-  )
   const { closeCreateNotionContentItemModal } = useActions()
+  const { item, parentItemId, invokerRect } = useTypedSelector(
+    s => s.modals.createNotionContentItem
+  )
+
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'centerTop',
     invokerRect,
   })
 
   useOnCloseModal(ref, closeCreateNotionContentItemModal)
-
-  if (!item) return null
 
   return createPortal(
     <Wrapper ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>

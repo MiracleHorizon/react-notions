@@ -7,7 +7,7 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import {
   useCreateItemMutation,
   useUpdateItemMutation,
-} from 'store/slices/pages/pages.api'
+} from 'services/pages.api'
 import NotionContentItem from 'models/pageContent/NotionContentItem.class'
 import PropTypes from './CreateNotionContentItemOption.types'
 import * as Option from './CreateNotionContentItemOption.styles'

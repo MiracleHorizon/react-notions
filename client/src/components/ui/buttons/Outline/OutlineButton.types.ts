@@ -2,7 +2,7 @@ import { FC } from 'react'
 import {
   IOutlineButtonColors,
   OutlineButtonColorsEnum,
-} from 'models/decor/outlineButton/outlineButton.models'
+} from 'models/decor/outlineButton'
 
 export default interface OutlineButtonProps {
   title: string

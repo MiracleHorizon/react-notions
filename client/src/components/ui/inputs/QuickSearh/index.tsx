@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useRef } from 'react'
 
-import InputPropTypes from '../input.types'
+import PropTypes from '../types'
 import Input from './QuickSearchInput.styles'
 
-const QuickSearchInput: FC<InputPropTypes> = params => {
+const QuickSearchInput: FC<PropTypes> = params => {
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => ref.current?.focus(), [])

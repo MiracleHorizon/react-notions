@@ -1,4 +1,4 @@
-import React, { memo, useRef } from 'react'
+import React, { useRef } from 'react'
 import { useHover } from 'usehooks-ts'
 
 import OptionItem from 'components/ui/options/OptionItem'
@@ -7,14 +7,13 @@ import { LoupeSvg, GearSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import * as Panel from './AppOptionsPanel.styles'
 
-const AppOptionsPanel = memo(() => {
+const AppOptionsPanel = () => {
   const { openQuickSearchModal, openAppSettingsModal } = useActions()
+  const quickSearchOptionRef = useRef<HTMLDivElement>(null)
+  const isQuickSearchOptionHovering = useHover(quickSearchOptionRef)
 
-  const quickSearchRef = useRef<HTMLDivElement>(null)
-  const isQuickSearchHovering = useHover(quickSearchRef)
-
-  const appSettingsRef = useRef<HTMLDivElement>(null)
-  const isAppSettingsHovering = useHover(appSettingsRef)
+  const appSettingsOptionRef = useRef<HTMLDivElement>(null)
+  const isAppSettingsOptionHovering = useHover(appSettingsOptionRef)
 
   const handleOpenQuickSearchModal = () => openQuickSearchModal()
 
@@ -24,26 +23,26 @@ const AppOptionsPanel = memo(() => {
     <Panel.Wrapper>
       <Panel.Container>
         <OptionItem
-          StartSvg={LoupeSvg}
           title='Quick Search'
-          reference={quickSearchRef}
+          StartSvg={LoupeSvg}
+          reference={quickSearchOptionRef}
           onClickAction={handleOpenQuickSearchModal}
         />
         <OptionItem
-          StartSvg={GearSvg}
           title='Settings & Themes'
-          reference={appSettingsRef}
+          StartSvg={GearSvg}
+          reference={appSettingsOptionRef}
           onClickAction={handleOpenAppSettingsModal}
         />
       </Panel.Container>
-      {isQuickSearchHovering && (
-        <QuickSearchTooltip reference={quickSearchRef} />
+      {isQuickSearchOptionHovering && (
+        <QuickSearchTooltip reference={quickSearchOptionRef} />
       )}
-      {isAppSettingsHovering && (
-        <AppSettingsTooltip reference={appSettingsRef} />
+      {isAppSettingsOptionHovering && (
+        <AppSettingsTooltip reference={appSettingsOptionRef} />
       )}
     </Panel.Wrapper>
   )
-})
+}
 
 export default AppOptionsPanel

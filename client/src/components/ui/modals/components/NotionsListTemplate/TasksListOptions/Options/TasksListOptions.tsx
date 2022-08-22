@@ -5,12 +5,13 @@ import RenameTasksListOption from './RenameList'
 import { DeleteTrashSvg, EyeHideSvg, EyeShowSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useUpdateTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
+import { useUpdateTasksListMutation } from 'services/tasksLists.api'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import PropTypes from './TasksListOptions.types'
 
 const TasksListOptions: FC<PropTypes> = memo(
   ({ hidden, color, template, selectedItem, handleSelectItem }) => {
-    const { listId } = useTypedSelector(state => state.modals.tasksListOptions)
+    const { listId } = useTypedSelector(s => s.modals.tasksListOptions)
     const [updateTasksList] = useUpdateTasksListMutation()
     const {
       closeTasksListsOptionsModal,
@@ -18,8 +19,8 @@ const TasksListOptions: FC<PropTypes> = memo(
       showDeleteTasksListAlert,
     } = useActions()
 
-    const handleToggleHideList = async () => {
-      await updateTasksList({ _id: listId, body: { hidden: !hidden } })
+    const handleToggleHideList = () => {
+      updateTasksList({ _id: listId, body: { hidden: !hidden } })
       closeTasksListsOptionsModal()
       closeHiddenTasksListModal()
     }
@@ -41,14 +42,14 @@ const TasksListOptions: FC<PropTypes> = memo(
         {template === 'default' && (
           <OptionItem
             title={hidden ? 'Show' : 'Hide'}
-            margY={color === 'empty'}
+            margY={color === TasksListTitleColorsEnum.EMPTY}
             isSelected={selectedItem === (hidden ? 'Show' : 'Hide')}
             StartSvg={hidden ? EyeShowSvg : EyeHideSvg}
             onClickAction={handleToggleHideList}
             onMouseOverAction={handleSelectToggleShowOption}
           />
         )}
-        {color !== 'empty' && (
+        {color !== TasksListTitleColorsEnum.EMPTY && (
           <OptionItem
             title='Delete'
             isSelected={selectedItem === 'Delete'}

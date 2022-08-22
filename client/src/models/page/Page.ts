@@ -13,10 +13,14 @@ export default class Page {
     status: null,
   })
 
-  static createTask = (parentPageId: string, parentListId: string) => ({
+  static createTask = (
+    parentPageId: string,
+    parentListId: string,
+    title?: string
+  ) => ({
     parentPageId,
     parentListId,
-    title: '',
+    title: title ? title : '',
     status: parentListId,
   })
 

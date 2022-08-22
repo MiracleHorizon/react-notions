@@ -8,7 +8,7 @@ const NOTION_ITEM_HEADING_STYLES = {
     },
     content: {
       height: '40px',
-      fontSize: '30px',
+      fontSize: '1.875em',
     },
   },
   h2: {
@@ -18,7 +18,7 @@ const NOTION_ITEM_HEADING_STYLES = {
     },
     content: {
       height: '32px',
-      fontSize: '24px',
+      fontSize: '1.5em',
     },
   },
   h3: {
@@ -28,7 +28,7 @@ const NOTION_ITEM_HEADING_STYLES = {
     },
     content: {
       height: '26px',
-      fontSize: '19px',
+      fontSize: '1.25em',
     },
   },
   tglH1: {

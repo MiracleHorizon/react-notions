@@ -1,6 +1,7 @@
 import { RootState } from 'store'
 import IPage from 'models/page/IPage'
-import INotionContentItem from '../../../models/pageContent/INotionContentItem'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 
 export const selectFavoritePages = (state: RootState): IPage[] => {
   return state.pages.pages.filter(
@@ -22,10 +23,20 @@ export const selectCommonPages = (state: RootState): IPage[] => {
   )
 }
 
-export const selectNoStatusPages = (state: RootState) =>
-  state.pages.pages.filter(page => page.status === 'NO_STATUS')
+export const selectNoStatusPages = (state: RootState) => {
+  const noStatusList = state.tasksLists.tasksLists.find(
+    list => list.color === TasksListTitleColorsEnum.EMPTY
+  )
 
-export const selectedDependencies = (state: RootState, _id: string): IPage[] =>
+  if (!noStatusList) return []
+
+  return state.pages.pages.filter(page => page.status === noStatusList._id)
+}
+
+export const selectPageDependencies = (
+  state: RootState,
+  _id: string
+): IPage[] =>
   state.pages.pages.filter(
     page => page.parentPageId === _id && page.status === null
   )
@@ -40,11 +51,11 @@ export const selectListTasks = (state: RootState, listId: string) => {
     .sort((a, b) => a.taskOrder! - b.taskOrder!)
 }
 
-export const selectMovablePages = (state: RootState, _id: string) => {
-  return state.pages.pages.filter(
-    page =>
-      page._id !== _id && page.status === null && page.parentListId === null
-  )
+export const selectParentPage = (
+  state: RootState,
+  parentPageId: string
+): IPage | undefined => {
+  return state.pages.pages.find(page => page._id === parentPageId)
 }
 
 export const selectPagesByListId = (
@@ -56,24 +67,12 @@ export const selectPagesByListId = (
   return state.pages.pages.filter(page => page.parentListId === _id)
 }
 
-export const selectPageById = (
-  state: RootState,
-  _id: string | null
-): IPage | null | undefined => {
-  if (!_id) return null
-  return state.pages.pages.find(page => page._id === _id)
-}
-
 export const selectGalleryPages = (state: RootState) => {
   const currentPage = state.pages.page
 
   return state.pages.pages.filter(
     page => page.parentPageId === currentPage?._id && page.status !== null
   )
-}
-
-export const selectCurrentPage = (state: RootState): IPage | null => {
-  return state.pages.page
 }
 
 export const selectContentItemDeps = (
@@ -85,3 +84,6 @@ export const selectContentItemDeps = (
 
   return deps ? deps : []
 }
+
+export const selectFilteredTasks = (state: RootState, _id: string): IPage[] =>
+  state.pages.pages.filter(page => page.parentListId === _id) // В страницы.

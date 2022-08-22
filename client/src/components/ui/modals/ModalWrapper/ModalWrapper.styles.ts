@@ -15,6 +15,6 @@ export const Wrapper = styled.div`
 export const Inset = styled.div`
   position: absolute;
   inset: 0;
-  background: ${props => props.theme.colors['modal-inset']};
+  background: ${p => p.theme.colors['modal-inset']};
   z-index: -1;
 `

@@ -25,7 +25,7 @@ const ContentItemTypeTooltip: FC<PropTypes> = ({ type, invokerRef }) => {
       {...coords}
     >
       <Tooltip.Container>
-        <Tooltip.Image src={imgUrl} alt='Tooltip' />
+        <Tooltip.Image src={imgUrl} alt='tooltip' />
         <Tooltip.TitleContainer>
           <Tooltip.Title>{title}</Tooltip.Title>
         </Tooltip.TitleContainer>

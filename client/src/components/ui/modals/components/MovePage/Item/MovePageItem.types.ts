@@ -1,6 +1,8 @@
-export default interface MovePageOptionProps {
+import { ISelectItemParams } from 'types'
+
+export default interface MovePageOptionProps extends ISelectItemParams<string> {
   pageId: string
-  _id: string
+  pageForMoveId: string
   title: string
   iconUrl: string | null
 }

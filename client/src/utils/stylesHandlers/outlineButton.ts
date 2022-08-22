@@ -2,11 +2,11 @@ import ITheme, { Theme } from 'themes/theme.model'
 import {
   IOutlineButtonColors,
   OutlineButtonColorsEnum,
-} from 'models/decor/outlineButton/outlineButton.models'
+} from 'models/decor/outlineButton'
 import {
-  grayOutlineButtonStyles,
-  redOutlineButtonStyles,
-} from 'models/decor/outlineButton/outlineButton.colors'
+  GRAY_OUTLINE_BUTTON_STYLES,
+  RED_OUTLINE_BUTTON_STYLES,
+} from 'utils/constants/colors'
 
 export default function outlineButtonStylesHandler(
   color: OutlineButtonColorsEnum,
@@ -15,12 +15,12 @@ export default function outlineButtonStylesHandler(
   switch (color) {
     case OutlineButtonColorsEnum.GRAY:
       return theme.identifier === Theme.LIGHT
-        ? grayOutlineButtonStyles.light
-        : grayOutlineButtonStyles.dark
+        ? GRAY_OUTLINE_BUTTON_STYLES.light
+        : GRAY_OUTLINE_BUTTON_STYLES.dark
     case OutlineButtonColorsEnum.RED:
       return theme.identifier === Theme.LIGHT
-        ? redOutlineButtonStyles.light
-        : redOutlineButtonStyles.dark
+        ? RED_OUTLINE_BUTTON_STYLES.light
+        : RED_OUTLINE_BUTTON_STYLES.dark
     default:
       throw new Error('Ошибка установки цвета.')
   }

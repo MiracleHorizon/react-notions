@@ -26,11 +26,11 @@ export class TasksList {
   @Prop()
   order: number
 
-  // @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Page' })
-  // dependencies: Page[]
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId }], ref: 'Page' })
+  dependencies: Page[]
 
-  @Prop()
-  dependencies: string[]
+  // @Prop()
+  // dependencies: string[]
 }
 
 export const TasksListSchema = SchemaFactory.createForClass(TasksList)

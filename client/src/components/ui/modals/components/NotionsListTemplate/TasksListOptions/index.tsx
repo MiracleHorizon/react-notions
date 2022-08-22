@@ -10,21 +10,22 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useSetModalPosition from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import ITheme from 'themes/theme.model'
 import Container from './TasksListOptionsModal.styles'
 
-const TasksListOptionsModal = memo(() => {
+const TasksListOptionsModal = () => {
+  const { closeTasksListsOptionsModal } = useActions()
   const { listId, color, hidden, template, invokerRect } = useTypedSelector(
-    state => state.modals.tasksListOptions
+    s => s.modals.tasksListOptions
   )
   const { selectedItem, handleSelectItem } = useSelectItem(color)
-  const { closeTasksListsOptionsModal } = useActions()
   const theme = useTheme() as ITheme
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'centerBottom',
     invokerRect,
-  }) // useMemo ?
+  })
 
   useOnCloseModal(ref, closeTasksListsOptionsModal)
 
@@ -44,7 +45,7 @@ const TasksListOptionsModal = memo(() => {
           selectedItem={selectedItem}
           handleSelectItem={handleSelectItem}
         />
-        {color !== 'empty' && (
+        {color !== TasksListTitleColorsEnum.EMPTY && (
           <TasksListModalColors
             _id={listId}
             theme={theme}
@@ -57,6 +58,6 @@ const TasksListOptionsModal = memo(() => {
       </Container>
     </ModalWrapper>
   )
-})
+}
 
 export default TasksListOptionsModal

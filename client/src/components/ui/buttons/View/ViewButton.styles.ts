@@ -6,24 +6,21 @@ export const Wrapper = styled.div<{ isActive: boolean }>`
   margin-right: 2px;
   padding-bottom: 4px;
   user-select: none;
-  ${props =>
-    props.isActive
-      ? `border-bottom: 2px solid ${props.theme.colors['text-primary']};`
+  ${p => p.isActive
+      ? `border-bottom: 2px solid ${p.theme.colors['text-primary']};`
       : 'padding-bottom: 6px;'};
 
   div[data-btn='view-btn-icon'] {
     svg {
       width: 14px !important;
-      fill: ${props =>
-        !props.isActive
-          ? props.theme.svgFills['view-btn']
-          : props.theme.colors['text-primary']} !important;
+      fill: ${p => !p.isActive
+          ? p.theme.svgFills['view-btn']
+          : p.theme.colors['text-primary']} !important;
     }
   }
 
   span {
-    ${props =>
-      props.isActive && `color: ${props.theme.colors['text-primary']};`}
+    ${p => p.isActive && `color: ${p.theme.colors['text-primary']};`}
   }
 `
 
@@ -37,11 +34,11 @@ export const Container = styled.div`
   ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
@@ -56,5 +53,5 @@ export const Title = styled.span`
   font-size: 14px;
   font-weight: 500;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-view-btn']};
+  color: ${p => p.theme.colors['text-view-btn']};
 `

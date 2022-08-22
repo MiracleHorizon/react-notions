@@ -1,82 +1,52 @@
-import React, { FC, memo, useRef, useState, MouseEvent } from 'react'
+import React, { FC, useRef, useState } from 'react'
 import { useHover } from 'usehooks-ts'
 
-import CoverOptionsPanel from './CoverOptions'
+import CoverOptionsPanel from './CoverOptions - Checked'
 import { DragCoverPositionTooltip } from 'components/ui/tooltips'
+import handleImageUrl from 'utils/helpers/handleImageUrl'
 import PropTypes from './PageCover.types'
 import * as Cover from './PageCover.styles'
 
-const PageCover: FC<PropTypes> = memo(
-  ({ _id, template, coverUrl, coverPosition, fullWidth }) => {
-    const [isRepositionEnabled, setRepositionEnabled] = useState<boolean>(false)
-    const [reposition, setStartReposition] = useState<boolean>(false)
-    const [covPosition, setCoverPosition] = useState<number>(coverPosition)
-    const imgRef = useRef<HTMLImageElement>(null)
-    const ref = useRef<HTMLDivElement>(null)
-    const isHovering = useHover(ref)
+const PageCover: FC<PropTypes> = ({
+  _id,
+  template,
+  coverUrl,
+  coverPosition,
+  fullWidth,
+  locked,
+}) => {
+  const [isRepositionEnabled, setRepositionEnabled] = useState<boolean>(false)
+  const imgRef = useRef<HTMLImageElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
+  const isHovering = useHover(ref)
 
-    const startPos = useRef<number>(0)
-    const endPos = useRef<number>(0)
-
-    const handleMouseDown = (e: MouseEvent) => {
-      if (!isRepositionEnabled) return
-
-      setStartReposition(true)
-      startPos.current = e.clientY
-    }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const coverRect = ref.current?.getBoundingClientRect()
-      if (!isRepositionEnabled || !reposition || !coverRect) return
-
-      if (e.clientY >= coverRect.bottom || e.clientY <= coverRect.top) {
-        setStartReposition(false)
-      }
-
-      // console.log(covPosition + (startPos.current - e.clientY) / 10)
-      if (covPosition < 0) setCoverPosition(0)
-      if (covPosition > 100) setCoverPosition(100)
-
-      // if (covPosition >= 0 && covPosition <= 100) {
-      //   setCoverPosition(covPosition + (startPos.current - e.clientY) / 10)
-      // }
-    }
-
-    const handleMouseUp = (e: MouseEvent) => {
-      if (!isRepositionEnabled) return
-
-      setStartReposition(false)
-      endPos.current = e.clientY
-    }
-
-    return (
-      <Cover.Wrapper
-        data-el='cover'
-        ref={ref}
-        template={template}
-        isRepositionEnabled={isRepositionEnabled}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-      >
-        <Cover.Image
-          src={coverUrl}
-          ref={imgRef}
-          draggable
-          imagePosition={covPosition}
-        />
+  return (
+    <Cover.Wrapper
+      data-el='cover'
+      ref={ref}
+      template={template}
+      isRepositionEnabled={isRepositionEnabled}
+    >
+      <Cover.Image
+        draggable
+        ref={imgRef}
+        src={handleImageUrl(coverUrl)}
+        imagePosition={coverPosition}
+        alt='cover'
+      />
+      {!locked && (
         <CoverOptionsPanel
           _id={_id}
           fullWidth={fullWidth}
           isHovering={isHovering}
           isRepositionEnabled={isRepositionEnabled}
           setReposition={setRepositionEnabled}
-          position={covPosition}
+          position={coverPosition}
         />
-        {isRepositionEnabled && <DragCoverPositionTooltip />}
-      </Cover.Wrapper>
-    )
-  }
-)
+      )}
+      {isRepositionEnabled && <DragCoverPositionTooltip />}
+    </Cover.Wrapper>
+  )
+}
 
 export default PageCover

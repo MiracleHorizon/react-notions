@@ -6,42 +6,41 @@ export const Container = styled.div<IconContainerProps>`
   cursor: pointer;
   position: relative;
   ${dFlex.center};
-  ${props =>
-    props.template === 'Notion'
+  ${p => p.template === 'Notion'
       ? `
         width: 140px;
         height: 140px
        `
       : `
+        min-width: 36px;
         width: 36px; 
         height: 36px;
       `};
-  margin-top: ${props =>
-    props.coverUrl && props.template === 'Notion' ? -80 : 0}px;
+  margin-top: ${p => (p.coverUrl && p.template === 'Notion' ? -80 : 0)}px;
   border-radius: 3px;
   z-index: 10;
+  pointer-events: ${p => p.locked && 'none'};
   ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   img {
-    ${props =>
-      props.template === 'Notion'
+    ${p => p.template === 'Notion'
         ? `
           width: 125px; 
           height: 125px
         `
         : `
-          width: 100%; 
-          height: 100%
+          width: 90%; 
+          height: 90%
         `};
-  };
+  }
 `
 
 export const Image = styled.img`

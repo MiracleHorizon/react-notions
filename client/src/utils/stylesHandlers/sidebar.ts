@@ -31,16 +31,13 @@ export default class SidebarStylesHandler {
   }
 
   static setToggleButtonParams(dest: 'open' | 'close') {
-    let position: string = 'relative',
-      rotate: number = 0,
+    let position = 'relative',
+      rotate = 0,
       coords: string
 
     if (dest === 'open') {
       rotate = 180
-      coords = `
-          top: 11px;
-          left: 10px;
-        `
+      coords = `left: 10px;`
     } else {
       position = 'absolute'
       coords = `

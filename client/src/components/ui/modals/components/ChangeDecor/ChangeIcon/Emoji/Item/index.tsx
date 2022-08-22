@@ -1,16 +1,16 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
-import { useAppDispatch } from 'store'
+import { useUpdatePageMutation } from 'services/pages.api'
 import Container from './EmojiItem.styles'
 
-const EmojiItem: FC<{ _id: string; emoji: string }> = ({ _id, emoji }) => {
-  const appDispatch = useAppDispatch()
+const EmojiItem: FC<{ _id: string; emoji: string }> = memo(({ _id, emoji }) => {
+  const [updatePage] = useUpdatePageMutation()
 
   const handleSelectIcon = () => {
-    // appDispatch(updatePage({_id, {iconUrl: emoji}}))
+    // updatePage({_id, {iconUrl: emoji}})
   }
 
   return <Container onClick={handleSelectIcon}>{emoji}</Container>
-}
+})
 
 export default EmojiItem

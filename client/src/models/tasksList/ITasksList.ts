@@ -7,5 +7,4 @@ export default interface ITasksList {
   color: TasksListTitleColorsEnum
   hidden: boolean
   order: number
-  dependencies: string[] // IPage[]
 }

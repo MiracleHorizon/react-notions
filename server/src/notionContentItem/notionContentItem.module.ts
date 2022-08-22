@@ -18,4 +18,4 @@ import {
   controllers: [NotionContentItemController],
   providers: [NotionContentItemService],
 })
-export default class NotionContentItemModule {}
+export class NotionContentItemModule {}

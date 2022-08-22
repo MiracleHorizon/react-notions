@@ -7,9 +7,9 @@ export const Container = styled.div<{ margY?: boolean; isSelected?: boolean }>`
   align-items: center;
   width: calc(100% - 8px);
   height: 28px;
-  border-radius: 3px;
   margin: ${p => (!p.margY ? 1 : 0)}px 4px;
   padding-left: 15px;
+  border-radius: 3px;
   user-select: none;
   ${bgTransitions.esIn20};
 

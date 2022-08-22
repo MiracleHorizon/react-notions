@@ -1,4 +1,6 @@
+import { SetState } from 'types'
+
 export default interface FileUploaderProps {
-  accept: 'audio' | 'image'
-  action: (file: any) => void
+  accept: 'audio' | 'video' | 'image'
+  setFile: SetState<FileList | null>
 }

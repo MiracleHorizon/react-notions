@@ -10,7 +10,7 @@ const WorkspaceContent: FC<{ children: JSX.Element }> = ({ children }) => {
 
   useEffect(() => {
     scrollContext.contentRef = ref
-  }, [scrollContext.contentRef])
+  }, [scrollContext])
 
   return (
     <MainLayout>

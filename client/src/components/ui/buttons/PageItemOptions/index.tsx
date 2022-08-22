@@ -1,4 +1,4 @@
-import React, { useRef, MouseEvent, FC } from 'react'
+import React, { useRef, MouseEvent, FC, memo } from 'react'
 import { useHover } from 'usehooks-ts'
 
 import { PageOptionsTooltip } from 'components/ui/tooltips'
@@ -6,9 +6,9 @@ import { DotsSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import setCoordsByPointer from 'utils/helpers/setCoordsByPointer'
 import IPage from 'models/page/IPage'
-import Container from './PageItemOptionsButton.styles'
+import Button from './PageItemOptionsButton.styles'
 
-const PageItemOptionsButton: FC<IPage> = page => {
+const PageItemOptionsButton: FC<IPage> = memo(page => {
   const { openPageOptionsModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
@@ -19,16 +19,17 @@ const PageItemOptionsButton: FC<IPage> = page => {
   }
 
   return (
-    <Container
+    <Button
       ref={ref}
       role='button'
+      data-btn='page-item-options'
       onClick={handleOpenOptionsModal}
       onContextMenu={handleOpenOptionsModal}
     >
       <DotsSvg />
       {isHovering && <PageOptionsTooltip reference={ref} />}
-    </Container>
+    </Button>
   )
-}
+})
 
 export default PageItemOptionsButton

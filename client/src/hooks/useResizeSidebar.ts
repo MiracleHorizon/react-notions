@@ -14,7 +14,10 @@ const SIDEBAR_WIDTH_RESTRICTIONS = {
   minWidth: 180,
 }
 
-const useResizeSidebar = ({ ref, resizerRef }: UseResizeParams): boolean => {
+export default function useResizeSidebar({
+  ref,
+  resizerRef,
+}: UseResizeParams): boolean {
   const [isResizingEnabled, setResizingEnabled] = useState<boolean>(false)
   const { maxWidth, minWidth } = SIDEBAR_WIDTH_RESTRICTIONS
   const { device } = useDeviceData('desktop')
@@ -41,7 +44,7 @@ const useResizeSidebar = ({ ref, resizerRef }: UseResizeParams): boolean => {
     (e: MouseEvent) => {
       if (!resizerRef.current || !isResizingEnabled || !nodeRect) return
 
-      let width = startPosition.current + e.clientX
+      const width = startPosition.current + e.clientX
 
       if (width <= maxWidth && width >= minWidth) {
         setSidebarWidth(width)
@@ -51,7 +54,14 @@ const useResizeSidebar = ({ ref, resizerRef }: UseResizeParams): boolean => {
         )
       }
     },
-    [resizerRef, nodeRect, maxWidth, minWidth, isResizingEnabled]
+    [
+      resizerRef,
+      nodeRect,
+      maxWidth,
+      minWidth,
+      isResizingEnabled,
+      setSidebarWidth,
+    ]
   )
 
   const onMouseUp = useCallback(
@@ -73,5 +83,3 @@ const useResizeSidebar = ({ ref, resizerRef }: UseResizeParams): boolean => {
 
   return isResizingEnabled
 }
-
-export default useResizeSidebar

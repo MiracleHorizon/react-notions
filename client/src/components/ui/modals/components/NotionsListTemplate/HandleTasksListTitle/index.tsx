@@ -11,7 +11,7 @@ import useSetModalPosition from 'hooks/useSetModalPosition'
 import {
   useCreateTasksListMutation,
   useUpdateTasksListMutation,
-} from 'store/slices/tasksLists/tasksLists.api'
+} from 'services/tasksLists.api'
 import AlreadyExistHandler from 'utils/AlreadyExistHandler'
 import GetRandom from 'utils/GetRandom'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
@@ -19,23 +19,21 @@ import { TasksList } from 'models/tasksList/TasksList'
 import * as Modal from './HandleTasksListTitleModal.styles'
 
 const HandleTasksListTitleModal = () => {
-  const { listId, title, dest, invokerRect } = useTypedSelector(
-    state => state.modals.handleTasksList
-  )
-  const page = useTypedSelector(state => state.pages.page)
-  const lists = useTypedSelector(state => state.tasksLists.tasksLists)
-  const { isOpen } = useTypedSelector(state => state.alerts.alreadyExist)
-  const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'centerBottom',
-    invokerRect,
-  }) // useMemo ?
+  const { closeHandleTasksListTitleModal, showAlreadyExistAlert } = useActions()
+  const [createTasksList] = useCreateTasksListMutation()
+  const [updateTasksList] = useUpdateTasksListMutation()
+  const { listId, title, dest, invokerRect } = useTypedSelector(s => s.modals.handleTasksList)
+  const page = useTypedSelector(s => s.pages.page)
+  const lists = useTypedSelector(s => s.tasksLists.tasksLists)
+  const { isOpen } = useTypedSelector(s => s.alerts.alreadyExist)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const { value, handleChangeValue } = useInput(title)
-  const { closeHandleTasksListTitleModal, showAlreadyExistAlert } = useActions()
 
-  const [createTasksList] = useCreateTasksListMutation()
-  const [updateTasksList] = useUpdateTasksListMutation()
+  const { ref, setRef, rect, coords } = useSetModalPosition({
+    pos: 'centerBottom',
+    invokerRect,
+  })
 
   const handleTasksListTitle = () => {
     if (dest === 'create' && page && value !== title) {

@@ -1,29 +1,27 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import OutlineInput from 'components/ui/inputs/Outline'
+import OutlineInput from 'components/ui/inputs - Checked/Outline'
 import FilledButton from 'components/ui/buttons/Filled'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import { useUpdateItemMutation } from 'store/slices/pages/pages.api'
+import { useUpdateItemMutation } from 'services/pages.api'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './CreateWebBookmarkModal.styles'
 
 const CreateWebBookmarkModal = () => {
-  const { _id, invokerRect } = useTypedSelector(
-    state => state.modals.webBookmark
-  )
-  const [updateContentItem] = useUpdateItemMutation()
-  const { value, handleChangeValue, handleClearValue } = useInput('')
   const { closeCreateWebBookmarkModal } = useActions()
+  const [updateContentItem] = useUpdateItemMutation()
+  const { _id, invokerRect } = useTypedSelector(s => s.modals.webBookmark)
+  const { value, handleChangeValue, handleClearValue } = useInput('')
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'centerBottom',
     invokerRect,
-  }) // useMemo ?
+  })
 
   const handleSubmitCreate = () => {
     updateContentItem({ _id, body: { content: value } })
@@ -34,10 +32,7 @@ const CreateWebBookmarkModal = () => {
 
   return (
     <ModalWrapper>
-      <Modal.Container
-        ref={node => nodeRefHandler(node, rect, setRef)}
-        {...coords}
-      >
+      <Modal.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
         <OutlineInput
           renderFocusable
           inputMode='url'

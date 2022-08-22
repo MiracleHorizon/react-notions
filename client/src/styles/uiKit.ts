@@ -98,3 +98,8 @@ export const modalBoxShadowPrimary = (theme: ITheme) =>
   theme.identifier === Theme.LIGHT
     ? `rgb(15 15 15 / 5%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 3px 6px, rgb(15 15 15 / 20%) 0 9px 24px`
     : `rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 3px 6px, rgb(15 15 15 / 40%) 0 9px 24px`
+
+export const alertBoxShadowPrimary = (theme: ITheme) =>
+  theme.identifier === Theme.DARK
+    ? 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 5px 10px, rgb(15 15 15 / 40%) 0 15px 40px;'
+    : 'rgb(15 15 15 / 5%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 5px 10px, rgb(15 15 15 / 20%) 0 15px 40px;'

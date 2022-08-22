@@ -1,20 +1,17 @@
-import React, { CSSProperties, memo, useRef } from 'react'
+import React, { useRef } from 'react'
 
 import useActions from 'hooks/useActions'
-import useImageOnLoad from 'hooks/useImageOnLoad'
+import handleImageUrl from 'utils/helpers/handleImageUrl'
 import PropTypes from './PageIcon.types'
 import * as Icon from './PageIcon.styles'
 
-const PageIcon = memo(({ _id, iconUrl, coverUrl, template }: PropTypes) => {
-  const ref = useRef<HTMLDivElement>(null)
-  // const { handleImageOnLoad, css } = useImageOnLoad()
+const PageIcon = ({ _id, iconUrl, coverUrl, template, locked }: PropTypes) => {
   const { openChangeIconModal } = useActions()
+  const ref = useRef<HTMLDivElement>(null)
 
-  const handleOpenIconModal = () => {
-    openChangeIconModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
-      pageId: _id,
-    })
+  const handleOpenChangeIconModal = () => {
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
+    openChangeIconModal({ invokerRect, pageId: _id })
   }
 
   return (
@@ -22,15 +19,12 @@ const PageIcon = memo(({ _id, iconUrl, coverUrl, template }: PropTypes) => {
       ref={ref}
       template={template}
       coverUrl={coverUrl}
-      onClick={handleOpenIconModal}
+      locked={locked}
+      onClick={handleOpenChangeIconModal}
     >
-      <Icon.Image
-        src={iconUrl}
-        // onLoad={handleImageOnLoad}
-        // style={{ ...(css.loadOpacity as CSSProperties) }}
-      />
+      <Icon.Image src={handleImageUrl(iconUrl)} alt='icon' />
     </Icon.Container>
   )
-})
+}
 
 export default PageIcon

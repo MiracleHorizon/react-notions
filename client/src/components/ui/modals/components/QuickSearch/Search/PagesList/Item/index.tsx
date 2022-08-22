@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useNavigate } from 'react-router'
 
-import SmallPageIcon from 'components/ui/SmallPageIcon'
+import SmallPageIcon from 'components/ui/SmallPageIcon - Checked'
 import { EnterSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'

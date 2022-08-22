@@ -1,16 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import AppState, { PageView } from './app.types'
-import AppStateHandler from 'utils/AppStateHandler'
+import AppState, {
+  PageView,
+  StartOpenOptionEnum,
+  ThemeState,
+} from './app.types'
+import { Theme } from 'themes/theme.model'
 import { lightTheme } from 'themes/light'
 import { darkTheme } from 'themes/dark'
+import AppStateHandler from 'utils/AppStateHandler'
 
-const initialState: AppState = {
-  theme: AppStateHandler.getTheme(),
-  sidebar: AppStateHandler.getSidebar(),
-  commonPagesLists: AppStateHandler.getCommonPagesList(),
-  favoritePagesLists: AppStateHandler.getFavoritePagesList(),
-  selectedView: 'Board',
-}
+const initialState: AppState = AppStateHandler.getAppState()
 
 const appSlice = createSlice({
   name: 'app',
@@ -18,17 +17,31 @@ const appSlice = createSlice({
   initialState,
 
   reducers: {
-    setLightTheme(state) {
-      state.theme = lightTheme
-      window.localStorage.setItem('theme', JSON.stringify(lightTheme))
-    },
-    setDarkTheme(state) {
-      state.theme = darkTheme
-      window.localStorage.setItem('theme', JSON.stringify(darkTheme))
-    },
-    setSystemTheme(state) {
+    setTheme(state, action: PayloadAction<Theme>) {
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      state.theme = isDark ? darkTheme : lightTheme
+      const themeState = {} as ThemeState
+
+      switch (action.payload) {
+        case Theme.LIGHT:
+          themeState.theme = lightTheme
+          themeState.title = Theme.LIGHT
+          break
+        case Theme.DARK:
+          themeState.theme = darkTheme
+          themeState.title = Theme.DARK
+          break
+        case Theme.SYSTEM:
+          themeState.theme = isDark ? darkTheme : lightTheme
+          themeState.title = Theme.SYSTEM
+          break
+      }
+
+      state.themeState = themeState
+      window.localStorage.setItem('themeState', JSON.stringify(themeState))
+    },
+    setStartOpenOption(state, action: PayloadAction<StartOpenOptionEnum>) {
+      state.startOpen = action.payload
+      window.localStorage.setItem('startOpen', JSON.stringify(state.startOpen))
     },
 
     toggleCommonPagesList(state) {
@@ -49,7 +62,6 @@ const appSlice = createSlice({
     setSidebarWidth(state, action: PayloadAction<number>) {
       state.sidebar.width = action.payload
     },
-
     openSidebar(state) {
       state.sidebar.isOpen = true
       window.localStorage.setItem('sidebar', JSON.stringify(state.sidebar))
@@ -66,13 +78,16 @@ const appSlice = createSlice({
     setView(state, action: PayloadAction<PageView>) {
       state.selectedView = action.payload
     },
+
+    setSavePageLoading(state, action: PayloadAction<boolean>) {
+      state.loadings.savePage = action.payload
+    },
   },
 })
 
 export const {
-  setLightTheme,
-  setDarkTheme,
-  setSystemTheme,
+  setTheme,
+  setStartOpenOption,
   toggleCommonPagesList,
   toggleFavoritePagesList,
   setSidebarWidth,
@@ -80,6 +95,7 @@ export const {
   closeSidebar,
   toggleSidebar,
   setView,
+  setSavePageLoading,
 } = appSlice.actions
 
 export default appSlice.reducer

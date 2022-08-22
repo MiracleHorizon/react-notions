@@ -4,10 +4,10 @@ import { Theme } from 'themes/theme.model'
 const Container = styled.div`
   margin-top: 6px;
   padding: 3px 10px;
-  box-shadow: ${props =>
-      props.theme.identifier === Theme.LIGHT
-        ? 'rgb(55 53 47 / 9%)'
-        : 'rgb(255 255 255 / 9%)'}
+  box-shadow: ${p =>
+    p.theme.identifier === Theme.LIGHT
+      ? 'rgb(55 53 47 / 9%)'
+      : 'rgb(255 255 255 / 9%)'}
     0px -1px 0px;
 
   p {
@@ -15,7 +15,7 @@ const Container = styled.div`
     font-size: 12px;
     font-weight: 400;
     line-height: 16px;
-    color: ${props => props.theme.colors['text-secondary']};
+    color: ${p => p.theme.colors['text-secondary']};
   }
 `
 

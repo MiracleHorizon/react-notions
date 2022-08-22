@@ -1,21 +1,20 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   min-width: 18px;
   min-height: 18px;
   width: 18px;
   height: 18px;
   padding-bottom: 1px;
   border-radius: 3px;
-  background: ${props => props.theme.colors['bg-empty-avatar']};
+  background: ${p => p.theme.colors['bg-empty-avatar']};
 `
 
 export const Title = styled.p`
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  color: ${props => props.theme.colors['text-empty-avatar']};
+  color: ${p => p.theme.colors['text-empty-avatar']};
 `

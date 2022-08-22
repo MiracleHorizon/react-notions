@@ -4,5 +4,4 @@ export default interface IUpdateTasksListBody {
   color?: string
   hidden?: boolean
   order?: number
-  dependencies?: string[]
 }

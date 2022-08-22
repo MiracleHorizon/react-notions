@@ -5,7 +5,7 @@ import ClipboardCopyButton from 'components/ui/buttons/ClipboardCopy'
 import { ClockSvg } from 'components/ui/svg'
 import * as Status from './StatusItem.styles'
 
-const TaskCreatedStatus: FC<{ value: string }> = ({ value }) => {
+const TaskCreatedStatus: FC<{ createdAt: string }> = ({ createdAt }) => {
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
@@ -17,10 +17,10 @@ const TaskCreatedStatus: FC<{ value: string }> = ({ value }) => {
           <Status.Title>Date Created</Status.Title>
         </Status.TitleContainer>
         <Status.ValueContainer>
-          <Status.Value>{value}</Status.Value>
+          <Status.Value>{createdAt}</Status.Value>
         </Status.ValueContainer>
       </Status.Container>
-      {isHovering && <ClipboardCopyButton value={value} />}
+      {isHovering && <ClipboardCopyButton value={createdAt} />}
     </Status.Wrapper>
   )
 }

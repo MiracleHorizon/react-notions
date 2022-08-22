@@ -4,8 +4,8 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import Container from './NotionLoader.styles'
 
 const NotionLoader = () => {
-  const { theme } = useTypedSelector(state => state.app)
-  const { page } = useTypedSelector(state => state.pages)
+  const { theme } = useTypedSelector(s => s.app.themeState)
+  const { page } = useTypedSelector(s => s.pages)
 
   if (!page) return null
 

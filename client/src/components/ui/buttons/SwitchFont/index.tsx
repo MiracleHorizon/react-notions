@@ -3,14 +3,14 @@ import { useHover } from 'usehooks-ts'
 
 import { FontTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import { useUpdatePageMutation } from 'services/pages.api'
 import { TPageFont } from 'models/decor/fonts'
 import PropTypes from './SwitchFontButton.types'
 import * as Button from './SwitchFontButton.styles'
 
 const SwitchFontButton: FC<PropTypes> = memo(({ _id, ...font }) => {
   const { updatePageSettingsModalState } = useActions()
-  const [updatePage, { isSuccess, isError }] = useUpdatePageMutation()
+  const [updatePage] = useUpdatePageMutation()
 
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
@@ -22,7 +22,12 @@ const SwitchFontButton: FC<PropTypes> = memo(({ _id, ...font }) => {
   }
 
   return (
-    <Button.Wrapper role='button' ref={ref} onClick={handleSwitchFont}>
+    <Button.Wrapper
+      ref={ref}
+      role='button'
+      data-btn='switch-font'
+      onClick={handleSwitchFont}
+    >
       <Button.Container>
         <Button.Abbreviation {...font}>Ag</Button.Abbreviation>
         <Button.Title>{font.fontFamily}</Button.Title>

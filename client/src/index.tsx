@@ -5,15 +5,12 @@ import { Provider } from 'react-redux'
 
 import App from './App'
 import { store } from 'store'
-import { AuthContext, fbAuth, fbDb } from 'context/Auth'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Router>
     <Provider store={store}>
-      <AuthContext.Provider value={{ fbAuth, fbDb }}>
-        <App />
-      </AuthContext.Provider>
+      <App />
     </Provider>
   </Router>
 )

@@ -5,7 +5,7 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import Container from './NotionTaskContentLoader.styles'
 
 const NotionTaskContentLoader = () => {
-  const { theme } = useTypedSelector(state => state.app)
+  const { theme } = useTypedSelector(s => s.app.themeState)
 
   return (
     <Container>

@@ -1,29 +1,53 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState, lazy, Suspense } from 'react'
+import { useSelector } from 'react-redux'
+import { useDebounce } from 'usehooks-ts'
 
 import QuickSearchPageItem from './Item'
+import DefaultLoader from 'components/ui/loaders/Default'
 import useSelectItem from 'hooks/useSelectItem'
-import useTypedSelector from 'hooks/useTypedSelector'
-import getFilteredPages from 'utils/helpers/getFilteredPages'
+import { useLazySearchPagesQuery } from 'services/pages.api'
+import { selectUser } from 'store/slices/auth/auth.selectors'
 import IPage from 'models/page/IPage'
 import Container from './QuickSearchPagesList.styles'
 
-const QuickSearchPagesList: FC<{ value: string }> = ({ value }) => {
-  const { selectedItem, handleSelectItem } = useSelectItem('')
-  const { pages } = useTypedSelector(state => state.pages) // Сделать запросом с бэка
-  const [filteredPages, setFilteredPages] = useState<IPage[]>(pages)
+const NoResultExposition = lazy(
+  () => import('components/ui/expositions/NoResultsExposition')
+)
+const SearchErrorExposition = lazy(
+  () => import('components/ui/expositions/SearchErrorExposition')
+)
 
-  useEffect(() => setFilteredPages(getFilteredPages(pages, value)), [value])
+const QuickSearchPagesList: FC<{ value: string }> = ({ value }) => {
+  const [searchPages, { data, isSuccess, isLoading, isError }] = useLazySearchPagesQuery()
+  const [pages, setPages] = useState<IPage[]>([])
+  const { selectedItem, handleSelectItem } = useSelectItem('')
+  const debouncedValue = useDebounce(value, 250)
+  const user = useSelector(selectUser)
+
+  useEffect(() => {
+    searchPages({ authorId: user._id, query: debouncedValue })
+  }, [user._id, debouncedValue, searchPages])
+
+  useEffect(() => {
+    if (isSuccess && data) setPages(data)
+  }, [data, isSuccess])
 
   return (
-    <Container isEmpty={filteredPages.length === 0}>
-      {filteredPages.map(page => (
-        <QuickSearchPageItem
-          key={page._id}
-          isSelected={page._id === selectedItem}
-          handleSelectItem={handleSelectItem}
-          {...page}
-        />
-      ))}
+    <Container>
+      <Suspense fallback={<DefaultLoader isLarge={false} />}>
+        {isLoading && <DefaultLoader isLarge={false} />}
+        {pages.length === 0 && <NoResultExposition />}
+        {isError && <SearchErrorExposition />}
+        {isSuccess &&
+          pages.map(page => (
+            <QuickSearchPageItem
+              key={page._id}
+              isSelected={page._id === selectedItem}
+              handleSelectItem={handleSelectItem}
+              {...page}
+            />
+          ))}
+      </Suspense>
     </Container>
   )
 }

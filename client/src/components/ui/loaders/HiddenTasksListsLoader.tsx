@@ -3,7 +3,7 @@ import ContentLoader from 'react-content-loader'
 import useTypedSelector from 'hooks/useTypedSelector'
 
 const HiddenTasksListsLoader = () => {
-  const { theme } = useTypedSelector(state => state.app)
+  const { theme } = useTypedSelector(s => s.app.themeState)
 
   return (
     <ContentLoader

@@ -5,17 +5,14 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import Container from './PageDescriptionLoader.styles'
 
 const PageDescriptionLoader = () => {
-  const { theme } = useTypedSelector(state => state.app)
-  const { page } = useTypedSelector(state => state.pages)
-
-  if (!page) return null
+  const { theme } = useTypedSelector(s => s.app.themeState)
 
   return (
     <Container>
       <ClipLoader
         size={25}
         speedMultiplier={0.6}
-        color={theme ? theme.colors['bg-app-loader'] : 'rgb(55, 53, 47)'}
+        color={theme.colors['bg-app-loader']}
       />
     </Container>
   )

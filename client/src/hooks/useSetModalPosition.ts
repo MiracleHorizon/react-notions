@@ -50,8 +50,8 @@ export default function useSetModalPosition({
         return modalCoords.changeStatus
       default:
         throw new Error()
-    }
-  }, [rect.current, invokerRect])
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pos, rect.current, invokerRect, pointerCoords])
 
   return { ref, setRef, rect, coords }
 }

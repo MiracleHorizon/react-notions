@@ -12,16 +12,16 @@ export const Container = styled.div`
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
 export const Title = styled.span`
   font-size: 14px;
   font-weight: 400;
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
 `

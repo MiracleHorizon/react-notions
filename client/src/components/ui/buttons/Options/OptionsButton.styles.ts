@@ -4,7 +4,7 @@ import { OptionsButtonContainerProps } from './OptionsButton.types'
 import { buttonSizesHandler } from 'utils/stylesHandlers/button'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 
-const Container = styled.div<OptionsButtonContainerProps>`
+const Button = styled.div<OptionsButtonContainerProps>`
   cursor: pointer;
   position: absolute;
   ${dFlex.center};
@@ -28,4 +28,4 @@ const Container = styled.div<OptionsButtonContainerProps>`
   }
 `
 
-export default Container
+export default Button

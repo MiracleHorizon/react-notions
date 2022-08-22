@@ -1,28 +1,35 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
+import { useSelector } from 'react-redux'
 
-import EmptyUserAvatar from 'components/ui/EmptyUserAvatar'
+import EmptyUserAvatar from 'components/ui/EmptyUserAvatar - Checked'
 import CloseSidebarButton from 'components/ui/buttons/ToggleSidebar/Close'
-import useAuth from 'hooks/useAuth'
+import { selectUser } from 'store/slices/auth/auth.selectors'
+import handleImageUrl from 'utils/helpers/handleImageUrl'
 import * as Panel from './UserPanel.styles'
 
-const UserPanel: FC<{ isHovering: boolean }> = ({ isHovering }) => {
-  const { user } = useAuth()
+const UserPanel: FC<{ isHovering: boolean }> = memo(({ isHovering }) => {
+  const user = useSelector(selectUser)
 
   return (
     <Panel.Wrapper>
       {user && (
         <>
-          {user.photoURL ? (
-            <Panel.Avatar src={user.photoURL} />
+          {user.avatarUrl ? (
+            <Panel.Avatar src={handleImageUrl(user.avatarUrl)} alt='avatar' />
           ) : (
-            <EmptyUserAvatar firstChar={user?.displayName![0]} />
+            <EmptyUserAvatar
+              firstChar={user.fullName ? user.fullName[0] : 'A'}
+            />
           )}
-          <Panel.Title>{user.displayName}'s Notion</Panel.Title>
+          <Panel.Title>
+            {user.fullName ? user.fullName : user.email.split('@')[0]}&apos;s
+            Notion
+          </Panel.Title>
           <CloseSidebarButton isSidebarHovering={isHovering} />
         </>
       )}
     </Panel.Wrapper>
   )
-}
+})
 
 export default UserPanel

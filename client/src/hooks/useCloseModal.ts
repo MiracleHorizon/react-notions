@@ -4,7 +4,7 @@ import { RefObject } from 'react'
 
 export default function useCloseModal<T extends HTMLElement>(
   ref: RefObject<T>,
-  action: ActionCreatorWithoutPayload | null
+  action: ActionCreatorWithoutPayload | null | (() => void)
 ) {
   const handleKeydownClose = (e: KeyboardEvent) => {
     if (e.code === 'Escape' && action) action()

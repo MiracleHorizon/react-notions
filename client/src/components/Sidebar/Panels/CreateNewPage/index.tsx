@@ -1,18 +1,25 @@
-import React, { memo } from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
 
 import PlusButton from 'components/ui/buttons/Plus'
-import useAuth from 'hooks/useAuth'
-import { useCreatePageMutation } from 'store/slices/pages/pages.api'
+import { useCreatePageMutation } from 'services/pages.api'
+import { selectUser } from 'store/slices/auth/auth.selectors'
 import Page from 'models/page/Page'
 import * as Panel from './CreateNewPagePanel.styles'
 
-const CreateNewPagePanel = memo(() => {
-  const [createPage] = useCreatePageMutation()
-  const { user } = useAuth()
+const CreateNewPagePanel = () => {
+  const [createPage, { data: page, isSuccess }] = useCreatePageMutation()
+  const user = useSelector(selectUser)
+  const navigate = useNavigate()
 
   const handleCreateNewPage = () => {
-    if (user) createPage({ ...Page.create(), author: user.uid })
+    createPage({ ...Page.create(), author: user._id })
   }
+
+  useEffect(() => {
+    if (isSuccess && page) navigate(`/workspace/${page._id}`)
+  }, [isSuccess, page, navigate])
 
   return (
     <Panel.Wrapper onClick={handleCreateNewPage}>
@@ -20,6 +27,6 @@ const CreateNewPagePanel = memo(() => {
       <Panel.Title>New page</Panel.Title>
     </Panel.Wrapper>
   )
-})
+}
 
 export default CreateNewPagePanel

@@ -1,5 +1,6 @@
-import IUser, { IGoogleUser } from 'models/IUser'
+import IUser from 'models/IUser'
 
 export default interface AuthState {
-  user: null | IUser | IGoogleUser
+  isAuth: boolean
+  user: IUser
 }

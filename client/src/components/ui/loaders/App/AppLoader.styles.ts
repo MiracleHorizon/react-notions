@@ -7,9 +7,8 @@ const Wrapper = styled.div<{ appTheme: ITheme | undefined }>`
   ${dFlex.center};
   width: 100vw;
   height: 100vh;
-  background: ${props =>
-    props.appTheme
-      ? props.appTheme.colors['bg-primary']
+  background: ${p => p.appTheme
+      ? p.appTheme.colors['bg-primary']
       : lightTheme.colors['bg-primary']};
 `
 

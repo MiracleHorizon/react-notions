@@ -16,7 +16,6 @@ const Global = createGlobalStyle<{ theme: ITheme }>`
     list-style: none;
     outline: none;
     box-sizing: border-box;
-
   }
 
   html {
@@ -71,7 +70,7 @@ const Global = createGlobalStyle<{ theme: ITheme }>`
   ::-webkit-scrollbar-track {
     background: ${p => p.theme.colors['scroll-track']};
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: ${p => p.theme.colors['scroll-thumb']};
 
@@ -81,7 +80,7 @@ const Global = createGlobalStyle<{ theme: ITheme }>`
   }
 
   ::selection {
-    background: ${props => props.theme.colors['bg-selection']};
+    background: ${p => p.theme.colors['bg-selection']};
   }
 `
 

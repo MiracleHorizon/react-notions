@@ -5,9 +5,11 @@ export default interface PageIconProps {
   template: TPageTemplate
   iconUrl: string
   coverUrl: string | null
+  locked: boolean
 }
 
 export interface IconContainerProps {
   template: TPageTemplate
   coverUrl: string | null
+  locked: boolean
 }

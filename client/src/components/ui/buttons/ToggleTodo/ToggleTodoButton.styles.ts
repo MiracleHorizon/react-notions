@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
-import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
+import ContentItemColorsHandler from 'utils/ContentItemColorsHandler'
 
-const Container = styled.div<{
+const Button = styled.div<{
   isActive: boolean
   squareColor: NotionContentItemColorsEnum
 }>`
@@ -14,8 +14,8 @@ const Container = styled.div<{
   width: 16px;
   height: 16px;
   background: ${p => (p.isActive ? 'rgb(46, 170, 220)' : 'transparent')};
-  ${bgTransitions.esIn20};
   background: ${p => !p.isActive && p.theme.colors['bg-el-hover-primary']};
+  ${bgTransitions.esIn20};
 
   &:active {
     background: ${p => !p.isActive && p.theme.colors['bg-el-active-primary']};
@@ -28,9 +28,8 @@ const Container = styled.div<{
   }
 
   svg[data-svg='checkbox-square'] {
-    fill: ${p =>
-      ContentItemColorsHandler.setColor(p.squareColor, p.theme)} !important;
+    fill: ${p => ContentItemColorsHandler.setColor(p.squareColor, p.theme)} !important;
   }
 `
 
-export default Container
+export default Button

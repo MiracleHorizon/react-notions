@@ -1,49 +1,47 @@
-import React, { FormEvent, useEffect, useMemo, useRef } from 'react'
+import React, { FormEvent, useEffect, useRef } from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import CommonInput from 'components/ui/inputs/Common'
-import { EmptyPageSvg, PageSvg } from 'components/ui/svg'
+import CommonInput from 'components/ui/inputs - Checked/Common'
+import SmallPageIcon from 'components/ui/SmallPageIcon - Checked'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useSetModalPosition from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import { useUpdatePageMutation } from 'services/pages.api'
 import * as Modal from './RenamePageModal.styles'
 
 const RenamePageModal = () => {
-  const isIconModalOpen = useTypedSelector(state => state.modals.icon.isOpen)
-  const { page, invokerRect } = useTypedSelector(state => state.modals.rename)
-  const { value, handleChangeValue } = useInput(page ? page.title : '')
   const { closeRenamePageModal, openChangeIconModal } = useActions()
   const [updatedPage] = useUpdatePageMutation()
+  const {
+    invokerRect,
+    page: { _id, title, iconUrl, coverUrl, content },
+  } = useTypedSelector(s => s.modals.rename)
+  const isIconModalOpen = useTypedSelector(s => s.modals.icon.isOpen)
+  const { value, handleChangeValue } = useInput(title)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const ref = useRef<HTMLDivElement>(null)
 
   const {
-    ref: iconRef,
-    setRef: setIconRef,
     rect,
     coords,
-  } = useSetModalPosition({ pos: 'rename', invokerRect }) // useMemo ?
+    ref: iconRef,
+    setRef: setIconRef,
+  } = useSetModalPosition({ pos: 'rename', invokerRect })
 
   const handleSubmitChanges = (e: FormEvent) => {
-    if (!page) return
     e.preventDefault()
 
-    updatedPage({ _id: page._id, body: { title: value } })
+    updatedPage({ _id, body: { title: value } })
     closeRenamePageModal()
   }
 
   const handleOpenIconModal = () => {
-    if (!page) return
-
-    openChangeIconModal({
-      invokerRect: iconRef?.getBoundingClientRect().toJSON(),
-      pageId: page._id,
-    })
+    const invRect = iconRef?.getBoundingClientRect().toJSON()
+    openChangeIconModal({ invokerRect: invRect, pageId: _id })
   }
 
   useEffect(() => inputRef.current?.select(), [])
@@ -57,13 +55,11 @@ const RenamePageModal = () => {
           ref={node => nodeRefHandler(node, rect, setIconRef)}
           onClick={handleOpenIconModal}
         >
-          {page?.iconUrl ? (
-            <Modal.Icon src={page.iconUrl} />
-          ) : page?.content.length === 0 ? (
-            <EmptyPageSvg />
-          ) : (
-            <PageSvg />
-          )}
+          <SmallPageIcon
+            iconUrl={iconUrl}
+            coverUrl={coverUrl}
+            content={content}
+          />
         </Modal.IconContainer>
         <Modal.Form onSubmit={handleSubmitChanges}>
           <CommonInput

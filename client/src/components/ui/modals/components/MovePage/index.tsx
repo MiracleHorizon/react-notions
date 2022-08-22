@@ -1,50 +1,89 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useDebounce } from 'usehooks-ts'
 
+import PagesToMoveList from './List'
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import MovePageItem from 'components/ui/modals/components/MovePage/Item'
-import OutlineInput from 'components/ui/inputs/Outline'
-import MoveToCommonPagesOption from 'components/ui/options/MovePage/MoveToCommonPages'
+import OutlineInput from 'components/ui/inputs - Checked/Outline'
+import InputSearchLoader from 'components/ui/loaders/InputSearch'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import getFilteredPages from 'utils/helpers/getFilteredPages'
+import {
+  useLazyGetPagesToMoveQuery,
+  useLazySearchPagesToMoveQuery,
+} from 'services/pages.api'
+import { selectMovePageModalState } from 'store/slices/modals/modals.selectors'
+import { selectUser } from 'store/slices/auth/auth.selectors'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
-import { selectMovablePages } from 'store/slices/pages/pages.selectors'
 import IPage from 'models/page/IPage'
 import * as Modal from './MovePageModal.styles'
 
 const MovePageModal = () => {
-  const { pageId, coords: pointerCoords } = useTypedSelector(
-    state => state.modals.movePage
-  )
-  // const pages = useTypedSelector(state => selectMovablePages(state, pageId))
-  const { pages } = useTypedSelector(state => state.pages) //! MOCK
   const { closeMovePageModal } = useActions()
+  const { pageId, coords: pointerCoords } = useSelector(
+    selectMovePageModalState
+  )
+  const user = useSelector(selectUser)
 
-  const [filteredPages, setFilteredPage] = useState<IPage[]>(pages)
+  const [getPagesToMove, { data, isLoading, isSuccess, isError }] =
+    useLazyGetPagesToMoveQuery()
+  const [
+    searchPagesToMove,
+    {
+      data: searchData,
+      isLoading: isSearchLoading,
+      isSuccess: isSearchSuccess,
+      isError: isSearchError,
+    },
+  ] = useLazySearchPagesToMoveQuery()
+
+  const [pages, setPages] = useState<IPage[]>([])
   const { value, handleChangeValue } = useInput('')
   const debouncedValue = useDebounce(value, 200)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'pointer',
     pointerCoords,
-  }) // useMemo ?
+  })
+
+  useEffect(() => {
+    // Получение всех страниц для перемещения, за исключением той,
+    // у которой вызывается данное модальное окно
+    if (debouncedValue === '') {
+      getPagesToMove({
+        authorId: user._id,
+        excludePageId: pageId,
+      })
+    }
+
+    // Поиск страниц для перемещения, за исключением той,
+    // у которой вызывается данное модальное окно
+    if (debouncedValue !== '') {
+      searchPagesToMove({
+        authorId: user._id,
+        excludePageId: pageId,
+        query: debouncedValue,
+      })
+    }
+  }, [user._id, pageId, debouncedValue, getPagesToMove, searchPagesToMove])
+
+  useEffect(() => {
+    if (isSuccess && data && debouncedValue === '') {
+      setPages(data)
+    }
+
+    if (isSearchSuccess && searchData && debouncedValue !== '') {
+      setPages(searchData)
+    }
+  }, [isSuccess, isSearchSuccess, data, searchData, debouncedValue])
 
   useOnCloseModal(ref, closeMovePageModal)
 
-  useEffect(() => {
-    setFilteredPage(getFilteredPages(pages, debouncedValue))
-  }, [debouncedValue])
-
   return (
     <ModalWrapper>
-      <Modal.Container
-        ref={node => nodeRefHandler(node, rect, setRef)}
-        {...coords}
-      >
+      <Modal.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
         <Modal.Content>
           <Modal.InputContainer>
             <OutlineInput
@@ -54,17 +93,9 @@ const MovePageModal = () => {
               value={value}
               onChange={handleChangeValue}
             />
+            {isSearchLoading && <InputSearchLoader />}
           </Modal.InputContainer>
-          <Modal.List>
-            <MoveToCommonPagesOption _id={pageId} />
-            {filteredPages.length > 0 ? (
-              filteredPages.map(page => (
-                <MovePageItem key={page._id} pageId={pageId} {...page} />
-              ))
-            ) : (
-              <>No results</>
-            )}
-          </Modal.List>
+          <PagesToMoveList _id={pageId} pages={pages} />
         </Modal.Content>
       </Modal.Container>
     </ModalWrapper>

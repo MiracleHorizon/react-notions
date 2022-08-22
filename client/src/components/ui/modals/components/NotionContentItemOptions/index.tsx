@@ -11,15 +11,15 @@ import Container from './NotionContentItemOptionsModal.styles'
 
 const NotionContentItemOptionsModal = () => {
   const {
-    notionItemOptions: { invokerRect, ...itemParams },
+    notionItemOptions: { invokerRect, page, ...itemParams },
     notionItemDecor: { isOpen: isContentItemDecorModalOpen },
-  } = useTypedSelector(state => state.modals)
+  } = useTypedSelector(s => s.modals)
   const { closeNotionContentItemOptionsModal } = useActions()
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'leftCenter',
     invokerRect,
-  }) // useMemo ?
+  })
 
   useOnCloseModal(
     isContentItemDecorModalOpen ? null : ref,
@@ -28,8 +28,16 @@ const NotionContentItemOptionsModal = () => {
 
   return (
     <ModalWrapper>
-      <Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
-        <NotionContentItemOptionsList {...itemParams} rect={rect} />
+      <Container
+        ref={node => nodeRefHandler(node, rect, setRef)}
+        locked={page?.locked}
+        {...coords}
+      >
+        <NotionContentItemOptionsList
+          {...itemParams}
+          rect={rect}
+          locked={page?.locked}
+        />
       </Container>
     </ModalWrapper>
   )

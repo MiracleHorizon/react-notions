@@ -1,23 +1,41 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
-import FileUploader from 'components/ui/FileUploader'
+import FileUploader from 'components/ui/FileUploader - Checked'
+import useActions from 'hooks/useActions'
+import useDndUpload from 'hooks/useDndUpload'
+import { useUploadCoverMutation } from 'services/pages.api'
+import { COVER_UPLOAD_RESTRICTION } from 'utils/constants/app'
 import * as Uploader from './CoverUploader.styles'
 
 const CoverUploader: FC<{ _id: string }> = ({ _id }) => {
-  const handleUploadCover = () => {
-    // updatePage({_id, body: {coverUrl: ...}})
-  }
+  const { closeChangeCoverModal } = useActions()
+  const [uploadCover] = useUploadCoverMutation()
+  const [drag, setDrag] = useState<boolean>(false)
+  const [coverUrl, setCoverUrl] = useState<FileList | null>(null)
+  const [isValidSize, setValidSize] = useState<boolean>(true)
 
-  // Сделать ограничение на загрузку файла не более двух 2мб.
+  useEffect(() => {
+    if (coverUrl && coverUrl[0]) {
+      if (coverUrl[0].size >= COVER_UPLOAD_RESTRICTION) {
+        setValidSize(false)
+      } else {
+        const formData = new FormData()
+        formData.append('coverUrl', coverUrl[0])
+        uploadCover({ _id, file: formData })
+        closeChangeCoverModal()
+      }
+    }
+  }, [_id, coverUrl, uploadCover, closeChangeCoverModal])
 
   return (
-    <Uploader.Wrapper>
+    <Uploader.Wrapper drag={drag} {...useDndUpload(setDrag, setCoverUrl)}>
       <Uploader.Button>
-        <FileUploader accept='image' action={handleUploadCover} />
+        <FileUploader accept='image' setFile={setCoverUrl} />
         Upload file
       </Uploader.Button>
       <p>Images wider than 1500 pixels work best.</p>
       <p>The maximum size per file is 2 MB.</p>
+      {!isValidSize && <h4>INVALID</h4>}
     </Uploader.Wrapper>
   )
 }

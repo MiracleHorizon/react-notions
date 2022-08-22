@@ -1,40 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { useTheme } from 'styled-components'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import Dropdown from 'components/ui/Dropdown'
 import useActions from 'hooks/useActions'
-import ITheme from 'themes/theme.model'
+import useTypedSelector from 'hooks/useTypedSelector'
+import { Theme } from 'themes/theme.model'
 import * as Option from './AppSettingsOption.styles'
 
-const reducer = (state: string, setLight: () => void, setDark: () => void) => {
-  switch (state.toLowerCase()) {
-    case 'light':
-      setLight()
-      break
-    case 'dark':
-      setDark()
-      break
-    case 'use system setting':
-      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      isDark ? setDark() : setLight()
-      break
-    default:
-      throw new Error('Error')
-  }
-}
-
-const ThemeDropdownOptions = ['Use system setting', 'Light', 'Dark']
-
 const AppAppearance = () => {
-  const { identifier } = useTheme() as ITheme
-  const [theme, setTheme] = useState<string>(identifier)
-  const { setLightTheme, setDarkTheme } = useActions()
-
-  // const [state, dispatch] = useReducer()
+  const { setTheme } = useActions()
+  const dropdownOptions = useMemo(() => Object.values(Theme).reverse(), [])
+  const { title: themeTitle } = useTypedSelector(s => s.app.themeState)
+  const [theme, setThemeOption] = useState<string>(themeTitle)
 
   useEffect(() => {
-    reducer(theme, setLightTheme, setDarkTheme)
-  }, [setDarkTheme, setLightTheme, theme])
+    setTheme(theme as Theme)
+    // eslint-disable-next-line
+  }, [theme])
 
   return (
     <Option.Container>
@@ -45,11 +26,10 @@ const AppAppearance = () => {
         </Option.Description>
       </Option.Content>
       <Dropdown
-        options={ThemeDropdownOptions}
-        activeOption={theme}
-        setOption={setTheme}
-        pos='center'
         type='theme'
+        options={dropdownOptions}
+        activeOption={theme}
+        setOption={setThemeOption}
       />
     </Option.Container>
   )

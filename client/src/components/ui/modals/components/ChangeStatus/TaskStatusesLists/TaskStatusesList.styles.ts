@@ -11,5 +11,5 @@ export const Title = styled.h4`
   font-size: 12px;
   font-weight: 500;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-statuses-modal-title']};
+  color: ${p => p.theme.colors['text-statuses-modal-title']};
 `

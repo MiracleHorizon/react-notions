@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
+import Dropdown from 'components/ui/Dropdown'
+import useActions from 'hooks/useActions'
+import useTypedSelector from 'hooks/useTypedSelector'
+import { StartOpenOptionEnum } from 'store/slices/app/app.types'
 import * as Option from './AppSettingsOption.styles'
 
 const StartOpenOption = () => {
+  const { setStartOpenOption } = useActions()
+  const { startOpen } = useTypedSelector(state => state.app)
+  const [startOption, setStartOption] = useState<StartOpenOptionEnum>(startOpen)
+  const dropdownOptions = useMemo(() => Object.values(StartOpenOptionEnum), [])
+
+  useEffect(() => {
+    setStartOption(startOption)
+    setStartOpenOption(startOption)
+  }, [startOption, setStartOpenOption])
+
   return (
     <Option.Container>
       <Option.Content>
@@ -11,9 +25,12 @@ const StartOpenOption = () => {
           Choose what to show when Notion starts or when you switch workspaces.
         </Option.Description>
       </Option.Content>
-      <div >
-        Это дропдаун
-      </div>
+      <Dropdown
+        type='startOpen'
+        options={dropdownOptions}
+        activeOption={startOption}
+        setOption={setStartOption}
+      />
     </Option.Container>
   )
 }

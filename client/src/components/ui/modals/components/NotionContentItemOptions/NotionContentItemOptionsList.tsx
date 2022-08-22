@@ -2,43 +2,35 @@ import React, { FC, MutableRefObject, useCallback } from 'react'
 
 import OptionItem from 'components/ui/options/OptionItem'
 import MovePageOption from 'components/ui/options/MovePage'
-import ChangesBar from 'components/ui/ChangesBar'
-import Divider from 'components/ui/Divider'
+import ChangesBar from 'components/ui/ChangesBar - Checked'
+import Divider from 'components/ui/Divider - Checked'
 import {
   ChevronDownSvg,
   ColorOptionSvg,
   DeleteTrashSvg,
-  DuplicateSvg,
 } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import {
-  useCreateItemMutation,
   useDeleteItemMutation,
   useUpdateItemMutation,
-} from 'store/slices/pages/pages.api'
+} from 'services/pages.api'
 
 const NotionContentItemOptionsList: FC<{
   _id: string
   type: NotionContentItemTypes
   rect: MutableRefObject<DOMRect | null>
-}> = ({ _id, type, rect }) => {
+  locked: boolean | undefined
+}> = ({ _id, type, rect, locked }) => {
   const {
     openNotionContentItemDecorModal,
     closeNotionContentItemOptionsModal,
   } = useActions()
-
-  const [createContentItem] = useCreateItemMutation()
   const [updateContentItem] = useUpdateItemMutation()
   const [deleteContentItem] = useDeleteItemMutation()
 
   const handleDeleteItem = async () => {
     await deleteContentItem(_id)
-    closeNotionContentItemOptionsModal()
-  }
-
-  const handleDuplicateItem = async () => {
-    // await createContentItem()
     closeNotionContentItemOptionsModal()
   }
 
@@ -51,24 +43,23 @@ const NotionContentItemOptionsList: FC<{
     // closeNotionContentItemOptionsModal()
     const invokerRect = rect.current?.toJSON()
     openNotionContentItemDecorModal({ invokerRect, itemId: _id })
-  }, [rect, _id])
+  }, [rect, _id, openNotionContentItemDecorModal])
 
   return (
     <>
-      <OptionItem
-        title='Delete'
-        StartSvg={DeleteTrashSvg}
-        onClickAction={handleDeleteItem}
-      />
-      <OptionItem
-        title='Duplicate'
-        StartSvg={DuplicateSvg}
-        onClickAction={handleDuplicateItem}
-      />
+      {!locked && (
+        <>
+          <OptionItem
+            title='Delete'
+            StartSvg={DeleteTrashSvg}
+            onClickAction={handleDeleteItem}
+          />
+        </>
+      )}
       <MovePageOption
         onClickAction={() => closeNotionContentItemOptionsModal()}
       />
-      {type !== NotionContentItemTypes.DIVIDER && (
+      {type !== NotionContentItemTypes.DIVIDER && !locked && (
         <>
           <Divider />
           <OptionItem
@@ -76,7 +67,6 @@ const NotionContentItemOptionsList: FC<{
             StartSvg={ColorOptionSvg}
             EndSvg={ChevronDownSvg}
             onClickAction={handleOpenContentItemDecorModal}
-            // onMouseOverAction={handleOpenContentItemDecorModal}
           />
         </>
       )}

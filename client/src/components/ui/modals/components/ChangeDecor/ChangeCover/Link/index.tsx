@@ -1,25 +1,23 @@
 import React, { FC } from 'react'
 
-import OutlineInput from 'components/ui/inputs/Outline'
+import OutlineInput from 'components/ui/inputs - Checked/Outline'
 import FilledButton from 'components/ui/buttons/Filled'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import { useUpdatePageMutation } from 'services/pages.api'
 import * as Link from './CoverLink.styles'
 
 const CoverLink: FC<{ _id: string }> = ({ _id }) => {
-  const { value, handleChangeValue, handleClearValue } = useInput('')
   const { closeChangeCoverModal } = useActions()
   const [updatePage] = useUpdatePageMutation()
+  const { value, handleChangeValue, handleClearValue } = useInput('')
 
   const handleSubmitLink = () => {
-    if (value === '') return
-
-    updatePage({ _id, body: { coverUrl: value } })
-    closeChangeCoverModal()
+    if (value !== '') {
+      updatePage({ _id, body: { coverUrl: value } })
+      closeChangeCoverModal()
+    }
   }
-
-  // Добавить форму.
 
   return (
     <Link.Wrapper>

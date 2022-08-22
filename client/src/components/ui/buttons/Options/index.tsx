@@ -1,19 +1,22 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import { DotsSvg } from 'components/ui/svg'
 import PropTypes from './OptionsButton.types'
-import Container from './OptionsButton.styles'
+import Button from './OptionsButton.styles'
 
-const OptionsButton: FC<PropTypes> = ({ onClickAction, reference, ...styles }) => (
-  <Container
-    {...styles}
-    data-btn='options'
-    ref={reference}
-    onClick={onClickAction}
-    onContextMenu={onClickAction}
-  >
-    <DotsSvg />
-  </Container>
+const OptionsButton: FC<PropTypes> = memo(
+  ({ onClickAction, reference, ...styles }) => (
+    <Button
+      {...styles}
+      role='button'
+      data-btn='options'
+      ref={reference}
+      onClick={onClickAction}
+      onContextMenu={onClickAction}
+    >
+      <DotsSvg />
+    </Button>
+  )
 )
 
 export default OptionsButton

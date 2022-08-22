@@ -7,7 +7,7 @@ export const Container = styled.div<ElementCoords>`
   top: ${p => p.top}px;
   left: ${p => p.left}px;
   max-height: 250px;
-  width: 548px;
+  width: 538px;
   height: max-content;
   border-radius: 3px;
   box-shadow: ${p => modalBoxShadowPrimary(p.theme)};

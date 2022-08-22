@@ -1,21 +1,21 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
-import DefaultAlert from 'components/ui/alerts/Default'
+import DefaultAlert from 'components/ui/alerts - Checked/Default/index'
 import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useDeletePageMutation } from 'store/slices/pages/pages.api'
-import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
+import { useDeletePageMutation } from 'services/pages.api'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton'
 
 const DeletePageAlert = () => {
-  const { pageId } = useTypedSelector(state => state.alerts.deletePage)
-  const [deletePage] = useDeletePageMutation()
   const { hideDeletePageAlert } = useActions()
+  const { pageId } = useTypedSelector(s => s.alerts.deletePage)
+  const [deletePage] = useDeletePageMutation()
 
-  const handleSubmitDelete = () => {
+  const handleSubmitDelete = useCallback(() => {
     deletePage(pageId)
     hideDeletePageAlert()
-  }
+  }, [pageId, deletePage, hideDeletePageAlert])
 
   const handleHideAlert = () => hideDeletePageAlert()
 
@@ -27,7 +27,7 @@ const DeletePageAlert = () => {
       <>
         <OutlineButton
           title='Yes. Delete this page'
-          color={OutlineButtonColorsEnum.GRAY}
+          color={OutlineButtonColorsEnum.RED}
           onClickAction={handleSubmitDelete}
         />
         <OutlineButton

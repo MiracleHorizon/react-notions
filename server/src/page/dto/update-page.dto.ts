@@ -78,10 +78,15 @@ export default class UpdatePageDto {
   @IsOptional()
   @IsNumber()
   @IsNotEmpty()
-  sbOrder: number | null
+  sbOrder?: number | null
 
   @IsOptional()
   @IsNumber()
   @IsNotEmpty()
-  taskOrder: number | null
+  taskOrder?: number | null
+
+  @IsOptional()
+  @IsBoolean()
+  @IsNotEmpty()
+  deleted?: boolean
 }

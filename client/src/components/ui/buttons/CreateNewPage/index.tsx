@@ -4,7 +4,7 @@ import { useHover } from 'usehooks-ts'
 import { CreateDepPageTooltip } from 'components/ui/tooltips'
 import { PlusSvg } from 'components/ui/svg'
 import PropTypes from './CreateNewPageButton.types'
-import Container from './CreateNewPageButton.styles'
+import Button from './CreateNewPageButton.styles'
 
 const CreateNewPageButton: FC<PropTypes> = ({
   coords,
@@ -15,16 +15,17 @@ const CreateNewPageButton: FC<PropTypes> = ({
   const isHovering = useHover(ref)
 
   return (
-    <Container
+    <Button
       ref={ref}
       role='button'
+      data-btn='create-page'
       absolute={absolute}
       onClick={onClickAction}
       coords={coords}
     >
       <PlusSvg />
       {isHovering && <CreateDepPageTooltip reference={ref} />}
-    </Container>
+    </Button>
   )
 }
 export default CreateNewPageButton

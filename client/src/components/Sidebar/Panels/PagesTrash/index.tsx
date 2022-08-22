@@ -9,11 +9,10 @@ import Container from './PagesTrashPanel.styles'
 
 const PagesTrashPanel = memo(() => {
   const { openPagesTrashModal } = useActions()
-
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
-  const handleOpenPagesTrash = () => openPagesTrashModal()
+  const handleOpenPagesTrashModal = () => openPagesTrashModal()
 
   return (
     <Container>
@@ -21,7 +20,7 @@ const PagesTrashPanel = memo(() => {
         title='Trash'
         reference={ref}
         StartSvg={TrashSvg}
-        onClickAction={handleOpenPagesTrash}
+        onClickAction={handleOpenPagesTrashModal}
       />
       {isHovering && <PagesTrashTooltip reference={ref} />}
     </Container>

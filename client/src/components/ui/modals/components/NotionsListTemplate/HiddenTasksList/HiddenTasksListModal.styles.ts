@@ -1,20 +1,17 @@
 import styled from 'styled-components'
-import { Theme } from 'themes/theme.model'
 import { ElementCoords } from 'types'
+import { modalBoxShadowPrimary } from 'styles/uiKit'
 
 export const Container = styled.div<ElementCoords>`
   position: absolute;
-  top: ${props => props.top}px;
-  left: ${props => props.left}px;
+  top: ${p => p.top}px;
+  left: ${p => p.left}px;
   max-height: 70vh;
   width: 300px;
   height: max-content;
   border-radius: 4px;
-  box-shadow: ${props =>
-    props.theme.identifier === Theme.LIGHT
-      ? 'rgb(15 15 15 / 5%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 3px 6px, rgb(15 15 15 / 20%) 0 9px 24px;'
-      : 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 3px 6px, rgb(15 15 15 / 40%) 0 9px 24px;'};
-  background: ${props => props.theme.colors['bg-modal-primary']};
+  box-shadow: ${p => modalBoxShadowPrimary(p.theme)};
+  background: ${p => p.theme.colors['bg-modal-primary']};
 `
 
 export const TopBarContainer = styled.div`
@@ -30,7 +27,7 @@ export const TopBarContainer = styled.div`
   }
 
   div[data-btn='options'] {
-    background: ${props => props.theme.colors['bg-modal-primary']};
+    background: ${p => p.theme.colors['bg-modal-primary']};
   }
 `
 

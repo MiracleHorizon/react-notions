@@ -11,11 +11,11 @@ export const Container = styled.div`
   ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   svg {
@@ -25,5 +25,6 @@ export const Container = styled.div`
 
 export const Title = styled.span`
   font-size: 14px;
-  color: ${props => props.theme.colors['text-cover-titles']};
+  line-height: 18px;
+  color: ${p => p.theme.colors['text-cover-titles']};
 `

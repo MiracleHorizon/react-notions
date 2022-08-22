@@ -15,9 +15,7 @@ const RepositionOption: FC<PropTypes> = ({
     <Option.Container
       pos='right'
       role='button'
-      onClick={
-        isRepositionEnabled ? handleCancelReposition : handleStartReposition
-      }
+      onClick={isRepositionEnabled ? handleCancelReposition : handleStartReposition}
     >
       <Option.Title>
         {isRepositionEnabled ? 'Cancel' : 'Reposition'}

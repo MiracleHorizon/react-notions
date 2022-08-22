@@ -8,17 +8,16 @@ import {
   TasksList,
   TasksListDocument,
 } from '../tasksList/schemas/tasksList.schema'
-
-const defaultDescription = `Use this template to track your personal tasks.
-Click + New to create a new task directly on this board.
-Click an existing task to add additional context or subtasks.`
+import { FilesService, FileType } from '../files/files.service'
+import { DEFAULT_DESCRIPTION } from '../utils/constants'
 
 @Injectable()
 export class PageService {
   constructor(
     @InjectModel(Page.name) private pageModel: Model<PageDocument>,
     @InjectModel(TasksList.name)
-    private tasksListModel: Model<TasksListDocument>
+    private tasksListModel: Model<TasksListDocument>,
+    private filesService: FilesService
   ) {}
 
   async create(dto: CreatePageDto): Promise<Page> {
@@ -34,19 +33,19 @@ export class PageService {
       coverUrl: null,
       coverPosition: 50,
       descriptionExpanded: true,
-      description: defaultDescription,
+      description: DEFAULT_DESCRIPTION,
       font: 'Default',
       dependencies: [],
       content: [],
       sbOrder: null,
       taskOrder: null,
+      deleted: false,
     })
 
     if ('parentListId' in dto && dto.parentListId !== null) {
       const parentList = await this.tasksListModel.findById(dto.parentListId)
-      const pageId: string = page._id
 
-      parentList.dependencies.push(pageId)
+      parentList.dependencies.push(page)
       await parentList.save()
 
       page.taskOrder = parentList.dependencies.length
@@ -75,28 +74,93 @@ export class PageService {
   }
 
   async getAll(author: string): Promise<Page[]> {
-    return this.pageModel.find({ author })
+    return this.pageModel.find({ author, deleted: false })
+  }
+
+  async getTrashPages(author: string): Promise<Page[]> {
+    return this.pageModel.find({ author, deleted: true })
   }
 
   async getOne(id: ObjectId): Promise<Page | string> {
     return this.pageModel
-      .findById(id)
+      .findOne({ _id: id, deleted: false })
       .populate('dependencies')
       .populate('content')
   }
 
-  async delete(id: ObjectId): Promise<ObjectId> {
-    const page = await this.pageModel.findById(id)
+  async getPagesToMove(author: string, excludePageId: string): Promise<Page[]> {
+    const pages = await this.pageModel.find({
+      parentListId: null,
+      status: null,
+      author,
+      deleted: false,
+    })
 
-    if (page.parentListId !== null) {
-      const list = await this.tasksListModel.findById(page.parentListId)
+    return pages.filter(page => page._id.toString() !== excludePageId)
+  }
 
-      list.dependencies = list.dependencies.filter(
-        _id => _id.toString() !== id.toString()
-      ) //!
-      await list.save()
+  async getByList(listId: ObjectId): Promise<Page[]> {
+    return this.pageModel.find({ parentListId: listId, deleted: false })
+  }
+
+  async update(id: ObjectId, updateData: UpdatePageDto) {
+    const { parentListId } = updateData
+    const page = await this.pageModel.findByIdAndUpdate({ _id: id }, updateData) //!
+    // const page = await this.pageModel.findById(id)
+
+    if (!page) throw new NotFoundException()
+
+    if ('parentPageId' in updateData) {
+      // const page = await this.pageModel.findOne({ _id: id })
+      // const prevParent = await this.pageModel.findById(page.parentPageId)
     }
 
+    if ('parentListId' in updateData && parentListId) {
+      // Удаление страницы из зависимостей её прошлого списка задач.
+      const previousList = await this.tasksListModel.findById(page.parentListId)
+      previousList.dependencies = previousList.dependencies.filter(page => {
+        return page.toString() !== id.toString()
+      })
+      await previousList.save()
+
+      // Добавление страницы в зависимости её нового списка задач.
+      const newList = await this.tasksListModel.findById(parentListId)
+      console.log(newList)
+      newList.dependencies.push(page._id)
+      await newList.save()
+    }
+
+    if ('template' in updateData && updateData.template === 'NotionsList') {
+      await this.tasksListModel.create({
+        title: 'NO_STATUS',
+        parentPageId: page._id,
+        color: 'empty',
+      })
+    }
+
+    // return this.pageModel.findByIdAndUpdate({ _id: id }, updateData)
+    return page
+  }
+
+  async uploadCover(id: ObjectId, coverUrlFile: string) {
+    const coverFilePath = this.filesService.createFile(
+      FileType.IMAGE,
+      coverUrlFile
+    )
+
+    return this.pageModel.findByIdAndUpdate(id, { coverUrl: coverFilePath })
+  }
+
+  async uploadIcon(id: ObjectId, iconUrlFile: string) {
+    const iconFilePath = this.filesService.createFile(
+      FileType.IMAGE,
+      iconUrlFile
+    )
+
+    return this.pageModel.findByIdAndUpdate(id, { iconUrl: iconFilePath })
+  }
+
+  async delete(id: ObjectId): Promise<ObjectId> {
     await this.pageModel.findOneAndUpdate(
       { parentPageId: id },
       { parentPageId: null }
@@ -110,31 +174,41 @@ export class PageService {
 
   async deleteAll() {
     return this.pageModel.deleteMany()
+  } //! Убрать.
+
+  async deleteFile(fileName: string) {
+    return this.filesService.deleteFile(fileName)
   }
 
-  async update(id: ObjectId, updateData: UpdatePageDto) {
-    const page = await this.pageModel.findByIdAndUpdate({ _id: id }, updateData)
+  async search(query: string, author: string): Promise<Page[]> {
+    return this.pageModel.find({
+      title: { $regex: new RegExp(query, 'i') },
+      deleted: false,
+      author,
+    })
+  }
 
-    if (!page) throw new NotFoundException()
+  async searchDeletedPages(query: string, author: string): Promise<Page[]> {
+    return this.pageModel.find({
+      title: { $regex: new RegExp(query, 'i') },
+      deleted: true,
+      author,
+    })
+  }
 
-    if ('parentPageId' in updateData) {
-      // const page = await this.pageModel.findOne({ _id: id })
-      // const oldParent = await this.pageModel.findById(page.parentPageId)
-    }
+  async searchPagesToMove(
+    authorId: string,
+    excludePageId: string,
+    query: string
+  ): Promise<Page[]> {
+    const pages = await this.pageModel.find({
+      parentListId: null,
+      title: { $regex: new RegExp(query, 'i') },
+      status: null,
+      author: authorId,
+      deleted: false,
+    })
 
-    if ('parentListId' in updateData && updateData.parentListId) {
-      const list = await this.tasksListModel.findById(updateData.parentListId)
-      list.dependencies.push(page._id)
-    }
-
-    if ('template' in updateData && updateData.template === 'NotionsList') {
-      await this.tasksListModel.create({
-        title: 'NO_STATUS',
-        parentPageId: page._id,
-        color: 'empty',
-      })
-    }
-
-    return page
+    return pages.filter(page => page._id.toString() !== excludePageId)
   }
 }

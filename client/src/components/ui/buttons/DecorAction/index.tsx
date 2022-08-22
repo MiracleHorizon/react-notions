@@ -7,7 +7,11 @@ const DecorActionButton: FC<PropTypes> = ({
   onClickAction,
   StartSvg,
 }) => (
-  <Button.Container onClick={onClickAction}>
+  <Button.Container
+    role='button'
+    data-btn='decor-action'
+    onClick={onClickAction}
+  >
     {StartSvg && <StartSvg />}
     <Button.Title>{title}</Button.Title>
   </Button.Container>

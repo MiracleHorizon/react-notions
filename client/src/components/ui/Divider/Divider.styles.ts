@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
 const Line = styled.div`
-  height: 1px;
   width: 100%;
+  height: 1px;
   margin: 5px 0;
-  background: ${props => props.theme.colors.divider};
+  background: ${p => p.theme.colors.divider};
 `
 
 export default Line

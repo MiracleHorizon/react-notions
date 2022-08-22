@@ -1,23 +1,28 @@
 import styled from 'styled-components'
+import { bgTransitions, dFlex } from 'styles/uiKit'
 
-export const Container = styled.div`
+export const Container = styled.div<{ drag: boolean }>`
+  background: ${p => p.drag && p.theme.colors['bg-upload-drag']};
+  
   p {
-    text-align: center;
     margin-bottom: 15px;
     font-size: 12px;
-    color: ${props => props.theme.colors['text-cover-titles']};
+    text-align: center;
+    color: ${p => p.theme.colors['text-cover-titles']};
   }
 `
 
 export const LinkContainer = styled.div`
+  ${dFlex.center};
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 10px;
 
   div:first-child {
     width: 65%;
+    
+    input {
+      height: 28px;
+    }
   }
 
   div[data-btn='filled'] {
@@ -27,39 +32,34 @@ export const LinkContainer = styled.div`
 `
 
 export const UploaderWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  ${dFlex['center-col']};
   padding: 10px 0;
   user-select: none;
 
   p {
     margin-top: 15px;
     font-size: 12px;
-    color: ${props => props.theme.colors['text-cover-titles']};
+    color: ${p => p.theme.colors['text-cover-titles']};
   }
 `
 
 export const UploaderContainer = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   width: 95%;
   height: 32px;
-  border: 1px solid ${props => props.theme.colors['br-cover-uploader']};
+  border: 1px solid ${p => p.theme.colors['br-cover-uploader']};
   border-radius: 3px;
   font-size: 14px;
   line-height: 24px;
-  color: ${props => props.theme.colors['text-primary']};
-  transition: background 50ms ease-in;
+  color: ${p => p.theme.colors['text-primary']};
+  ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-cover-uploader-hover']};
+    background: ${p => p.theme.colors['bg-cover-uploader-hover']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-cover-uploader-active']};
+    background: ${p => p.theme.colors['bg-cover-uploader-active']};
   }
 `

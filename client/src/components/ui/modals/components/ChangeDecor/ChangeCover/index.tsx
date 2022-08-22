@@ -1,4 +1,4 @@
-import React, { memo, useState, lazy, Suspense } from 'react'
+import React, { memo, useState, useMemo, lazy, Suspense } from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import CustomDecorLoader from 'components/ui/loaders/CustomDecor'
@@ -14,19 +14,21 @@ import * as Modal from './ChangeCoverModal.styles'
 const CoverUploader = lazy(() => import('./Upload'))
 const CoverLink = lazy(() => import('./Link'))
 
-const categories = ['Gallery', 'Upload', 'Link'] // В константы.
-
 const ChangeCoverModal = memo(() => {
-  const [activeCategory, setActiveCategory] = useState<string>('Gallery')
-  const { pageId, invokerRect } = useTypedSelector(state => state.modals.cover)
   const { closeChangeCoverModal } = useActions()
+  const categories = useMemo(() => ['Gallery', 'Upload', 'Link'], [])
+  const [activeCategory, setActiveCategory] = useState<string>('Gallery')
+  const { pageId, invokerRect } = useTypedSelector(s => s.modals.cover)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'centerBottom',
     invokerRect,
-  }) // useMemo ?
+  })
 
-  useOnCloseModal(ref, closeChangeCoverModal)
+  useOnCloseModal(ref, () => {
+    closeChangeCoverModal()
+    setActiveCategory('Gallery')
+  })
 
   return (
     <ModalWrapper>

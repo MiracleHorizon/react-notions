@@ -9,6 +9,8 @@ import {
 } from 'components/ui/svg'
 
 // Urls.
+export const CLIENT_API = 'http://localhost:3000'
+export const SERVER_API = 'http://localhost:5000'
 export const NOTION_LOGO_URL = 'https://www.notion.so/images/favicon.ico'
 export const NASA_ARCHIVE_URL = 'https://www.flickr.com/photos/nasacommons/'
 export const MET_MUSEUM_URL = 'https://www.metmuseum.org/art/collection'
@@ -52,3 +54,12 @@ export const UPDATE_PAGE_TEMPLATES = [
     StartSvg: PageSvg,
   },
 ]
+
+// Upload.
+export const COVER_UPLOAD_RESTRICTION = 2e6
+export const ICON_UPLOAD_RESTRICTION = 1e6
+
+// -- NotionContentItems.
+export const IMAGE_UPLOAD_RESTRICTION = 2e6
+export const VIDEO_UPLOAD_RESTRICTION = 3e6
+export const AUDIO_UPLOAD_RESTRICTION = 2e6

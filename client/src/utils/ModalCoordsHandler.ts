@@ -39,7 +39,9 @@ export default class ModalCoordsHandler {
   }
 
   private static setCoordsByXAxis({ rect, invokerRect }: IDefaultParams) {
-    if (!rect || !invokerRect) return { centerTop: {}, centerBottom: {} }
+    if (!rect || !invokerRect) {
+      return { centerTop: {}, centerBottom: {} }
+    }
 
     const invRect = invokerRect as unknown as DOMRect
     const bodyHeight = document.body.offsetHeight
@@ -86,7 +88,7 @@ export default class ModalCoordsHandler {
     const bodyWidth = document.body.offsetWidth
     const bodyHeight = document.body.offsetHeight
 
-    let lPos = invRect.left - rect.width - 5
+    const lPos = invRect.left - rect.width - 5
     let tPos = invRect.top + invRect.height / 2 - rect.height / 2
     let lPosRight = invRect.left + invRect.width + 5
 

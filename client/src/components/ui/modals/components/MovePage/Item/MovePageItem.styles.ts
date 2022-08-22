@@ -1,25 +1,19 @@
 import styled from 'styled-components'
-import { bgTransitions } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
-export const Container = styled.div`
+export const Container = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  ${dFlex['center-start']};
   width: 100%;
   height: 27px;
   margin: 1px 0;
   padding: 5px 5px 5px 10px;
   border-radius: 3px;
-  background: transparent;
+  background: ${p => p.isSelected ? p.theme.colors['bg-el-hover-primary'] : 'transparent'};
   ${bgTransitions.esIn20};
 
-  &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
-  }
-
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
@@ -34,8 +28,6 @@ export const Icon = styled.img`
 export const Title = styled.p`
   margin-left: 10px;
   font-size: 14px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  color: ${props => props.theme.colors['text-primary']};
+  ${txtOflow.ell};
+  color: ${p => p.theme.colors['text-primary']};
 `

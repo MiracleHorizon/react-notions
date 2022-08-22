@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
 export const Container = styled.div<{ isSelected: boolean }>`
+  position: relative;
   cursor: pointer;
   ${dFlex['center-start']};
   width: 100%;

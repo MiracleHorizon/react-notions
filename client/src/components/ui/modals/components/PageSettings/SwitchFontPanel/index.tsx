@@ -1,13 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
+import ModalTitle from 'components/ui/modals/ModalTitle'
 import SwitchFontButton from 'components/ui/buttons/SwitchFont'
 import { PAGE_FONTS } from 'utils/constants/app'
 import IPage from 'models/page/IPage'
 import * as Panel from './SwitchFontPanel.styles'
 
-const SwitchFontPanel: FC<IPage> = ({ _id, font }) => (
+const SwitchFontPanel: FC<IPage> = memo(({ _id, font }) => (
   <Panel.Container>
-    <Panel.Title>Style</Panel.Title>
+    <ModalTitle upCase title='Style' />
     <Panel.List>
       {PAGE_FONTS.map(fontFamily => (
         <SwitchFontButton
@@ -19,6 +20,6 @@ const SwitchFontPanel: FC<IPage> = ({ _id, font }) => (
       ))}
     </Panel.List>
   </Panel.Container>
-)
+))
 
 export default SwitchFontPanel

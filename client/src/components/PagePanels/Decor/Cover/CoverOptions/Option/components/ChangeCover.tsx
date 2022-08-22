@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useRef } from 'react'
+import React, { FC, useRef } from 'react'
 
 import useActions from 'hooks/useActions'
 import PropTypes from '../CoverOption.types'
@@ -8,22 +8,16 @@ const ChangeCoverOption: FC<PropTypes> = ({
   _id,
   setReposition,
   isRepositionEnabled,
-  position,
 }) => {
   const { openChangeCoverModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
 
-  const handleOpenCoverModal = () => {
-    openChangeCoverModal({
-      invokerRect: ref.current?.getBoundingClientRect().toJSON(),
-      pageId: _id!,
-    })
+  const handleOpenChangeCoverModal = () => {
+    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
+    openChangeCoverModal({ invokerRect, pageId: _id! })
   }
 
-  const handleSavePosition = () => {
-    // updatePage({_id, })
-    setReposition(false)
-  }
+  const handleSavePosition = () => setReposition(false)
 
   return (
     <Option.Container
@@ -31,7 +25,7 @@ const ChangeCoverOption: FC<PropTypes> = ({
       pos='left'
       role='button'
       ref={!isRepositionEnabled ? ref : null}
-      onClick={isRepositionEnabled ? handleSavePosition : handleOpenCoverModal}
+      onClick={isRepositionEnabled ? handleSavePosition : handleOpenChangeCoverModal}
     >
       <Option.Title>
         {isRepositionEnabled ? 'Save position' : 'Change cover'}

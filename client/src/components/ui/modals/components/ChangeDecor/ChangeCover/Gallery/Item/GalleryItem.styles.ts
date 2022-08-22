@@ -10,9 +10,9 @@ export const Container = styled.div`
   cursor: pointer;
   width: 100%;
   height: 64px;
-  
+
   &:hover {
-    opacity: 0.9;
+    opacity: 0.85;
   }
 `
 

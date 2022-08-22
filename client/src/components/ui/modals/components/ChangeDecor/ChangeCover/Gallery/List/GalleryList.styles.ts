@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
-  ${dFlex['start-center']};
-  flex-direction: column;
+  ${dFlex['start-center-col']};
   width: 100%;
   height: max-content;
   margin-top: 5px;
@@ -23,11 +22,11 @@ export const TitleContainer = styled.div`
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
@@ -35,7 +34,7 @@ export const Title = styled.span`
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
-  color: ${props => props.theme.colors['text-cover-titles']};
+  color: ${p => p.theme.colors['text-cover-titles']};
 `
 
 export const Link = styled.a`

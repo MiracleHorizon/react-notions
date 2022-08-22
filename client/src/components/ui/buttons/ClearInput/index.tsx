@@ -1,18 +1,13 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import { ClearInputSvg } from 'components/ui/svg'
-import PropTypes from './ClearInputButton.types'
+import { IVoidClick } from 'types'
 import Button from './ClearInputButton.styles'
 
-const ClearInputButton: FC<PropTypes> = ({ onClickAction, coords }) => (
-  <Button
-    role='button'
-    data-btn='clear-input'
-    onClick={onClickAction}
-    {...coords}
-  >
+const ClearInputButton: FC<IVoidClick> = memo(({ onClickAction }) => (
+  <Button role='button' data-btn='clear-input' onClick={onClickAction}>
     <ClearInputSvg />
   </Button>
-)
+))
 
 export default ClearInputButton

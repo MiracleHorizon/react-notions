@@ -11,7 +11,12 @@ const SwitchTaskButton: FC<PropTypes> = ({ dest, isActive, onClickAction }) => {
   const isHovering = useHover(ref)
 
   return (
-    <Button.Wrapper ref={ref} isActive={isActive}>
+    <Button.Wrapper
+      ref={ref}
+      role='button'
+      data-btn='switch-task'
+      isActive={isActive}
+    >
       <Button.Container onClick={onClickAction}>
         {dest === 'prev' ? <ChevronUpRoundedSvg /> : <ChevronDownRoundedSvg />}
         {isHovering && <SwitchTaskTooltip reference={ref} dest={dest} />}

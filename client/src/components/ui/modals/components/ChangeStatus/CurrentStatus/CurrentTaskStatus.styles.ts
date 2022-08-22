@@ -2,22 +2,21 @@ import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import { dFlex, txtOflow } from 'styles/uiKit'
-import ColorsHandler from 'utils/stylesHandlers/colors'
+import handleTasksListTitleColor from 'utils/stylesHandlers/colors'
 
 export const Wrapper = styled.div`
   position: relative;
   ${dFlex['center-start']};
   width: 100%;
-  height: 32px;
+  height: 36px;
   padding-left: 7px;
   padding-right: 30px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  box-shadow: ${p =>
-    `${
-      p.theme.identifier === Theme.LIGHT
-        ? 'rgb(55 53 47 / 16%)'
-        : 'rgb(255 255 255 / 13%)'
+  box-shadow: ${p => 
+    `${p.theme.identifier === Theme.LIGHT
+      ? 'rgb(55 53 47 / 16%)'
+      : 'rgb(255 255 255 / 13%)'
     } 0 -1px inset`};
   background: ${p => p.theme.colors['bg-curr-task-status']};
 `
@@ -26,17 +25,18 @@ export const Container = styled.div<{
   bgColor: TasksListTitleColorsEnum
 }>`
   ${dFlex['center-s-between']};
+  max-height: 24px;
   width: max-content;
-  height: 20px;
+  height: auto;
   padding: 1px 0 1px 4px;
   border-radius: 3px;
-  background: ${p => ColorsHandler.tasksListTitle(p.bgColor, p.theme)};
+  background: ${p => handleTasksListTitleColor(p.bgColor, p.theme)};
 `
 
 export const IconContainer = styled.div`
   ${dFlex.center};
   width: 20px;
-  height: 20px;
+  height: 24px;
 
   svg {
     cursor: pointer;

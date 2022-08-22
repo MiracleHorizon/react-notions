@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -6,19 +7,17 @@ export const Wrapper = styled.div`
 
 export const Container = styled.div`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   width: max-content;
   padding: 4px 6px;
   border-radius: 3px;
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   svg {
@@ -29,5 +28,5 @@ export const Container = styled.div`
 export const Title = styled.span`
   margin-right: 5px;
   font-size: 14px;
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `

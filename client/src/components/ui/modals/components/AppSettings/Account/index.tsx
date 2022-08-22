@@ -1,34 +1,45 @@
-import React, { useContext } from 'react'
+import React from 'react'
 
+import {
+  UploadAccountPhotoOption,
+  ChangeEmailOption,
+} from 'components/ui/options/AppSettings'
+import Divider from 'components/ui/Divider - Checked'
 import useActions from 'hooks/useActions'
-import { AuthContext } from 'context/Auth'
+import { useLogoutMutation } from 'services/auth.api'
+import * as Settings from './AccountSettings.styles'
 
 const AccountSettings = () => {
-  const authCtx = useContext(AuthContext)
-  const { closeAppSettingsModal } = useActions()
+  const { closeAppSettingsModal, logout } = useActions()
+  const [authLogout] = useLogoutMutation()
 
   const handleSignOut = () => {
-    authCtx.fbAuth.signOut().then(() => closeAppSettingsModal())
+    authLogout()
+    logout()
+    closeAppSettingsModal()
   }
 
   return (
-    <div>
-      <div>
-        <span>Смена имени</span>
-      </div>
-      <div>
-        <span>Смена аватарки</span>
-      </div>
-      <div>
-        <span>Смена пароль</span>
-      </div>
-      <div>
-        <span>Смена почты</span>
-      </div>
-      <div onClick={handleSignOut}>
-        <span>LogOut</span>
-      </div>
-    </div>
+    <Settings.Wrapper>
+      <Settings.Container>
+        <UploadAccountPhotoOption />
+        <Divider />
+        <Settings.PersonalInfoContainer>
+          <Settings.PersonalInfoTitle>Personal info</Settings.PersonalInfoTitle>
+          <div>
+            <span>Смена имени</span>
+          </div>
+          <ChangeEmailOption />
+        </Settings.PersonalInfoContainer>
+        <Divider />
+        <div>
+          <span>Смена пароль</span>
+        </div>
+        <div onClick={handleSignOut}>
+          <span>LogOut</span>
+        </div>
+      </Settings.Container>
+    </Settings.Wrapper>
   )
 }
 

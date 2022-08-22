@@ -12,11 +12,11 @@ export const Wrapper = styled.div`
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
@@ -35,5 +35,5 @@ export const Title = styled.p`
   font-weight: 500;
   line-height: 24px;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `

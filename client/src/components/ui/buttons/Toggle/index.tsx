@@ -1,13 +1,15 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import { TriangleSvg } from 'components/ui/svg'
 import PropTypes from './ToggleButton.types'
-import Container from './ToggleButton.styles'
+import Button from './ToggleButton.styles'
 
-const ToggleButton: FC<PropTypes> = ({ expanded, handleToggleExpanded }) => (
-  <Container role='button' data-btn='toggle' onClick={handleToggleExpanded}>
-    <TriangleSvg isOpen={expanded} />
-  </Container>
+const ToggleButton: FC<PropTypes> = memo(
+  ({ expanded, handleToggleExpanded }) => (
+    <Button role='button' data-btn='toggle' onClick={handleToggleExpanded}>
+      <TriangleSvg isOpen={expanded} />
+    </Button>
+  )
 )
 
 export default ToggleButton

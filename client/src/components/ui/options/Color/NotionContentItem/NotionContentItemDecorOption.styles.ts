@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
-import ContentItemColorsHandler from 'utils/helpers/ContentItemColorsHandler'
+import ContentItemColorsHandler from 'utils/ContentItemColorsHandler'
 
 export const Container = styled.div`
   cursor: pointer;
@@ -36,8 +36,7 @@ export const DecorPreviewBlock = styled.div<{
   ${p =>
     p.theme.identifier === Theme.LIGHT &&
     'box-shadow: rgb(15 15 15 / 10%) 0 0 0 1px inset'};
-  background: ${p =>
-    p.dest === 'bg'
+  background: ${p => p.dest === 'bg'
       ? ContentItemColorsHandler.setBgColor(p.decor, p.theme)
       : 'none'};
 
@@ -45,8 +44,7 @@ export const DecorPreviewBlock = styled.div<{
     font-size: 16px;
     font-weight: 500;
     ${txtOflow.ell};
-    color: ${p =>
-      p.dest === 'color'
+    color: ${p => p.dest === 'color'
         ? ContentItemColorsHandler.setColor(p.decor, p.theme)
         : p.theme.colors['text-primary']};
   }

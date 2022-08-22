@@ -14,15 +14,15 @@ export const Container = styled.div`
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
 
     span {
-      color: ${props => props.theme.colors['text-sb-list-active-title']};
+      color: ${p => p.theme.colors['text-sb-list-active-title']};
     }
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
@@ -31,6 +31,6 @@ export const Text = styled.span`
   font-weight: 600;
   letter-spacing: 0.3px;
   text-transform: uppercase;
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
   transition: color 20ms ease-in;
 `

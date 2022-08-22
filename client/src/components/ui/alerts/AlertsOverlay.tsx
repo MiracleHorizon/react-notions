@@ -10,7 +10,7 @@ const AlertsOverlay = () => {
     deletePage: { isOpen: isDeletePageAlertOpen },
     alreadyExist: { isOpen: isAlreadyExistAlertOpen },
     deleteTasksList: { isOpen: isDeleteTasksListAlertOpen },
-  } = useTypedSelector(state => state.alerts)
+  } = useTypedSelector(s => s.alerts)
 
   return (
     <>

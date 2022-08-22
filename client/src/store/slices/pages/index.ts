@@ -4,8 +4,7 @@ import PagesState from './pages.types'
 
 const initialState: PagesState = {
   pages: [],
-  noStatusPages: [],
-  page: null,
+  page: {} as IPage,
 }
 
 const pagesSlice = createSlice({
@@ -16,22 +15,14 @@ const pagesSlice = createSlice({
   reducers: {
     setPages(state, action: PayloadAction<IPage[]>) {
       state.pages = action.payload
-      // state.noStatusPages = action.payload.filter(page => page.status === 'NO_STATUS')
     },
 
     setCurrentPage(state, action: PayloadAction<IPage>) {
       state.page = action.payload
     },
-
-    clearStore(state) {
-      state.page = null
-      state.pages = []
-      state.noStatusPages = []
-      window.localStorage.removeItem('lastVisitedPage')
-    },
   },
 })
 
-export const { setPages, setCurrentPage, clearStore } = pagesSlice.actions
+export const { setPages, setCurrentPage } = pagesSlice.actions
 
 export default pagesSlice.reducer

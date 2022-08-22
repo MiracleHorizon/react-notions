@@ -1,22 +1,21 @@
 import styled from 'styled-components'
+import { bgTransitions, dFlex } from 'styles/uiKit'
 
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Button = styled.div`
+  ${dFlex.center};
   width: 32px;
   height: 100%;
   margin-right: 1px;
   border-radius: 3px;
-  transition: background 50ms ease-in-out;
+  ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
-export default Container
+export default Button

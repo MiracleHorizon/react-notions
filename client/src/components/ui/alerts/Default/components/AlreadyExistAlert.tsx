@@ -1,9 +1,9 @@
 import React from 'react'
 
-import DefaultAlert from 'components/ui/alerts/Default'
+import DefaultAlert from 'components/ui/alerts - Checked/Default/index'
 import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
-import { OutlineButtonColorsEnum } from 'models/decor/outlineButton/outlineButton.models'
+import { OutlineButtonColorsEnum } from 'models/decor/outlineButton'
 
 const AlreadyExistAlert = () => {
   const { hideAlreadyExistAlert } = useActions()
@@ -12,7 +12,7 @@ const AlreadyExistAlert = () => {
 
   return (
     <DefaultAlert
-      textAlignCenter
+      textCenter
       title='Group already exists.'
       closeAction={hideAlreadyExistAlert}
     >

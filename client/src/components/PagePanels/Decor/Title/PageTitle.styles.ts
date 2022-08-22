@@ -4,29 +4,22 @@ import { TitleContainerProps } from './PageTitle.types'
 import fontFamilyHandler from 'utils/helpers/fontFamilyHandler'
 
 export const Wrapper = styled.div`
-  margin-top: 5px;
   width: 100%;
   height: auto;
+  margin-top: 5px;
 `
 
-export const Container = styled.div<TitleContainerProps>`
+export const Container = styled.div`
   ${dFlex['center-start']};
-  //width: 100%;
   height: 100%;
+`
 
-  div[contenteditable] {
-    font-family: ${p => fontFamilyHandler(p.font)};
-    cursor: text;
-    margin-left: ${p => (p.template === 'NotionsList' && p.iconUrl ? 10 : 0)}px;
-    font-size: ${p => (p.template === 'Notion' ? 40 : 32)}px;
-    font-weight: 700;
-    line-height: 50px;
-    color: ${p => p.theme.colors['text-primary']};
-
-    &:empty:after {
-      content: attr(placeholder);
-      -webkit-text-fill-color: ${p =>
-        p.theme.colors['text-placeholder-primary']};
-    }
-  }
+export const Value = styled.h1<TitleContainerProps>`
+  font-family: ${p => fontFamilyHandler(p.font)};
+  width: 100%;
+  margin-left: ${p => (p.template === 'NotionsList' && p.iconUrl ? 10 : 0)}px;
+  font-size: ${p => (p.template === 'Notion' ? (p.smallText ? 32 : 40) : 32)}px;
+  font-weight: 700;
+  line-height: 50px;
+  color: ${p => p.theme.colors['text-primary']};
 `

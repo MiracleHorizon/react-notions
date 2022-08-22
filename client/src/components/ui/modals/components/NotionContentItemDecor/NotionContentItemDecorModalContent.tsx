@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import Divider from 'components/ui/Divider'
+import Divider from 'components/ui/Divider - Checked'
 import ModalTitle from 'components/ui/modals/ModalTitle'
 import NotionContentItemDecorOption from 'components/ui/options/Color/NotionContentItem'
 import { NOTION_CONTENT_ITEM_DECOR_COLORS } from 'utils/constants/colors'
@@ -11,10 +11,6 @@ const NotionContentItemDecorModalContent: FC<{ itemId: string }> = ({
 }) => (
   <>
     <Modal.OptionsList>
-      {/*<>*/}
-      {/*  <Modal.OptionsList>LAST USED</Modal.OptionsList>*/}
-      {/*  <Divider />*/}
-      {/*</>*/}
       <ModalTitle title='Color' upCase />
       {Object.values(NOTION_CONTENT_ITEM_DECOR_COLORS).map(color => (
         <NotionContentItemDecorOption

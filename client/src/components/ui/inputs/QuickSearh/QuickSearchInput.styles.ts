@@ -9,9 +9,10 @@ const Input = styled.input`
   font-size: 18px;
   line-height: 24px;
   ${txtOflow.ell};
+  color: ${p => p.theme.colors['text-primary']};
 
   &::placeholder {
-    font-weight: 300;
+    font-weight: 400;
   }
 `
 

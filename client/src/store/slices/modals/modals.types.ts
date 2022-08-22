@@ -18,15 +18,13 @@ export default interface ModalsState {
   tasksListOptions: TasksListOptionsModalState
   handleTasksList: HandleTasksListTitleModalState
   hiddenTasksList: HiddenTasksListModalState
-  notionTask: {
-    isOpen: boolean
-    page: IPage | null
-  }
+  notionTask: { isOpen: boolean }
   notionItemOptions: {
     isOpen: boolean
     _id: string
     type: NotionContentItemTypes
     invokerRect: string
+    page: IPage | null
   }
   notionItemDecor: {
     isOpen: boolean
@@ -35,14 +33,14 @@ export default interface ModalsState {
   }
   changeStatus: {
     isOpen: boolean
-    list: ITasksList | null // Дополнить все подобные поля * ... | null *.
-    task: IPage | null
+    list: ITasksList
+    task: IPage
     invokerRect: string
   }
   createNotionContentItem: {
     isOpen: boolean
     invokerRect: string
-    item: INotionContentItem | null
+    item: INotionContentItem
     parentItemId?: string
   }
   webBookmark: {
@@ -67,7 +65,7 @@ export interface IElementCoords {
 }
 
 export interface RenamePageModalState extends ModalInitialState, IInvokerRect {
-  page: IPage | null
+  page: IPage
 }
 
 export interface ChangeCoverModalState extends ModalInitialState, IInvokerRect {
@@ -81,13 +79,13 @@ export interface ChangeIconModalState extends ModalInitialState, IInvokerRect {
 export interface PageOptionsModalState
   extends ModalInitialState,
     IElementCoords {
-  page: IPage | null
+  page: IPage
 }
 
 export interface PageSettingsModalState
   extends ModalInitialState,
     IInvokerRect {
-  page: IPage | null
+  page: IPage
   invokerRect: string
 }
 

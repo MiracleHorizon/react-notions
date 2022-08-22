@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 
 import BorderedButton from 'components/ui/buttons/Bordered'
 import DecorModalActionsBar from './ActionsBar'
@@ -11,7 +11,10 @@ const DecorModalNavbar: FC<PropTypes> = ({
   setActiveCategory,
   ...actionsProps
 }) => {
-  const handleSelectCategory = (category: string) => setActiveCategory(category)
+  const handleSelectCategory = useCallback(
+    (category: string) => setActiveCategory(category),
+    [setActiveCategory]
+  )
 
   return (
     <Wrapper>

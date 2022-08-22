@@ -6,6 +6,7 @@ export default interface PageCoverProps {
   template: TPageTemplate
   coverPosition: number
   fullWidth: boolean
+  locked: boolean
 }
 
 export interface CoverWrapperProps {

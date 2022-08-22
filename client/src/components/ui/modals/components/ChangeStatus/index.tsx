@@ -12,31 +12,23 @@ import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './ChangeStatusModal.styles'
 
 const ChangeStatusModal = () => {
+  const { closeChangeStatusModal } = useActions()
   const {
     changeStatus: { list, task, invokerRect },
     tasksListOptions: { isOpen: isTasksListOptionsModalOpen },
-  } = useTypedSelector(state => state.modals)
+  } = useTypedSelector(s => s.modals)
   const { value, handleChangeValue } = useInput('')
-  const { closeChangeStatusModal } = useActions()
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     pos: 'changeStatus',
     invokerRect,
   })
 
-  useOnCloseModal(
-    ref,
-    !isTasksListOptionsModalOpen ? closeChangeStatusModal : null
-  )
-
-  if (!list || !task) return null
+  useOnCloseModal(ref, !isTasksListOptionsModalOpen ? closeChangeStatusModal : null)
 
   return (
     <ModalWrapper>
-      <Modal.Container
-        ref={node => nodeRefHandler(node, rect, setRef)}
-        {...coords}
-      >
+      <Modal.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
         <CurrentTaskStatus
           list={list}
           task={task}

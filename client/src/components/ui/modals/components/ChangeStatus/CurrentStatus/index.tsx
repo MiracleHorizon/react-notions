@@ -1,27 +1,40 @@
 import React, { FC, memo, useEffect, useRef } from 'react'
 
 import { CloseThickSvg } from 'components/ui/svg'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
-import { IInputParams } from 'components/ui/inputs/input.types'
-import PropTypes from '../ChangeStatusModal.types'
+import useTypedSelector from 'hooks/useTypedSelector'
+import { useUpdatePageMutation } from 'services/pages.api'
+import { selectNoStatusList } from 'store/slices/tasksLists/tasksLists.selectors'
+import { IInputParams } from 'components/ui/inputs - Checked/types'
+import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
+import ITasksList from 'models/tasksList/ITasksList'
+import IPage from 'models/page/IPage'
 import * as Status from './CurrentTaskStatus.styles'
 
-const CurrentTaskStatus: FC<PropTypes & IInputParams> = memo(
+const CurrentTaskStatus: FC<
+  {
+    task: IPage
+    list: ITasksList
+  } & IInputParams
+> = memo(
   ({ task: { _id }, list: { title, color }, value, handleChangeValue }) => {
-    const inputRef = useRef<HTMLInputElement>(null)
     const [updatePage] = useUpdatePageMutation()
+    const noStatusList = useTypedSelector(selectNoStatusList)
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const handleDeleteStatus = () => {
-      updatePage({ _id, body: { parentListId: null, status: 'NO_STATUS' } })
+      if (noStatusList) {
+        const body = { parentListId: null, status: noStatusList._id }
+        updatePage({ _id, body })
+      }
     }
 
     useEffect(() => {
-      title === 'NO_STATUS' && inputRef.current?.focus()
-    }, [title])
+      color === TasksListTitleColorsEnum.EMPTY && inputRef.current?.focus()
+    }, [color])
 
     return (
       <Status.Wrapper>
-        {title !== 'NO_STATUS' ? (
+        {color !== TasksListTitleColorsEnum.EMPTY ? (
           <Status.Container bgColor={color}>
             <Status.Value>{title}</Status.Value>
             <Status.IconContainer onClick={handleDeleteStatus}>

@@ -5,10 +5,10 @@ import TaskMainStatus from './Item/TaskMainStatus'
 import IPage from 'models/page/IPage'
 import Wrapper from './TaskStatusPanel.styles'
 
-const TaskStatusPanel: FC<IPage> = memo(page => (
+const TaskStatusPanel: FC<IPage> = memo(task => (
   <Wrapper>
-    <TaskCreatedStatus value={page.createdAt} />
-    <TaskMainStatus {...page} />
+    <TaskCreatedStatus createdAt={task.createdAt} />
+    <TaskMainStatus {...task} />
   </Wrapper>
 ))
 

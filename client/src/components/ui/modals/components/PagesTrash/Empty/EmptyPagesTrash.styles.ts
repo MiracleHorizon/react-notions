@@ -10,5 +10,5 @@ export const Title = styled.span`
   margin: auto;
   user-select: none;
   font-size: 14px;
-  color: ${props => props.theme.colors['text-sb-option-title']};
+  color: ${p => p.theme.colors['text-sb-option-title']};
 `

@@ -5,4 +5,5 @@ export interface TitleContainerProps {
   template: TPageTemplate
   iconUrl: string | null
   font: TPageFont
+  smallText: boolean
 }

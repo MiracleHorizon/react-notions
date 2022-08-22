@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 
-const Container = styled.div<{ isOpen?: boolean }>`
+const Button = styled.div<{ isOpen?: boolean }>`
   cursor: pointer;
   ${dFlex.center};
   height: 28px;
@@ -24,4 +24,4 @@ const Container = styled.div<{ isOpen?: boolean }>`
   }
 `
 
-export default Container
+export default Button

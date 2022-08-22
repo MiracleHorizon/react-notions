@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
 
-import { authApi } from './slices/auth/auth.api'
-import { pagesApi } from './slices/pages/pages.api'
-import { tasksListsApi } from './slices/tasksLists/tasksLists.api'
+// api
+import { authApi } from 'services/auth.api'
+import { pagesApi } from 'services/pages.api'
+import { tasksListsApi } from 'services/tasksLists.api'
 
+// slices.
 import auth from './slices/auth'
 import app from './slices/app'
 import pages from './slices/pages'
@@ -15,10 +16,10 @@ import alerts from './slices/alerts'
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    auth,
     [pagesApi.reducerPath]: pagesApi.reducer,
-    pages,
     [tasksListsApi.reducerPath]: tasksListsApi.reducer,
+    auth,
+    pages,
     tasksLists,
     app,
     modals,
@@ -33,5 +34,3 @@ export const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
-export const useAppDispatch = () => useDispatch<AppDispatch>()

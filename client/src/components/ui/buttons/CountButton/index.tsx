@@ -1,8 +1,7 @@
-import React, { FC, memo } from 'react'
-
+import React, { memo } from 'react'
 import * as Button from './CountButton.styles'
 
-const CountButton: FC<{ count: number }> = memo(({ count }) => (
+const CountButton = memo(({ count }: { count: number }) => (
   <Button.Container role='button' data-btn='count'>
     <Button.Title>{count}</Button.Title>
   </Button.Container>

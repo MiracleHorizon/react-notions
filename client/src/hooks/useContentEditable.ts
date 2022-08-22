@@ -3,9 +3,10 @@ import { ContentEditableEvent } from 'react-contenteditable'
 
 import useActions from './useActions'
 import {
+  useCreateItemMutation,
   useDeleteItemMutation,
   useUpdateItemMutation,
-} from 'store/slices/pages/pages.api'
+} from 'services/pages.api'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
 import IPage from 'models/page/IPage'
 
@@ -19,6 +20,7 @@ export default function useContentEditable(
   page?: IPage | null
 ) {
   const value = useRef<string>(initialValue)
+  const [createContentItem] = useCreateItemMutation()
   const [updateContentItem] = useUpdateItemMutation()
   const [deleteContentItem] = useDeleteItemMutation()
   const {
@@ -70,6 +72,10 @@ export default function useContentEditable(
     }
 
     if (e.code === 'Backspace' && value.current === '') deleteContentItem(_id)
+
+    if (e.code === 'Enter') {
+      // createContentItem({parentItemId})
+    }
   }
 
   const handleBlur = () => {

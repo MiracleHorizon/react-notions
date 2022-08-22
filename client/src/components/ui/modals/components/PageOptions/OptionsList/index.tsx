@@ -1,5 +1,7 @@
 import React, { FC, memo, useRef } from 'react'
 import { useCopyToClipboard } from 'usehooks-ts'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 
 import OptionItem from 'components/ui/options/OptionItem'
 import MovePageOption from 'components/ui/options/MovePage'
@@ -11,24 +13,31 @@ import {
   UnstarSvg,
 } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import useTypedSelector from 'hooks/useTypedSelector'
 import {
-  useDeletePageMutation,
+  useMovePageToTrashMutation,
   useUpdatePageMutation,
-} from 'store/slices/pages/pages.api'
+} from 'services/pages.api'
+import { selectRedirectPageId } from 'store/slices/app/app.selectors'
+import { CLIENT_API } from 'utils/constants/app'
 import PropTypes from './PageOptionsList.types'
 
 const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
-  const { _id, favorite } = page
-  const renameRef = useRef<HTMLDivElement>(null)
-  const [, handleCopy] = useCopyToClipboard()
-  const { closePageOptionsModal, openRenamePageModal, openMovePageModal } =
-    useActions()
+  const { _id, favorite, locked } = page
+  const { closePageOptionsModal, openRenamePageModal, openMovePageModal } = useActions()
+  const { page: currentPage } = useTypedSelector(s => s.pages)
 
-  const [deletePage] = useDeletePageMutation()
+  const [, handleCopy] = useCopyToClipboard()
+  const redirectPageId = useSelector(selectRedirectPageId)
+  const renameRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
+
+  const [movePageToTrash] = useMovePageToTrashMutation()
   const [updatePage] = useUpdatePageMutation()
 
   const handleDelete = async () => {
-    await deletePage(_id)
+    await movePageToTrash(_id)
+    if (_id === currentPage?._id) navigate(`/workspace/${redirectPageId}`)
     closePageOptionsModal()
   }
 
@@ -38,19 +47,19 @@ const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
     closePageOptionsModal()
   }
 
-  const handleToggleFavorite = async () => {
-    await updatePage({ _id, body: { favorite: !favorite } })
+  const handleToggleFavorite = () => {
+    updatePage({ _id, body: { favorite: !favorite } })
     closePageOptionsModal()
   }
 
   const handleCopyLink = () => {
-    handleCopy('Имя домена/workspace/' + _id).then(() =>
-      closePageOptionsModal()
-    )
+    handleCopy(`${CLIENT_API}/workspace/${_id}`)
+      .then(() => closePageOptionsModal())
+      .catch(() => console.error('Ошибка копирования'))
   }
 
   const handleOpenMovePageModal = () => {
-    openMovePageModal({ pageId: page._id, coords })
+    openMovePageModal({ pageId: _id, coords })
     closePageOptionsModal()
   }
 
@@ -62,8 +71,8 @@ const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
         onClickAction={handleDelete}
       />
       <OptionItem
-        title={page.favorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        StartSvg={page.favorite ? UnstarSvg : StarSvg}
+        title={favorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        StartSvg={favorite ? UnstarSvg : StarSvg}
         onClickAction={handleToggleFavorite}
       />
       <OptionItem
@@ -71,12 +80,14 @@ const PageOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
         StartSvg={LinkSvg}
         onClickAction={handleCopyLink}
       />
-      <OptionItem
-        title='Rename'
-        StartSvg={RenameSvg}
-        onClickAction={handleOpenRenameModal}
-        reference={renameRef}
-      />
+      {!locked && (
+        <OptionItem
+          title='Rename'
+          StartSvg={RenameSvg}
+          onClickAction={handleOpenRenameModal}
+          reference={renameRef}
+        />
+      )}
       <MovePageOption onClickAction={handleOpenMovePageModal} />
     </>
   )

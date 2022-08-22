@@ -1,9 +1,8 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
   margin-right: 8px;
 `
 

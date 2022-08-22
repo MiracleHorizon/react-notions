@@ -1,19 +1,19 @@
-import React, { FC, useRef, lazy, Suspense } from 'react'
+import React, { FC, memo, useRef, lazy, Suspense } from 'react'
 import { useHover } from 'usehooks-ts'
 
-import PageTitle from './Title'
-import DecorOptions from './Options'
+import PageTitle from './Title - Checked'
+import DecorOptions from './Options - Checked'
 import PageCoverLoader from 'components/ui/loaders/Cover'
 import PageIconLoader from 'components/ui/loaders/Icon'
 import PageDescriptionLoader from 'components/ui/loaders/Description'
 import IPage from 'models/page/IPage'
 import * as Panel from './PageDecorPanel.styles'
 
-const PageCover = lazy(() => import('./Cover'))
-const PageIcon = lazy(() => import('./Icon'))
-const PageDescription = lazy(() => import('./Description'))
+const PageCover = lazy(() => import('./Cover - Checked'))
+const PageIcon = lazy(() => import('./Icon - Checked'))
+const PageDescription = lazy(() => import('./Description - Checked'))
 
-const PageDecorPanel: FC<IPage> = page => {
+const PageDecorPanel: FC<IPage> = memo(page => {
   const {
     _id,
     template,
@@ -21,6 +21,7 @@ const PageDecorPanel: FC<IPage> = page => {
     iconUrl,
     coverUrl,
     coverPosition,
+    locked,
     description,
     descriptionExpanded,
   } = page
@@ -37,13 +38,14 @@ const PageDecorPanel: FC<IPage> = page => {
             coverUrl={coverUrl}
             coverPosition={coverPosition}
             fullWidth={fullWidth}
+            locked={locked}
           />
         </Suspense>
       )}
       <Panel.Container
+        data-el='decor-panel'
         template={template}
         fullWidth={fullWidth}
-        data-el='decor-panel'
       >
         {template === 'Notion' && iconUrl && (
           <Suspense fallback={<PageIconLoader />}>
@@ -52,6 +54,7 @@ const PageDecorPanel: FC<IPage> = page => {
               template={template}
               iconUrl={iconUrl}
               coverUrl={coverUrl}
+              locked={locked}
             />
           </Suspense>
         )}
@@ -65,6 +68,6 @@ const PageDecorPanel: FC<IPage> = page => {
       </Panel.Container>
     </Panel.Wrapper>
   )
-}
+})
 
 export default PageDecorPanel

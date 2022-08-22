@@ -1,11 +1,10 @@
 import styled from 'styled-components'
+import { dFlex } from 'styles/uiKit'
 
 const Bar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${dFlex.center};
+  height: 100%;
   margin-left: auto;
-  height: auto;
   margin-right: 2px;
 `
 

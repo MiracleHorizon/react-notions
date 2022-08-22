@@ -26,4 +26,8 @@ export const IconContainer = styled.div`
   top: 50%;
   left: 15px;
   transform: translateY(-50%);
+  
+  svg {
+    fill: ${p => p.theme.svgFills.secondary} !important;
+  }
 `

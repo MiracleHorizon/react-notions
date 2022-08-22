@@ -3,23 +3,20 @@ import { useCopyToClipboard, useHover } from 'usehooks-ts'
 
 import { CopySvg } from 'components/ui/svg'
 import { ClipboardCopyTooltip } from 'components/ui/tooltips'
-import Container from './ClipboardCopyButton.styles'
+import Button from './ClipboardCopyButton.styles'
 
 const ClipboardCopyButton: FC<{ value: string }> = ({ value }) => {
+  const [, copyTrigger] = useCopyToClipboard()
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
-  const [, handleCopy] = useCopyToClipboard()
+
+  const handleCopy = () => copyTrigger(value)
 
   return (
-    <Container
-      ref={ref}
-      role='button'
-      data-btn='copy'
-      onClick={() => handleCopy(value)}
-    >
+    <Button ref={ref} role='button' data-btn='copy' onClick={handleCopy}>
       <CopySvg />
       {isHovering && <ClipboardCopyTooltip reference={ref} />}
-    </Container>
+    </Button>
   )
 }
 

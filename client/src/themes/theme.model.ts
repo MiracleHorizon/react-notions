@@ -14,7 +14,7 @@ export interface IThemeColors {
   'text-primary': string
   'text-secondary': string
   'text-statuses-modal-title': string
-  'text-lower-titles'?: string // !
+  'text-lower-titles'?: string
   'text-placeholder-primary': string
   'text-cover-option': string
   'text-cover-titles': string
@@ -55,6 +55,7 @@ export interface IThemeColors {
   'bg-t-list-title-modal': string
   'bg-notion-task-modal': string
   'bg-curr-task-status': string
+  'bg-upload-drag': string
   'br-cover-option': string
   'br-cover-uploader': string
   'br-r-sb-header': string

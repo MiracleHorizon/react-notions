@@ -6,14 +6,14 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 40px;
   margin-top: 10px;
-  box-shadow: ${p => p.theme.colors['b-shadow-views-panel']} 0px -1px 0px inset;
+  padding: 0 90px;
 `
 
 export const Container = styled.div`
   flex: 1;
-  display: flex;
-  justify-content: space-between;
+  ${dFlex['center-s-between']};
   min-height: 40px;
+  box-shadow: ${p => p.theme.colors['b-shadow-views-panel']} 0px -1px 0px inset;
 `
 
 export const ViewsList = styled.ul`

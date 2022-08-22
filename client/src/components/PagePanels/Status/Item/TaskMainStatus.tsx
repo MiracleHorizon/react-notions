@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { StatusSelectSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useGetTasksListsQuery } from 'store/slices/tasksLists/tasksLists.api'
+import { useLazyGetTasksListsQuery } from 'services/tasksLists.api'
 import {
   selectListById,
   selectNoStatusList,
@@ -13,23 +13,30 @@ import IPage from 'models/page/IPage'
 import * as Status from './StatusItem.styles'
 
 const TaskMainStatus: FC<IPage> = task => {
-  const { data, isSuccess } = useGetTasksListsQuery(task.parentPageId!)
-  const { tasksLists } = useTypedSelector(state => state.tasksLists)
   const { openChangeStatusModal, setTasksLists } = useActions()
+  const [getTasksLists, { data, isSuccess }] = useLazyGetTasksListsQuery()
+  const { tasksLists } = useTypedSelector(s => s.tasksLists)
+  const parentList = useTypedSelector(s => selectListById(s, task.parentListId))
+  const noStatusList = useSelector(selectNoStatusList)
   const ref = useRef<HTMLDivElement>(null)
 
-  const parentList = useTypedSelector(state => selectListById(state, task.parentListId!))
-  const noStatusList = useSelector(selectNoStatusList)
-
   const handleOpenChangeStatusModal = () => {
-    const list = parentList ? parentList : noStatusList
-    const invokerRect = ref.current?.getBoundingClientRect().toJSON()
-    openChangeStatusModal({ invokerRect, list, task })
+    if (!task.locked && noStatusList) {
+      const list = parentList ? parentList : noStatusList
+      const invokerRect = ref.current?.getBoundingClientRect().toJSON()
+      openChangeStatusModal({ invokerRect, list, task })
+    }
   }
 
   useEffect(() => {
-    if (isSuccess && tasksLists.length !== 1) setTasksLists(data)
-  }, [data, isSuccess, tasksLists.length])
+    if (task.parentPageId && tasksLists.length === 0) {
+      getTasksLists(task.parentPageId)
+    }
+  }, [task.parentPageId, tasksLists.length, getTasksLists])
+
+  useEffect(() => {
+    if (isSuccess && data) setTasksLists(data)
+  }, [isSuccess, data, setTasksLists])
 
   return (
     <Status.Wrapper>

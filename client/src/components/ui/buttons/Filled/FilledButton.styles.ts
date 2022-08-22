@@ -6,8 +6,8 @@ export const Container = styled.div`
   ${dFlex.center};
   max-width: 300px;
   min-width: 60px;
-  width: 100%;
   min-height: 28px;
+  width: 100%;
   margin: 15px auto;
   border-radius: 3px;
   box-shadow: rgb(15 15 15 / 10%) 0 0 0 1px inset, rgb(15 15 15 / 10%) 0 1px 2px;

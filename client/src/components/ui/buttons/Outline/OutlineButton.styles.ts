@@ -8,26 +8,25 @@ const Button = styled.div<OutlineButtonContainerProps>`
   width: 100%;
   height: 32px;
   margin-top: 8px;
-  border: 1px solid ${props => props.brColor};
+  border: 1px solid ${p => p.brColor};
   border-radius: 4px;
   user-select: none;
-  ${props => props.disabled && 'pointer-events: none; opacity: 0.5'};
+  ${p => p.disabled && 'pointer-events: none; opacity: 0.5'};
   ${bgTransitions.esIn20};
 
   &:hover {
-    background: ${props => props.hover};
+    background: ${p => p.hover};
   }
 
   &:active {
-    background: ${props => props.active};
+    background: ${p => p.active};
   }
 
   p {
     margin-bottom: 1px;
     font-size: 14px;
-    line-height: 24px;
     ${txtOflow.ell};
-    color: ${props => props.color};
+    color: ${p => p.color};
   }
 `
 

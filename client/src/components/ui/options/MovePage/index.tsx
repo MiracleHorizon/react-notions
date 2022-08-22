@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
+import React, { memo } from 'react'
 
 import OptionItem from '../OptionItem'
-import Divider from 'components/ui/Divider'
+import Divider from 'components/ui/Divider - Checked'
 import { MoveToSvg } from 'components/ui/svg'
 import { IVoidClick } from 'types'
 
-const MovePageOption: FC<IVoidClick> = ({ onClickAction }) => (
+const MovePageOption = memo(({ onClickAction }: IVoidClick) => (
   <>
     <Divider />
     <OptionItem
@@ -14,6 +14,6 @@ const MovePageOption: FC<IVoidClick> = ({ onClickAction }) => (
       onClickAction={onClickAction}
     />
   </>
-)
+))
 
 export default MovePageOption

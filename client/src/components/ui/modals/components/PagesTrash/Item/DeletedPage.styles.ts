@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ isSelected: boolean }>`
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -10,14 +11,11 @@ export const Wrapper = styled.div`
   margin: 1px 0;
   padding-left: 10px;
   border-radius: 3px;
-  transition: background 20ms ease-in;
-
-  &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
-  }
+  background: ${p => p.isSelected ? p.theme.colors['bg-el-hover-primary'] : 'transparent'};
+  ${bgTransitions.esIn20};
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
@@ -26,10 +24,8 @@ export const Title = styled.p`
   font-size: 14px;
   font-weight: 400;
   line-height: 24px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  color: ${props => props.theme.colors['text-primary']};
+  ${txtOflow.ell};
+  color: ${p => p.theme.colors['text-primary']};
 `
 
 export const Icon = styled.img`
@@ -41,15 +37,13 @@ export const Icon = styled.img`
 `
 
 export const ButtonsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${dFlex['center-s-between']};
   width: max-content;
   height: calc(100% - 4px);
   margin-left: auto;
   margin-right: 10px;
 
   svg {
-    fill: ${props => props.theme.svgFills['pages-trash-btn']} !important;
+    fill: ${p => p.theme.svgFills['pages-trash-btn']} !important;
   }
 `

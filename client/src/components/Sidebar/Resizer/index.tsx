@@ -6,9 +6,8 @@ const SidebarResizer: FC<PropTypes> = ({
   resizerRef,
   isResizingEnabled,
   onClickAction,
-  isActive,
 }) => (
-  <Resizer.Container onClick={!isActive ? onClickAction : () => {}}>
+  <Resizer.Container onClick={onClickAction}>
     <Resizer.Line ref={resizerRef} isResizingEnabled={isResizingEnabled} />
   </Resizer.Container>
 )

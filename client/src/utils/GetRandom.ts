@@ -8,5 +8,5 @@ export default class GetRandom {
   static icon = () => sample(EMOJIS_URLS)
 
   static listColor = () =>
-    sample(Object.values(TasksListTitleColorsEnum).filter(c => c !== 'empty'))
+    sample(Object.values(TasksListTitleColorsEnum).filter(c => c !== TasksListTitleColorsEnum.EMPTY))
 }

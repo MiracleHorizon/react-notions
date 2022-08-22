@@ -6,11 +6,11 @@ const Title = styled.h4<{ upCase?: boolean }>`
   margin-left: 10px;
   margin-bottom: 5px;
   user-select: none;
-  font-size: ${props => (props.upCase ? 11 : 12)}px;
+  font-size: ${p => (p.upCase ? 11 : 12)}px;
   font-weight: 500;
   ${txtOflow.ell};
-  text-transform: ${props => (props.upCase ? 'uppercase' : 'none')};
-  color: ${props => props.theme.colors['text-secondary']};
+  text-transform: ${p => (p.upCase ? 'uppercase' : 'none')};
+  color: ${p => p.theme.colors['text-secondary']};
 `
 
 export default Title

@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import { ElementCoords } from 'types'
 import { dFlex, modalBoxShadowPrimary } from 'styles/uiKit'
 
-export const Container = styled.div<ElementCoords>`
+export const Container = styled.div<
+  { isOnTop: boolean; isOnBottom: boolean } & ElementCoords
+>`
   position: absolute;
   top: ${p => p.top}px;
   left: ${p => p.left}px;
@@ -15,6 +17,16 @@ export const Container = styled.div<ElementCoords>`
   box-shadow: ${p => modalBoxShadowPrimary(p.theme)};
   background: ${p => p.theme.colors['bg-modal-primary']};
   overflow: auto;
+
+  &::-webkit-scrollbar-track {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-top-right-radius: ${p => (p.isOnTop ? 4 : 0)}px;
+    border-bottom-right-radius: ${p => (p.isOnBottom ? 4 : 0)}px;
+  }
 `
 
 export const OptionsList = styled.ul`

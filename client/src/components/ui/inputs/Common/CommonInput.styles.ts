@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 const Input = styled.input`
-  width: 100%;
   min-height: 28px;
+  width: 100%;
   height: auto;
   padding: 0 10px;
   border-radius: 3px;
@@ -10,10 +10,10 @@ const Input = styled.input`
   white-space: pre-wrap;
   word-break: break-word;
   color: inherit;
-  background: ${props => props.theme.colors['bg-modal-secondary']};
-  
+  background: ${p => p.theme.colors['bg-modal-secondary']};
+
   &::placeholder {
-    color: ${props => props.theme.colors['text-secondary']};
+    color: ${p => p.theme.colors['text-secondary']};
   }
 `
 

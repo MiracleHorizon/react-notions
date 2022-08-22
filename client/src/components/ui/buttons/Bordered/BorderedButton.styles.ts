@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   position: relative;
@@ -9,26 +9,27 @@ export const Wrapper = styled.div`
 
 export const Container = styled.div`
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  max-height: 30px;
+  ${dFlex.center};
+  min-height: 28px;
+  height: 28px;
   padding: 4px 6px;
   border-radius: 3px;
-  transition: background 50ms ease-in;
+  ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 `
 
 export const Title = styled.span`
   font-size: 14px;
+  line-height: 24px;
   ${txtOflow.ell};
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `
 
 export const Border = styled.div`
@@ -36,5 +37,5 @@ export const Border = styled.div`
   left: 8px;
   right: 8px;
   bottom: 0;
-  border-bottom: 2px solid ${props => props.theme.colors['text-primary']};
+  border-bottom: 2px solid ${p => p.theme.colors['text-primary']};
 `

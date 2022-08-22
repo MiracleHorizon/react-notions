@@ -9,8 +9,7 @@ const Container = styled.div<{
   cursor: pointer;
   position: relative;
   ${dFlex.center};
-  ${props =>
-    props.template === 'Notion'
+  ${p => p.template === 'Notion'
       ? `
         width: 140px;
         height: 140px
@@ -19,8 +18,7 @@ const Container = styled.div<{
         width: 36px; 
         height: 36px;
       `};
-  margin-top: ${props =>
-    props.coverUrl && props.template === 'Notion' ? -80 : 0}px;
+  margin-top: ${p => (p.coverUrl && p.template === 'Notion' ? -80 : 0)}px;
   border-radius: 3px;
   background: rgb(55, 53, 47, 0.16);
   z-index: 10;

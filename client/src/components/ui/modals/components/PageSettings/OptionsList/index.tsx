@@ -1,5 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { useCopyToClipboard } from 'usehooks-ts'
+import { useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router'
+import { useSelector } from 'react-redux'
 
 import OptionItem from 'components/ui/options/OptionItem'
 import MovePageOption from 'components/ui/options/MovePage'
@@ -13,14 +16,14 @@ import {
 } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import {
-  useDeletePageMutation,
+  useMovePageToTrashMutation,
   useUpdatePageMutation,
-} from 'store/slices/pages/pages.api'
+} from 'services/pages.api'
+import { selectRedirectPageId } from 'store/slices/app/app.selectors'
 import PropTypes from './PageSettingsOptionsList.types'
 
 const PageSettingsOptionsList: FC<PropTypes> = ({
   _id,
-  template,
   favorite,
   locked,
   coords,
@@ -31,27 +34,37 @@ const PageSettingsOptionsList: FC<PropTypes> = ({
     updatePageSettingsModalState,
   } = useActions()
   const [, handleCopy] = useCopyToClipboard()
-  const [deletePage] = useDeletePageMutation()
+  const redirectPageId = useSelector(selectRedirectPageId)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [movePageToTrash] = useMovePageToTrashMutation()
   const [updatePage] = useUpdatePageMutation()
+  const navigate = useNavigate()
 
   const handleDeletePage = async () => {
-    await deletePage(_id)
+    await movePageToTrash(_id)
+
+    searchParams.get('p')
+      ? setSearchParams('')
+      : navigate(`workspace/${redirectPageId}`)
     closePageSettingsModal()
   }
 
   const handleToggleFavorite = async () => {
-    await updatePage({ _id, body: { parentPageId: null, favorite: !favorite } })
+    const body = { parentPageId: null, favorite: !favorite }
+    await updatePage({ _id, body })
     closePageSettingsModal()
   }
 
-  const handleToggleLocked = async () => {
+  const handleToggleLocked = () => {
     const body = { locked: !locked }
-    await updatePage({ _id, body })
+    updatePage({ _id, body })
     updatePageSettingsModalState(body)
   }
 
   const handleCopyLink = () => {
-    handleCopy(window.location.href).then(() => closePageSettingsModal())
+    handleCopy(window.location.href)
+      .then(() => closePageSettingsModal())
+      .catch(() => console.error('Ошибка копирования'))
   }
 
   const handleOpenMovePageModal = () => {
@@ -61,13 +74,11 @@ const PageSettingsOptionsList: FC<PropTypes> = ({
 
   return (
     <>
-      {template === 'Notion' && (
-        <OptionItem
-          title={locked ? 'Unlock page' : 'Lock page'}
-          StartSvg={locked ? UnlockedSvg : LockedSvg}
-          onClickAction={handleToggleLocked}
-        />
-      )}
+      <OptionItem
+        title={locked ? 'Unlock page' : 'Lock page'}
+        StartSvg={locked ? UnlockedSvg : LockedSvg}
+        onClickAction={handleToggleLocked}
+      />
       <OptionItem
         title={favorite ? 'Remove from Favorites' : 'Add to Favorites'}
         StartSvg={favorite ? UnstarSvg : StarSvg}

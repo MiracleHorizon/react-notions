@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
-import ColorsHandler from 'utils/stylesHandlers/colors'
+import handleTasksListTitleColor from 'utils/stylesHandlers/colors'
 
 export const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 34px;
+  height: 36px;
   margin: 1px 0;
 
   div[data-btn='copy'] {
@@ -16,10 +16,9 @@ export const Wrapper = styled.div`
   }
 
   svg {
-    fill: ${props =>
-      props.theme.identifier === Theme.LIGHT
-        ? props.theme.svgFills.primary
-        : props.theme.svgFills.secondary} !important;
+    fill: ${p => p.theme.identifier === Theme.LIGHT
+        ? p.theme.svgFills.primary
+        : p.theme.svgFills.secondary} !important;
   }
 `
 
@@ -30,7 +29,7 @@ export const Container = styled.div`
 
   > div {
     ${dFlex['center-start']};
-    height: 32px;
+    height: 36px;
     border-radius: 3px;
     ${bgTransitions.esInOut50};
 
@@ -44,15 +43,15 @@ export const Container = styled.div`
 
 export const TitleContainer = styled.div`
   cursor: pointer;
-  margin-right: 10px;
   width: 160px;
+  margin-right: 10px;
 
   &:hover {
-    background: ${props => props.theme.colors['bg-el-hover-primary']};
+    background: ${p => p.theme.colors['bg-el-hover-primary']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-el-active-primary']};
+    background: ${p => p.theme.colors['bg-el-active-primary']};
   }
 
   svg {
@@ -66,17 +65,16 @@ export const ValueContainer = styled.div<{ styleEvents?: boolean }>`
   padding-right: 30px;
   padding-left: 7px;
 
-  ${props =>
-    props.styleEvents &&
+  ${p => p.styleEvents &&
     `
     cursor: pointer;
 
     &:hover {
-       background: ${props.theme.colors['bg-el-hover-primary']};
+       background: ${p.theme.colors['bg-el-hover-primary']};
     }
 
     &:active {
-      background: ${props.theme.colors['bg-el-active-primary']};
+      background: ${p.theme.colors['bg-el-active-primary']};
     }
   `};
 `
@@ -86,22 +84,21 @@ export const StatusContainer = styled.div<{
 }>`
   ${dFlex.center};
   width: max-content;
-  height: 20px;
-  padding: 1px 4px;
+  height: auto;
+  padding: 0 4px;
   border-radius: 3px;
-  background: ${props =>
-    ColorsHandler.tasksListTitle(props.bgColor, props.theme)};
+  background: ${p => handleTasksListTitleColor(p.bgColor, p.theme)};
 `
 
 export const Title = styled.span`
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
 `
 
 export const Value = styled.span`
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `
 
 export const EmptyStatus = styled.span`
   font-size: 14px;
-  color: ${props => props.theme.colors['text-secondary']};
+  color: ${p => p.theme.colors['text-secondary']};
 `

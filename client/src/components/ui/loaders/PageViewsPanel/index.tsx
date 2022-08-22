@@ -6,7 +6,7 @@ import { NOTIONS_LIST_VIEWS } from 'utils/constants/app'
 import Wrapper from './PageViewsPanelLoader.styles'
 
 const PageViewsPanelLoader = () => {
-  const { theme } = useTypedSelector(state => state.app)
+  const { theme } = useTypedSelector(s => s.app.themeState)
 
   return (
     <Wrapper>

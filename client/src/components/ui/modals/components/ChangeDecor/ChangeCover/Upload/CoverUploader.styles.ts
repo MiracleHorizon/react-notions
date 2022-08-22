@@ -1,17 +1,18 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex } from 'styles/uiKit'
 
-export const Wrapper = styled.div`
-  ${dFlex['center-start']};
-  flex-direction: column;
+export const Wrapper = styled.div<{ drag: boolean }>`
+  ${dFlex['center-start-col']};
+  width: 100%;
   height: 130px;
   padding: 13px 0;
   user-select: none;
+  background: ${p => p.drag && p.theme.colors['bg-upload-drag']};
 
   p {
     margin-top: 15px;
     font-size: 12px;
-    color: ${props => props.theme.colors['text-cover-titles']};
+    color: ${p => p.theme.colors['text-cover-titles']};
   }
 `
 
@@ -20,18 +21,18 @@ export const Button = styled.div`
   ${dFlex.center};
   width: 95%;
   height: 32px;
-  border: 1px solid ${props => props.theme.colors['br-cover-uploader']};
+  border: 1px solid ${p => p.theme.colors['br-cover-uploader']};
   border-radius: 3px;
   font-size: 14px;
   line-height: 24px;
-  color: ${props => props.theme.colors['text-primary']};
+  color: ${p => p.theme.colors['text-primary']};
   ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${props => props.theme.colors['bg-cover-uploader-hover']};
+    background: ${p => p.theme.colors['bg-cover-uploader-hover']};
   }
 
   &:active {
-    background: ${props => props.theme.colors['bg-cover-uploader-active']};
+    background: ${p => p.theme.colors['bg-cover-uploader-active']};
   }
 `

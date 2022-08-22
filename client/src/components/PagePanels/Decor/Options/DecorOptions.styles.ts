@@ -1,18 +1,17 @@
 import styled from 'styled-components'
-import { OptionsWrapperProps } from './DecorOptions.types'
+import { DecorOptionsWrapperProps } from './DecorOptions.types'
+import { dFlex } from 'styles/uiKit'
 
-export const Wrapper = styled.div<OptionsWrapperProps>`
-  display: flex;
-  justify-content: flex-start;
+export const Wrapper = styled.div<DecorOptionsWrapperProps>`
+  ${dFlex['center-start']};
   width: 100%;
-  margin-top: ${props => (props.template === 'Notion' ? 5 : 10)}px;
+  margin-top: ${p => (p.template === 'Notion' ? 5 : 10)}px;
 `
 
-export const Container = styled.ul<{ isHovering: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+export const Container = styled.ul<{ isHovering: boolean; locked: boolean }>`
+  ${dFlex['center-start']};
   height: auto;
-  opacity: ${props => (props.isHovering ? 1 : 0)};
+  opacity: ${p => (!p.isHovering || p.locked ? 0 : 1)};
+  pointer-events: ${p => (p.locked ? 'none' : 'auto')};
   transition: opacity 0.15s ease-in-out;
 `

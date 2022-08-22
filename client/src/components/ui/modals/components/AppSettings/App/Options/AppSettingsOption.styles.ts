@@ -7,7 +7,6 @@ export const Container = styled.div`
   height: 100%;
   margin-bottom: 15px;
   padding: 4px;
-  // background: ${p => p.theme.colors['bg-modal-secondary']};
 `
 
 export const Content = styled.div`

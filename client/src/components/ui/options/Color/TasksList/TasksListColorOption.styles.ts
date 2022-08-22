@@ -30,8 +30,7 @@ export const Container = styled.div<{ color: string }>`
   height: 18px;
   margin: 0 6px;
   border-radius: 3px;
-  box-shadow: ${p =>
-    p.theme.identifier === Theme.LIGHT
+  box-shadow: ${p => p.theme.identifier === Theme.LIGHT
       ? 'rgb(15 15 15 / 10%) 0 0 0 1px inset'
       : 'none'};
   background: ${p => p.color};

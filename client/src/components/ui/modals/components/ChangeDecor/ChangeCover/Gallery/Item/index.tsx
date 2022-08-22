@@ -1,15 +1,15 @@
-import React, { CSSProperties, FC, memo, useRef } from 'react'
-import { useHover, useImageOnLoad } from 'usehooks-ts'
+import React, { CSSProperties, FC, memo } from 'react'
+import { useImageOnLoad } from 'usehooks-ts'
 
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
-import PropTypes from './GalleryItem.types'
+import { useUpdatePageMutation } from 'services/pages.api'
 import * as Item from './GalleryItem.styles'
 
-const GalleryItem: FC<PropTypes> = memo(({ _id, coverImg }) => {
+const GalleryItem: FC<{
+  _id: string
+  coverImg: string
+}> = memo(({ _id, coverImg }) => {
   const [updatePage] = useUpdatePageMutation()
   const { handleImageOnLoad, css } = useImageOnLoad()
-  const ref = useRef<HTMLDivElement>(null)
-  // const isHovering = useHover(ref)
 
   const handleSelectCover = () => {
     updatePage({ _id, body: { coverUrl: coverImg } })
@@ -17,15 +17,14 @@ const GalleryItem: FC<PropTypes> = memo(({ _id, coverImg }) => {
 
   return (
     <Item.Wrapper>
-      <Item.Container ref={ref} onClick={handleSelectCover}>
+      <Item.Container onClick={handleSelectCover}>
         <Item.Image
           style={{ ...(css.fullSize as CSSProperties) }}
           src={coverImg}
-          alt='Image'
           onLoad={handleImageOnLoad}
+          alt='Image'
         />
       </Item.Container>
-      {/*{isHovering && <></>}*/}
     </Item.Wrapper>
   )
 })

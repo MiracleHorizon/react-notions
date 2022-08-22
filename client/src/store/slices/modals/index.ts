@@ -22,12 +22,12 @@ const initialState: ModalsState = {
   },
   pageSettings: {
     isOpen: false,
-    page: null,
+    page: {} as IPage,
     invokerRect: '',
   },
   pageOptions: {
     isOpen: false,
-    page: null,
+    page: {} as IPage,
     coords: {},
   },
   movePage: {
@@ -36,7 +36,7 @@ const initialState: ModalsState = {
     coords: {},
   },
   rename: {
-    page: null,
+    page: {} as IPage,
     isOpen: false,
     invokerRect: '',
   },
@@ -52,8 +52,8 @@ const initialState: ModalsState = {
   },
   changeStatus: {
     isOpen: false,
-    list: null,
-    task: null,
+    list: {} as ITasksList,
+    task: {} as IPage,
     invokerRect: '',
   },
   tasksListOptions: {
@@ -76,15 +76,13 @@ const initialState: ModalsState = {
     list: null,
     invokerRect: '',
   },
-  notionTask: {
-    isOpen: false,
-    page: null,
-  },
+  notionTask: { isOpen: false },
   notionItemOptions: {
     isOpen: false,
     _id: '',
     type: NotionContentItemTypes.TEXT,
     invokerRect: '',
+    page: null,
   },
   notionItemDecor: {
     isOpen: false,
@@ -92,9 +90,9 @@ const initialState: ModalsState = {
     invokerRect: '',
   },
   createNotionContentItem: {
-    isOpen: true,
+    isOpen: false,
     invokerRect: '',
-    item: null,
+    item: {} as INotionContentItem,
   },
   webBookmark: {
     isOpen: false,
@@ -215,14 +213,17 @@ const modalsSlice = createSlice({
     openQuickSearchModal(state) {
       state.quickSearch.isOpen = true
     },
-    openNotionTaskModal(state, action: PayloadAction<IPage>) {
+    // openNotionTaskModal(state, action: PayloadAction<IPage>) {
+    //   state.notionTask.isOpen = true
+    //   state.notionTask.page = action.payload
+    // },
+    openNotionTaskModal(state) {
       state.notionTask.isOpen = true
-      state.notionTask.page = action.payload
     },
     openChangeStatusModal(
       state,
       action: PayloadAction<{
-        list: ITasksList | null
+        list: ITasksList
         task: IPage
         invokerRect: string
       }>
@@ -238,12 +239,14 @@ const modalsSlice = createSlice({
         _id: string
         type: NotionContentItemTypes
         invokerRect: string
+        page: IPage
       }>
     ) {
       state.notionItemOptions.isOpen = true
       state.notionItemOptions._id = action.payload._id
       state.notionItemOptions.type = action.payload.type
       state.notionItemOptions.invokerRect = action.payload.invokerRect
+      state.notionItemOptions.page = action.payload.page
     },
     openNotionContentItemDecorModal(
       state,
@@ -274,7 +277,7 @@ const modalsSlice = createSlice({
     },
     closeRenamePageModal(state) {
       state.rename.isOpen = false
-      state.rename.page = null
+      state.rename.page = {} as IPage
       state.rename.invokerRect = ''
     },
     closeChangeCoverModal(state) {
@@ -295,12 +298,12 @@ const modalsSlice = createSlice({
     },
     closePageOptionsModal(state) {
       state.pageOptions.isOpen = false
-      state.pageOptions.page = null
+      state.pageOptions.page = {} as IPage
       state.pageOptions.coords = {}
     },
     closePageSettingsModal(state) {
       state.pageSettings.isOpen = false
-      state.pageSettings.page = null
+      state.pageSettings.page = {} as IPage
       state.pageSettings.invokerRect = ''
     },
     closeMovePageModal(state) {
@@ -334,13 +337,12 @@ const modalsSlice = createSlice({
 
     closeChangeStatusModal(state) {
       state.changeStatus.isOpen = false
-      state.changeStatus.list = null
-      state.changeStatus.task = null
+      state.changeStatus.list = {} as ITasksList
+      state.changeStatus.task = {} as IPage
       state.changeStatus.invokerRect = ''
     },
     closeNotionTaskModal(state) {
       state.notionTask.isOpen = false
-      state.notionTask.page = null
     },
 
     closeNotionContentItemOptionsModal(state) {
@@ -348,6 +350,7 @@ const modalsSlice = createSlice({
       state.notionItemOptions._id = ''
       state.notionItemOptions.type = NotionContentItemTypes.TEXT
       state.notionItemOptions.invokerRect = ''
+      state.notionItemOptions.page = null
     },
     closeNotionContentItemDecorModal(state) {
       state.notionItemDecor.isOpen = false
@@ -355,7 +358,7 @@ const modalsSlice = createSlice({
       state.notionItemDecor.invokerRect = ''
     },
     closeCreateNotionContentItemModal(state) {
-      state.createNotionContentItem.item = null
+      state.createNotionContentItem.item = {} as INotionContentItem
       state.createNotionContentItem.isOpen = false
       state.createNotionContentItem.invokerRect = ''
       state.createNotionContentItem.parentItemId = ''
@@ -372,9 +375,6 @@ const modalsSlice = createSlice({
       state.tasksListOptions.color = action.payload
     },
 
-    updateNotionTaskModalState(state, action: PayloadAction<IPage>) {
-      state.notionTask.page = action.payload
-    },
     updatePageSettingsModalState(
       state,
       action: PayloadAction<IUpdatePageSettingsModalState>
@@ -398,10 +398,7 @@ const modalsSlice = createSlice({
       }
     },
 
-    openDropdown(
-      state,
-      action: PayloadAction<'theme' | 'comments' | 'startOpen'>
-    ) {
+    openDropdown(state, action: PayloadAction<'theme' | 'startOpen'>) {
       switch (action.payload) {
         case 'theme':
           state.dropdown.theme.isOpen = true
@@ -411,10 +408,7 @@ const modalsSlice = createSlice({
           break
       }
     },
-    closeDropdown(
-      state,
-      action: PayloadAction<'theme' | 'comments' | 'startOpen'>
-    ) {
+    closeDropdown(state, action: PayloadAction<'theme' | 'startOpen'>) {
       switch (action.payload) {
         case 'theme':
           state.dropdown.theme.isOpen = false
@@ -465,12 +459,11 @@ export const {
   closeCreateNotionContentItemModal,
   closeCreateWebBookmarkModal,
   setTasksListsOptionsModalColor,
-  openDropdown,
-  closeDropdown,
   toggleAppSettingsModal,
   toggleQuickSearchModal,
-  updateNotionTaskModalState,
   updatePageSettingsModalState,
+  openDropdown,
+  closeDropdown,
 } = modalsSlice.actions
 
 export default modalsSlice.reducer

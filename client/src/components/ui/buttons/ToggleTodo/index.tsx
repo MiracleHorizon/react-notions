@@ -19,4 +19,5 @@ const ToggleTodoButton: FC<PropTypes> = ({
     {isActive ? <CheckSvg /> : <CheckboxSquareSvg />}
   </Container>
 )
+
 export default ToggleTodoButton

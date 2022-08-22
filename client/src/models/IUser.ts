@@ -1,9 +1,9 @@
 export default interface IUser {
   _id: string
-  email: string | null
-  fullName: string
+  email: string
+  isActivated: boolean
+  fullName: string | null
   avatarUrl: string | null
-  token?: string
 }
 
 export interface IGoogleUser {

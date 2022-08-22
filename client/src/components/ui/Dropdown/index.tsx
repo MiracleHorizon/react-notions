@@ -7,12 +7,10 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import PropTypes from './Dropdown.types'
 import * as Bar from './Dropdown.styles'
 
-// Проверить необходимость мемоизации
-
 const Dropdown: FC<PropTypes> = memo(
-  ({ options, activeOption, setOption, pos, type }) => {
-    const { isOpen } = useTypedSelector(state => state.modals.dropdown[type])
+  ({ options, activeOption, setOption, type }) => {
     const { openDropdown } = useActions()
+    const { isOpen } = useTypedSelector(s => s.modals.dropdown[type])
     const ref = useRef<HTMLDivElement>(null)
 
     const handleOpenDropdown = () => openDropdown(type)

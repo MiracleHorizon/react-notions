@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-const Container = styled.div<{ isEmpty: boolean }>`
+const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: ${p => (p.isEmpty ? 0 : '6px 0')};
+  padding: 6px 0;
   overflow: hidden auto;
 `
 

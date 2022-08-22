@@ -17,7 +17,7 @@ function useHandleClickOutside<T extends HTMLElement>(
 
 export default function useOnCloseModal<T extends HTMLElement>(
   ref: T | null,
-  action: ActionCreatorWithoutPayload | null
+  action: ActionCreatorWithoutPayload | (() => void) | null
 ) {
   const handleKeydownClose = (e: KeyboardEvent) => {
     if (e.code === 'Escape' && action) action()

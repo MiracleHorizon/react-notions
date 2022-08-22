@@ -2,20 +2,24 @@ import React, { FC, useEffect, useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 import useContentEditable from 'hooks/useContentEditable'
-import PropTypes from './PageDescription.types'
-import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
+import { useUpdatePageMutation } from 'services/pages.api'
 import * as Panel from './PageDescription.styles'
 
-const PageDescription: FC<PropTypes> = ({ _id, description }) => {
-  const ref = useRef<HTMLElement>(null)
+const PageDescription: FC<{
+  _id: string
+  description: string
+}> = ({ _id, description }) => {
   const [updatePage] = useUpdatePageMutation()
+  const ref = useRef<HTMLElement>(null)
 
-  const handleSubmitDescription = (description: string) => {
+  const {
+    value,
+    handleChange,
+    handleEnterKey,
+    handleBlur
+  } = useContentEditable(description, (description: string) => {
     updatePage({ _id, body: { description } })
-  }
-
-  const { value, handleChange, handleEnterKey, handleBlur } =
-    useContentEditable(description, handleSubmitDescription)
+  })
 
   useEffect(() => {
     description === '' && ref.current?.focus()

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import useTypedSelector from 'hooks/useTypedSelector'
-
 import PageOptionsModal from './components/PageOptions'
 import PageSettingsModal from './components/PageSettings'
 import MovePageModal from './components/MovePage'
@@ -12,7 +10,7 @@ import HiddenTasksListModal from './components/NotionsListTemplate/HiddenTasksLi
 import RenamePageModal from './components/RenamePage'
 import AppSettingsModal from './components/AppSettings'
 import PagesTrashModal from './components/PagesTrash'
-import NotionTask from 'components/Workspace/Templates/NotionsList/NotionTask'
+import NotionTask from 'components/NotionTask'
 import ChangeCoverModal from './components/ChangeDecor/ChangeCover'
 import ChangeStatusModal from './components/ChangeStatus'
 import NotionContentItemDecorModal from './components/NotionContentItemDecor'
@@ -20,6 +18,7 @@ import NotionContentItemOptionsModal from './components/NotionContentItemOptions
 import CreateNotionContentItemModal from './components/CreateNotionContentItem'
 import QuickSearchModal from './components/QuickSearch'
 import CreateWebBookmarkModal from './components/CreateWebBookmark'
+import useTypedSelector from 'hooks/useTypedSelector'
 
 const ModalsOverlay = () => {
   const {
@@ -41,9 +40,7 @@ const ModalsOverlay = () => {
     notionItemDecor: { isOpen: isNotionContentItemDecorModalOpen },
     notionItemOptions: { isOpen: isNotionContentItemOptionsModalOpen },
     createNotionContentItem: { isOpen: isCreateNotionContentItemModalOpen },
-  } = useTypedSelector(state => state.modals)
-
-  // Suspense
+  } = useTypedSelector(s => s.modals)
 
   return (
     <>

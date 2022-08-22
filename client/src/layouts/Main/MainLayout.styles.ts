@@ -1,12 +1,11 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
 
 export const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  background: ${props => props.theme.colors['bg-primary']};
-  color: ${props => props.theme.colors['text-primary']};
+  background: ${p => p.theme.colors['bg-primary']};
+  color: ${p => p.theme.colors['text-primary']};
 `
 
 export const Container = styled.div`
@@ -17,8 +16,8 @@ export const Container = styled.div`
   height: 100vh;
 `
 
-export const Main = styled.div`
+export const Main = styled.main`
   width: 100%;
   height: 100%;
-  //transition: width 0.25s;
+  overflow: auto;
 `

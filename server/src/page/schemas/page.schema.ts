@@ -46,7 +46,7 @@ export class Page {
     type: [{ type: mongoose.Schema.Types.ObjectId }],
     ref: 'NotionContentItem',
   })
-  content: NotionContentItem[] //*
+  content: NotionContentItem[]
 
   @Prop() sbOrder: number | null
 
@@ -56,6 +56,9 @@ export class Page {
   dependencies: Page[]
 
   @Prop() author: string
+
+  @Prop()
+  deleted: boolean
 }
 
 export const PageSchema = SchemaFactory.createForClass(Page)

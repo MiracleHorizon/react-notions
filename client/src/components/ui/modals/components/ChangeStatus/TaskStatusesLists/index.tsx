@@ -1,30 +1,31 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, memo, useEffect, useState } from 'react'
 
 import StatusListItem from './Item'
 import useSelectItem from 'hooks/useSelectItem'
-import { useGetTasksListsQuery } from 'store/slices/tasksLists/tasksLists.api'
+import { useLazyGetTasksListsQuery } from 'services/tasksLists.api'
 import getFilteredLists from 'utils/helpers/getFilteredLists'
 import IPage from 'models/page/IPage'
 import ITasksList from 'models/tasksList/ITasksList'
 import * as List from './TaskStatusesList.styles'
 
-const TaskStatusesLists: FC<IPage & { value: string }> = ({
-  value,
-  ...task
-}) => {
-  const { data, isSuccess } = useGetTasksListsQuery(task.parentPageId!)
-  const { selectedItem, handleSelectItem } = useSelectItem('')
-  const [filteredLists, setFilteredLists] = useState<ITasksList[]>([])
+const TaskStatusesLists: FC<IPage & { value: string }> = memo(
+  ({ value, ...task }) => {
+    const [getTasksLists, { data: lists, isSuccess }] = useLazyGetTasksListsQuery()
+    const [filteredLists, setFilteredLists] = useState<ITasksList[]>([])
+    const { selectedItem, handleSelectItem } = useSelectItem('')
 
-  useEffect(() => {
-    data && setFilteredLists(getFilteredLists(data, value))
-  }, [data, value])
+    useEffect(() => {
+      if (task.parentPageId) getTasksLists(task.parentPageId)
+    }, [task.parentPageId, getTasksLists])
 
-  return (
-    <List.Container>
-      <List.Title>Select an list status</List.Title>
-      {isSuccess &&
-        filteredLists.map(list => (
+    useEffect(() => {
+      lists && setFilteredLists(getFilteredLists(lists, value))
+    }, [lists, value])
+
+    return (
+      <List.Container>
+        <List.Title>Select an list status</List.Title>
+        {isSuccess && filteredLists.map(list => (
           <StatusListItem
             key={list._id}
             list={list}
@@ -33,8 +34,9 @@ const TaskStatusesLists: FC<IPage & { value: string }> = ({
             handleSelectItem={handleSelectItem}
           />
         ))}
-    </List.Container>
-  )
-}
+      </List.Container>
+    )
+  }
+)
 
 export default TaskStatusesLists

@@ -2,14 +2,15 @@ import styled from 'styled-components'
 import { modalBoxShadowPrimary } from 'styles/uiKit'
 import { ElementCoords } from 'types'
 
-const Container = styled.div<ElementCoords>`
+const Container = styled.div<ElementCoords & { locked: boolean | undefined }>`
   position: absolute;
   top: ${p => p.top}px;
   left: ${p => p.left}px;
   max-height: 70vh;
   width: 245px;
   height: max-content;
-  padding: 6px 0;
+  padding-top: ${p => p.locked ? 0 : 6}px;
+  padding-bottom: 6px;
   border-radius: 4px;
   box-shadow: ${p => modalBoxShadowPrimary(p.theme)};
   background: ${p => p.theme.colors['bg-modal-primary']};

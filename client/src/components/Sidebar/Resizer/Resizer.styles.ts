@@ -17,7 +17,7 @@ export const Container = styled.div`
 `
 
 export const Line = styled.div<{ isResizingEnabled: boolean }>`
-  cursor: ${props => (props.isResizingEnabled ? 'default' : 'col-resize')};
+  cursor: ${p => (p.isResizingEnabled ? 'default' : 'col-resize')};
   position: relative;
   width: 12px;
   height: 100%;

@@ -1,9 +1,14 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { createPortal } from 'react-dom'
-import PropTypes from './ModalWrapper.types'
 import { Wrapper, Inset } from './ModalWrapper.styles'
 
-const ModalWrapper: FC<PropTypes> = ({ children, inset }) =>
+const ModalWrapper = ({
+  children,
+  inset,
+}: {
+  children: JSX.Element
+  inset?: boolean
+}) =>
   createPortal(
     <Wrapper>
       {children}
