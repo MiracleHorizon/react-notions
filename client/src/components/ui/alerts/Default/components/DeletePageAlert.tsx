@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
 
-import DefaultAlert from 'components/ui/alerts - Checked/Default/index'
+import DefaultAlert from 'components/ui/alerts/Default'
 import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useDeletePageMutation } from 'services/pages.api'
+import { useDeletePageMutation } from 'services/notions.api'
 import { OutlineButtonColorsEnum } from 'models/decor/outlineButton'
 
 const DeletePageAlert = () => {

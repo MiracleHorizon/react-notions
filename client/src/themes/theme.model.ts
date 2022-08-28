@@ -30,8 +30,7 @@ export interface IThemeColors {
   'bg-primary': string
   'bg-el-hover-primary': string
   'bg-el-active-primary': string
-  'bg-l-sidebar': string
-  'bg-r-sidebar': string
+  'bg-sidebar': string
   'bg-selection': string
   'bg-modal-primary': string
   'bg-modal-secondary': string
@@ -40,8 +39,8 @@ export interface IThemeColors {
   'bg-cover-option': string
   'bg-option-hover': string
   'bg-option-active': string
-  'bg-cover-uploader-hover': string
-  'bg-cover-uploader-active': string
+  'bg-uploader-hover': string
+  'bg-uploader-active': string
   'bg-empty-avatar': string
   'bg-gallery-item': string
   'bg-gallery-item-hover': string
@@ -56,14 +55,14 @@ export interface IThemeColors {
   'bg-notion-task-modal': string
   'bg-curr-task-status': string
   'bg-upload-drag': string
+  'bg-option-btn': string
   'br-cover-option': string
-  'br-cover-uploader': string
-  'br-r-sb-header': string
+  'br-uploader': string
   'b-shadow-cover-navbar': string
   'b-shadow-rename-input': string
   'b-shadow-rename-icon': string
   'b-shadow-sb-resizer': string
-  'b-shadow-sb-new-page-panel': string
+  'b-shadow-divider': string
   'b-shadow-views-panel': string
   'b-shadow-soon-title': string
   'caret-primary': string

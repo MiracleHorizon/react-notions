@@ -1,11 +1,13 @@
-export interface ToggleOptionInitialProps {
-  _id: string
-}
-
-export interface ToggleSmallTextProps extends ToggleOptionInitialProps {
+export interface ToggleSmallTextProps {
   smallText: boolean
+  handleToggleSmallText: () => void
+  selectedItem: string
+  handleSelectItem: (item: string) => void
 }
 
-export interface ToggleFullWidthProps extends ToggleOptionInitialProps {
+export interface ToggleFullWidthProps {
   fullWidth: boolean
+  handleToggleFullWidth: () => void
+  selectedItem: string
+  handleSelectItem: (item: string) => void
 }

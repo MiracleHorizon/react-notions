@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 import ContentItemColorsHandler from 'utils/ContentItemColorsHandler'
 

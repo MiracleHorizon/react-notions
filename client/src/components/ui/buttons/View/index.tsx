@@ -7,10 +7,10 @@ import { PageView } from 'store/slices/app/app.types'
 import * as Button from './ViewButton.styles'
 
 const ViewButton: FC<PropTypes> = memo(({ title, StartSvg }) => {
+  const { setNotionsDatabaseView } = useActions()
   const { selectedView } = useTypedSelector(s => s.app)
-  const { setView } = useActions()
 
-  const handleSelectView = () => setView(title as PageView)
+  const handleSelectView = () => setNotionsDatabaseView(title as PageView)
 
   return (
     <Button.Wrapper data-btn='view' isActive={selectedView === title}>

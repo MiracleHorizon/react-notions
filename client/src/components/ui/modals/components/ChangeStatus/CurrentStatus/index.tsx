@@ -2,9 +2,9 @@ import React, { FC, memo, useEffect, useRef } from 'react'
 
 import { CloseThickSvg } from 'components/ui/svg'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useUpdatePageMutation } from 'services/pages.api'
-import { selectNoStatusList } from 'store/slices/tasksLists/tasksLists.selectors'
-import { IInputParams } from 'components/ui/inputs - Checked/types'
+import { useUpdatePageMutation } from 'services/notions.api'
+import { TasksListsSelector } from 'store/slices/tasksLists/tasksLists.selectors'
+import { IInputParams } from 'components/ui/inputs/types'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import ITasksList from 'models/tasksList/ITasksList'
 import IPage from 'models/page/IPage'
@@ -18,7 +18,7 @@ const CurrentTaskStatus: FC<
 > = memo(
   ({ task: { _id }, list: { title, color }, value, handleChangeValue }) => {
     const [updatePage] = useUpdatePageMutation()
-    const noStatusList = useTypedSelector(selectNoStatusList)
+    const noStatusList = useTypedSelector(TasksListsSelector.selectNoStatusList)
     const inputRef = useRef<HTMLInputElement>(null)
 
     const handleDeleteStatus = () => {

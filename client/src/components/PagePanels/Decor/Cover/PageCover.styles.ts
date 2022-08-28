@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { CoverWrapperProps } from './PageCover.types'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div<CoverWrapperProps>`
+  position: relative;
   cursor: ${p => (p.isRepositionEnabled ? 'all-scroll' : 'default')};
   ${dFlex['center-col']};
   min-height: 0;

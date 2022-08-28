@@ -12,6 +12,7 @@ const OutlineButton: FC<PropTypes> = ({
   StartSvg,
   color,
   disabled,
+  children,
 }) => (
   <Button
     role='button'
@@ -22,6 +23,7 @@ const OutlineButton: FC<PropTypes> = ({
   >
     {StartSvg && <StartSvg />}
     <p>{title}</p>
+    {children}
   </Button>
 )
 

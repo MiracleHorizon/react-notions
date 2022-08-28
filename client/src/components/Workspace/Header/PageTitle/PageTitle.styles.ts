@@ -1,10 +1,16 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
+
+export const Wrapper = styled.div`
+  ${dFlex['center-start']};
+  max-width: 300px;
+  min-width: 50px;
+`
 
 export const Container = styled.div`
   cursor: pointer;
   ${dFlex.center};
-  max-width: 300px;
+  max-width: 130px;
   min-width: 50px;
   margin-left: 3px;
   padding: 2px 6px;

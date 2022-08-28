@@ -2,56 +2,30 @@ import { ElementCoords } from 'types'
 import IPage from 'models/page/IPage'
 import ITasksList from 'models/tasksList/ITasksList'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
-import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import { TPageFont } from 'models/decor/fonts'
 
 export default interface ModalsState {
-  rename: RenamePageModalState
-  cover: ChangeCoverModalState
-  icon: ChangeIconModalState
-  trash: { isOpen: boolean }
-  appSettings: { isOpen: boolean }
-  quickSearch: { isOpen: boolean }
-  pageOptions: PageOptionsModalState
-  pageSettings: PageSettingsModalState
-  movePage: MovePageModalState
+  rename: ModalWithPageState & IInvokerRect
+  cover: ModalWithPageId & IInvokerRect
+  icon: ModalWithPageId & IInvokerRect
+  trash: ModalInitialState
+  appSettings: ModalInitialState
+  quickSearch: ModalInitialState
+  pageOptions: ModalWithPageState & IElementCoords
+  pageSettings: ModalWithPageState & IInvokerRect
+  movePage: ModalWithPageId & IElementCoords
+  notionTask: ModalInitialState
   tasksListOptions: TasksListOptionsModalState
   handleTasksList: HandleTasksListTitleModalState
-  hiddenTasksList: HiddenTasksListModalState
-  notionTask: { isOpen: boolean }
-  notionItemOptions: {
-    isOpen: boolean
-    _id: string
-    type: NotionContentItemTypes
-    invokerRect: string
-    page: IPage | null
-  }
-  notionItemDecor: {
-    isOpen: boolean
-    itemId: string
-    invokerRect: string
-  }
-  changeStatus: {
-    isOpen: boolean
-    list: ITasksList
-    task: IPage
-    invokerRect: string
-  }
-  createNotionContentItem: {
-    isOpen: boolean
-    invokerRect: string
-    item: INotionContentItem
-    parentItemId?: string
-  }
-  webBookmark: {
-    isOpen: boolean
-    _id: string
-    invokerRect: string
-  }
+  hiddenTasksList: ModalWithListState & IInvokerRect
+  createNotionContentItem: ModalWithNotionContentItemState & IInvokerRect
+  notionItemOptions: NotionContentItemOptionsModalState
+  notionItemDecor: ModalWithNotionContentItemId & IInvokerRect
+  webBookmark: { _id: string } & IInvokerRect & ModalInitialState
+  changeStatus: ChangeStatusModalState
   dropdown: DropdownPopupState
 }
 
-// Типизация состояния всплывающих окон.
 export interface ModalInitialState {
   isOpen: boolean
 }
@@ -64,69 +38,67 @@ export interface IElementCoords {
   coords: ElementCoords
 }
 
-export interface RenamePageModalState extends ModalInitialState, IInvokerRect {
+export interface ModalWithPageState extends ModalInitialState {
   page: IPage
 }
 
-export interface ChangeCoverModalState extends ModalInitialState, IInvokerRect {
+export interface ModalWithPageId extends ModalInitialState {
   pageId: string
 }
 
-export interface ChangeIconModalState extends ModalInitialState, IInvokerRect {
-  pageId: string
+export interface ModalWithListState extends ModalInitialState {
+  list: ITasksList
 }
 
-export interface PageOptionsModalState
-  extends ModalInitialState,
-    IElementCoords {
-  page: IPage
+export interface ModalWithListId extends ModalInitialState {
+  listId: string
 }
 
-export interface PageSettingsModalState
-  extends ModalInitialState,
-    IInvokerRect {
-  page: IPage
-  invokerRect: string
+export interface ModalWithNotionContentItemState extends ModalInitialState {
+  item: INotionContentItem
+  parentItemId?: string
 }
 
-export interface MovePageModalState extends ModalInitialState, IElementCoords {
-  pageId: string
+export interface ModalWithNotionContentItemId extends ModalInitialState {
+  itemId: string
+}
+
+// Типизация состояния всплывающих окон.
+export interface DropdownPopupState {
+  theme: ModalInitialState
+  startOpen: ModalInitialState
 }
 
 export interface TasksListOptionsModalState
-  extends ModalInitialState,
-    IInvokerRect {
-  listId: string
+  extends ModalWithListId, IInvokerRect {
   color: string
   hidden: boolean | null
-  template: 'default' | 'taskModal' | null
-}
-
-export interface DropdownPopupState {
-  theme: { isOpen: boolean }
-  startOpen: { isOpen: boolean }
+  template: 'default' | 'taskModal'
 }
 
 export interface HandleTasksListTitleModalState
-  extends ModalInitialState,
-    IInvokerRect {
-  listId: string
+  extends ModalWithListId, IInvokerRect {
   title: string
   dest: 'edit' | 'create'
 }
 
-export interface HiddenTasksListModalState
-  extends ModalInitialState,
-    IInvokerRect {
-  list: ITasksList | null
+export interface ChangeStatusModalState
+  extends ModalInitialState, IInvokerRect {
+  list: ITasksList
+  task: IPage
 }
+
+export interface NotionContentItemOptionsModalState
+  extends ModalWithPageState,
+    ModalWithNotionContentItemState,
+    IInvokerRect {}
 
 // Типизация PayloadAction.
 export interface DecorModalPayload extends IInvokerRect {
   pageId: string
 }
 
-export interface PageModalPayload extends IInvokerRect {
+export interface ModalWithPagePayload extends IInvokerRect {
   page: IPage
 }
 
@@ -135,4 +107,32 @@ export interface IUpdatePageSettingsModalState {
   smallText?: boolean
   fullWidth?: boolean
   locked?: boolean
+}
+
+export interface ITasksListsOptionsModalPayload extends IInvokerRect {
+  listId: string
+  color: string
+  hidden: boolean
+  template: 'default' | 'taskModal'
+}
+
+export interface IHandleTasksListTitleModalPayload extends IInvokerRect {
+  listId?: string
+  title?: string
+  dest: 'edit' | 'create'
+}
+
+export interface ChangeStatusModalPayload extends IInvokerRect {
+  task: IPage
+  list: ITasksList
+}
+
+export interface NotionContentItemOptionsModalPayload extends IInvokerRect {
+  item: INotionContentItem
+  page: IPage
+}
+
+export interface CreateNotionContentItemModalPayload extends IInvokerRect {
+  item: INotionContentItem
+  parentItemId?: string
 }

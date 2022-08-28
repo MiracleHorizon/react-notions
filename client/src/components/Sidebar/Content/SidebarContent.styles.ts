@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 const Content = styled.div<{ topIndent?: boolean; isScrollOnTop: boolean }>`
   position: relative;

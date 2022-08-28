@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
-import { dFlex, txtOflow } from 'styles/uiKit'
+import { dFlex, txtOflow } from 'assets/styles/uiKit'
 import handleTasksListTitleColor from 'utils/stylesHandlers/colors'
 
 export const Wrapper = styled.div`

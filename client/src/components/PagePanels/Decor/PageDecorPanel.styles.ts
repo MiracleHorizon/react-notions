@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 import { PanelContainerProps } from './PageDecorPanel.types'
 
 export const Wrapper = styled.div`
@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `
 
 export const Container = styled.div<PanelContainerProps>`
-  width: ${p => p.fullWidth || p.template === 'NotionsList' ? '100%' : '900px'};
+  width: ${p => p.fullWidth || p.template === 'NotionsDatabase' ? '100%' : '900px'};
   padding-left: 90px;
   padding-bottom: 5px;
   transition: width ease-in-out 0.25s;

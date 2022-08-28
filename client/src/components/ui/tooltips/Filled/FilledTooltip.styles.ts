@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 import { FilledTooltipContainerProps } from './FilledTooltip.types'
 
 export const Container = styled.div<FilledTooltipContainerProps>`

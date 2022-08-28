@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
-export const Wrapper = styled.div<{ isOnBottom: boolean }>`
+export const Wrapper = styled.div<{ isScrollOnBottom: boolean }>`
   width: 100%;
   height: calc(100% - 50px);
   padding: 6px 0;
@@ -12,7 +12,7 @@ export const Wrapper = styled.div<{ isOnBottom: boolean }>`
   }
   
   &::-webkit-scrollbar-thumb {
-    border-bottom-right-radius: ${p => (p.isOnBottom ? 4 : 0)}px;
+    border-bottom-right-radius: ${p => (p.isScrollOnBottom ? 4 : 0)}px;
   }
 `
 

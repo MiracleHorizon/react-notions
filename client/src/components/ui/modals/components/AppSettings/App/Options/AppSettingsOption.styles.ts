@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Container = styled.div`
   ${dFlex['center-s-between']};

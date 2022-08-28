@@ -7,21 +7,21 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import {
   useCreateItemMutation,
   useUpdateItemMutation,
-} from 'services/pages.api'
+} from 'services/notions.api'
+import handleValidContentType from 'utils/helpers/handleValidContentType'
 import NotionContentItem from 'models/pageContent/NotionContentItem.class'
 import PropTypes from './CreateNotionContentItemOption.types'
 import * as Option from './CreateNotionContentItemOption.styles'
 
 const CreateNotionContentItemOption: FC<PropTypes> = memo(
   ({ item, parentItemId, title, desc, imageUrl, type }) => {
-    const { page } = useTypedSelector(state => state.pages)
     const { closeCreateNotionContentItemModal } = useActions()
+    const { page } = useTypedSelector(s => s.notions)
+    const [createNotionItem] = useCreateItemMutation()
+    const [updateNotionItem] = useUpdateItemMutation()
 
     const ref = useRef<HTMLDivElement>(null)
     const isHovering = useHover(ref)
-
-    const [createNotionItem] = useCreateItemMutation()
-    const [updateNotionItem] = useUpdateItemMutation()
 
     const handleCreateNotionContentItem = () => {
       if (!page) return
@@ -34,7 +34,7 @@ const CreateNotionContentItemOption: FC<PropTypes> = memo(
     }
 
     return (
-      <Option.Wrapper ref={ref}>
+      <Option.Wrapper ref={ref} disabled={handleValidContentType(type)}>
         <Option.Container onClick={handleCreateNotionContentItem}>
           <Option.ImageContainer>
             <Option.Image src={imageUrl} />

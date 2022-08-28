@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import { txtOflow } from 'styles/uiKit'
+import { dFlex, txtOflow } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div`
+  max-height: 200px;
   width: 100%;
   height: 100%;
-  max-height: 200px;
-  margin-bottom: 25px;
-  background: rgba(255, 137, 94, 0.24);
+  margin-top: 8px;
+  margin-bottom: 22px;
 `
 
 export const Container = styled.div`
@@ -30,4 +30,19 @@ export const Avatar = styled.img`
   border-radius: 50%;
   object-fit: cover;
   pointer-events: none;
+`
+
+export const EmptyAvatar = styled.div`
+  ${dFlex.center};
+  width: 90px;
+  height: 90px;
+  padding-bottom: 10px;
+  border-radius: 50%;
+  background: ${p => p.theme.colors['bg-empty-avatar']};
+`
+
+export const EmptyAvatarTitle = styled.span`
+  font-size: 60px;
+  text-transform: uppercase;
+  color: ${p => p.theme.colors['text-empty-avatar']};
 `

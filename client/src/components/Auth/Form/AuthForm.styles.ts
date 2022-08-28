@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { lightTheme } from 'themes/light'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div`
   position: relative;

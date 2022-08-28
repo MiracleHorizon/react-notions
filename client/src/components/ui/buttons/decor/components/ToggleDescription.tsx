@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react'
 
 import PageDecorButton from '../index'
 import { NotionsDescriptionSvg } from 'components/ui/svg'
-import { useUpdatePageMutation } from 'services/pages.api'
+import { useUpdatePageMutation } from 'services/notions.api'
 import { ToggleDescriptionButtonProps } from '../PageDecorButton.types'
 
 const ToggleDescriptionButton: FC<ToggleDescriptionButtonProps> = ({

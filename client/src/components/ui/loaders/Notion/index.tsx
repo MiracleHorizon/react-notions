@@ -5,9 +5,7 @@ import Container from './NotionLoader.styles'
 
 const NotionLoader = () => {
   const { theme } = useTypedSelector(s => s.app.themeState)
-  const { page } = useTypedSelector(s => s.pages)
-
-  if (!page) return null
+  const { page } = useTypedSelector(s => s.notions)
 
   return (
     <Container fullWidth={page.fullWidth} template={page.template}>

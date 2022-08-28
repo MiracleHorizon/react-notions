@@ -1,8 +1,8 @@
 import React, { FC, memo, useCallback } from 'react'
 
+import EmptyToggleBlock from './Empty'
 import ToggleButton from 'components/ui/buttons/Toggle'
-import EmptyToggleBlock from './Empty - Checked'
-import { useUpdateItemMutation } from 'services/pages.api'
+import { useUpdateItemMutation } from 'services/notions.api'
 import PropTypes from './NotionItemToggleWrapper.types'
 import * as Item from './NotionItemToggleWrapper.styles'
 

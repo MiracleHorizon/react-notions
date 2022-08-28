@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 import { Theme } from 'themes/theme.model'
 
 export const Wrapper = styled.div<{ isSelected: boolean }>`

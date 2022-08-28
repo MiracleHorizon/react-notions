@@ -5,8 +5,8 @@ import { useHover } from 'usehooks-ts'
 
 import PlusButton from 'components/ui/buttons/Plus'
 import { CreatePageTooltipSidebar } from 'components/ui/tooltips'
-import { useCreatePageMutation } from 'services/pages.api'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { useCreatePageMutation } from 'services/notions.api'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import Page from 'models/page/Page'
 import Button from './CreatePageButtonSidebar.styles'
 

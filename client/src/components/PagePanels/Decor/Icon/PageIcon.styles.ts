@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { IconContainerProps } from './PageIcon.types'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
 export const Container = styled.div<IconContainerProps>`
   cursor: pointer;
@@ -18,7 +18,6 @@ export const Container = styled.div<IconContainerProps>`
       `};
   margin-top: ${p => (p.coverUrl && p.template === 'Notion' ? -80 : 0)}px;
   border-radius: 3px;
-  z-index: 10;
   pointer-events: ${p => p.locked && 'none'};
   ${bgTransitions.esInOut50};
 

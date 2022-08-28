@@ -1,5 +1,4 @@
 import React, { FC, useRef } from 'react'
-import { CSSTransition } from 'react-transition-group'
 import { useHover } from 'usehooks-ts'
 
 import { DoubleChevronSvg, HamburgerMenuSvg } from 'components/ui/svg'
@@ -7,8 +6,8 @@ import { OpenSidebarTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
 import Button from './ToggleSidebarButton.styles'
 
-const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = ({
-  isHeaderHovering,
+const OpenSidebarButton: FC<{ isParentHovering: boolean }> = ({
+  isParentHovering,
 }) => {
   const { openSidebar } = useActions()
   const ref = useRef<HTMLDivElement>(null)
@@ -25,10 +24,8 @@ const OpenSidebarButton: FC<{ isHeaderHovering: boolean }> = ({
       isHovering={true}
       onClick={handleOpenSidebar}
     >
-      <CSSTransition in={true} unmountOnExit timeout={300}>
-        {isHeaderHovering ? <DoubleChevronSvg /> : <HamburgerMenuSvg />}
-      </CSSTransition>
-      {/*{isHovering && <OpenSidebarTooltip reference={ref} />}*/}
+      {isParentHovering ? <DoubleChevronSvg /> : <HamburgerMenuSvg />}
+      {isHovering && <OpenSidebarTooltip reference={ref} />}
     </Button>
   )
 }

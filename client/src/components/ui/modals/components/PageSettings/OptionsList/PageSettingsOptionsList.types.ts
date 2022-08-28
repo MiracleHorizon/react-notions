@@ -1,8 +1,7 @@
 import { ElementCoords } from 'types'
+import IPage from 'models/page/IPage'
 
 export default interface PageSettingsOptionsListProps {
-  _id: string
-  favorite: boolean
-  locked: boolean
   coords: ElementCoords
+  page: IPage
 }

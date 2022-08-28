@@ -7,6 +7,7 @@ export default interface InputPropTypes
   value?: string
   onChange?: (e: InputEvent) => void
   onClear?: () => void
+  onBlur?: () => void
   reference?: RefObject<HTMLInputElement>
   renderFocusable?: boolean
   renderSelectable?: boolean

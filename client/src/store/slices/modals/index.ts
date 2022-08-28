@@ -1,93 +1,91 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ElementCoords } from 'types'
 import ModalsState, {
+  ChangeStatusModalPayload,
+  CreateNotionContentItemModalPayload,
   DecorModalPayload,
+  IElementCoords,
+  IHandleTasksListTitleModalPayload,
+  IInvokerRect,
+  ITasksListsOptionsModalPayload,
   IUpdatePageSettingsModalState,
-  PageModalPayload,
+  ModalWithPagePayload,
+  NotionContentItemOptionsModalPayload,
 } from './modals.types'
 import ITasksList from 'models/tasksList/ITasksList'
 import IPage from 'models/page/IPage'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
-import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 
 const initialState: ModalsState = {
-  appSettings: {
-    isOpen: false,
-  },
-  quickSearch: {
-    isOpen: false,
-  },
-  trash: {
-    isOpen: false,
-  },
+  appSettings: { isOpen: false },
+  quickSearch: { isOpen: false },
+  trash: { isOpen: false },
   pageSettings: {
     isOpen: false,
-    page: {} as IPage,
     invokerRect: '',
+    page: {} as IPage,
   },
   pageOptions: {
     isOpen: false,
-    page: {} as IPage,
     coords: {},
+    page: {} as IPage,
   },
   movePage: {
     isOpen: false,
-    pageId: '',
     coords: {},
+    pageId: '',
   },
   rename: {
-    page: {} as IPage,
     isOpen: false,
     invokerRect: '',
+    page: {} as IPage,
   },
   cover: {
-    pageId: '',
     isOpen: false,
     invokerRect: '',
+    pageId: '',
   },
   icon: {
-    pageId: '',
     isOpen: false,
     invokerRect: '',
+    pageId: '',
   },
   changeStatus: {
     isOpen: false,
+    invokerRect: '',
     list: {} as ITasksList,
     task: {} as IPage,
-    invokerRect: '',
   },
   tasksListOptions: {
     isOpen: false,
+    invokerRect: '',
     listId: '',
     color: '',
     hidden: null,
-    invokerRect: '',
-    template: null,
+    template: 'default',
   },
   handleTasksList: {
     isOpen: false,
+    invokerRect: '',
     listId: '',
     title: '',
-    invokerRect: '',
     dest: 'create',
   },
   hiddenTasksList: {
     isOpen: false,
-    list: null,
     invokerRect: '',
+    list: {} as ITasksList,
   },
   notionTask: { isOpen: false },
   notionItemOptions: {
     isOpen: false,
-    _id: '',
-    type: NotionContentItemTypes.TEXT,
     invokerRect: '',
-    page: null,
+    page: {} as IPage,
+    item: {} as INotionContentItem
   },
   notionItemDecor: {
     isOpen: false,
-    itemId: '',
     invokerRect: '',
+    itemId: '',
   },
   createNotionContentItem: {
     isOpen: false,
@@ -96,8 +94,8 @@ const initialState: ModalsState = {
   },
   webBookmark: {
     isOpen: false,
-    _id: '',
     invokerRect: '',
+    _id: '',
   },
   dropdown: {
     theme: { isOpen: false },
@@ -111,68 +109,66 @@ const modalsSlice = createSlice({
   initialState,
 
   reducers: {
-    openCreateWebBookmarkModal(
-      state,
-      payload: PayloadAction<{ _id: string; invokerRect: string }>
-    ) {
-      state.webBookmark.isOpen = true
-      state.webBookmark._id = payload.payload._id
-      state.webBookmark.invokerRect = payload.payload.invokerRect
+    openNotionTaskModal(state) {
+      state.notionTask.isOpen = true
     },
-    openRenamePageModal(
-      state,
-      action: PayloadAction<{ page: IPage; invokerRect: string }>
-    ) {
-      state.rename.isOpen = true
-      state.rename.page = action.payload.page
-      state.rename.invokerRect = action.payload.invokerRect
-    },
-    openChangeCoverModal(state, action: PayloadAction<DecorModalPayload>) {
-      state.cover.isOpen = true
-      state.cover.pageId = action.payload.pageId
-      state.cover.invokerRect = action.payload.invokerRect
-    },
-    openChangeIconModal(state, action: PayloadAction<DecorModalPayload>) {
-      state.icon.isOpen = true
-      state.icon.pageId = action.payload.pageId
-      state.icon.invokerRect = action.payload.invokerRect
-    },
-    openPagesTrashModal(state) {
-      state.trash.isOpen = true
+    openQuickSearchModal(state) {
+      state.quickSearch.isOpen = true
     },
     openAppSettingsModal(state) {
       state.appSettings.isOpen = true
     },
-    openPageOptionsModal(
-      state,
-      action: PayloadAction<{ page: IPage; coords: ElementCoords }>
-    ) {
-      state.pageOptions.isOpen = true
-      state.pageOptions.page = action.payload.page
-      state.pageOptions.coords = action.payload.coords
-    },
-    openPageSettingsModal(state, action: PayloadAction<PageModalPayload>) {
-      state.pageSettings.isOpen = true
-      state.pageSettings.page = action.payload.page
-      state.pageSettings.invokerRect = action.payload.invokerRect
+    openPagesTrashModal(state) {
+      state.trash.isOpen = true
     },
     openMovePageModal(
       state,
-      action: PayloadAction<{ pageId: string; coords: ElementCoords }>
+      action: PayloadAction<{ pageId: string } & IElementCoords>
     ) {
       state.movePage.isOpen = true
       state.movePage.pageId = action.payload.pageId
       state.movePage.coords = action.payload.coords
     },
+    openRenamePageModal(state, action: PayloadAction<ModalWithPagePayload>) {
+      state.rename.isOpen = true
+      state.rename.invokerRect = action.payload.invokerRect
+      state.rename.page = action.payload.page
+    },
+    openPageSettingsModal(state, action: PayloadAction<ModalWithPagePayload>) {
+      state.pageSettings.isOpen = true
+      state.pageSettings.invokerRect = action.payload.invokerRect
+      state.pageSettings.page = action.payload.page
+    },
+    openPageOptionsModal(
+      state,
+      action: PayloadAction<{ page: IPage } & IElementCoords>
+    ) {
+      state.pageOptions.isOpen = true
+      state.pageOptions.page = action.payload.page
+      state.pageOptions.coords = action.payload.coords
+    },
+    openChangeCoverModal(state, action: PayloadAction<DecorModalPayload>) {
+      state.cover.isOpen = true
+      state.cover.invokerRect = action.payload.invokerRect
+      state.cover.pageId = action.payload.pageId
+    },
+    openChangeIconModal(state, action: PayloadAction<DecorModalPayload>) {
+      state.icon.isOpen = true
+      state.icon.invokerRect = action.payload.invokerRect
+      state.icon.pageId = action.payload.pageId
+    },
+    openChangeStatusModal(
+      state,
+      action: PayloadAction<ChangeStatusModalPayload>
+    ) {
+      state.changeStatus.isOpen = true
+      state.changeStatus.list = action.payload.list
+      state.changeStatus.task = action.payload.task
+      state.changeStatus.invokerRect = action.payload.invokerRect
+    },
     openTasksListsOptionsModal(
       state,
-      action: PayloadAction<{
-        listId: string
-        color: string
-        hidden: boolean
-        invokerRect: string
-        template: 'default' | 'taskModal'
-      }>
+      action: PayloadAction<ITasksListsOptionsModalPayload>
     ) {
       state.tasksListOptions.isOpen = true
       state.tasksListOptions.listId = action.payload.listId
@@ -181,14 +177,17 @@ const modalsSlice = createSlice({
       state.tasksListOptions.invokerRect = action.payload.invokerRect
       state.tasksListOptions.template = action.payload.template
     },
+    openHiddenTasksListModal(
+      state,
+      action: PayloadAction<{ list: ITasksList } & IInvokerRect>
+    ) {
+      state.hiddenTasksList.isOpen = true
+      state.hiddenTasksList.list = action.payload.list
+      state.hiddenTasksList.invokerRect = action.payload.invokerRect
+    },
     openHandleTasksListTitleModal(
       state,
-      action: PayloadAction<{
-        listId?: string
-        title?: string
-        dest: 'edit' | 'create'
-        invokerRect: string
-      }>
+      action: PayloadAction<IHandleTasksListTitleModalPayload>
     ) {
       state.handleTasksList.isOpen = true
       state.handleTasksList.dest = action.payload.dest
@@ -202,166 +201,114 @@ const modalsSlice = createSlice({
         state.handleTasksList.title = action.payload.title
       }
     },
-    openHiddenTasksListModal(
-      state,
-      action: PayloadAction<{ list: ITasksList; invokerRect: string }>
-    ) {
-      state.hiddenTasksList.isOpen = true
-      state.hiddenTasksList.list = action.payload.list
-      state.hiddenTasksList.invokerRect = action.payload.invokerRect
-    },
-    openQuickSearchModal(state) {
-      state.quickSearch.isOpen = true
-    },
-    // openNotionTaskModal(state, action: PayloadAction<IPage>) {
-    //   state.notionTask.isOpen = true
-    //   state.notionTask.page = action.payload
-    // },
-    openNotionTaskModal(state) {
-      state.notionTask.isOpen = true
-    },
-    openChangeStatusModal(
-      state,
-      action: PayloadAction<{
-        list: ITasksList
-        task: IPage
-        invokerRect: string
-      }>
-    ) {
-      state.changeStatus.isOpen = true
-      state.changeStatus.list = action.payload.list
-      state.changeStatus.task = action.payload.task
-      state.changeStatus.invokerRect = action.payload.invokerRect
-    },
-    openNotionContentItemOptionsModal(
-      state,
-      action: PayloadAction<{
-        _id: string
-        type: NotionContentItemTypes
-        invokerRect: string
-        page: IPage
-      }>
-    ) {
-      state.notionItemOptions.isOpen = true
-      state.notionItemOptions._id = action.payload._id
-      state.notionItemOptions.type = action.payload.type
-      state.notionItemOptions.invokerRect = action.payload.invokerRect
-      state.notionItemOptions.page = action.payload.page
-    },
-    openNotionContentItemDecorModal(
-      state,
-      action: PayloadAction<{ itemId: string; invokerRect: string }>
-    ) {
-      state.notionItemDecor.isOpen = true
-      state.notionItemDecor.itemId = action.payload.itemId
-      state.notionItemDecor.invokerRect = action.payload.invokerRect
-    },
     openCreateNotionContentItemModal(
       state,
-      action: PayloadAction<{
-        invokerRect: string
-        item: INotionContentItem
-        parentItemId?: string
-      }>
+      action: PayloadAction<CreateNotionContentItemModalPayload>
     ) {
       state.createNotionContentItem.isOpen = true
       state.createNotionContentItem.item = action.payload.item
       state.createNotionContentItem.parentItemId = action.payload.parentItemId
       state.createNotionContentItem.invokerRect = action.payload.invokerRect
     },
+    openNotionContentItemOptionsModal(
+      state,
+      action: PayloadAction<NotionContentItemOptionsModalPayload>
+    ) {
+      state.notionItemOptions.isOpen = true
+      state.notionItemOptions.invokerRect = action.payload.invokerRect
+      state.notionItemOptions.page = action.payload.page
+      state.notionItemOptions.item = action.payload.item
+    },
+    openNotionContentItemDecorModal(
+      state,
+      action: PayloadAction<{ itemId: string } & IInvokerRect>
+    ) {
+      state.notionItemDecor.isOpen = true
+      state.notionItemDecor.itemId = action.payload.itemId
+      state.notionItemDecor.invokerRect = action.payload.invokerRect
+    },
+    openCreateWebBookmarkModal(
+      state,
+      payload: PayloadAction<{ _id: string } & IInvokerRect>
+    ) {
+      state.webBookmark.isOpen = true
+      state.webBookmark.invokerRect = payload.payload.invokerRect
+      state.webBookmark._id = payload.payload._id
+    },
+    openDropdown(state, action: PayloadAction<'theme' | 'startOpen'>) {
+      switch (action.payload) {
+        case 'theme':
+          state.dropdown.theme.isOpen = true
+          break
+        case 'startOpen':
+          state.dropdown.startOpen.isOpen = true
+          break
+      }
+    },
 
-    closeCreateWebBookmarkModal(state) {
-      state.webBookmark.isOpen = false
-      state.webBookmark._id = ''
-      state.webBookmark.invokerRect = ''
-    },
-    closeRenamePageModal(state) {
-      state.rename.isOpen = false
-      state.rename.page = {} as IPage
-      state.rename.invokerRect = ''
-    },
-    closeChangeCoverModal(state) {
-      state.cover.isOpen = false
-      state.cover.pageId = ''
-      state.cover.invokerRect = ''
-    },
-    closeChangeIconModal(state) {
-      state.icon.isOpen = false
-      state.icon.pageId = ''
-      state.icon.invokerRect = ''
-    },
-    closePagesTrashModal(state) {
-      state.trash.isOpen = false
-    },
-    closeAppSettingsModal(state) {
-      state.appSettings.isOpen = false
-    },
-    closePageOptionsModal(state) {
-      state.pageOptions.isOpen = false
-      state.pageOptions.page = {} as IPage
-      state.pageOptions.coords = {}
-    },
-    closePageSettingsModal(state) {
-      state.pageSettings.isOpen = false
-      state.pageSettings.page = {} as IPage
-      state.pageSettings.invokerRect = ''
-    },
-    closeMovePageModal(state) {
-      state.movePage.isOpen = false
-      state.movePage.pageId = ''
-      state.movePage.coords = {}
-    },
-    closeTasksListsOptionsModal(state) {
-      state.tasksListOptions.isOpen = false
-      state.tasksListOptions.listId = ''
-      state.tasksListOptions.color = ''
-      state.tasksListOptions.hidden = null
-      state.tasksListOptions.invokerRect = ''
-      state.tasksListOptions.template = null
-    },
-    closeHandleTasksListTitleModal(state) {
-      state.handleTasksList.isOpen = false
-      state.handleTasksList.listId = ''
-      state.handleTasksList.title = ''
-      state.handleTasksList.dest = 'create'
-      state.handleTasksList.invokerRect = ''
-    },
-    closeHiddenTasksListModal(state) {
-      state.hiddenTasksList.isOpen = true
-      state.hiddenTasksList.list = null
-      state.hiddenTasksList.invokerRect = ''
+    closeNotionTaskModal(state) {
+      state.notionTask.isOpen = false
     },
     closeQuickSearchModal(state) {
       state.quickSearch.isOpen = false
     },
-
+    closeAppSettingsModal(state) {
+      state.appSettings.isOpen = false
+    },
+    closePagesTrashModal(state) {
+      state.trash.isOpen = false
+    },
+    closeMovePageModal(state) {
+      state.movePage.isOpen = false
+    },
+    closeRenamePageModal(state) {
+      state.rename.isOpen = false
+    },
+    closePageSettingsModal(state) {
+      state.pageSettings.isOpen = false
+    },
+    closePageOptionsModal(state) {
+      state.pageOptions.isOpen = false
+    },
+    closeChangeCoverModal(state) {
+      state.cover.isOpen = false
+    },
+    closeChangeIconModal(state) {
+      state.icon.isOpen = false
+    },
     closeChangeStatusModal(state) {
       state.changeStatus.isOpen = false
-      state.changeStatus.list = {} as ITasksList
-      state.changeStatus.task = {} as IPage
-      state.changeStatus.invokerRect = ''
     },
-    closeNotionTaskModal(state) {
-      state.notionTask.isOpen = false
+    closeTasksListsOptionsModal(state) {
+      state.tasksListOptions.isOpen = false
     },
-
+    closeHiddenTasksListModal(state) {
+      state.hiddenTasksList.isOpen = false
+    },
+    closeHandleTasksListTitleModal(state) {
+      state.handleTasksList.isOpen = false
+    },
+    closeCreateNotionContentItemModal(state) {
+      state.createNotionContentItem.isOpen = false
+    },
     closeNotionContentItemOptionsModal(state) {
       state.notionItemOptions.isOpen = false
-      state.notionItemOptions._id = ''
-      state.notionItemOptions.type = NotionContentItemTypes.TEXT
-      state.notionItemOptions.invokerRect = ''
-      state.notionItemOptions.page = null
     },
     closeNotionContentItemDecorModal(state) {
       state.notionItemDecor.isOpen = false
-      state.notionItemDecor.itemId = ''
-      state.notionItemDecor.invokerRect = ''
     },
-    closeCreateNotionContentItemModal(state) {
-      state.createNotionContentItem.item = {} as INotionContentItem
-      state.createNotionContentItem.isOpen = false
-      state.createNotionContentItem.invokerRect = ''
-      state.createNotionContentItem.parentItemId = ''
+    closeCreateWebBookmarkModal(state) {
+      state.webBookmark.isOpen = false
+    },
+    closeDropdown(state, action: PayloadAction<'theme' | 'startOpen'>) {
+      switch (action.payload) {
+        case 'theme':
+          state.dropdown.theme.isOpen = false
+          break
+        case 'startOpen':
+          state.dropdown.startOpen.isOpen = false
+          break
+      }
     },
 
     toggleAppSettingsModal(state) {
@@ -397,73 +344,52 @@ const modalsSlice = createSlice({
         state.pageSettings.page.locked = action.payload.locked
       }
     },
-
-    openDropdown(state, action: PayloadAction<'theme' | 'startOpen'>) {
-      switch (action.payload) {
-        case 'theme':
-          state.dropdown.theme.isOpen = true
-          break
-        case 'startOpen':
-          state.dropdown.startOpen.isOpen = true
-          break
-      }
-    },
-    closeDropdown(state, action: PayloadAction<'theme' | 'startOpen'>) {
-      switch (action.payload) {
-        case 'theme':
-          state.dropdown.theme.isOpen = false
-          break
-        case 'startOpen':
-          state.dropdown.startOpen.isOpen = false
-          break
-      }
-    },
   },
 })
 
 export const {
+  openNotionTaskModal,
+  openQuickSearchModal,
+  openAppSettingsModal,
+  openPagesTrashModal,
+  openMovePageModal,
   openRenamePageModal,
+  openPageSettingsModal,
+  openPageOptionsModal,
   openChangeCoverModal,
   openChangeIconModal,
-  openPagesTrashModal,
-  openAppSettingsModal,
-  openPageOptionsModal,
-  openPageSettingsModal,
-  openMovePageModal,
-  openTasksListsOptionsModal,
-  openHandleTasksListTitleModal,
-  openHiddenTasksListModal,
-  openQuickSearchModal,
-  openNotionTaskModal,
   openChangeStatusModal,
+  openTasksListsOptionsModal,
+  openHiddenTasksListModal,
+  openHandleTasksListTitleModal,
+  openCreateNotionContentItemModal,
   openNotionContentItemOptionsModal,
   openNotionContentItemDecorModal,
-  openCreateNotionContentItemModal,
   openCreateWebBookmarkModal,
+  openDropdown,
+  closeNotionTaskModal,
+  closeQuickSearchModal,
+  closeAppSettingsModal,
+  closePagesTrashModal,
+  closeMovePageModal,
   closeRenamePageModal,
+  closePageSettingsModal,
+  closePageOptionsModal,
   closeChangeCoverModal,
   closeChangeIconModal,
-  closePagesTrashModal,
-  closeAppSettingsModal,
-  closePageOptionsModal,
-  closePageSettingsModal,
-  closeMovePageModal,
-  closeTasksListsOptionsModal,
-  closeHandleTasksListTitleModal,
-  closeHiddenTasksListModal,
-  closeQuickSearchModal,
-  closeNotionTaskModal,
   closeChangeStatusModal,
+  closeTasksListsOptionsModal,
+  closeHiddenTasksListModal,
+  closeHandleTasksListTitleModal,
+  closeCreateNotionContentItemModal,
   closeNotionContentItemOptionsModal,
   closeNotionContentItemDecorModal,
-  closeCreateNotionContentItemModal,
   closeCreateWebBookmarkModal,
-  setTasksListsOptionsModalColor,
+  closeDropdown,
   toggleAppSettingsModal,
   toggleQuickSearchModal,
+  setTasksListsOptionsModalColor,
   updatePageSettingsModalState,
-  openDropdown,
-  closeDropdown,
 } = modalsSlice.actions
 
 export default modalsSlice.reducer

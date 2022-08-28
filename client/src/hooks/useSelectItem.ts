@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-export interface ISelectItemParams<T> {
+export interface ISelectItemState<T> {
   isSelected: boolean
   handleSelectItem: (item: T) => void
   handleKeydownSelect: (e: KeyboardEvent, func?: () => void) => void
@@ -17,11 +17,16 @@ export default function useSelectItem<T>(initialValue: T, items?: T[]) {
 
       if (!items) return
 
+      const itemIndex = items.indexOf(selectedItem)
+
       if (e.code === 'ArrowDown' || e.code === 'ArrowUp') {
         e.preventDefault()
       }
 
-      const itemIndex = items.indexOf(selectedItem)
+      if (itemIndex === -1 && e.key === 'ArrowUp') {
+        setSelectedItem(items[items.length - 1])
+        return
+      }
 
       switch (e.key) {
         case 'ArrowDown':
@@ -40,6 +45,7 @@ export default function useSelectItem<T>(initialValue: T, items?: T[]) {
   )
 
   return {
+    setSelectedItem,
     selectedItem,
     handleSelectItem,
     handleKeydownSelect,

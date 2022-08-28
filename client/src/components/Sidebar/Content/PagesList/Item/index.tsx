@@ -6,22 +6,24 @@ import { useHover } from 'usehooks-ts'
 import PagesList from '../index'
 import PageItemIcon from './Icon'
 import ToggleButton from 'components/ui/buttons/Toggle'
-import EmptyPageDependencies from './EmptyDependencies - Checked'
+import EmptyPageDependencies from './EmptyDependencies'
 import PageItemOptions from './Options'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { useUpdatePageMutation } from 'services/pages.api'
-import { selectPageDependencies } from 'store/slices/pages/pages.selectors'
+import { useUpdatePageMutation } from 'services/notions.api'
+import { NotionsSelector } from 'store/slices/notions/notions.selectors'
 import setCoordsByPointer from 'utils/helpers/setCoordsByPointer'
 import PropTypes from './PageItem.types'
 import * as Item from './PageItem.styles'
 
 const PageItem: FC<PropTypes> = ({ page, pLeft }) => {
-  const { openPageOptionsModal } = useActions()
   const { _id, title, expanded } = page
+  const { openPageOptionsModal } = useActions()
   const [updatePage] = useUpdatePageMutation()
-  const dependencies = useTypedSelector(s => selectPageDependencies(s, _id))
   const isSelected = useLocation().pathname.split('/').includes(_id)
+  const dependencies = useTypedSelector(s =>
+    NotionsSelector.selectPageDependencies(s, _id)
+  )
 
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
@@ -69,7 +71,7 @@ const PageItem: FC<PropTypes> = ({ page, pLeft }) => {
               {title === '' ? 'Untitled' : title}
             </Item.Title>
           </Item.Content>
-          {isHovering && <PageItemOptions {...page} />}
+          <PageItemOptions isHovering={isHovering} {...page} />
         </Item.Container>
       </Link>
       {handleDependencies()}

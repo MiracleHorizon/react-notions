@@ -2,7 +2,7 @@ import React, { FC, memo, useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 import useContentEditable from 'hooks/useContentEditable'
-import { useUpdateItemMutation } from 'services/pages.api'
+import { useUpdateItemMutation } from 'services/notions.api'
 import PropTypes from '../../NotionContentItem.types'
 import * as Item from './NotionQuoteItem.styles'
 

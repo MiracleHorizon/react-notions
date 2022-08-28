@@ -2,14 +2,14 @@ export default class Page {
   static create = () => ({
     parentPageId: null,
     parentListId: null,
-    title: 'Untitled',
+    title: '',
     status: null,
   })
 
   static createDependence = (parentPageId: string) => ({
     parentPageId,
     parentListId: null,
-    title: 'Untitled',
+    title: '',
     status: null,
   })
 
@@ -22,12 +22,5 @@ export default class Page {
     parentListId,
     title: title ? title : '',
     status: parentListId,
-  })
-
-  static createNoStatusTask = (parentPageId: string) => ({
-    parentPageId,
-    parentListId: null,
-    title: '',
-    status: 'NO_STATUS',
   })
 }

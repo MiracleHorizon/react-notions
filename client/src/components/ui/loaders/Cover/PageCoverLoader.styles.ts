@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import ITheme from 'themes/theme.model'
 import { TPageTemplate } from 'models/page/IPage'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 const Container = styled.div<{
   appTheme: ITheme

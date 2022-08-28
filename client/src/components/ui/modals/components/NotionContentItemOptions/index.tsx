@@ -11,7 +11,7 @@ import Container from './NotionContentItemOptionsModal.styles'
 
 const NotionContentItemOptionsModal = () => {
   const {
-    notionItemOptions: { invokerRect, page, ...itemParams },
+    notionItemOptions: { invokerRect, page, item },
     notionItemDecor: { isOpen: isContentItemDecorModalOpen },
   } = useTypedSelector(s => s.modals)
   const { closeNotionContentItemOptionsModal } = useActions()
@@ -34,7 +34,7 @@ const NotionContentItemOptionsModal = () => {
         {...coords}
       >
         <NotionContentItemOptionsList
-          {...itemParams}
+          item={item}
           rect={rect}
           locked={page?.locked}
         />

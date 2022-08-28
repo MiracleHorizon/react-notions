@@ -1,7 +1,9 @@
-import React, { memo } from 'react'
+import React from 'react'
+
+import { EnterSvg } from 'components/ui/svg'
 import * as Bar from './QuickSearchHotkeysBar.styles'
 
-const QuickSearchHotkeysBar = memo(() => (
+const QuickSearchHotkeysBar = () => (
   <Bar.Wrapper>
     <Bar.Container>
       <Bar.Hotkey>
@@ -9,11 +11,11 @@ const QuickSearchHotkeysBar = memo(() => (
         <Bar.Title>Select</Bar.Title>
       </Bar.Hotkey>
       <Bar.Hotkey>
-        <span>↵</span>
+        <EnterSvg />
         <Bar.Title>Open</Bar.Title>
       </Bar.Hotkey>
     </Bar.Container>
   </Bar.Wrapper>
-))
+)
 
 export default QuickSearchHotkeysBar

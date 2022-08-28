@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Wrapper = styled.div<{ isOnBottom: boolean }>`
+const Wrapper = styled.div<{ isScrollOnBottom: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -13,7 +13,7 @@ const Wrapper = styled.div<{ isOnBottom: boolean }>`
   }
 
   &::-webkit-scrollbar-thumb {
-    border-bottom-right-radius: ${p => (p.isOnBottom ? 4 : 0)}px;
+    border-bottom-right-radius: ${p => (p.isScrollOnBottom ? 4 : 0)}px;
   }
 `
 

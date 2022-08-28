@@ -1,14 +1,14 @@
 import React from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import OutlineInput from 'components/ui/inputs - Checked/Outline'
+import OutlineInput from 'components/ui/inputs/Outline'
 import FilledButton from 'components/ui/buttons/Filled'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import { useUpdateItemMutation } from 'services/pages.api'
+import { useUpdateItemMutation } from 'services/notions.api'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './CreateWebBookmarkModal.styles'
 

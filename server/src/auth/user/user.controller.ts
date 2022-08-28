@@ -1,17 +1,23 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
   Redirect,
   Req,
   Res,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { LoginUserDto } from './dto/login-user.dto'
 import { Request, Response } from 'express'
+import { ObjectId } from 'mongoose'
+import { FileFieldsInterceptor } from '@nestjs/platform-express'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Controller('auth')
 export class UserController {
@@ -71,8 +77,26 @@ export class UserController {
     return res.json({ ...userData }).status(200)
   }
 
-  @Get('/all')
-  getAll() {
-    return this.userService.getAll()
+  @Post('update/:id')
+  update(@Param('id') id: ObjectId, @Body() dto: UpdateUserDto) {
+    return this.userService.update(id, dto)
+  }
+
+  @Post('files/:id/avatar')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      {
+        name: 'avatarUrl',
+        maxCount: 1,
+      },
+    ])
+  )
+  uploadAvatar(@UploadedFiles() file, @Param('id') id: ObjectId) {
+    return this.userService.uploadAvatar(id, file.avatarUrl[0])
+  }
+
+  @Delete('delete/:id')
+  delete(@Param('id') id) {
+    return this.userService.delete(id)
   }
 }

@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 
-import UserPanel from './User - Checked'
-import AppOptionsPanel from './AppOptions - Checked'
+import UserPanel from './User'
+import AppOptionsPanel from './AppOptions'
 import SidebarContent from '../Content'
-import CreateNewPagePanel from './CreateNewPage - Checked'
+import CreateNewPagePanel from './CreateNewPage'
 
 const SidebarPanels: FC<{ isHovering: boolean }> = ({ isHovering }) => (
   <>

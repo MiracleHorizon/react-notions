@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, mobile, modalBoxShadowPrimary } from 'styles/uiKit'
+import { dFlex, mobile, modalBoxShadowPrimary } from 'assets/styles/uiKit'
 import { ElementCoords } from 'types'
 
 export const Container = styled.div<ElementCoords>`

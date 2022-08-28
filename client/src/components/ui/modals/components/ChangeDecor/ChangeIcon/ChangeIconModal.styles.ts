@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { mobile, modalBoxShadowPrimary, tablet } from 'styles/uiKit'
+import { mobile, modalBoxShadowPrimary, tablet } from 'assets/styles/uiKit'
 import { ElementCoords } from 'types'
 
 const Container = styled.div<{

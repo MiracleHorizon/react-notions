@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
-import { modalBoxShadowPrimary } from 'styles/uiKit'
+import { modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div<ElementCoords>`
   position: absolute;

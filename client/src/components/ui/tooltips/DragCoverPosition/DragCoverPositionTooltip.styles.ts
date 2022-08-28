@@ -9,7 +9,7 @@ export const Container = styled.div`
   border-radius: 3px;
   scroll-snap-align: none;
   background: rgba(0, 0, 0, 0.4);
-  transform: translate(-50%);
+  transform: translateX(-50%) translateY(-50%);
 `
 
 export const Title = styled.p`

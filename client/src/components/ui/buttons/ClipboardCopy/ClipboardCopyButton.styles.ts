@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 import { Theme } from 'themes/theme.model'
 
 const Button = styled.div`

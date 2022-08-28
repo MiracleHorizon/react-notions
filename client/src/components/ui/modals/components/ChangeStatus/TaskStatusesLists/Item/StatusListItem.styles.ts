@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div<{ isSelected: boolean }>`
   cursor: pointer;

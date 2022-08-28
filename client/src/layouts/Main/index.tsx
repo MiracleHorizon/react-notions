@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
 
-import AppHotkeysWrapper from 'components/AppHotkeysWrapper'
-import LayoutHeader from 'components/Workspace - Checked/Header - Checked'
-import PagesSidebar from 'components/Sidebar - Checked'
+import AppHotkeysWrapper from 'components/HotkeysWrappers/AppHotkeysWrapper'
+import LayoutHeader from 'components/Workspace/Header'
+import PagesSidebar from 'components/Sidebar'
 import WorkspaceScrollContext, { defaultValue } from 'context/WorkspaceScroll'
 import * as Layout from './MainLayout.styles'
 

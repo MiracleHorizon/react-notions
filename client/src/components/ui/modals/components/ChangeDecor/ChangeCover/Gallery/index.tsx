@@ -1,26 +1,39 @@
-import React, { FC, useRef, useState } from 'react'
-import { useEventListener } from 'usehooks-ts'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 
 import GalleryList from './List'
-import { COVERS_GALLERY_LISTS } from 'utils/constants/decor'
-import Wrapper from './CoverGallery.styles'
+import PaginationLoader from 'components/ui/loaders/Pagination'
+import DefaultErrorExposition from 'components/ui/expositions/DefaultErrorExposition'
+import useFetchPagination, { FetchKind } from 'hooks/useFetchPagination'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
+import Wrapper from './CoverGallery.styles'
 
 const CoversGallery: FC<{ _id: string }> = ({ _id }) => {
-  const [isOnBottom, setOnBottom] = useState<boolean>(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const [isScrollOnBottom, setScrollBottom] = useState<boolean>(false)
+  const [node, setNode] = useState<HTMLDivElement | null>(null)
 
-  useEventListener(
-    'scroll',
-    () => handleScrollTop({ node: ref.current, setOnBottom }),
-    ref
-  )
+  const handleScrollOffset = useCallback(() => {
+    if (node) handleScrollTop({ node, setScrollBottom })
+  }, [node])
+
+  const paginationParams = useMemo(() => ({
+    kind: FetchKind.GALLERY_LISTS,
+    handleScrollOffset,
+    offsetValue: 2,
+    node,
+  }), [handleScrollOffset, node])
+
+  const { coverLists, isLoading, isSuccess, isError } = useFetchPagination(paginationParams)
 
   return (
-    <Wrapper ref={ref} isOnBottom={isOnBottom}>
-      {COVERS_GALLERY_LISTS.map(list => (
-        <GalleryList key={list.title} _id={_id} list={list} />
+    <Wrapper
+      ref={node => node && setNode(node)}
+      isScrollOnBottom={isScrollOnBottom}
+    >
+      {isSuccess && coverLists && coverLists.map(list => (
+        <GalleryList key={list._id} _id={_id} list={list} />
       ))}
+      {isLoading && <PaginationLoader/>}
+      {isError && <DefaultErrorExposition />}
     </Wrapper>
   )
 }

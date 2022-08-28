@@ -4,13 +4,13 @@ import PageIconLoader from 'components/ui/loaders/Icon'
 import IPage from 'models/page/IPage'
 import * as Title from './PageTitle.styles'
 
-const PageIcon = lazy(() => import('../Icon - Checked'))
+const PageIcon = lazy(() => import('../Icon'))
 
 const PageTitle: FC<IPage> = memo(
   ({ _id, template, title, iconUrl, coverUrl, font, locked, smallText }) => (
     <Title.Wrapper>
       <Title.Container>
-        {template === 'NotionsList' && iconUrl && (
+        {template === 'NotionsDatabase' && iconUrl && (
           <Suspense fallback={<PageIconLoader />}>
             <PageIcon
               _id={_id}
@@ -27,7 +27,7 @@ const PageTitle: FC<IPage> = memo(
           iconUrl={iconUrl}
           template={template}
         >
-          {title}
+          {title === '' ? 'Untitled' : title}
         </Title.Value>
       </Title.Container>
     </Title.Wrapper>

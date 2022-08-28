@@ -13,13 +13,13 @@ import useCloseModal from 'hooks/useCloseModal'
 import {
   useLazyGetOnePageQuery,
   useUpdatePageMutation,
-} from 'services/pages.api'
+} from 'services/notions.api'
 import { selectNotionTaskClosable } from 'store/slices/modals/modals.selectors'
 import IPage from 'models/page/IPage'
 import Wrapper from './NotionTask.styles'
 
 const NotionTask = () => {
-  const { closeNotionTaskModal } = useActions()
+  const { closeNotionTaskModal, hideOverLimitFileSizeAlert } = useActions()
   const [page, setPage] = useState<IPage | null>(null)
   const [updatePage] = useUpdatePageMutation()
   const isClosable = useSelector(selectNotionTaskClosable)
@@ -30,8 +30,11 @@ const NotionTask = () => {
   const navigate = useNavigate()
 
   const handleCloseModal = () => {
-    setSearchParams('')
-    if (isClosable) closeNotionTaskModal()
+    if (isClosable) {
+      setSearchParams('')
+      closeNotionTaskModal()
+      hideOverLimitFileSizeAlert()
+    }
   }
 
   const handleKeydown = async (e: KeyboardEvent) => {

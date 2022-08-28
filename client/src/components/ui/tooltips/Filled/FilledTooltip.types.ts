@@ -11,7 +11,7 @@ export default interface FilledTooltipProps
     NodeRef<HTMLDivElement> {
   title?: string
   desc?: string
-  pos: 'centerBottom' | 'centerTop' | 'rightCenter' | 'leftCenter'
+  pos: 'centerBottom' | 'centerTop' | 'rightCenter' | 'leftCenter' | 'rightTop'
 }
 
 export interface NodeRef<T extends HTMLElement> {

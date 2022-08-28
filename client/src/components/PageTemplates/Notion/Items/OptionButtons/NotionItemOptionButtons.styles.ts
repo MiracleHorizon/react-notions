@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 
 const Container = styled.div<{

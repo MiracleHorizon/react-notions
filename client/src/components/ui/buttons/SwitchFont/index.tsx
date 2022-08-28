@@ -3,7 +3,7 @@ import { useHover } from 'usehooks-ts'
 
 import { FontTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'services/pages.api'
+import { useUpdatePageMutation } from 'services/notions.api'
 import { TPageFont } from 'models/decor/fonts'
 import PropTypes from './SwitchFontButton.types'
 import * as Button from './SwitchFontButton.styles'

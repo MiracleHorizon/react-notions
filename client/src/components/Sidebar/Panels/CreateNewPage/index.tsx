@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router'
 import { useSelector } from 'react-redux'
 
 import PlusButton from 'components/ui/buttons/Plus'
-import { useCreatePageMutation } from 'services/pages.api'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { useCreatePageMutation } from 'services/notions.api'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import Page from 'models/page/Page'
 import * as Panel from './CreateNewPagePanel.styles'
 

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useNavigate } from 'react-router'
 
-import SmallPageIcon from 'components/ui/SmallPageIcon - Checked'
+import SmallPageIcon from 'components/ui/SmallPageIcon'
 import { EnterSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
@@ -20,9 +20,9 @@ const QuickSearchPageItem: FC<IPage & ISelectItemParams<string>> = ({
   handleSelectItem,
 }) => {
   const navigate = useNavigate()
-  const parentPage = useTypedSelector(state => state.pages.pages).find(
-    page => page._id === parentPageId
-  )
+  const parentPage = useTypedSelector(s => s.notions.pages).find(page => {
+    return page._id === parentPageId
+  })
   const { closeQuickSearchModal } = useActions()
 
   const handleSelectPage = () => {

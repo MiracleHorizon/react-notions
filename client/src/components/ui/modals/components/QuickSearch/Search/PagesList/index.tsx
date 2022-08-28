@@ -5,8 +5,8 @@ import { useDebounce } from 'usehooks-ts'
 import QuickSearchPageItem from './Item'
 import DefaultLoader from 'components/ui/loaders/Default'
 import useSelectItem from 'hooks/useSelectItem'
-import { useLazySearchPagesQuery } from 'services/pages.api'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { useLazySearchPagesQuery } from 'services/notions.api'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import IPage from 'models/page/IPage'
 import Container from './QuickSearchPagesList.styles'
 
@@ -18,14 +18,14 @@ const SearchErrorExposition = lazy(
 )
 
 const QuickSearchPagesList: FC<{ value: string }> = ({ value }) => {
-  const [searchPages, { data, isSuccess, isLoading, isError }] = useLazySearchPagesQuery()
+  const [searchPages, { data, isLoading, isSuccess, isError }] = useLazySearchPagesQuery()
   const [pages, setPages] = useState<IPage[]>([])
   const { selectedItem, handleSelectItem } = useSelectItem('')
   const debouncedValue = useDebounce(value, 250)
   const user = useSelector(selectUser)
 
   useEffect(() => {
-    searchPages({ authorId: user._id, query: debouncedValue })
+    searchPages({ author: user._id, query: debouncedValue })
   }, [user._id, debouncedValue, searchPages])
 
   useEffect(() => {
@@ -36,10 +36,8 @@ const QuickSearchPagesList: FC<{ value: string }> = ({ value }) => {
     <Container>
       <Suspense fallback={<DefaultLoader isLarge={false} />}>
         {isLoading && <DefaultLoader isLarge={false} />}
-        {pages.length === 0 && <NoResultExposition />}
         {isError && <SearchErrorExposition />}
-        {isSuccess &&
-          pages.map(page => (
+        {isSuccess && pages.map(page => (
             <QuickSearchPageItem
               key={page._id}
               isSelected={page._id === selectedItem}
@@ -47,6 +45,7 @@ const QuickSearchPagesList: FC<{ value: string }> = ({ value }) => {
               {...page}
             />
           ))}
+        {pages.length === 0 && <NoResultExposition />}
       </Suspense>
     </Container>
   )

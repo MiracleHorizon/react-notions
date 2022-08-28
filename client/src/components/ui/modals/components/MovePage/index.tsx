@@ -4,7 +4,7 @@ import { useDebounce } from 'usehooks-ts'
 
 import PagesToMoveList from './List'
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import OutlineInput from 'components/ui/inputs - Checked/Outline'
+import OutlineInput from 'components/ui/inputs/Outline'
 import InputSearchLoader from 'components/ui/loaders/InputSearch'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
@@ -13,22 +13,19 @@ import useSetModalPosition from 'hooks/useSetModalPosition'
 import {
   useLazyGetPagesToMoveQuery,
   useLazySearchPagesToMoveQuery,
-} from 'services/pages.api'
+} from 'services/notions.api'
 import { selectMovePageModalState } from 'store/slices/modals/modals.selectors'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import IPage from 'models/page/IPage'
 import * as Modal from './MovePageModal.styles'
 
 const MovePageModal = () => {
   const { closeMovePageModal } = useActions()
-  const { pageId, coords: pointerCoords } = useSelector(
-    selectMovePageModalState
-  )
+  const { pageId, coords: pointerCoords } = useSelector(selectMovePageModalState)
   const user = useSelector(selectUser)
 
-  const [getPagesToMove, { data, isLoading, isSuccess, isError }] =
-    useLazyGetPagesToMoveQuery()
+  const [getPagesToMove, { data, isLoading, isSuccess, isError }] = useLazyGetPagesToMoveQuery()
   const [
     searchPagesToMove,
     {

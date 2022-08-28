@@ -1,17 +1,12 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.header`
-  ${dFlex['center-start']};
   max-width: 100vw;
   width: 100%;
   background: ${p => p.theme.colors['bg-primary']};
   user-select: none;
-  z-index: 100;
-
-  div[data-btn='open-sb'] {
-    margin-right: 15px;
-  }
+  z-index: 10000;
 `
 
 export const Container = styled.div`
@@ -20,7 +15,8 @@ export const Container = styled.div`
   height: 45px;
 `
 
-export const Panel = styled.div`
-  ${dFlex['center-s-between']}
-  padding-left: 10px;
+export const Panel = styled.div<{ isSidebarOpen: boolean }>`
+  ${dFlex['center-s-between']};
+  width: 100%;
+  ${p => p.isSidebarOpen && 'margin-left: 8px'};
 `

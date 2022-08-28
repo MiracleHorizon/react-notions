@@ -1,14 +1,14 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
-const Container = styled.div`
+export const Container = styled.div`
   cursor: pointer;
   ${dFlex.center};
-  width: calc(100% / 10);
-  height: 32px;
+  min-width: 30px;
+  width: calc(100% / 12.5);
+  height: 30px;
   margin-right: auto;
-  margin-bottom: 1px;
-  padding: 3px;
+  margin-bottom: 2px;
   border-radius: 3px;
   font-size: 24px;
   ${bgTransitions.esInOut50};
@@ -22,4 +22,9 @@ const Container = styled.div`
   }
 `
 
-export default Container
+export const Image = styled.img`
+  pointer-events: none;
+  object-fit: cover;
+  width: 75%;
+  height: 75%;
+`

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { ToggleFavoriteTooltip } from 'components/ui/tooltips'
 import { FavoriteStarSvg, UnfavoriteStarSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'services/pages.api'
+import { useUpdatePageMutation } from 'services/notions.api'
 import IPage from 'models/page/IPage'
 import Button from './ToggleFavoriteButton.styles'
 

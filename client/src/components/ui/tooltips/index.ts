@@ -27,3 +27,5 @@ export { default as RestorePageTooltip } from './Filled/components/RestorePageTo
 export { default as PermanentlyDeletePageTooltip } from './Filled/components/PermanentlyDeletePageTooltip'
 
 // Outgoing.
+export { default as MovedToTrashTooltip } from './Outgoing/components/MovedToTrashTooltip'
+export { default as OutgoingClipboardCopyTooltip } from './Outgoing/components/OutgoingClipboardCopyTooltip'

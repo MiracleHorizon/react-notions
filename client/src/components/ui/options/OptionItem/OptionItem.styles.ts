@@ -1,13 +1,16 @@
 import styled from 'styled-components'
-import { bgTransitions } from 'styles/uiKit'
+import { bgTransitions } from 'assets/styles/uiKit'
 
-export const Container = styled.div<{ margY?: boolean; isSelected?: boolean }>`
+export const Container = styled.div<{
+  margY?: boolean
+  isSelected?: boolean
+}>`
   cursor: pointer;
   display: flex;
   align-items: center;
   width: calc(100% - 8px);
   height: 28px;
-  margin: ${p => (!p.margY ? 1 : 0)}px 4px;
+  margin: 0 4px ${p => (!p.margY ? 1 : 0)}px 4px;
   padding-left: 15px;
   border-radius: 3px;
   user-select: none;
@@ -31,4 +34,12 @@ export const Title = styled.span`
   font-weight: 500;
   line-height: 24px;
   color: ${p => p.theme.colors['text-sb-option-title']};
+`
+
+export const HotKeyTitle = styled.h6`
+  max-width: 100px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 400;
+  color: ${p => p.theme.colors['text-secondary']};
 `

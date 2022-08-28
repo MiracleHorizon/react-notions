@@ -18,10 +18,10 @@ export default function useResizeSidebar({
   ref,
   resizerRef,
 }: UseResizeParams): boolean {
+  const { setSidebarWidth } = useActions()
   const [isResizingEnabled, setResizingEnabled] = useState<boolean>(false)
   const { maxWidth, minWidth } = SIDEBAR_WIDTH_RESTRICTIONS
   const { device } = useDeviceData('desktop')
-  const { setSidebarWidth } = useActions()
 
   const startPosition = useRef<number>(0)
   const nodeRect = ref.current?.getBoundingClientRect()
@@ -43,15 +43,10 @@ export default function useResizeSidebar({
   const onMouseMove = useCallback(
     (e: MouseEvent) => {
       if (!resizerRef.current || !isResizingEnabled || !nodeRect) return
-
       const width = startPosition.current + e.clientX
 
       if (width <= maxWidth && width >= minWidth) {
         setSidebarWidth(width)
-        window.localStorage.setItem(
-          'sidebar',
-          JSON.stringify({ isOpen: true, width })
-        )
       }
     },
     [

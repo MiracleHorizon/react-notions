@@ -4,10 +4,10 @@ import AppState, {
   StartOpenOptionEnum,
   ThemeState,
 } from './app.types'
+import AppStateHandler from 'utils/AppStateHandler'
 import { Theme } from 'themes/theme.model'
 import { lightTheme } from 'themes/light'
 import { darkTheme } from 'themes/dark'
-import AppStateHandler from 'utils/AppStateHandler'
 
 const initialState: AppState = AppStateHandler.getAppState()
 
@@ -43,24 +43,16 @@ const appSlice = createSlice({
       state.startOpen = action.payload
       window.localStorage.setItem('startOpen', JSON.stringify(state.startOpen))
     },
-
-    toggleCommonPagesList(state) {
-      state.commonPagesLists.isOpen = !state.commonPagesLists.isOpen
-      window.localStorage.setItem(
-        'commonPagesList',
-        JSON.stringify(state.commonPagesLists)
-      )
+    setNotionsDatabaseView(state, action: PayloadAction<PageView>) {
+      state.selectedView = action.payload
     },
-    toggleFavoritePagesList(state) {
-      state.favoritePagesLists.isOpen = !state.favoritePagesLists.isOpen
-      window.localStorage.setItem(
-        'favoritePagesList',
-        JSON.stringify(state.favoritePagesLists)
-      )
+    setSavePageLoading(state, action: PayloadAction<boolean>) {
+      state.loadings.savePage = action.payload
     },
 
     setSidebarWidth(state, action: PayloadAction<number>) {
       state.sidebar.width = action.payload
+      window.localStorage.setItem('sidebar', JSON.stringify(state.sidebar))
     },
     openSidebar(state) {
       state.sidebar.isOpen = true
@@ -72,15 +64,22 @@ const appSlice = createSlice({
     },
     toggleSidebar(state) {
       state.sidebar.isOpen = !state.sidebar.isOpen
-      window.localStorage.setItem('lSidebar', JSON.stringify(state.sidebar))
+      window.localStorage.setItem('sidebar', JSON.stringify(state.sidebar))
     },
 
-    setView(state, action: PayloadAction<PageView>) {
-      state.selectedView = action.payload
+    toggleFavoritePagesList(state) {
+      state.favoritePagesLists.isOpen = !state.favoritePagesLists.isOpen
+      window.localStorage.setItem(
+        'favoritePagesList',
+        JSON.stringify(state.favoritePagesLists)
+      )
     },
-
-    setSavePageLoading(state, action: PayloadAction<boolean>) {
-      state.loadings.savePage = action.payload
+    toggleCommonPagesList(state) {
+      state.commonPagesLists.isOpen = !state.commonPagesLists.isOpen
+      window.localStorage.setItem(
+        'commonPagesList',
+        JSON.stringify(state.commonPagesLists)
+      )
     },
   },
 })
@@ -94,7 +93,7 @@ export const {
   openSidebar,
   closeSidebar,
   toggleSidebar,
-  setView,
+  setNotionsDatabaseView,
   setSavePageLoading,
 } = appSlice.actions
 

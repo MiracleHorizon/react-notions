@@ -20,7 +20,7 @@ const FavoritesPagesList: FC<{ pages: IPage[] }> = memo(({ pages }) => {
         title='Favorites'
         onClickAction={handleToggleList}
       />
-      {isOpen && <PagesList pages={pages} pLeft={10} />}
+      {isOpen && <PagesList pages={pages} pLeft={8} />}
     </Wrapper>
   )
 })

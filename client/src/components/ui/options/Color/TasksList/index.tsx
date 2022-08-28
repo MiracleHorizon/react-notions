@@ -9,11 +9,11 @@ import * as Option from './TasksListColorOption.styles'
 const TasksListColorOption: FC<PropTypes> = memo(
   ({ _id, color, title, reqColor, isActive, isSelected, handleSelectItem }) => {
     const { setTasksListsOptionsModalColor } = useActions()
-    const [updateTasksList, { isSuccess }] = useUpdateTasksListMutation()
+    const [updateTasksList] = useUpdateTasksListMutation()
 
-    const handleSelectColor = async () => {
-      await updateTasksList({ _id, body: { color: reqColor } })
-      isSuccess && setTasksListsOptionsModalColor(reqColor)
+    const handleSelectColor = () => {
+      updateTasksList({ _id, body: { color: reqColor } })
+      setTasksListsOptionsModalColor(reqColor)
     }
 
     return (

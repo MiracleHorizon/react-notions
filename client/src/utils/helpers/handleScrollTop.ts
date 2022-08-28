@@ -2,22 +2,22 @@ import { SetState } from 'types'
 
 interface Params<T extends HTMLElement> {
   node: T | null
-  setOnTop?: SetState<boolean>
-  setOnBottom?: SetState<boolean>
+  setScrollTop?: SetState<boolean>
+  setScrollBottom?: SetState<boolean>
 }
 
 export default function handleScrollTop<T extends HTMLElement>({
   node,
-  setOnTop,
-  setOnBottom,
+  setScrollTop,
+  setScrollBottom,
 }: Params<T>) {
   if (!node) return
 
-  if (setOnTop) {
-    setOnTop(node.scrollTop === 0)
+  if (setScrollTop) {
+    setScrollTop(node.scrollTop === 0)
   }
 
-  if (setOnBottom) {
-    setOnBottom(node.scrollTop + node.offsetHeight === node.scrollHeight)
+  if (setScrollBottom) {
+    setScrollBottom(node.scrollTop + node.offsetHeight === node.scrollHeight)
   }
 }

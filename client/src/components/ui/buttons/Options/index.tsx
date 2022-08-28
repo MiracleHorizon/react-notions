@@ -1,21 +1,29 @@
 import React, { FC, memo } from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 import { DotsSvg } from 'components/ui/svg'
 import PropTypes from './OptionsButton.types'
-import Button from './OptionsButton.styles'
+import Button, { appearDuration } from './OptionsButton.styles'
 
 const OptionsButton: FC<PropTypes> = memo(
-  ({ onClickAction, reference, ...styles }) => (
-    <Button
-      {...styles}
-      role='button'
-      data-btn='options'
-      ref={reference}
-      onClick={onClickAction}
-      onContextMenu={onClickAction}
+  ({ onClickAction, reference, isHovering, ...styles }) => (
+    <CSSTransition
+      in={isHovering}
+      timeout={appearDuration}
+      classNames='default'
+      unmountOnExit
     >
-      <DotsSvg />
-    </Button>
+      <Button
+        {...styles}
+        role='button'
+        data-btn='options'
+        ref={reference}
+        onClick={onClickAction}
+        onContextMenu={onClickAction}
+      >
+        <DotsSvg />
+      </Button>
+    </CSSTransition>
   )
 )
 

@@ -13,6 +13,8 @@ export default interface INotionContentItem {
   color: NotionContentItemColorsEnum
   bgColor: NotionContentItemColorsEnum
   order: number
+  createdAt: string
+  updatedAt: string
   // Toggle.
   expanded: boolean | null
   dependencies: INotionContentItem[]

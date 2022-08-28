@@ -1,7 +1,7 @@
 import React, { FC, useRef, MouseEvent, memo, useCallback } from 'react'
 import { useHover } from 'usehooks-ts'
 
-import SmallPageIcon from 'components/ui/SmallPageIcon - Checked'
+import SmallPageIcon from 'components/ui/SmallPageIcon'
 import { ChangeIconTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
 import IPage from 'models/page/IPage'

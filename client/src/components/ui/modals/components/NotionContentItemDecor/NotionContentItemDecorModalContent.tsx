@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import Divider from 'components/ui/Divider - Checked'
+import Divider from 'components/ui/Divider'
 import ModalTitle from 'components/ui/modals/ModalTitle'
 import NotionContentItemDecorOption from 'components/ui/options/Color/NotionContentItem'
 import { NOTION_CONTENT_ITEM_DECOR_COLORS } from 'utils/constants/colors'

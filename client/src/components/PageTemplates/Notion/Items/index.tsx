@@ -1,15 +1,15 @@
 import React, { FC, memo, useRef, useState } from 'react'
 import { useHover } from 'usehooks-ts'
 
-import NotionItemOptionButtons from './OptionButtons - Checked'
-import NotionTextItem from './components - Checked/Text'
-import NotionTodoItem from './components - Checked/Todo'
-import NotionHeadingItem from './components - Checked/Heading'
-import NotionToggleHeadingItem from './components - Checked/ToggleHeading'
-import NotionQuoteItem from './components - Checked/Quote'
-import NotionPageUrlItem from './components - Checked/PageLink'
-import NotionWebBookmarkItem from './components - Checked/WebBookmark'
-import NotionDividerItem from './components - Checked/Divider'
+import NotionItemOptionButtons from './OptionButtons'
+import NotionTextItem from './components/Text'
+import NotionTodoItem from './components/Todo'
+import NotionHeadingItem from './components/Heading'
+import NotionToggleHeadingItem from './components/ToggleHeading'
+import NotionQuoteItem from './components/Quote'
+import NotionPageLinkItem from './components/PageLink'
+import NotionWebBookmarkItem from './components/WebBookmark'
+import NotionDividerItem from './components/Divider'
 import DndHighlight from 'components/ui/DndHighlight'
 import contentItemDatasetHandler from 'utils/helpers/contentItemDatasetHandler'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
@@ -17,16 +17,11 @@ import PropTypes from './NotionContentItem.types'
 import Wrapper from './NotionContentItem.styles'
 
 const NotionContentItem: FC<PropTypes> = memo(props => {
-  const {
-    item: { _id, type, order },
-  } = props
-  const [dragStart, setDragStart] = useState<boolean>(false)
-  const [dragOver, setDragOver] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
   const handleItemType = () => {
-    switch (type) {
+    switch (props.item.type) {
       case NotionContentItemTypes.TEXT:
         return <NotionTextItem {...props} />
 
@@ -51,8 +46,8 @@ const NotionContentItem: FC<PropTypes> = memo(props => {
       case NotionContentItemTypes.TGL_H3:
         return <NotionToggleHeadingItem {...props} />
 
-      case NotionContentItemTypes.PAGE_URL:
-        return <NotionPageUrlItem {...props} />
+      case NotionContentItemTypes.PAGE_LINK:
+        return <NotionPageLinkItem {...props} />
 
       case NotionContentItemTypes.QUOTE:
         return <NotionQuoteItem {...props} />
@@ -69,58 +64,19 @@ const NotionContentItem: FC<PropTypes> = memo(props => {
     }
   }
 
-  const handleDragStart = (e: any) => {
-    e.preventDefault()
-    console.log('drag start')
-  }
-
-  const handleDragEnd = (e: any) => {
-    e.preventDefault()
-    const dataset = e.target.dataset
-
-    if ((dataset.el || dataset.selectable) && dragOver) {
-      setDragOver(false)
-    }
-  }
-
-  const handleDragOver = (e: any) => {
-    e.preventDefault()
-    const dataset = e.target.dataset
-
-    if ((dataset.el || dataset.selectable) && !dragOver) {
-      setDragOver(true)
-    }
-  }
-
-  const handleDragLeave = (e: any) => {
-    e.preventDefault()
-    const dataset = e.target.dataset
-
-    if ((dataset.el || !dataset.selectable) && dragOver) {
-      setDragOver(false)
-    }
-  }
-
   return (
     <Wrapper
-      draggable
       ref={ref}
-      type={type}
+      type={props.item.type}
       data-el='notion-item'
-      data-item={contentItemDatasetHandler(type)}
-      onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd}
-      onDragLeave={handleDragLeave}
+      data-item={contentItemDatasetHandler(props.item.type)}
     >
       <NotionItemOptionButtons
-        _id={_id}
-        order={order}
-        type={type}
-        isHovering={isHovering}
+        item={props.item}
         page={props.page}
+        isHovering={isHovering}
       />
       {handleItemType()}
-      {dragOver && <DndHighlight />}
     </Wrapper>
   )
 })

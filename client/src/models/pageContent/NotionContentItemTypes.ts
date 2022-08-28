@@ -15,7 +15,7 @@ enum NotionContentItemTypes {
   IMAGE = 'image',
   VIDEO = 'video',
   DIVIDER = 'divider',
-  PAGE_URL = 'pageUrl',
+  PAGE_LINK = 'pageLink',
 }
 
 export default NotionContentItemTypes

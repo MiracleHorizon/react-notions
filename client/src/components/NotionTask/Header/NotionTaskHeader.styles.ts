@@ -1,17 +1,20 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.header`
   position: sticky;
   top: 0;
   left: 0;
-  ${dFlex.center};
-  height: 45px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
 `
 
 export const Container = styled.div`
-  flex: 1;
   ${dFlex['center-s-between']};
+  width: 100%;
+  height: 45px;
 
   div[data-el='settings-panel'] {
     right: 7px;

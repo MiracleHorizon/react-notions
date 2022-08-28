@@ -19,10 +19,12 @@ const DropdownPopup: FC<PropTypes> = ({
   type,
 }) => {
   const { closeDropdown } = useActions()
-  const { selectedItem, handleSelectItem, handleKeydownSelect } = useSelectItem(
-    activeOption,
-    options
-  )
+  const {
+    selectedItem,
+    handleSelectItem,
+    handleKeydownSelect
+  } = useSelectItem('', options)
+
   const { ref, setRef, rect, coords } = useSetModalPosition({
     invokerRect: invokerRef.current?.getBoundingClientRect().toJSON(),
     pos: 'rightCenter',
@@ -43,10 +45,7 @@ const DropdownPopup: FC<PropTypes> = ({
 
   return (
     <ModalWrapper>
-      <Popup.Container
-        ref={node => nodeRefHandler(node, rect, setRef)}
-        {...coords}
-      >
+      <Popup.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
         <Popup.OptionsList>
           {options.map(option => (
             <Popup.Option

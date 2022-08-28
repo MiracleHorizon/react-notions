@@ -3,7 +3,7 @@ import { useHover } from 'usehooks-ts'
 
 import { UndoSvg } from 'components/ui/svg'
 import { RestorePageTooltip } from 'components/ui/tooltips'
-import { useRestorePageMutation } from 'services/pages.api'
+import { useRestorePageMutation } from 'services/notions.api'
 import Container from './RestorePageButton.styles'
 
 const RestorePageButton: FC<{ _id: string }> = ({ _id }) => {

@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 
-import OutlineInput from 'components/ui/inputs - Checked/Outline'
+import OutlineInput from 'components/ui/inputs/Outline'
 import FilledButton from 'components/ui/buttons/Filled'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'services/pages.api'
+import { useUpdatePageMutation } from 'services/notions.api'
 import * as Link from './CoverLink.styles'
 
 const CoverLink: FC<{ _id: string }> = ({ _id }) => {

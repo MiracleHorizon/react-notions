@@ -1,15 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import useActions from '../hooks/useActions'
-import { useLogoutMutation } from 'services/auth.api'
-import { selectUser } from 'store/slices/auth/auth.selectors'
-import MainLayout from '../layouts/Main'
+import MainLayout from 'layouts/Main'
+import useActions from 'hooks/useActions'
+import { useLogoutMutation } from 'services/user.api'
+import { selectUser } from 'store/slices/user/auth.selectors'
 
 const WorkspacePage = () => {
   const { closeAppSettingsModal, logout } = useActions()
+  const { email } = useSelector(selectUser)
   const [authLogout] = useLogoutMutation()
-  const user = useSelector(selectUser)
 
   const handleLogout = () => {
     authLogout()
@@ -20,7 +20,7 @@ const WorkspacePage = () => {
   return (
     <MainLayout>
       <div>
-        <span>{user.email}</span>
+        <span>{email}</span>
         <button onClick={handleLogout}>Logout</button>
       </div>
     </MainLayout>

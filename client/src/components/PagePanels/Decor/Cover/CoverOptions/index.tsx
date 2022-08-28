@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-import ChangeCoverOption from './Option - Checked/components/ChangeCover'
-import RepositionOption from './Option - Checked/components/Reposition'
+import ChangeCoverOption from './Option/components/ChangeCover'
+import RepositionOption from './Option/components/Reposition'
 import PropTypes from './CoverOptionsPanel.types'
 import * as Panel from './CoverOptionsPanel.styles'
 

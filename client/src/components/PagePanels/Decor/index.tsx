@@ -1,17 +1,18 @@
 import React, { FC, memo, useRef, lazy, Suspense } from 'react'
 import { useHover } from 'usehooks-ts'
 
-import PageTitle from './Title - Checked'
-import DecorOptions from './Options - Checked'
+import PageTitle from './Title'
+import DecorOptions from './Options'
 import PageCoverLoader from 'components/ui/loaders/Cover'
 import PageIconLoader from 'components/ui/loaders/Icon'
 import PageDescriptionLoader from 'components/ui/loaders/Description'
+import OverLimitFileSizeAlert from 'components/ui/alerts/OverLimitFileSize'
 import IPage from 'models/page/IPage'
 import * as Panel from './PageDecorPanel.styles'
 
-const PageCover = lazy(() => import('./Cover - Checked'))
-const PageIcon = lazy(() => import('./Icon - Checked'))
-const PageDescription = lazy(() => import('./Description - Checked'))
+const PageCover = lazy(() => import('./Cover'))
+const PageIcon = lazy(() => import('./Icon'))
+const PageDescription = lazy(() => import('./Description'))
 
 const PageDecorPanel: FC<IPage> = memo(page => {
   const {

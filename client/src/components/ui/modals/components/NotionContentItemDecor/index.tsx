@@ -12,8 +12,8 @@ import * as Modal from './NotionContentItemDecorModal.styles'
 
 const NotionContentItemDecorModal = () => {
   const { closeNotionContentItemDecorModal } = useActions()
-  const [isOnTop, setOnTop] = useState<boolean>(true)
-  const [isOnBottom, setOnBottom] = useState<boolean>(false)
+  const [isScrollOnTop, setScrollTop] = useState<boolean>(true)
+  const [isScrollOnBottom, setScrollBottom] = useState<boolean>(false)
   const { itemId, invokerRect } = useTypedSelector(
     s => s.modals.notionItemDecor
   )
@@ -25,7 +25,7 @@ const NotionContentItemDecorModal = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      handleScrollTop({ node: ref, setOnTop, setOnBottom })
+      handleScrollTop({ node: ref, setScrollTop, setScrollBottom })
     }
 
     ref?.addEventListener('scroll', handleScroll)
@@ -40,8 +40,8 @@ const NotionContentItemDecorModal = () => {
       <Modal.Container
         {...coords}
         ref={node => nodeRefHandler(node, rect, setRef)}
-        isOnTop={isOnTop}
-        isOnBottom={isOnBottom}
+        isScrollOnTop={isScrollOnTop}
+        isScrollOnBottom={isScrollOnBottom}
       >
         <NotionContentItemDecorModalContent itemId={itemId} />
       </Modal.Container>

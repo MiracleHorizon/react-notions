@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ItemContainerProps } from './PageItem.types'
-import { bgTransitions, txtOflow } from 'styles/uiKit'
+import { bgTransitions, txtOflow } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div`
   display: flex;

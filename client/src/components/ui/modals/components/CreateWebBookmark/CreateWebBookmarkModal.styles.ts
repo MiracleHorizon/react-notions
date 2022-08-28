@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { modalBoxShadowPrimary, txtOflow } from 'styles/uiKit'
+import { modalBoxShadowPrimary, txtOflow } from 'assets/styles/uiKit'
 import { ElementCoords } from 'types'
 
 export const Container = styled.div<ElementCoords>`

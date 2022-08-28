@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, Dispatch, RefObject } from 'react'
 
-export declare type SetState<T> = Dispatch<SetStateAction<T>>
+export type SetState<T> = Dispatch<SetStateAction<T>>
 export type InputEvent = ChangeEvent<HTMLInputElement>
 export type TDivRef = RefObject<HTMLDivElement>
 export type TClientRect = DOMRect | null

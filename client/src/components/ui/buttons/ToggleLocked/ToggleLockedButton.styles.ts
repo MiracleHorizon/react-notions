@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
 export const Container = styled.div<{ locked: boolean; reLock?: boolean }>`
   cursor: pointer;

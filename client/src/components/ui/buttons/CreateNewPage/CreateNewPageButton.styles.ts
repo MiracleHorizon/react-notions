@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
 const Button = styled.div<{ coords?: ElementCoords; absolute?: boolean }>`
   cursor: pointer;

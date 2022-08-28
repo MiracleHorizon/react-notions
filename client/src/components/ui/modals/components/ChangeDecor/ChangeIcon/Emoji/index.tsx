@@ -1,26 +1,34 @@
-import React, { FC, useRef, useState } from 'react'
-import { useEventListener } from 'usehooks-ts'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 
 import EmojiList from './List'
+import PaginationLoader from 'components/ui/loaders/Pagination'
+import useFetchPagination, { FetchKind } from 'hooks/useFetchPagination'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
-import { EMOJI_LISTS } from 'utils/constants/decor'
 import Wrapper from './EmojiLists.styles'
 
 const EmojiLists: FC<{ _id: string }> = ({ _id }) => {
-  const [isOnBottom, setOnBottom] = useState<boolean>(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const [isScrollOnBottom, setScrollBottom] = useState<boolean>(false)
+  const [node, setNode] = useState<HTMLDivElement | null>(null)
 
-  useEventListener(
-    'scroll',
-    () => handleScrollTop({ node: ref.current, setOnBottom }),
-    ref
-  )
+  const handleScrollOffset = useCallback(() => {
+    if (node) handleScrollTop({ node, setScrollBottom })
+  }, [node])
+
+  const paginationParams = useMemo(() => ({
+    kind: FetchKind.EMOJI_LISTS,
+    handleScrollOffset,
+    offsetValue: 2,
+    node,
+  }), [handleScrollOffset, node])
+
+  const { emojiLists, isLoading } = useFetchPagination(paginationParams)
 
   return (
-    <Wrapper ref={ref} isOnBottom={isOnBottom}>
-      {EMOJI_LISTS.map(list => (
+    <Wrapper ref={node => node && setNode(node)} isScrollOnBottom={isScrollOnBottom}>
+      {emojiLists?.map(list => (
         <EmojiList key={list.title} _id={_id} list={list} />
       ))}
+      {isLoading && <PaginationLoader />}
     </Wrapper>
   )
 }

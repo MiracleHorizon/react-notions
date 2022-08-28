@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { modalBoxShadowPrimary } from 'styles/uiKit'
+import { modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div`
   position: absolute;
@@ -13,12 +13,8 @@ export const Container = styled.div`
   background: ${p => p.theme.colors['bg-modal-primary']};
 `
 
-export const Content = styled.div<{ isOnBottom: boolean }>`
+export const Content = styled.div`
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 50px - 28px);
   overflow: auto;
-
-  &::-webkit-scrollbar-thumb {
-    border-bottom-right-radius: ${p => (p.isOnBottom ? 4 : 0)}px;
-  }
 `

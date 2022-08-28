@@ -3,15 +3,14 @@ import React, { lazy, Suspense, useEffect } from 'react'
 import AuthLayout from 'layouts/Auth'
 import AuthFormLoader from 'components/ui/loaders/AuthForm'
 import useActions from 'hooks/useActions'
-import { useLoginMutation } from 'services/auth.api'
+import { useLoginMutation } from 'services/user.api'
 import { SubmitAuthParams } from './Form/AuthForm.types'
 
 const AuthForm = lazy(() => import('./Form'))
 
 const Login = () => {
   const { login } = useActions()
-  const [authLogin, { data, isLoading, isSuccess, isError }] =
-    useLoginMutation()
+  const [authLogin, { data, isLoading, isSuccess, isError }] = useLoginMutation()
 
   const handleSubmitLogin = (params: SubmitAuthParams) => {
     authLogin(params)

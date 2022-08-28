@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 import ContentItemColorsHandler from 'utils/ContentItemColorsHandler'
 
@@ -13,8 +13,7 @@ const Button = styled.div<{
   min-height: 16px;
   width: 16px;
   height: 16px;
-  background: ${p => (p.isActive ? 'rgb(46, 170, 220)' : 'transparent')};
-  background: ${p => !p.isActive && p.theme.colors['bg-el-hover-primary']};
+  background: ${p => (p.isActive ? 'rgb(46, 170, 220)' : p.theme.colors['bg-el-hover-primary'])};
   ${bgTransitions.esIn20};
 
   &:active {

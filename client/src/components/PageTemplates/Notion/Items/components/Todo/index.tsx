@@ -3,7 +3,7 @@ import ContentEditable from 'react-contenteditable'
 
 import ToggleTodoButton from 'components/ui/buttons/ToggleTodo'
 import useContentEditable from 'hooks/useContentEditable'
-import { useUpdateItemMutation } from 'services/pages.api'
+import { useUpdateItemMutation } from 'services/notions.api'
 import PropTypes from '../../NotionContentItem.types'
 import * as Item from './NotionTodoItem.styles'
 
@@ -17,9 +17,9 @@ const NotionTodoItem: FC<PropTypes> = memo(
     }
 
     const handleToggleTodo = useCallback(() => {
-      if (!page || completed === null || page.locked) return
+      if (completed === null || page.locked) return
       updateContentItem({ _id, body: { completed: !completed } })
-    }, [page, completed, _id, updateContentItem])
+    }, [page.locked, completed, _id, updateContentItem])
 
     const {
       value,

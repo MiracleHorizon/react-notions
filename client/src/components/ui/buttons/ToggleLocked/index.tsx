@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import { LockedFilledSvg, UnlockedFilledSvg } from 'components/ui/svg'
-import { useUpdatePageMutation } from 'services/pages.api'
+import { useUpdatePageMutation } from 'services/notions.api'
 import PropTypes from './ToggleLockedButton.types'
 import * as Button from './ToggleLockedButton.styles'
 

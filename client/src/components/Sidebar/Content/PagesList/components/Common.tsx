@@ -2,7 +2,7 @@ import React, { FC, memo } from 'react'
 
 import PagesList from '../index'
 import PagesListTitle from '../Title'
-import CreatePageButtonSidebar from '../../../../ui/buttons/CreatePageSidebar'
+import CreatePageButtonSidebar from 'components/ui/buttons/CreatePageSidebar'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import IPage from 'models/page/IPage'
@@ -23,7 +23,7 @@ const CommonPagesList: FC<{ pages: IPage[]; isHovering: boolean }> = memo(
           onClickAction={handleToggleList}
         />
         {isHovering && <CreatePageButtonSidebar />}
-        {isOpen && <PagesList pages={pages} pLeft={10} />}
+        {isOpen && <PagesList pages={pages} pLeft={8} />}
       </Wrapper>
     )
   }

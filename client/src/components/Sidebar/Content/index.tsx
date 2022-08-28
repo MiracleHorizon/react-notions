@@ -2,24 +2,24 @@ import React, { FC, memo, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useEventListener } from 'usehooks-ts'
 
-import FavoritesPagesList from './PagesList - Checked/components/Favorites'
-import CommonPagesList from './PagesList - Checked/components/Common'
-import PagesTrashPanel from '../Panels - Checked/PagesTrash - Checked'
+import FavoritesPagesList from './PagesList/components/Favorites'
+import CommonPagesList from './PagesList/components/Common'
+import PagesTrashPanel from '../Panels/PagesTrash'
 import SidebarPagesListLoader from 'components/ui/loaders/SidebarPagesList'
 import useActions from 'hooks/useActions'
-import { useGetAllPagesQuery } from 'services/pages.api'
-import {
-  selectCommonPages,
-  selectFavoritePages,
-} from 'store/slices/pages/pages.selectors'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { useGetAllPagesQuery } from 'services/notions.api'
+import { NotionsSelector } from 'store/slices/notions/notions.selectors'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import handleScrollOffset from 'utils/helpers/handleScrollOffset'
 import Content from './SidebarContent.styles'
 
 const SidebarContent: FC<{ isHovering: boolean }> = memo(({ isHovering }) => {
   const { setPages } = useActions()
-  const favoritePages = useSelector(selectFavoritePages)
-  const commonPages = useSelector(selectCommonPages)
+  const [isScrollOnTop, setScrollOnTop] = useState<boolean>(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  const favoritePages = useSelector(NotionsSelector.selectFavoritePages)
+  const commonPages = useSelector(NotionsSelector.selectCommonPages)
   const user = useSelector(selectUser)
 
   const {
@@ -28,8 +28,6 @@ const SidebarContent: FC<{ isHovering: boolean }> = memo(({ isHovering }) => {
     isSuccess,
     isError,
   } = useGetAllPagesQuery(user._id)
-  const [isScrollOnTop, setScrollOnTop] = useState<boolean>(false)
-  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (isSuccess && pages) setPages(pages)

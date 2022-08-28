@@ -7,18 +7,19 @@ import WorkspaceContent from 'components/Workspace/Content'
 import TemplateContent from 'components/PageTemplates/TemplateContent'
 import NotionPageLoader from 'components/ui/loaders/NotionPage'
 import useActions from 'hooks/useActions'
-import useTypedSelector from 'hooks/useTypedSelector'
-import { useLazyGetOnePageQuery } from 'services/pages.api'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { useLazyGetOnePageQuery } from 'services/notions.api'
+import { selectUser } from 'store/slices/user/auth.selectors'
+import { selectRedirectPageId } from 'store/slices/app/app.selectors'
 
 const Notion = () => {
   const { setCurrentPage, openNotionTaskModal, closeNotionTaskModal } = useActions()
+  const redirectPage = useSelector(selectRedirectPageId)
   const [getPage, { data: page, isLoading, isSuccess, isError }] = useLazyGetOnePageQuery()
-  const { lastPageId } = useTypedSelector(s => s.app)
+  const user = useSelector(selectUser)
+
   const [searchParams] = useSearchParams()
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const user = useSelector(selectUser)
 
   useEffect(() => {
     const pagePath = pathname.split('/').pop()
@@ -27,17 +28,15 @@ const Notion = () => {
 
   useEffect(() => {
     if (isSuccess && page) setCurrentPage(page)
-    if (isError) navigate(`/workspace/${lastPageId ? lastPageId : ''}`)
+    if (isError) navigate(`/workspace/${redirectPage}`)
 
     return () => {
       if (page) window.localStorage.setItem('lastPageId', page._id)
     }
-  }, [page, navigate, isSuccess, isError, lastPageId, setCurrentPage])
+  }, [page, navigate, isSuccess, isError, redirectPage, setCurrentPage])
 
   useEffect(() => {
-    const taskPageParams = searchParams.get('p')
-    if (taskPageParams) openNotionTaskModal()
-    if (!taskPageParams) closeNotionTaskModal()
+    searchParams.get('p') ? openNotionTaskModal() : closeNotionTaskModal()
   }, [searchParams, openNotionTaskModal, closeNotionTaskModal])
 
   if (page && user._id !== page.author) return null

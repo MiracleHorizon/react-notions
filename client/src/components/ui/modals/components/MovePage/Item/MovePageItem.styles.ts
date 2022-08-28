@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 
 export const Container = styled.div<{ isSelected: boolean }>`
   cursor: pointer;

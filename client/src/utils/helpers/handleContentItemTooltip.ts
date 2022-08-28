@@ -25,7 +25,7 @@ export default function handleContentItemTooltip(type: Types) {
         title: 'Just start writing with plain text.',
         imgUrl: `${textTooltip}`,
       }
-    case Types.PAGE_URL:
+    case Types.PAGE_LINK:
       return {
         title: 'Link to an existing page.',
         imgUrl: `${pageLinkTooltip}`,

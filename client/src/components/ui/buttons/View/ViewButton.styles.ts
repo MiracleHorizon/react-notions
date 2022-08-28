@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, txtOflow } from 'styles/uiKit'
+import { bgTransitions, txtOflow } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div<{ isActive: boolean }>`
   align-self: flex-end;

@@ -1,12 +1,10 @@
 import React, { FC, memo, useContext, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 import ParentPageTitle from './ParentPageTitle'
 import ToggleLockedButton from 'components/ui/buttons/ToggleLocked'
-import SavePageLoading from 'components/ui/SavePageLoading - Checked'
+import SavePageLoading from 'components/ui/SavePageLoading'
 import useActions from 'hooks/useActions'
 import WorkspaceScrollContext from 'context/WorkspaceScroll'
-import { selectPageSaveLoading } from 'store/slices/app/app.selectors'
 import handleImageUrl from 'utils/helpers/handleImageUrl'
 import IPage from 'models/page/IPage'
 import * as Title from './PageTitle.styles'
@@ -14,7 +12,6 @@ import * as Title from './PageTitle.styles'
 const HeaderPageTitle: FC<IPage> = memo(page => {
   const { openRenamePageModal } = useActions()
   const { _id, parentPageId, status, title, iconUrl, locked } = page
-  const isSavePageLoading = useSelector(selectPageSaveLoading)
   const [reLock, setReLock] = useState<boolean>(false)
   const { contentRef } = useContext(WorkspaceScrollContext)
   const ref = useRef<HTMLDivElement>(null)
@@ -31,8 +28,8 @@ const HeaderPageTitle: FC<IPage> = memo(page => {
   }
 
   return (
-    <>
-      {parentPageId && status !== null && (
+    <Title.Wrapper>
+      {parentPageId && status && (
         <ParentPageTitle parentPageId={parentPageId} />
       )}
       <Title.Container ref={ref} onClick={handleClickOnTitle}>
@@ -47,8 +44,8 @@ const HeaderPageTitle: FC<IPage> = memo(page => {
           setReLock={setReLock}
         />
       )}
-      {isSavePageLoading && <SavePageLoading />}
-    </>
+      <SavePageLoading />
+    </Title.Wrapper>
   )
 })
 

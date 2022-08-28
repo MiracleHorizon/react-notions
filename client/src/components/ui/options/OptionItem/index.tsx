@@ -8,24 +8,34 @@ const OptionItem: FC<PropTypes> = memo(
     margY,
     reference,
     isSelected,
+    hotkeyTitle,
     StartSvg,
     EndSvg,
     onClickAction,
     onMouseOverAction,
-  }) => (
-    <Option.Container
-      data-el='option-item'
-      margY={margY}
-      ref={reference}
-      onClick={onClickAction}
-      onMouseOver={onMouseOverAction}
-      isSelected={isSelected}
-    >
-      <StartSvg />
-      <Option.Title>{title}</Option.Title>
-      {EndSvg && <EndSvg />}
-    </Option.Container>
-  )
+    handleSelectItem,
+  }) => {
+    const handleMouseOver = () => {
+      if (onMouseOverAction) return onMouseOverAction()
+      if (handleSelectItem) return handleSelectItem(title)
+    }
+
+    return (
+      <Option.Container
+        data-el='option-item'
+        margY={margY}
+        ref={reference}
+        onClick={onClickAction}
+        onMouseOver={handleMouseOver}
+        isSelected={isSelected}
+      >
+        <StartSvg />
+        <Option.Title>{title}</Option.Title>
+        {EndSvg && <EndSvg />}
+        {hotkeyTitle && <Option.HotKeyTitle>{hotkeyTitle}</Option.HotKeyTitle>}
+      </Option.Container>
+    )
+  }
 )
 
 export default OptionItem

@@ -1,9 +1,9 @@
 import React, { FC, memo } from 'react'
 import { useSelector } from 'react-redux'
 
-import EmptyUserAvatar from 'components/ui/EmptyUserAvatar - Checked'
+import EmptyUserAvatar from 'components/ui/EmptyUserAvatar'
 import CloseSidebarButton from 'components/ui/buttons/ToggleSidebar/Close'
-import { selectUser } from 'store/slices/auth/auth.selectors'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import handleImageUrl from 'utils/helpers/handleImageUrl'
 import * as Panel from './UserPanel.styles'
 
@@ -18,7 +18,7 @@ const UserPanel: FC<{ isHovering: boolean }> = memo(({ isHovering }) => {
             <Panel.Avatar src={handleImageUrl(user.avatarUrl)} alt='avatar' />
           ) : (
             <EmptyUserAvatar
-              firstChar={user.fullName ? user.fullName[0] : 'A'}
+              firstChar={user.fullName ? user.fullName[0] : user.email[0]}
             />
           )}
           <Panel.Title>

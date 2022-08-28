@@ -19,6 +19,8 @@ export const WEBB_TELESCOPE_URL = 'https://webbtelescope.org/'
 
 // Styles.
 export const PAGE_FONTS: TPageFont[] = ['Default', 'Serif', 'Mono']
+export const OUTGOING_TOOLTIP_HIDE_DELAY = 6e3
+export const CLIPBOARD_COPY_TOOLTIP_HIDE_DELAY = 4e3
 
 // Notions.
 export const NOTIONS_LIST_VIEWS = [
@@ -40,7 +42,7 @@ export const NOTIONS_LIST_VIEWS = [
   },
 ]
 
-export const UPDATE_PAGE_TEMPLATES = [
+export const UPDATE_PAGE_TEMPLATES_OPTIONS = [
   {
     title: 'Empty page',
     StartSvg: EmptyPageSvg,
@@ -58,8 +60,9 @@ export const UPDATE_PAGE_TEMPLATES = [
 // Upload.
 export const COVER_UPLOAD_RESTRICTION = 2e6
 export const ICON_UPLOAD_RESTRICTION = 1e6
+export const AVATAR_UPLOAD_RESTRICTION = 1e6
 
 // -- NotionContentItems.
 export const IMAGE_UPLOAD_RESTRICTION = 2e6
-export const VIDEO_UPLOAD_RESTRICTION = 3e6
-export const AUDIO_UPLOAD_RESTRICTION = 2e6
+export const VIDEO_UPLOAD_RESTRICTION = 4e6
+export const AUDIO_UPLOAD_RESTRICTION = 3e6

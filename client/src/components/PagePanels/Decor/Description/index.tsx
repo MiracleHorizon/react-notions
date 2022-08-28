@@ -2,7 +2,7 @@ import React, { FC, useEffect, useRef } from 'react'
 import ContentEditable from 'react-contenteditable'
 
 import useContentEditable from 'hooks/useContentEditable'
-import { useUpdatePageMutation } from 'services/pages.api'
+import { useUpdatePageMutation } from 'services/notions.api'
 import * as Panel from './PageDescription.styles'
 
 const PageDescription: FC<{

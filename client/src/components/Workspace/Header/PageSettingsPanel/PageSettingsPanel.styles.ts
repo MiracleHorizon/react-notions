@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 const Container = styled.div`
   position: absolute;
@@ -16,6 +16,15 @@ const Container = styled.div`
     width: 32px;
     height: 28px;
     margin-left: 1px;
+    background: ${p => p.theme.colors['bg-primary']};
+
+    &:hover {
+      background: ${p => p.theme.colors['bg-el-hover-primary']};
+    }
+
+    &:active {
+      background: ${p => p.theme.colors['bg-el-active-primary']};
+    }
 
     svg {
       width: 18px !important;

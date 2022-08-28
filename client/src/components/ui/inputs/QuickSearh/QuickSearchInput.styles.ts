@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { txtOflow } from 'styles/uiKit'
+import { txtOflow } from 'assets/styles/uiKit'
 
 const Input = styled.input`
   min-width: 0;

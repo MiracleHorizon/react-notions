@@ -1,6 +1,6 @@
 import React, { FC, memo, useMemo } from 'react'
 
-import NotionContentItem from '../Items - Checked'
+import NotionContentItem from '../Items'
 import pageContentSorter from 'utils/helpers/pageContentSorter'
 import IPage from 'models/page/IPage'
 import Content from './NotionContent.styles'

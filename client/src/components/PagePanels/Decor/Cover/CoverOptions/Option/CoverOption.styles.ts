@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { OptionButtonProps } from './CoverOption.types'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 
 export const Container = styled.div<OptionButtonProps>`
   cursor: pointer;

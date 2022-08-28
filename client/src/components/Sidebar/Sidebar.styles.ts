@@ -13,7 +13,7 @@ export const Wrapper = styled.div<SidebarWrapperProps>`
     ${p => p.theme.identifier === Theme.LIGHT
         ? 'rgba(55, 53, 47, 0.09)'
         : 'rgba(255, 255, 255, 0.094)'};
-  background: ${p => p.theme.colors['bg-l-sidebar']}; //!
+  background: ${p => p.theme.colors['bg-sidebar']};
   opacity: ${p => (p.isOpen ? 1 : 0)};
   user-select: none;
   z-index: 1;

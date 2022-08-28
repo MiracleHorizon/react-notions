@@ -1,28 +1,30 @@
-import React, { useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import HeaderPageTitle from './PageTitle'
 import PageSettingsPanel from './PageSettingsPanel'
-import OpenSidebarButton from 'components/ui/buttons/ToggleSidebar/Open'
+import OpenSidebarBar from './OpenSidebarBar'
+import OverLimitFileSizeAlert from 'components/ui/alerts/OverLimitFileSize'
 import useTypedSelector from 'hooks/useTypedSelector'
 import * as Header from './Header.styles'
 
 const WorkspaceHeader = () => {
-  const { isOpen: isSidebarOpen } = useTypedSelector(s => s.app.sidebar)
-  const { page } = useTypedSelector(s => s.pages)
-
-  const ref = useRef<HTMLHeadElement>(null)
-  const isHovering = useHover(ref)
+  const {
+    notions: { page },
+    app: { sidebar: { isOpen: isSidebarOpen } },
+  } = useTypedSelector(s => s)
+  const [searchParams] = useSearchParams()
 
   return (
-    <Header.Wrapper ref={ref}>
-      {!isSidebarOpen && <OpenSidebarButton isHeaderHovering={isHovering} />}
+    <Header.Wrapper>
       <Header.Container>
-        <Header.Panel>
+        {!isSidebarOpen && <OpenSidebarBar />}
+        <Header.Panel isSidebarOpen={isSidebarOpen}>
           <HeaderPageTitle {...page} />
           <PageSettingsPanel {...page} />
         </Header.Panel>
       </Header.Container>
+      {!searchParams.get('p') && <OverLimitFileSizeAlert />}
     </Header.Wrapper>
   )
 }

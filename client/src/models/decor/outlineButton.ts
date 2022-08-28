@@ -13,4 +13,5 @@ export interface IOutlineButtonStyles {
 export enum OutlineButtonColorsEnum {
   RED = 'red',
   GRAY = 'gray',
+  BLUE = 'blue',
 }

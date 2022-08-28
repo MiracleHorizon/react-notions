@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { modalBoxShadowPrimary } from 'styles/uiKit'
+import { modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
 const Wrapper = styled.div`
   position: absolute;

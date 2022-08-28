@@ -6,7 +6,7 @@ import Container from './PageCoverLoader.styles'
 
 const PageCoverLoader = () => {
   const { theme } = useTypedSelector(s => s.app.themeState)
-  const { page } = useTypedSelector(s => s.pages)
+  const { page } = useTypedSelector(s => s.notions)
 
   return (
     <Container appTheme={theme} template={page.template}>

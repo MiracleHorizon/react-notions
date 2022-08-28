@@ -89,7 +89,7 @@ export const NOTION_CONTENT_ITEM_TYPE_OPTIONS = [
     title: 'Link to page',
     desc: 'Link to an existing page.',
     imageUrl: `${pageLinkImg}`,
-    type: NotionContentItemTypes.PAGE_URL,
+    type: NotionContentItemTypes.PAGE_LINK,
   },
   {
     title: 'Quote',

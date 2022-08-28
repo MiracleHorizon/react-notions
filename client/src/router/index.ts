@@ -19,7 +19,7 @@ export enum RouteNames {
 }
 
 export const publicRoutes: IRoute[] = [
-  { path: RouteNames.HOME, element: HomePage },
+  // { path: RouteNames.HOME, element: HomePage },
   { path: RouteNames.REGISTER, element: RegisterPage },
   { path: RouteNames.LOGIN, element: LoginPage },
 ]

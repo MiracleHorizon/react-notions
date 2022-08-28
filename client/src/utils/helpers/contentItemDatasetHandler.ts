@@ -32,8 +32,8 @@ export default function contentItemDatasetHandler(
     case NotionContentItemTypes.QUOTE:
       return NotionContentItemDatasets.QUOTE
 
-    case NotionContentItemTypes.PAGE_URL:
-      return NotionContentItemDatasets.PAGE_URL
+    case NotionContentItemTypes.PAGE_LINK:
+      return NotionContentItemDatasets.PAGE_LINK
 
     case NotionContentItemTypes.WEB_BOOKMARK:
       return NotionContentItemDatasets.WEB_BOOKMARK

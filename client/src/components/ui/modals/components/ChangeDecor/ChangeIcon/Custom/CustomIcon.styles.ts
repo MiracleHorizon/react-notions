@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
 export const Container = styled.div<{ drag: boolean }>`
   background: ${p => p.drag && p.theme.colors['bg-upload-drag']};
@@ -48,7 +48,7 @@ export const UploaderContainer = styled.div`
   ${dFlex.center};
   width: 95%;
   height: 32px;
-  border: 1px solid ${p => p.theme.colors['br-cover-uploader']};
+  border: 1px solid ${p => p.theme.colors['br-uploader']};
   border-radius: 3px;
   font-size: 14px;
   line-height: 24px;
@@ -56,10 +56,10 @@ export const UploaderContainer = styled.div`
   ${bgTransitions.esInOut50};
 
   &:hover {
-    background: ${p => p.theme.colors['bg-cover-uploader-hover']};
+    background: ${p => p.theme.colors['bg-uploader-hover']};
   }
 
   &:active {
-    background: ${p => p.theme.colors['bg-cover-uploader-active']};
+    background: ${p => p.theme.colors['bg-uploader-active']};
   }
 `

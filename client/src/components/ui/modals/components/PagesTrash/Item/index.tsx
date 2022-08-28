@@ -19,7 +19,7 @@ const DeletedPageItem: FC<IPage & ISelectItemParams<string>> = memo(
       ) : (
         <PageSvg />
       )}
-      <Item.Title>{title}</Item.Title>
+      <Item.Title>{title === '' ? 'Untitled' : title}</Item.Title>
       <Item.ButtonsContainer>
         <RestorePageButton _id={_id} />
         <PermanentlyDeletePageButton _id={_id} />

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import ChangesBar from 'components/ui/ChangesBar - Checked'
+import ChangesBarLoader from 'components/ui/loaders/ChangesBar'
 import PageOptionsList from './OptionsList'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
@@ -9,6 +9,8 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import useSetModalPosition from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './PageOptionsModal.styles'
+
+const ChangesBar = lazy(() => import('components/ui/ChangesBar'))
 
 const PageOptionsModal = () => {
   const { closePageOptionsModal } = useActions()
@@ -25,7 +27,9 @@ const PageOptionsModal = () => {
     <ModalWrapper>
       <Modal.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
         <PageOptionsList page={page} coords={pointerCoords} />
-        <ChangesBar createdAt={page.createdAt} updatedAt={page.updatedAt} />
+        <Suspense fallback={<ChangesBarLoader />}>
+          <ChangesBar createdAt={page.createdAt} updatedAt={page.updatedAt} />
+        </Suspense>
       </Modal.Container>
     </ModalWrapper>
   )

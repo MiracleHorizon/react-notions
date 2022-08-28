@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex, txtOflow } from 'styles/uiKit'
+import { dFlex, txtOflow } from 'assets/styles/uiKit'
 
 export const Container = styled.div`
   ${dFlex['center-col']};

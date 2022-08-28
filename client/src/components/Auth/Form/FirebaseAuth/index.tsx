@@ -1,26 +1,15 @@
-import React, { useContext } from 'react'
-import firebase from 'firebase/compat/app'
+import React from 'react'
 
 import OutlineButton from 'components/ui/buttons/Outline'
 import AppTitle from 'components/Auth/AppTitle'
 import { AppleLogoSvg, GoogleLogoSvg } from 'components/ui/svg'
-import { AuthContext } from 'context/Auth'
 import { OutlineButtonColorsEnum } from 'models/decor/outlineButton'
 import * as Auth from './FirebaseAuth.styles'
 
 const FirebaseAuth = () => {
-  const authCtx = useContext(AuthContext)
+  const handleGoogleAuth = () => {}
 
-  const handleGoogleAuth = async () => {
-    if (!authCtx) return
-
-    const provider = new firebase.auth.GoogleAuthProvider()
-    await authCtx.fbAuth.signInWithPopup(provider)
-  }
-
-  const handleAppleAuth = async () => {
-    if (!authCtx) return
-  }
+  const handleAppleAuth = () => {}
 
   return (
     <Auth.Wrapper>

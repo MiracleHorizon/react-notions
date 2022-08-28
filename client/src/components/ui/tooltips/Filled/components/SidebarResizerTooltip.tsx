@@ -2,25 +2,34 @@ import React, { FC } from 'react'
 
 import TooltipWrapper from 'components/ui/tooltips/Tooltip'
 import useSetModalPosition from 'hooks/useSetModalPosition'
-import { TDivRef } from 'types'
+import nodeRefHandler from 'utils/helpers/nodeRefHandler'
+import { ElementCoords, TDivRef } from 'types'
 import * as Tooltip from '../FilledTooltip.styles'
 
-const SidebarResizerTooltip: FC<{ reference: TDivRef }> = ({ reference }) => {
+const SidebarResizerTooltip: FC<{
+  reference: TDivRef
+  pointerCoords: ElementCoords
+}> = ({ reference, pointerCoords }) => {
   const { setRef, rect, coords } = useSetModalPosition({
-    invokerRect: reference?.current?.getBoundingClientRect().toJSON(),
-    pos: 'rightCenter',
+    invokerRect: reference.current?.getBoundingClientRect().toJSON(),
+    pointerCoords,
+    pos: 'resizeSb',
   })
 
   return (
     <TooltipWrapper>
-      <Tooltip.Container coords={{}}>
+      <Tooltip.Container
+        ref={node => nodeRefHandler(node, rect, setRef)}
+        coords={coords}
+        itemsCenter
+      >
         <Tooltip.TextContainer>
           <Tooltip.Title>Drag</Tooltip.Title>
           <Tooltip.Description>to resize</Tooltip.Description>
         </Tooltip.TextContainer>
         <Tooltip.TextContainer>
-          <Tooltip.Title>Click</Tooltip.Title>
-          <Tooltip.Description>to resize</Tooltip.Description>
+          <Tooltip.Title>Ctrl+Click</Tooltip.Title>
+          <Tooltip.Description>to close</Tooltip.Description>
         </Tooltip.TextContainer>
       </Tooltip.Container>
     </TooltipWrapper>

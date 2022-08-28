@@ -1,5 +1,5 @@
-import React, { FC } from 'react'
-import { useEventListener } from 'usehooks-ts'
+import React, { FC, useRef } from 'react'
+import { useEventListener, useOnClickOutside } from 'usehooks-ts'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import PropTypes from './DefaultAlert.types'
@@ -11,13 +11,17 @@ const DefaultAlert: FC<PropTypes> = ({
   closeAction,
   textCenter,
 }) => {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useOnClickOutside(ref, closeAction)
+
   useEventListener('keydown', e => {
     if (e.code === 'Enter') closeAction()
   })
 
   return (
     <ModalWrapper inset>
-      <Alert.Container>
+      <Alert.Container ref={ref}>
         <Alert.TitleContainer textCenter={textCenter}>
           <Alert.Title>{title}</Alert.Title>
         </Alert.TitleContainer>

@@ -1,10 +1,28 @@
 import { Controller, Get, Query } from '@nestjs/common'
+import { DecorService } from './decor.service'
 
 @Controller('decor')
 export class DecorController {
-  @Get('/covers')
-  getCovers(@Query('count') count: number, @Query('offset') offset: number) {}
+  constructor(private decorService: DecorService) {}
 
-  @Get('/icons')
-  getIcons(@Query('count') count: number, @Query('offset') offset: number) {}
+  @Get('/covers')
+  getCoversLists(
+    @Query('limit') limit: number,
+    @Query('offset') offset: number
+  ) {
+    return this.decorService.getCoversLists(limit, offset)
+  }
+
+  @Get('/emojis')
+  getEmojiLists(
+    @Query('limit') limit: number,
+    @Query('offset') offset: number
+  ) {
+    return this.decorService.getEmojiLists(limit, offset)
+  }
+
+  @Get('/test')
+  test() {
+    return this.decorService.test()
+  }
 }

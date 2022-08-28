@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { alertBoxShadowPrimary } from 'styles/uiKit'
+import { alertBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div`
   position: relative;

@@ -1,4 +1,6 @@
 import React, { FC, memo } from 'react'
+
+import DateFns from 'libs/date-fns'
 import Container from './ChangesBar.styles'
 
 const ChangesBar: FC<{
@@ -6,8 +8,8 @@ const ChangesBar: FC<{
   updatedAt: string
 }> = memo(({ createdAt, updatedAt }) => (
   <Container>
-    <p>Created at: {createdAt}</p>
-    <p>Last update: {updatedAt}</p>
+    <p>Created {DateFns.setDateByFormatRelative(createdAt)}</p>
+    <p>Updated {DateFns.setDateByFormatRelative(updatedAt)}</p>
   </Container>
 ))
 

@@ -1,6 +1,6 @@
 import React, { FC, memo, useCallback } from 'react'
 
-import { useCreateItemMutation } from 'services/pages.api'
+import { useCreateItemMutation } from 'services/notions.api'
 import handlePageContent from 'utils/helpers/handlePageContent'
 import { SetState } from 'types'
 import NotionContentItem from 'models/pageContent/NotionContentItem.class'

@@ -8,6 +8,7 @@ const OutlineInput: FC<PropTypes> = ({
   value,
   onChange,
   onClear,
+  onBlur,
   inputMode,
   register,
   placeholder,
@@ -22,7 +23,7 @@ const OutlineInput: FC<PropTypes> = ({
   }, [renderFocusable, renderSelectable])
 
   return (
-    <Wrapper>
+    <Wrapper data-el='outline-input-wrapper'>
       <Input
         data-input='outline'
         ref={ref}
@@ -30,6 +31,7 @@ const OutlineInput: FC<PropTypes> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         {...register}
       />
       {value !== '' && onClear && <ClearInputButton onClickAction={onClear} />}

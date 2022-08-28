@@ -5,7 +5,7 @@ import useTypedSelector from 'hooks/useTypedSelector'
 import Container from './PageIconLoader.styles'
 
 const PageIconLoader = () => {
-  const { page } = useTypedSelector(s => s.pages)
+  const { page } = useTypedSelector(s => s.notions)
   const { theme } = useTypedSelector(s => s.app.themeState)
 
   return (

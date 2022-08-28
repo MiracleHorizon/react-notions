@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
-import { dFlex, modalBoxShadowPrimary } from 'styles/uiKit'
+import { dFlex, modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div<
-  { isOnTop: boolean; isOnBottom: boolean } & ElementCoords
+  { isScrollOnTop: boolean; isScrollOnBottom: boolean } & ElementCoords
 >`
   position: absolute;
   top: ${p => p.top}px;
@@ -24,8 +24,8 @@ export const Container = styled.div<
   }
 
   &::-webkit-scrollbar-thumb {
-    border-top-right-radius: ${p => (p.isOnTop ? 4 : 0)}px;
-    border-bottom-right-radius: ${p => (p.isOnBottom ? 4 : 0)}px;
+    border-top-right-radius: ${p => (p.isScrollOnTop ? 4 : 0)}px;
+    border-bottom-right-radius: ${p => (p.isScrollOnBottom ? 4 : 0)}px;
   }
 `
 

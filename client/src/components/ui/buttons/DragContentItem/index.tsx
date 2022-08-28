@@ -1,25 +1,24 @@
-import React, { FC, useRef } from 'react'
+import React, { FC, memo, useRef } from 'react'
 import { useHover } from 'usehooks-ts'
 
 import { NotionContentItemOptionsTooltip } from 'components/ui/tooltips'
 import { DragContentSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
-import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import IPage from 'models/page/IPage'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
 import Button from './DragNotionContentItemButton.styles'
 
 const DragNotionContentItemButton: FC<{
-  _id: string
-  type: NotionContentItemTypes
+  item: INotionContentItem
   page: IPage
-}> = ({ _id, type, page }) => {
+}> = memo(({ item, page }) => {
   const { openNotionContentItemOptionsModal } = useActions()
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
   const handleOpenNotionContentItemOptionsModal = () => {
     const invokerRect = ref.current?.getBoundingClientRect().toJSON()
-    openNotionContentItemOptionsModal({ invokerRect, page, _id, type })
+    openNotionContentItemOptionsModal({ invokerRect, page, item })
   }
 
   return (
@@ -33,6 +32,6 @@ const DragNotionContentItemButton: FC<{
       {isHovering && <NotionContentItemOptionsTooltip reference={ref} />}
     </Button>
   )
-}
+})
 
 export default DragNotionContentItemButton

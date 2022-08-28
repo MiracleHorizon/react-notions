@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
-import { bgTransitions, dFlex, modalBoxShadowPrimary } from 'styles/uiKit'
+import { bgTransitions, dFlex, modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div<ElementCoords>`
   position: absolute;

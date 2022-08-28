@@ -29,7 +29,7 @@ const DecorOptions: FC<PropTypes> = ({
       <Suspense fallback={<DecorOptionLoader />}>
         {!iconUrl && <AddIconButton _id={_id} />}
         {!coverUrl && <AddCoverButton _id={_id} />}
-        {template === 'NotionsList' && (
+        {template === 'NotionsDatabase' && (
           <ToggleDescriptionButton _id={_id} {...description} />
         )}
       </Suspense>

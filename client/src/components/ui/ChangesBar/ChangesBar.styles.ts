@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 
-const Container = styled.div`
+const Container = styled.footer`
   margin-top: 6px;
   padding: 3px 10px;
   box-shadow: ${p =>

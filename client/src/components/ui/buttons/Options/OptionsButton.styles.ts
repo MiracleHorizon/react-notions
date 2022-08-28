@@ -2,7 +2,10 @@ import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { OptionsButtonContainerProps } from './OptionsButton.types'
 import { buttonSizesHandler } from 'utils/stylesHandlers/button'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
+import ReactTransitionGroup from '../../../../libs/react-transition-group'
+
+export const appearDuration = 350
 
 const Button = styled.div<OptionsButtonContainerProps>`
   cursor: pointer;
@@ -16,7 +19,7 @@ const Button = styled.div<OptionsButtonContainerProps>`
         ? 'rgb(15 15 15 / 10%) 0 0 0 1px, rgb(15 15 15 / 10%) 0 2px 4px'
         : 'rgb(15 15 15 / 20%) 0 0 0 1px, rgb(15 15 15 / 20%) 0 2px 4px;'
       : 'none'};
-  background: ${p => p.theme.colors['bg-primary']};
+  background: ${p => p.theme.colors['bg-option-btn']};
   ${bgTransitions.esInOut50};
 
   &:hover {
@@ -26,6 +29,8 @@ const Button = styled.div<OptionsButtonContainerProps>`
   &:active {
     background: ${p => p.theme.colors['bg-option-active']};
   }
+
+  ${ReactTransitionGroup.setDefaultAnimation(appearDuration)};
 `
 
 export default Button

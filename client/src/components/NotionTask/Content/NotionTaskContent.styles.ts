@@ -1,10 +1,12 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
+import { NotionTaskContentWrapperProps } from './NotionTaskContent.types'
 
-export const Wrapper = styled.main<{ fullWidth: boolean; isOnBottom: boolean }>`
+export const Wrapper = styled.main<NotionTaskContentWrapperProps>`
+  cursor: text;
   ${dFlex['center-start-col']};
   min-height: 0;
-  height: calc(100% - 45px);
+  height: calc(100% - ${p => (p.isOverLimitFileSizeAlertOpen ? 90 : 45)}px);
   padding-bottom: 40px;
   overflow: auto;
 
@@ -22,7 +24,7 @@ export const Wrapper = styled.main<{ fullWidth: boolean; isOnBottom: boolean }>`
   }
 
   &::-webkit-scrollbar-thumb {
-    border-bottom-right-radius: ${p => (p.isOnBottom ? 3 : 0)}px;
+    border-bottom-right-radius: ${p => (p.isScrollOnBottom ? 3 : 0)}px;
   }
 `
 

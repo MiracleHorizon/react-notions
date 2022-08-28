@@ -55,6 +55,7 @@ export default class AppStateHandler {
 
   private static getStartOpenOption(): StartOpenOptionEnum {
     const optionJson = window.localStorage.getItem('startOpen')
+
     return optionJson
       ? JSON.parse(optionJson)
       : StartOpenOptionEnum.TOP_SIDEBAR_PAGE
@@ -67,14 +68,12 @@ export default class AppStateHandler {
 
   public static getAppState = (): AppState => ({
     themeState: AppStateHandler.getTheme(),
-    sidebar: AppStateHandler.getSidebarState(),
-    commonPagesLists: AppStateHandler.getCommonPagesListState(),
-    favoritePagesLists: AppStateHandler.getFavoritePagesListState(),
     startOpen: AppStateHandler.getStartOpenOption(),
     lastPageId: AppStateHandler.getLastPageId(),
     selectedView: 'Board' as PageView,
-    loadings: {
-      savePage: false,
-    },
+    loadings: { savePage: false },
+    sidebar: AppStateHandler.getSidebarState(),
+    favoritePagesLists: AppStateHandler.getFavoritePagesListState(),
+    commonPagesLists: AppStateHandler.getCommonPagesListState(),
   })
 }

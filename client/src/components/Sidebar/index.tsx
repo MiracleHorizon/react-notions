@@ -1,12 +1,14 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDeviceData } from 'react-device-detect'
-import { useHover } from 'usehooks-ts'
+import { useEventListener, useHover } from 'usehooks-ts'
 
-import SidebarPanels from './Panels - Checked'
-import SidebarResizer from './Resizer - Checked'
+import SidebarPanels from './Panels'
+import SidebarResizer from './Resizer'
+import { SidebarResizerTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useResizeSidebar from 'hooks/useResizeSidebar'
+import { ElementCoords } from 'types'
 import * as Sidebar from './Sidebar.styles'
 
 const PagesSidebar = () => {
@@ -18,12 +20,23 @@ const PagesSidebar = () => {
   const isHovering = useHover(ref)
 
   const resizerRef = useRef<HTMLDivElement>(null)
-  const isResizerHovering = useHover(resizerRef)
+  const [pointerCoords, setPointerCoords] = useState<ElementCoords>({})
+  const [isResizerHovering, setResizerHovering] = useState<boolean>(false)
   const isResizingEnabled = useResizeSidebar({ ref, resizerRef })
 
-  const handleCloseSidebar = useCallback(() => {
-    if (!(!isResizingEnabled && isResizerHovering)) closeSidebar()
-  }, [isResizingEnabled, isResizerHovering, closeSidebar])
+  const handleCloseSidebar = (e: React.MouseEvent) => {
+    if (e.ctrlKey) closeSidebar()
+  }
+
+  const handleMouseEnter = (e: MouseEvent) => {
+    setResizerHovering(true)
+    setPointerCoords({ top: e.clientY })
+  }
+
+  const handleMouseLeave = () => setResizerHovering(false)
+
+  useEventListener('mouseenter', handleMouseEnter, resizerRef)
+  useEventListener('mouseleave', handleMouseLeave, resizerRef)
 
   return (
     <Sidebar.Wrapper
@@ -41,7 +54,9 @@ const PagesSidebar = () => {
           onClickAction={handleCloseSidebar}
         />
       </Sidebar.Container>
-      {/*{isResizerHovering && <SidebarResizerTooltip reference={resizerRef} />}*/}
+      {isResizerHovering && !isResizingEnabled && (
+        <SidebarResizerTooltip reference={ref} pointerCoords={pointerCoords} />
+      )}
     </Sidebar.Wrapper>
   )
 }

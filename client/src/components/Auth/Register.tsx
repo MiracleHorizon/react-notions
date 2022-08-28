@@ -3,7 +3,7 @@ import React, { lazy, Suspense, useEffect } from 'react'
 import AuthLayout from 'layouts/Auth'
 import AuthFormLoader from 'components/ui/loaders/AuthForm'
 import useActions from 'hooks/useActions'
-import { useRegisterMutation } from 'services/auth.api'
+import { useRegisterMutation } from 'services/user.api'
 import { SubmitAuthParams } from './Form/AuthForm.types'
 
 const AuthForm = lazy(() => import('./Form'))

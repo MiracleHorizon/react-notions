@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  Res,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common'
@@ -15,6 +16,7 @@ import { PageService } from './page.service'
 import CreatePageDto from './dto/create-page.dto'
 import UpdatePageDto from './dto/update-page.dto'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
+import { Response } from 'express'
 
 @Controller('workspace/pages') //! Убрать workspace
 export class PageController {
@@ -31,8 +33,21 @@ export class PageController {
   }
 
   @Get('user/trash/:author')
-  getTrashPages(@Param('author') author: string) {
-    return this.pageService.getTrashPages(author)
+  getTrashPages(
+    @Query('limit') limit: number,
+    @Query('offset') offset: number,
+    @Param('author') author: string,
+  ) {
+    // const { total, pages } = await this.pageService.getTrashPages(
+    //   author,
+    //   limit,
+    //   offset
+    // )
+    //
+
+    // return res.set({ 'X-Total-Count': total }).json(pages)
+
+    return this.pageService.getTrashPages(author, limit, offset)
   }
 
   @Get('move/:authorId/:id')
@@ -100,9 +115,20 @@ export class PageController {
   @Get('search/trash/:author')
   searchDeletedPages(
     @Query('query') query: string,
+    @Query('limit') limit: number,
+    @Query('offset') offset: number,
     @Param('author') author: string
   ) {
-    return this.pageService.searchDeletedPages(query, author)
+    return this.pageService.searchDeletedPages(query, author, limit, offset)
+  }
+
+  @Get('search/:author/list/:listId')
+  searchPagesByList(
+    @Query('query') query: string,
+    @Param('author') author: string,
+    @Param('listId') listId: string
+  ) {
+    return this.pageService.searchPagesByList(query, author, listId)
   }
 
   @Get('search/move/:authorId/:id')

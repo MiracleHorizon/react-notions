@@ -26,10 +26,10 @@ export const tasksListsApi = createApi({
 
     getTasksLists: build.query<ITasksList[], string>({
       query: _id => `/page/${_id}`,
-      providesTags: result => ['Lists'],
+      providesTags: () => ['Lists'],
     }),
 
-    updateTasksList: build.mutation<void, IUpdateTasksListParams>({
+    updateTasksList: build.mutation<ITasksList, IUpdateTasksListParams>({
       query: ({ _id, body }) => ({
         url: `/${_id}`,
         method: 'PATCH',
@@ -50,6 +50,7 @@ export const tasksListsApi = createApi({
 
 export const {
   useCreateTasksListMutation,
+  useGetTasksListsQuery,
   useLazyGetTasksListsQuery,
   useUpdateTasksListMutation,
   useDeleteTasksListMutation,

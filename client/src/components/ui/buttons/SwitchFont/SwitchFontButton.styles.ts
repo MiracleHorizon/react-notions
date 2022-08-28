@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import fontFamilyHandler from 'utils/helpers/fontFamilyHandler'
 import { FontAbbreviationProps } from './SwitchFontButton.types'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 import { TPageFont } from 'models/decor/fonts'
 
 export const Wrapper = styled.div`

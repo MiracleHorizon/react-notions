@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { DecorOptionsWrapperProps } from './DecorOptions.types'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div<DecorOptionsWrapperProps>`
   ${dFlex['center-start']};

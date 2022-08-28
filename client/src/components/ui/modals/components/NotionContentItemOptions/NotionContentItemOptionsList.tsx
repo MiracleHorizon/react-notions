@@ -1,27 +1,28 @@
-import React, { FC, MutableRefObject, useCallback } from 'react'
+import React, { FC, MutableRefObject, useCallback, lazy, Suspense } from 'react'
 
 import OptionItem from 'components/ui/options/OptionItem'
-import MovePageOption from 'components/ui/options/MovePage'
-import ChangesBar from 'components/ui/ChangesBar - Checked'
-import Divider from 'components/ui/Divider - Checked'
+import ChangesBarLoader from 'components/ui/loaders/ChangesBar'
+import Divider from 'components/ui/Divider'
 import {
   ChevronDownSvg,
   ColorOptionSvg,
   DeleteTrashSvg,
 } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import {
   useDeleteItemMutation,
   useUpdateItemMutation,
-} from 'services/pages.api'
+} from 'services/notions.api'
+
+const ChangesBar = lazy(() => import('components/ui/ChangesBar'))
 
 const NotionContentItemOptionsList: FC<{
-  _id: string
-  type: NotionContentItemTypes
   rect: MutableRefObject<DOMRect | null>
   locked: boolean | undefined
-}> = ({ _id, type, rect, locked }) => {
+  item: INotionContentItem
+}> = ({ item: { _id, type, createdAt, updatedAt }, rect, locked }) => {
   const {
     openNotionContentItemDecorModal,
     closeNotionContentItemOptionsModal,
@@ -34,8 +35,8 @@ const NotionContentItemOptionsList: FC<{
     closeNotionContentItemOptionsModal()
   }
 
-  const handleMoveItem = async () => {
-    // await updateContentItem()
+  const handleOpenMoveToModal = async () => {
+    // await updateContentItem({ _id, body: {parentPageId} })
     closeNotionContentItemOptionsModal()
   }
 
@@ -56,9 +57,10 @@ const NotionContentItemOptionsList: FC<{
           />
         </>
       )}
-      <MovePageOption
-        onClickAction={() => closeNotionContentItemOptionsModal()}
-      />
+      {/*<MovePageOption*/}
+      {/*  locked={locked}*/}
+      {/*  onClickAction={() => closeNotionContentItemOptionsModal()}*/}
+      {/*/>*/}
       {type !== NotionContentItemTypes.DIVIDER && !locked && (
         <>
           <Divider />
@@ -70,7 +72,9 @@ const NotionContentItemOptionsList: FC<{
           />
         </>
       )}
-      <ChangesBar createdAt='Hz kogda' updatedAt='Tozhe hz' />
+      <Suspense fallback={<ChangesBarLoader />}>
+        <ChangesBar createdAt={createdAt} updatedAt={updatedAt} />
+      </Suspense>
     </>
   )
 }

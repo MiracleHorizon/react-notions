@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { IVoidClick, TDivRef } from 'types'
+import { FC, RefObject } from 'react'
+import { ISelectItemParams, IVoidClick, TDivRef } from 'types'
 
 export default interface OptionItemProps extends IVoidClick {
   title: string
@@ -9,4 +9,15 @@ export default interface OptionItemProps extends IVoidClick {
   margY?: boolean
   onMouseOverAction?: () => void
   isSelected?: boolean
+  handleSelectItem?: (item: string) => void
+  hotkeyTitle?: string
+}
+
+export interface ItemProps extends IVoidClick {
+  selectedItem: string
+  handleSelectItem: (item: string) => void
+  favorite?: boolean
+  locked?: boolean
+  status?: string | null
+  reference?: RefObject<HTMLDivElement>
 }

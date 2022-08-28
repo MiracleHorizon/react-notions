@@ -16,7 +16,7 @@ import { NotionContentItemModule } from './notionContentItem/notionContentItem.m
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, 'static'),
     }),
-    MongooseModule.forRoot(process.env.MONGO_PASS),
+    MongooseModule.forRoot('mongodb+srv://admin:Ayq6UdX4zw_**Uy@cluster0.x9tps9r.mongodb.net/?retryWrites=true&w=majority'),
     ConfigModule.forRoot({
       envFilePath: '.env',
     }),

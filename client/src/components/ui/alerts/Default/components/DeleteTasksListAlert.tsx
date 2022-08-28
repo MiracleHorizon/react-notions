@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-import DefaultAlert from 'components/ui/alerts - Checked/Default/index'
+import DefaultAlert from 'components/ui/alerts/Default'
 import OutlineButton from 'components/ui/buttons/Outline'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'

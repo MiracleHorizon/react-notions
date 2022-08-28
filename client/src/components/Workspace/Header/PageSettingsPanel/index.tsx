@@ -24,6 +24,7 @@ const PageSettingsPanel: FC<IPage> = memo(page => {
       <OptionsButton
         size='large'
         type='primary'
+        isHovering={true}
         reference={optionsButtonRef}
         onClickAction={handleOpenPageSettingsModal}
       />

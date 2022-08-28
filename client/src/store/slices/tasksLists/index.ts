@@ -5,7 +5,7 @@ import ITasksList from 'models/tasksList/ITasksList'
 import IPage from 'models/page/IPage'
 
 const initialState: TasksListsState = {
-  tasksLists: [],
+  lists: [],
   startItem: null,
   startList: null,
 }
@@ -17,7 +17,7 @@ const tasksListsSlice = createSlice({
 
   reducers: {
     setTasksLists(state, action: PayloadAction<ITasksList[]>) {
-      state.tasksLists = action.payload
+      state.lists = action.payload
     },
 
     setStartItem(state, action: PayloadAction<IPage>) {

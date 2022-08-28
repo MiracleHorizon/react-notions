@@ -2,15 +2,13 @@ import ITheme, { Theme } from 'themes/theme.model'
 
 export default interface AppState {
   themeState: ThemeState
-  commonPagesLists: PagesListState
-  favoritePagesLists: PagesListState
-  sidebar: SidebarState
   selectedView: PageView
   startOpen: StartOpenOptionEnum
   lastPageId: string | null
-  loadings: {
-    savePage: boolean
-  }
+  loadings: { savePage: boolean }
+  sidebar: SidebarState
+  favoritePagesLists: PagesListState
+  commonPagesLists: PagesListState
 }
 
 export type PageView = 'Board' | 'Gallery' | 'List' | 'Calendar'

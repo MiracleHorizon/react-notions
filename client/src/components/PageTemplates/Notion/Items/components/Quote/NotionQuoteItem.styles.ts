@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import ContentItemColorsHandler from 'utils/ContentItemColorsHandler'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div<{ bgColor: NotionContentItemColorsEnum }>`
   ${dFlex['center-start']};

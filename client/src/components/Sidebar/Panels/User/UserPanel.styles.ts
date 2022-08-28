@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div`
   cursor: pointer;
@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   min-height: 45px;
   width: 100%;
   height: 45px;
+  margin-bottom: 1px;
   padding-left: 15px;
   padding-right: 40px;
   ${bgTransitions.esIn20};

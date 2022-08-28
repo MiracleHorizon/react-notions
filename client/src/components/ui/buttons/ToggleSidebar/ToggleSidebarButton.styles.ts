@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import SidebarStylesHandler from 'utils/stylesHandlers/sidebar'
-import { bgTransitions, dFlex } from 'styles/uiKit'
+import { bgTransitions, dFlex } from 'assets/styles/uiKit'
 
 const Button = styled.div<{
   dest: 'open' | 'close'

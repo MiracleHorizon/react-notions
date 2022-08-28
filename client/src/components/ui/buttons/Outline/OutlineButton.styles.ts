@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { OutlineButtonContainerProps } from './OutlineButton.types'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 
 const Button = styled.div<OutlineButtonContainerProps>`
   cursor: pointer;

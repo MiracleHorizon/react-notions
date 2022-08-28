@@ -2,11 +2,12 @@ import { KeyboardEvent, RefObject, useRef } from 'react'
 import { ContentEditableEvent } from 'react-contenteditable'
 
 import useActions from './useActions'
+import useTypedSelector from './useTypedSelector'
 import {
   useCreateItemMutation,
   useDeleteItemMutation,
   useUpdateItemMutation,
-} from 'services/pages.api'
+} from 'services/notions.api'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
 import IPage from 'models/page/IPage'
 
@@ -17,16 +18,17 @@ export default function useContentEditable(
   func: TFunc,
   ref?: RefObject<HTMLDivElement>,
   item?: INotionContentItem,
-  page?: IPage | null
+  page?: IPage,
 ) {
-  const value = useRef<string>(initialValue)
-  const [createContentItem] = useCreateItemMutation()
-  const [updateContentItem] = useUpdateItemMutation()
-  const [deleteContentItem] = useDeleteItemMutation()
   const {
     openCreateNotionContentItemModal,
     closeCreateNotionContentItemModal,
   } = useActions()
+  const value = useRef<string>(initialValue)
+  const { isOpen } = useTypedSelector(s => s.modals.createNotionContentItem)
+  const [createContentItem] = useCreateItemMutation()
+  const [updateContentItem] = useUpdateItemMutation()
+  const [deleteContentItem] = useDeleteItemMutation()
 
   const handleChange = (e: ContentEditableEvent) => {
     value.current = e.target.value
@@ -34,7 +36,7 @@ export default function useContentEditable(
     if (!item || !ref || initialValue === value.current) return
     const lastWord = e.target.value.split(' ').pop()
 
-    if (lastWord?.startsWith('/')) {
+    if (lastWord?.startsWith('/') && !isOpen) {
       const invokerRect = ref.current?.getBoundingClientRect().toJSON()
       openCreateNotionContentItemModal({ item, invokerRect })
     } else {

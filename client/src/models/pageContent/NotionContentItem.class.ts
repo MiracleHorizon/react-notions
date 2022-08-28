@@ -77,8 +77,8 @@ export default class NotionContentItem {
         return this.updateToHeading(_id, 2, parentItemId)
       case NotionContentItemTypes.H3:
         return this.updateToHeading(_id, 3, parentItemId)
-      case NotionContentItemTypes.PAGE_URL:
-        return this.updateToPageUrl(_id, iconUrl!, pageId!, parentItemId)
+      case NotionContentItemTypes.PAGE_LINK:
+        return this.updateToPageLink(_id, iconUrl!, pageId!, parentItemId)
       case NotionContentItemTypes.TGL_H1:
         return this.updateToToggleHeading(_id, 1, parentItemId)
       case NotionContentItemTypes.TGL_H2:
@@ -120,14 +120,14 @@ export default class NotionContentItem {
     return body
   }
 
-  private static updateToPageUrl(
+  private static updateToPageLink(
     _id: string,
     iconUrl: string | null,
     pageId: string,
     parentItemId?: string
   ): IUpdatePageContentItemParams {
     const data = {
-      type: NotionContentItemTypes.PAGE_URL,
+      type: NotionContentItemTypes.PAGE_LINK,
       // content: '',
       completed: null,
       expanded: null,

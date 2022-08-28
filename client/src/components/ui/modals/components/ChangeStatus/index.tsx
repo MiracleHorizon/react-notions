@@ -35,7 +35,7 @@ const ChangeStatusModal = () => {
           value={value}
           handleChangeValue={handleChangeValue}
         />
-        <TaskStatusesLists value={value} {...task} />
+        <TaskStatusesLists value={value} task={task} />
       </Modal.Container>
     </ModalWrapper>
   )

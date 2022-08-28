@@ -1,7 +1,8 @@
 import React, { memo } from 'react'
 
 import SwitchTaskBar from './SwitchTaskBar'
-import PageSettingsPanel from 'components/Workspace - Checked/Header - Checked/PageSettingsPanel'
+import PageSettingsPanel from 'components/Workspace/Header/PageSettingsPanel'
+import OverLimitFileSizeAlert from 'components/ui/alerts/OverLimitFileSize'
 import IPage from 'models/page/IPage'
 import * as Header from './NotionTaskHeader.styles'
 
@@ -11,6 +12,7 @@ const NotionTaskHeader = memo((page: IPage) => (
       <SwitchTaskBar {...page} />
       <PageSettingsPanel {...page} />
     </Header.Container>
+    <OverLimitFileSizeAlert/>
   </Header.Wrapper>
 ))
 

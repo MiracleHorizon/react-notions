@@ -1,25 +1,27 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 // api
-import { authApi } from 'services/auth.api'
-import { pagesApi } from 'services/pages.api'
+import { userApi } from 'services/user.api'
+import { notionsApi } from 'services/notions.api'
 import { tasksListsApi } from 'services/tasksLists.api'
+import { decorApi } from 'services/decor.api'
 
 // slices.
-import auth from './slices/auth'
+import user from './slices/user'
 import app from './slices/app'
-import pages from './slices/pages'
+import notions from './slices/notions'
 import tasksLists from './slices/tasksLists'
 import modals from './slices/modals'
 import alerts from './slices/alerts'
 
 export const store = configureStore({
   reducer: {
-    [authApi.reducerPath]: authApi.reducer,
-    [pagesApi.reducerPath]: pagesApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [notionsApi.reducerPath]: notionsApi.reducer,
     [tasksListsApi.reducerPath]: tasksListsApi.reducer,
-    auth,
-    pages,
+    [decorApi.reducerPath]: decorApi.reducer,
+    user,
+    notions,
     tasksLists,
     app,
     modals,
@@ -27,9 +29,10 @@ export const store = configureStore({
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
-      authApi.middleware,
-      pagesApi.middleware,
-      tasksListsApi.middleware
+      userApi.middleware,
+      notionsApi.middleware,
+      tasksListsApi.middleware,
+      decorApi.middleware
     ),
 })
 

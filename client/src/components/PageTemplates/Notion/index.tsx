@@ -1,20 +1,19 @@
 import React, { lazy, Suspense, useState } from 'react'
-import { useNavigate } from 'react-router'
 
 import NotionContent from './Content'
-import TaskStatusPanel from 'components/PagePanels - Checked/Status - Checked'
-import CreateNotionItemBar from './CreateItemBar - Checked'
+import TaskStatusPanel from 'components/PagePanels/Status'
+import CreateNotionItemBar from './CreateItemBar'
 import NotionPageLoader from 'components/ui/loaders/NotionPage'
 import useTypedSelector from 'hooks/useTypedSelector'
 import * as Template from './NotionTemplate.styles'
 
-const EmptyPage = lazy(() => import('./EmptyPage - Checked'))
+const EmptyPage = lazy(() => import('./EmptyPage'))
 
 const NotionTemplate = () => {
+  const { page } = useTypedSelector(s => s.notions)
   const [creatingItem, setCreatingItem] = useState<boolean>(false)
-  const { page } = useTypedSelector(s => s.pages)
 
-  if (page && !page.iconUrl && !page.coverUrl && page.content.length === 0) {
+  if (!page.iconUrl && !page.coverUrl && page.content.length === 0) {
     return (
       <Suspense fallback={<NotionPageLoader />}>
         <EmptyPage {...page} />
@@ -22,12 +21,10 @@ const NotionTemplate = () => {
     )
   }
 
-  if (!page) return null
-
   return (
     <Template.Wrapper>
       <Template.Container fullWidth={page.fullWidth}>
-        {page.status !== null && <TaskStatusPanel {...page} />}
+        {page.status && <TaskStatusPanel {...page} />}
         <NotionContent {...page} creatingItem={creatingItem} />
         <CreateNotionItemBar {...page} setCreatingItem={setCreatingItem} />
       </Template.Container>

@@ -82,18 +82,30 @@ export default class ModalCoordsHandler {
   }
 
   private static setCoordsByYAxis({ rect, invokerRect }: IDefaultParams) {
-    if (!rect || !invokerRect) return { leftCenter: {}, rightCenter: {} }
+    if (!rect || !invokerRect) {
+      return { leftCenter: {}, rightCenter: {}, rightTop: {}, rightBottom: {} }
+    }
 
-    const invRect = invokerRect as unknown as DOMRect
+    const invRect = invokerRect as unknown as DOMRect // JSON(DOMRect).
     const bodyWidth = document.body.offsetWidth
     const bodyHeight = document.body.offsetHeight
 
     const lPos = invRect.left - rect.width - 5
-    let tPos = invRect.top + invRect.height / 2 - rect.height / 2
     let lPosRight = invRect.left + invRect.width + 5
+
+    let tPos = invRect.top + invRect.height / 2 - rect.height / 2
+    let tPosBottom = invRect.bottom + 5
 
     if (tPos + rect.height + 10 > bodyHeight) {
       tPos = bodyHeight - rect.height - 10
+    }
+
+    if (tPosBottom + rect.height + 10 > bodyHeight) {
+      if (invRect.top - rect.height - 5 > 0) {
+        tPosBottom = invRect.top - rect.height - 5
+      } else {
+        tPosBottom = 10
+      }
     }
 
     if (lPosRight + rect.width + 10 > bodyWidth) {
@@ -107,6 +119,14 @@ export default class ModalCoordsHandler {
       },
       rightCenter: {
         top: tPos > 0 ? tPos : 5,
+        left: lPosRight,
+      },
+      rightTop: {
+        top: invRect.top,
+        left: lPosRight,
+      },
+      rightBottom: {
+        top: tPosBottom,
         left: lPosRight,
       },
     }
@@ -134,6 +154,38 @@ export default class ModalCoordsHandler {
       rename: {
         left: lPos < 0 ? 10 : lPos,
         top: tPos < 0 ? 5 : tPos,
+      },
+    }
+  }
+
+  private static setResizeSbTooltipCoords({
+    rect,
+    invokerRect,
+    pointerCoords,
+  }: IDefaultParams & { pointerCoords?: ElementCoords }) {
+    if (!rect || !invokerRect || !pointerCoords || !pointerCoords.top) {
+      return { resizeSb: {} }
+    }
+
+    const invRect = invokerRect as unknown as DOMRect
+    const bodyHeight = document.body.offsetHeight
+    const bodyWidth = document.body.offsetWidth
+
+    let lPos = invRect.width + 10
+    let tPos = pointerCoords.top - rect.height / 2
+
+    if (lPos + rect.width + 10 > bodyWidth) {
+      lPos = bodyWidth - rect.width - 5
+    }
+
+    if (tPos + rect.height + 10 > bodyHeight) {
+      tPos = bodyHeight - rect.height - 5
+    }
+
+    return {
+      resizeSb: {
+        top: tPos < 0 ? 5 : tPos,
+        left: lPos < 0 ? 10 : lPos,
       },
     }
   }
@@ -177,5 +229,6 @@ export default class ModalCoordsHandler {
     ...this.setCoordsByYAxis({ rect, invokerRect }),
     ...this.setRenameModalCoords({ rect, invokerRect }),
     ...this.setChangeStatusModalCoords({ rect, invokerRect }),
+    ...this.setResizeSbTooltipCoords({ rect, invokerRect, pointerCoords }),
   })
 }

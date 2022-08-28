@@ -28,4 +28,4 @@ export default interface IPage {
   readonly author: string
 }
 
-export type TPageTemplate = 'Notion' | 'NotionsList'
+export type TPageTemplate = 'Notion' | 'NotionsDatabase'

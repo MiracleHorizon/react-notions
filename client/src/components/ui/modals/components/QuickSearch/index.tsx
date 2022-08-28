@@ -1,34 +1,24 @@
-import React, { useRef, useState } from 'react'
-import { useEventListener } from 'usehooks-ts'
+import React, { useRef } from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import RecentLists from './Recent'
+import AllPagesList from './AllPagesList'
 import QuickSearchForm from './Search/Form'
 import QuickSearchPagesList from './Search/PagesList'
+import QuickSearchHotkeysBar from './HotkeysBar'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useCloseModal from 'hooks/useCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import handleScrollTop from 'utils/helpers/handleScrollTop'
 import * as Modal from './QuickSearchModal.styles'
 
 const QuickSearchModal = () => {
   const { closeQuickSearchModal } = useActions()
-  const {
-    appSettings: { isOpen: isAppSettingsModalOpen },
-  } = useTypedSelector(s => s.modals)
+  const { isOpen: isAppSettingsModalOpen } = useTypedSelector(s => s.modals.appSettings)
   const { value, handleChangeValue, handleClearValue } = useInput('')
-  const [isOnBottom, setOnBottom] = useState<boolean>(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const ref = useRef<HTMLDivElement>(null)
 
   useCloseModal(ref, !isAppSettingsModalOpen ? closeQuickSearchModal : null)
-
-  useEventListener(
-    'scroll',
-    () => handleScrollTop({ node: contentRef.current, setOnBottom }),
-    contentRef
-  )
 
   return (
     <ModalWrapper inset>
@@ -38,13 +28,14 @@ const QuickSearchModal = () => {
           onChange={handleChangeValue}
           onClear={handleClearValue}
         />
-        <Modal.Content ref={contentRef} isOnBottom={isOnBottom}>
+        <Modal.Content ref={contentRef}>
           {value === '' ? (
-            <RecentLists />
+            <AllPagesList />
           ) : (
             <QuickSearchPagesList value={value} />
           )}
         </Modal.Content>
+        <QuickSearchHotkeysBar />
       </Modal.Container>
     </ModalWrapper>
   )

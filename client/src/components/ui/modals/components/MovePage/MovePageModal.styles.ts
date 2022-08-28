@@ -1,24 +1,27 @@
 import styled from 'styled-components'
 import { ElementCoords } from 'types'
-import { modalBoxShadowPrimary } from 'styles/uiKit'
+import { modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div<ElementCoords>`
   position: absolute;
   top: ${p => p.top}px;
   left: ${p => p.left}px;
-  min-height: 90px;
-  max-height: 40vh;
+  max-height: 15vh;
   width: 220px;
-  height: 100%;
+  height: max-content;
   border-radius: 4px;
   box-shadow: ${p => modalBoxShadowPrimary(p.theme)};
   background: ${p => p.theme.colors['bg-modal-primary']};
   user-select: none;
+  overflow: auto;
 `
 
 export const Content = styled.div`
-  height: 100%;
+  position: relative;
+  height: max-content;
+  max-height: 100%;
   width: 100%;
+  overflow: auto;
 `
 
 export const InputContainer = styled.div`
@@ -29,6 +32,5 @@ export const InputContainer = styled.div`
 
   input[data-input='outline'] {
     height: 28px;
-    line-height: 28px;
   }
 `

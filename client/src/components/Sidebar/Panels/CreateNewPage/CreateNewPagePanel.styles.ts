@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { bgTransitions } from 'styles/uiKit'
+import { bgTransitions } from 'assets/styles/uiKit'
 
 export const Wrapper = styled.div`
   cursor: pointer;
@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   height: 45px;
   margin-top: auto;
   padding: 5px 10px;
-  box-shadow: ${p => p.theme.colors['b-shadow-sb-new-page-panel']} 0 -1px 0;
+  box-shadow: ${p => p.theme.colors['b-shadow-divider']} 0 -1px 0;
   background: inherit;
   user-select: none;
   ${bgTransitions.esIn20};

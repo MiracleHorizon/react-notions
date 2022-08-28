@@ -1,10 +1,14 @@
 import styled from 'styled-components'
-import { bgTransitions, dFlex, txtOflow } from 'styles/uiKit'
+import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ disabled: boolean }>`
   width: calc(100% - 8px);
   margin: 1px 4px;
   user-select: none;
+  ${p => p.disabled && `
+    pointer-events: none;
+    opacity: 0.55;
+  `};
 `
 
 export const Container = styled.div`

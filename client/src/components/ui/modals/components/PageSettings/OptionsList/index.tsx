@@ -1,102 +1,94 @@
-import React, { FC, memo } from 'react'
-import { useCopyToClipboard } from 'usehooks-ts'
-import { useSearchParams } from 'react-router-dom'
-import { useNavigate } from 'react-router'
-import { useSelector } from 'react-redux'
+import React, { FC, memo, useMemo } from 'react'
+import { useEventListener } from 'usehooks-ts'
 
-import OptionItem from 'components/ui/options/OptionItem'
-import MovePageOption from 'components/ui/options/MovePage'
 import {
-  DeleteTrashSvg,
-  LinkSvg,
-  LockedSvg,
-  StarSvg,
-  UnlockedSvg,
-  UnstarSvg,
-} from 'components/ui/svg'
-import useActions from 'hooks/useActions'
-import {
-  useMovePageToTrashMutation,
-  useUpdatePageMutation,
-} from 'services/pages.api'
-import { selectRedirectPageId } from 'store/slices/app/app.selectors'
+  ToggleLockOption,
+  ToggleFavoriteOption,
+  CopyLinkOption,
+  DeleteOption,
+  MovePageOption,
+} from 'components/ui/options/OptionItem/components'
+import ToggleOptionsList from '../ToggleOptionsList'
+import usePageActions, {
+  PageActionsTypes,
+  TPageOptionsDest,
+} from 'hooks/usePageActions'
+import useSelectItem from 'hooks/useSelectItem'
 import PropTypes from './PageSettingsOptionsList.types'
+import handlePageOptions from 'utils/helpers/handlePageOptions'
 
-const PageSettingsOptionsList: FC<PropTypes> = ({
-  _id,
-  favorite,
-  locked,
-  coords,
-}) => {
+const PageSettingsOptionsList: FC<PropTypes> = memo(({ page, coords }) => {
+  const { favorite, locked, template } = page
+  const options = useMemo(() => {
+    return handlePageOptions({ dest: 'settings', favorite, locked, template })
+  }, [favorite, locked, template])
   const {
-    closePageSettingsModal,
-    openMovePageModal,
-    updatePageSettingsModalState,
-  } = useActions()
-  const [, handleCopy] = useCopyToClipboard()
-  const redirectPageId = useSelector(selectRedirectPageId)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [movePageToTrash] = useMovePageToTrashMutation()
-  const [updatePage] = useUpdatePageMutation()
-  const navigate = useNavigate()
+    setSelectedItem,
+    handleKeydownSelect,
+    ...selectedItemState
+  } = useSelectItem('', options)
 
-  const handleDeletePage = async () => {
-    await movePageToTrash(_id)
+  const optionsParams = useMemo(
+    () => ({
+      page,
+      coords,
+      dest: 'settings' as TPageOptionsDest,
+      setSelectedItem,
+    }),
+    [page, coords, setSelectedItem]
+  )
 
-    searchParams.get('p')
-      ? setSearchParams('')
-      : navigate(`workspace/${redirectPageId}`)
-    closePageSettingsModal()
-  }
+  const {
+    handleDelete,
+    handleToggleSmallText,
+    handleToggleFullWidth,
+    handleToggleFavorite,
+    handleToggleLocked,
+    handleCopyLink,
+    handleOpenMovePageModal,
+    actionsReducer,
+  } = usePageActions(optionsParams)
 
-  const handleToggleFavorite = async () => {
-    const body = { parentPageId: null, favorite: !favorite }
-    await updatePage({ _id, body })
-    closePageSettingsModal()
-  }
+  useEventListener('keydown', (e: KeyboardEvent) => {
+    const { selectedItem } = selectedItemState
+    const action = actionsReducer(selectedItem as PageActionsTypes)
 
-  const handleToggleLocked = () => {
-    const body = { locked: !locked }
-    updatePage({ _id, body })
-    updatePageSettingsModalState(body)
-  }
+    handleKeydownSelect(e, action)
 
-  const handleCopyLink = () => {
-    handleCopy(window.location.href)
-      .then(() => closePageSettingsModal())
-      .catch(() => console.error('Ошибка копирования'))
-  }
-
-  const handleOpenMovePageModal = () => {
-    openMovePageModal({ coords, pageId: _id })
-    closePageSettingsModal()
-  }
+    if (e.code === 'KeyP' && e.ctrlKey && e.shiftKey) {
+      e.preventDefault()
+      handleOpenMovePageModal()
+    }
+  })
 
   return (
     <>
-      <OptionItem
-        title={locked ? 'Unlock page' : 'Lock page'}
-        StartSvg={locked ? UnlockedSvg : LockedSvg}
+      {page.template === 'Notion' && (
+        <ToggleOptionsList
+          {...selectedItemState}
+          page={page}
+          handleToggleSmallText={handleToggleSmallText}
+          handleToggleFullWidth={handleToggleFullWidth}
+        />
+      )}
+      <ToggleLockOption
+        {...selectedItemState}
+        locked={locked}
         onClickAction={handleToggleLocked}
       />
-      <OptionItem
-        title={favorite ? 'Remove from Favorites' : 'Add to Favorites'}
-        StartSvg={favorite ? UnstarSvg : StarSvg}
+      <ToggleFavoriteOption
+        {...selectedItemState}
+        favorite={favorite}
         onClickAction={handleToggleFavorite}
       />
-      <OptionItem
-        title='Copy link'
-        StartSvg={LinkSvg}
-        onClickAction={handleCopyLink}
+      <CopyLinkOption {...selectedItemState} onClickAction={handleCopyLink} />
+      <DeleteOption {...selectedItemState} onClickAction={handleDelete} />
+      <MovePageOption
+        {...selectedItemState}
+        onClickAction={handleOpenMovePageModal}
       />
-      <OptionItem
-        title='Delete'
-        StartSvg={DeleteTrashSvg}
-        onClickAction={handleDeletePage}
-      />
-      <MovePageOption onClickAction={handleOpenMovePageModal} />
     </>
   )
-}
+})
 
 export default PageSettingsOptionsList

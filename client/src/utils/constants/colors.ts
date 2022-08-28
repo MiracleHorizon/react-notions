@@ -1,6 +1,6 @@
 import INotionContentItemColors from 'models/decor/INotionContentItemColors'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
-import { IOutlineButtonStyles } from '../../models/decor/outlineButton'
+import { IOutlineButtonStyles } from 'models/decor/outlineButton'
 
 export const TASKS_LIST_TITLE_COLORS = {
   lightGray: {
@@ -185,7 +185,6 @@ export const NOTION_CONTENT_ITEM_DECOR_COLORS = {
   },
 }
 
-
 export const GRAY_OUTLINE_BUTTON_STYLES: IOutlineButtonStyles = {
   light: {
     color: '#000',
@@ -213,5 +212,20 @@ export const RED_OUTLINE_BUTTON_STYLES: IOutlineButtonStyles = {
     brColor: 'rgb(110, 54, 48)',
     hover: 'rgba(235, 87, 87, 0.1)',
     active: 'rgba(235, 87, 87, 0.2)',
+  },
+}
+
+export const BLUE_OUTLINE_BUTTON_STYLES: IOutlineButtonStyles = {
+  light: {
+    color: 'rgb(46, 170, 220)',
+    brColor: 'rgb(46, 170, 220)',
+    hover: 'rgba(46, 170, 220, 0.1)',
+    active: 'rgba(46, 170, 220, 0.2)',
+  },
+  dark: {
+    color: 'rgb(46, 170, 220)',
+    brColor: 'rgb(46, 170, 220)',
+    hover: 'rgba(46, 170, 220, 0.1)',
+    active: 'rgba(46, 170, 220, 0.2)',
   },
 }

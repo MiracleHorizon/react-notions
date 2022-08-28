@@ -5,8 +5,8 @@ import { TDivRef } from 'types'
 const OpenSidebarTooltip: FC<{ reference: TDivRef }> = ({ reference }) => (
   <FilledTooltip
     title='Lock sidebar open'
-    desc='Ctrl+\\'
-    pos='rightCenter'
+    desc='Ctrl+\'
+    pos='rightTop'
     invokerRef={reference}
   />
 )

@@ -6,14 +6,14 @@ import PropTypes from './NotionItemOptionButtons.types'
 import Container from './NotionItemOptionButtons.styles'
 
 const NotionItemOptionButtons: FC<PropTypes> = memo(
-  ({ _id, type, isHovering, order, page }) => (
-    <Container type={type} isHovering={isHovering}>
+  ({ isHovering, page, item }) => (
+    <Container type={item.type} isHovering={isHovering}>
       <AddBlockBelowButton
-        order={order}
+        order={item.order}
         pageId={page._id}
         pageLocked={page.locked}
       />
-      <DragNotionContentItemButton _id={_id} type={type} page={page} />
+      <DragNotionContentItemButton item={item} page={page} />
     </Container>
   )
 )

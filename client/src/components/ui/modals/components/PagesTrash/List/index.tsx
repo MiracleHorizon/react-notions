@@ -1,39 +1,39 @@
-import React, { FC, memo, useRef, useState } from 'react'
-import { useEventListener } from 'usehooks-ts'
+import React, { FC, memo, useCallback, useMemo, useState } from 'react'
+import { useDebounce } from 'usehooks-ts'
 
-import DeletedPageItem from '../Item'
-import useSelectItem from 'hooks/useSelectItem'
+import AllDeletedPagesList from './AllDeletedPagesList'
+import SearchDeletedPagesList from './SearchDeletedPagesList'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
-import IPage from 'models/page/IPage'
 import * as List from './DeletedPagesList.styles'
 
-const DeletedPagesList: FC<{ pages: IPage[] }> = memo(({ pages }) => {
-  const { selectedItem, handleSelectItem, handleKeydownSelect } = useSelectItem(
-    '',
-    pages.map(page => page._id)
-  )
-  const [isOnBottom, setOnBottom] = useState<boolean>(false)
-  const ref = useRef<HTMLDivElement>(null)
+const DeletedPagesList: FC<{ value: string }> = memo(({ value }) => {
+  const [isScrollOnBottom, setScrollBottom] = useState<boolean>(false)
+  const [node, setNode] = useState<HTMLDivElement | null>(null)
+  const debouncedValue = useDebounce(value, 250)
 
-  useEventListener(
-    'scroll',
-    () => handleScrollTop({ node: ref.current, setOnBottom }),
-    ref
-  )
+  const handleScrollOffset = useCallback(() => {
+    if (node) handleScrollTop({ node, setScrollBottom })
+  }, [node])
 
-  useEventListener('keydown', e => handleKeydownSelect(e))
+  const paginationParams = useMemo(() => ({
+    handleScrollOffset,
+    debouncedValue,
+    offsetValue: 20,
+    node,
+  }), [handleScrollOffset, debouncedValue, node])
+
 
   return (
-    <List.Wrapper ref={ref} isOnBottom={isOnBottom}>
+    <List.Wrapper
+      ref={node => node && setNode(node)}
+      isScrollOnBottom={isScrollOnBottom}
+    >
       <List.Container>
-        {pages.map(page => (
-          <DeletedPageItem
-            key={page._id}
-            {...page}
-            isSelected={selectedItem === page._id}
-            handleSelectItem={handleSelectItem}
-          />
-        ))}
+        {debouncedValue === '' ? (
+          <AllDeletedPagesList paginationParams={paginationParams} />
+        ) : (
+          <SearchDeletedPagesList paginationParams={paginationParams} />
+        )}
       </List.Container>
     </List.Wrapper>
   )

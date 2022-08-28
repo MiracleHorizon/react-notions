@@ -3,7 +3,7 @@ import { useHover } from 'usehooks-ts'
 
 import { AddBlockBelowTooltip } from 'components/ui/tooltips'
 import { PlusSvg } from 'components/ui/svg'
-import { useCreateItemMutation } from 'services/pages.api'
+import { useCreateItemMutation } from 'services/notions.api'
 import NotionContentItem from 'models/pageContent/NotionContentItem.class'
 import Button from './AddBlockBelowButton.styles'
 

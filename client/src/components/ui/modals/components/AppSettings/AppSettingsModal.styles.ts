@@ -1,26 +1,33 @@
 import styled from 'styled-components'
-import { dFlex, modalBoxShadowPrimary } from 'styles/uiKit'
+import { dFlex, modalBoxShadowPrimary } from 'assets/styles/uiKit'
 import { Theme } from 'themes/theme.model'
 
-export const Container = styled.div<{ isOnTop: boolean; isOnBottom: boolean }>`
+export const Container = styled.div<{ isScrollOnTop: boolean }>`
   position: relative;
-  width: 45vw;
-  height: 55vh;
+  max-height: 65vh;
+  width: 50vw;
+  height: 100%;
   margin: auto;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: ${p => modalBoxShadowPrimary(p.theme)};
   background: ${p => p.theme.identifier === Theme.LIGHT ? 'white' : 'rgb(32, 32, 32)'};
-  overflow: auto;
+
+  &::-webkit-scrollbar-track {
+    border-top-right-radius: 4px;
+  }
 
   &::-webkit-scrollbar-thumb {
-    border-top-right-radius: ${p => (p.isOnTop ? 4 : 0)}px;
-    border-bottom-right-radius: ${p => (p.isOnBottom ? 4 : 0)}px;
+    border-top-right-radius: ${p => (p.isScrollOnTop ? 4 : 0)}px;
   }
 `
 
 export const Content = styled.div`
-  ${dFlex['center-col']};
   width: 100%;
-  height: 100%;
-  padding: 20px;
+  height: calc(100% - 64px);
+  padding: 20px 30px 0 30px;
+  overflow: auto;
+
+  div[data-el='divider'] {
+    background: ${p => p.theme.colors['bg-el-active-primary']};
+  }
 `

@@ -1,4 +1,4 @@
-import mongoose, { Document, ObjectId } from 'mongoose'
+import mongoose, { Document } from 'mongoose'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { Page } from '../../page/schemas/page.schema'
 
@@ -8,8 +8,6 @@ export type NotionContentItemDocument = NotionContentItem & Document
   timestamps: true,
 })
 export class NotionContentItem {
-  // @Prop() _id: string
-
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Page' })
   parentPageId: string
 

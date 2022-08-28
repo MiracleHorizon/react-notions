@@ -1,19 +1,22 @@
 import { Injectable } from '@nestjs/common'
 import { User, UserDocument } from './schemas/user.schema'
 import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
-import { hash, compare } from 'bcrypt'
+import { Model, ObjectId } from 'mongoose'
+import { compare, hash } from 'bcrypt'
 import { v4 } from 'uuid'
 import { MailService } from '../mail/mail.service'
 import { TokenService } from '../token/token.service'
 import { UserDto } from './dto/user.dto'
+import { FilesService, FileType } from '../../files/files.service'
+import { UpdateUserDto } from './dto/update-user.dto'
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private tokenService: TokenService,
-    private mailService: MailService
+    private mailService: MailService,
+    private filesService: FilesService
   ) {}
 
   async register(email: string, password: string) {
@@ -101,7 +104,24 @@ export class UserService {
     return { ...tokens, user: userDto }
   }
 
-  async getAll() {
-    return this.userModel.find()
+  async update(id: ObjectId, dto: UpdateUserDto) {
+    await this.userModel.findByIdAndUpdate(id, { ...dto })
+
+    return dto
+  }
+
+  async uploadAvatar(id: ObjectId, avatarUrlFile: string) {
+    const avatarFilePath = this.filesService.createFile(
+      FileType.IMAGE,
+      avatarUrlFile
+    )
+
+    await this.userModel.findByIdAndUpdate(id, { avatarUrl: avatarFilePath })
+
+    return { avatarUrl: avatarFilePath }
+  }
+
+  async delete(id: ObjectId): Promise<User> {
+    return this.userModel.findByIdAndDelete(id)
   }
 }

@@ -15,7 +15,7 @@ enum NotionContentItemDatasets {
   // IMAGE = 'image-item',
   // VIDEO = 'video-item',
   DIVIDER = 'divider-item',
-  PAGE_URL = 'page-url-item',
+  PAGE_LINK = 'page-link-item',
 }
 
 export default NotionContentItemDatasets

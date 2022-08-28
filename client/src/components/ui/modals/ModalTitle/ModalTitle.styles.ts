@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { txtOflow } from 'styles/uiKit'
+import { txtOflow } from 'assets/styles/uiKit'
 
 const Title = styled.h4<{ upCase?: boolean }>`
   align-self: flex-start;

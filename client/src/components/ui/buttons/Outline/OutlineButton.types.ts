@@ -7,9 +7,10 @@ import {
 export default interface OutlineButtonProps {
   title: string
   color: OutlineButtonColorsEnum
-  onClickAction: () => void
+  onClickAction?: () => void
   StartSvg?: FC
   disabled?: boolean
+  children?: JSX.Element
 }
 
 export interface OutlineButtonContainerProps extends IOutlineButtonColors {

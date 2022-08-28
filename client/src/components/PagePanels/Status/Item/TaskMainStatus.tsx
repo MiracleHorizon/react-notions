@@ -5,19 +5,18 @@ import { StatusSelectSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useLazyGetTasksListsQuery } from 'services/tasksLists.api'
-import {
-  selectListById,
-  selectNoStatusList,
-} from 'store/slices/tasksLists/tasksLists.selectors'
+import { TasksListsSelector } from 'store/slices/tasksLists/tasksLists.selectors'
 import IPage from 'models/page/IPage'
 import * as Status from './StatusItem.styles'
 
 const TaskMainStatus: FC<IPage> = task => {
   const { openChangeStatusModal, setTasksLists } = useActions()
   const [getTasksLists, { data, isSuccess }] = useLazyGetTasksListsQuery()
-  const { tasksLists } = useTypedSelector(s => s.tasksLists)
-  const parentList = useTypedSelector(s => selectListById(s, task.parentListId))
-  const noStatusList = useSelector(selectNoStatusList)
+  const { lists } = useTypedSelector(s => s.tasksLists)
+  const parentList = useTypedSelector(s =>
+    TasksListsSelector.selectListById(s, task.parentListId)
+  )
+  const noStatusList = useSelector(TasksListsSelector.selectNoStatusList)
   const ref = useRef<HTMLDivElement>(null)
 
   const handleOpenChangeStatusModal = () => {
@@ -29,10 +28,10 @@ const TaskMainStatus: FC<IPage> = task => {
   }
 
   useEffect(() => {
-    if (task.parentPageId && tasksLists.length === 0) {
+    if (task.parentPageId && lists.length === 0) {
       getTasksLists(task.parentPageId)
     }
-  }, [task.parentPageId, tasksLists.length, getTasksLists])
+  }, [task.parentPageId, lists.length, getTasksLists])
 
   useEffect(() => {
     if (isSuccess && data) setTasksLists(data)

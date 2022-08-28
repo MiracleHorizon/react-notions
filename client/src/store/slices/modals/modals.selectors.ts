@@ -48,4 +48,36 @@ export const selectHiddenTasksListModalClosable = (
   )
 }
 
-export const selectMovePageModalState = (state: RootState) => state.modals.movePage
+export const selectMovePageModalState = (state: RootState) =>
+  state.modals.movePage
+
+export const selectIsDropdownsClose = (state: RootState): boolean => {
+  const {
+    theme: { isOpen: isOpenThemeDropdownOpen },
+    startOpen: { isOpen: isStartOpenDropdownOpen },
+  } = state.modals.dropdown
+
+  return !isOpenThemeDropdownOpen && !isStartOpenDropdownOpen
+}
+
+export const selectEmptyPageItemSelectable = (state: RootState): boolean => {
+  const {
+    changeStatus: { isOpen: isChangeStatusModalOpen },
+    pageSettings: { isOpen: isPageSettingsModalOpen },
+    pageOptions: { isOpen: isPageOptionsModalOpen },
+    appSettings: { isOpen: isAppSettingsModalOpen },
+    quickSearch: { isOpen: isQuickSearchModalOpen },
+    icon: { isOpen: isChangeIconModalOpen },
+    rename: { isOpen: isRenameModalOpen },
+  } = state.modals
+
+  return (
+    !isChangeStatusModalOpen &&
+    !isPageSettingsModalOpen &&
+    !isPageOptionsModalOpen &&
+    !isAppSettingsModalOpen &&
+    !isQuickSearchModalOpen &&
+    !isChangeIconModalOpen &&
+    !isRenameModalOpen
+  )
+}

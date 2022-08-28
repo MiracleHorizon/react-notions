@@ -7,8 +7,8 @@ export default function handleUpdatePageTemplate(template: string) {
       return { iconUrl: GetRandom.icon() }
     case 'Empty with cover':
       return { coverUrl: GetRandom.cover() }
-    case 'Notions List':
-      return { template: 'NotionsList', font: 'Default' as TPageFont }
+    case 'Notions database':
+      return { template: 'NotionsDatabase', font: 'Default' as TPageFont }
     default:
       throw new Error()
   }

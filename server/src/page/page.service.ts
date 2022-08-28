@@ -75,10 +75,19 @@ export class PageService {
 
   async getAll(author: string): Promise<Page[]> {
     return this.pageModel.find({ author, deleted: false })
-  }
+  } //!
 
-  async getTrashPages(author: string): Promise<Page[]> {
-    return this.pageModel.find({ author, deleted: true })
+  async getTrashPages(author: string, limit: number, offset: number) {
+    const params = { author, deleted: true }
+
+    const allPages = await this.pageModel.find(params)
+    const pages = await this.pageModel
+      .find(params)
+      .skip(offset)
+      .limit(limit)
+      // .sort({ updated_At: 1 })
+
+    return { total: allPages.length, pages }
   }
 
   async getOne(id: ObjectId): Promise<Page | string> {
@@ -130,7 +139,7 @@ export class PageService {
       await newList.save()
     }
 
-    if ('template' in updateData && updateData.template === 'NotionsList') {
+    if ('template' in updateData && updateData.template === 'NotionsDatabase') {
       await this.tasksListModel.create({
         title: 'NO_STATUS',
         parentPageId: page._id,
@@ -188,10 +197,37 @@ export class PageService {
     })
   }
 
-  async searchDeletedPages(query: string, author: string): Promise<Page[]> {
-    return this.pageModel.find({
+  async searchDeletedPages(
+    query: string,
+    author: string,
+    limit: number,
+    offset: number
+  ) {
+    const params = {
       title: { $regex: new RegExp(query, 'i') },
       deleted: true,
+      author,
+    }
+
+    const allPages = await this.pageModel.find(params)
+    const pages = await this.pageModel
+      .find(params)
+      .skip(offset)
+      .limit(limit)
+      // .sort({ updated_At: 1 })
+
+    return { total: allPages.length, pages }
+  }
+
+  async searchPagesByList(
+    query: string,
+    author: string,
+    listId: string
+  ): Promise<Page[]> {
+    return this.pageModel.find({
+      parentListId: listId,
+      title: { $regex: new RegExp(query, 'i') },
+      deleted: false,
       author,
     })
   }

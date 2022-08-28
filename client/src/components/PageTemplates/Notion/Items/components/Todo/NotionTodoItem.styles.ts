@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { dFlex } from 'styles/uiKit'
+import { dFlex } from 'assets/styles/uiKit'
 import ContentItemColorsHandler from 'utils/ContentItemColorsHandler'
 import NotionContentItemColorsEnum from 'models/decor/NotionContentItemColorsEnum'
 

@@ -1,10 +1,8 @@
-import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import IPage from 'models/page/IPage'
+import INotionContentItem from 'models/pageContent/INotionContentItem'
 
 export default interface NotionItemOptionButtonsProps {
-  _id: string
-  order: number
-  type: NotionContentItemTypes
-  isHovering: boolean
+  item: INotionContentItem
   page: IPage
+  isHovering: boolean
 }
