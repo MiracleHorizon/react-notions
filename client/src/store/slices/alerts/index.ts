@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import AlertsState from './alerts.types'
-import DeleteAccountAlert from '../../../components/ui/alerts/DeleteAccount'
-import { RootState } from '../../index'
-import useTypedSelector from '../../../hooks/useTypedSelector'
+import { RootState } from 'store'
 
 const initialState: AlertsState = {
   deletePage: {

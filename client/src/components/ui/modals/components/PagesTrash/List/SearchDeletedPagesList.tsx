@@ -18,7 +18,7 @@ const SearchDeletedPagesList: FC<PropTypes> = memo(
       offsetValue: 20,
       node,
     }), [handleScrollOffset, debouncedValue, node])
-    const { pages, isLoading, isSuccess, isError } = useFetchPagination(paginationParams)
+    const { pages, isLoading, isSuccess } = useFetchPagination(paginationParams)
     const pagesIds = useMemo(() => pages?.map(page => page._id), [pages])
 
     const {

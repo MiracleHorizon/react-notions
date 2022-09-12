@@ -1,8 +1,6 @@
 import React, { FC, memo } from 'react'
 
 import ToggleOptionButton from 'components/ui/buttons/ToggleOption'
-import useActions from 'hooks/useActions'
-import { useUpdatePageMutation } from 'services/notions.api'
 import { ToggleFullWidthProps } from '../ToggleOption.types'
 import * as Option from '../ToggleOption.styles'
 

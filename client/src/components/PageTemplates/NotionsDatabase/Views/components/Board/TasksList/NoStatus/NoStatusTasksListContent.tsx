@@ -14,7 +14,6 @@ const NoStatusTasksListContent: FC<PropTypes> = ({
   setTaskCreating,
   taskCreating,
   handleStartTaskCreating,
-  dragOver,
 }) => {
   return (
     <Content>

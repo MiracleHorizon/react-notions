@@ -10,7 +10,7 @@ import { SubmitAuthParams } from './AuthForm/AuthForm.types'
 
 const Login = () => {
   const { login } = useActions()
-  const [authLogin, { data, isLoading, isSuccess, error }] = useLoginMutation()
+  const [authLogin, { data, isSuccess, error }] = useLoginMutation()
 
   const handleSubmitLogin = (params: SubmitAuthParams) => authLogin(params)
 

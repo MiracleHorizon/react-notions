@@ -19,13 +19,3 @@ export const DEFAULT_PAGE_PARAMS = {
   taskOrder: null,
   deleted: false,
 }
-
-export const MAILER_TRANSPORTER_PARAMS = {
-  host: process.env.SMTP_HOST,
-  port: +process.env.SMTP_PORT,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_MAIL,
-    pass: process.env.SMTP_MAIL_PASS,
-  },
-}

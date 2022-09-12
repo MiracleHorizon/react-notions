@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
-import { genSaltSync, hashSync } from 'bcryptjs'
 
 import ChangePasswordForm from './Form'
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
@@ -33,15 +32,7 @@ const ChangePasswordModal = () => {
     ...params
   } = useForm({ defaultValues, ...DEFAULT_FORM_OPTIONS })
 
-  const onSubmit = handleSubmit(params => {
-    const salt = genSaltSync(10)
-    const hashedPasswords = {
-      oldPass: hashSync(params.oldPass, salt),
-      newPass: hashSync(params.newPass, salt),
-    }
-
-    changePassword({ _id, ...params })
-  })
+  const onSubmit = handleSubmit(params => changePassword({ _id, ...params }))
 
   const handleSubmitErrors = useCallback(() => {
     if (errors.oldPass?.message) {

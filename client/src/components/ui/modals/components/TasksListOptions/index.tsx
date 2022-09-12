@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useTheme } from 'styled-components'
 import { useEventListener } from 'usehooks-ts'
 

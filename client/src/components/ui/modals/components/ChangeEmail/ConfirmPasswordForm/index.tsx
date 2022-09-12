@@ -1,7 +1,6 @@
 import React, { Dispatch, FC, useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import bcrypt from 'bcryptjs'
 
 import OutlineInput from 'components/ui/inputs/Outline'
 import FilledButton from 'components/ui/buttons/Filled'

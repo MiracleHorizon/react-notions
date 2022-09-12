@@ -1,6 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
-import { useDeviceData } from 'react-device-detect'
 
 import useActions from 'hooks/useActions'
 import { TDivRef } from 'types'
@@ -22,7 +21,6 @@ export default function useResizeSidebar({
   const { setSidebarWidth } = useActions()
   const [isResizingEnabled, setResizingEnabled] = useState<boolean>(false)
   const { maxWidth, minWidth } = SIDEBAR_WIDTH_RESTRICTIONS
-  const { device } = useDeviceData('desktop')
 
   const startPosition = useRef<number>(0)
   const nodeRect = ref.current?.getBoundingClientRect()

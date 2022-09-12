@@ -11,10 +11,7 @@ import {
 import useActions from 'hooks/useActions'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
-import {
-  useDeleteItemMutation,
-  useUpdateItemMutation,
-} from 'services/notions.api'
+import { useDeleteItemMutation } from 'services/notions.api'
 
 const ChangesBar = lazy(() => import('components/ui/ChangesBar'))
 
@@ -27,7 +24,6 @@ const NotionContentItemOptionsList: FC<{
     openNotionContentItemDecorModal,
     closeNotionContentItemOptionsModal,
   } = useActions()
-  const [updateContentItem] = useUpdateItemMutation()
   const [deleteContentItem] = useDeleteItemMutation()
 
   const handleDeleteItem = async () => {
@@ -35,13 +31,7 @@ const NotionContentItemOptionsList: FC<{
     closeNotionContentItemOptionsModal()
   }
 
-  const handleOpenMoveToModal = async () => {
-    // await updateContentItem({ _id, body: {parentPageId} })
-    closeNotionContentItemOptionsModal()
-  }
-
   const handleOpenContentItemDecorModal = useCallback(() => {
-    // closeNotionContentItemOptionsModal()
     const invokerRect = rect.current?.toJSON()
     openNotionContentItemDecorModal({ invokerRect, itemId: _id })
   }, [rect, _id, openNotionContentItemDecorModal])
@@ -57,10 +47,6 @@ const NotionContentItemOptionsList: FC<{
           />
         </>
       )}
-      {/*<MovePageOption*/}
-      {/*  locked={locked}*/}
-      {/*  onClickAction={() => closeNotionContentItemOptionsModal()}*/}
-      {/*/>*/}
       {type !== NotionContentItemTypes.DIVIDER && !locked && (
         <>
           <Divider />

@@ -26,7 +26,7 @@ const HiddenTasksListContent: FC<PropTypes> = ({
     if (node) handleScrollTop({ node, setScrollBottom })
   }, [node])
 
-  const { pages, total, isLoading, isSuccess, isError } = useFetchPagination({
+  const { pages, total, isLoading } = useFetchPagination({
     kind: FetchKind.SEARCH_PAGES_BY_LIST,
     handleScrollOffset,
     debouncedValue,

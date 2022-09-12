@@ -11,17 +11,14 @@ import { OutlineButtonColorsEnum } from 'models/decor/outlineButton'
 import Container from './AvatarFileUploaderButton.styles'
 
 const AvatarFileUploaderButton = () => {
-  const { updateUser, showOverLimitFileSizeAlert } = useActions()
+  const { updateUser } = useActions()
   const [uploadAvatar, { data, isSuccess }] = useUploadAvatarMutation()
   const [avatarUrl, setAvatarUrl] = useState<FileList | null>(null)
   const { _id } = useSelector(selectUser)
 
   useEffect(() => {
     if (avatarUrl && avatarUrl[0]) {
-      if (avatarUrl[0].size >= AVATAR_UPLOAD_RESTRICTION) {
-        // showOverLimitFileSizeAlert({ dest: 'cover' })
-      } else {
-        console.log(avatarUrl[0])
+      if (avatarUrl[0].size < AVATAR_UPLOAD_RESTRICTION) {
         const formData = new FormData()
         formData.append('avatarUrl', avatarUrl[0])
         uploadAvatar({ _id, file: formData })

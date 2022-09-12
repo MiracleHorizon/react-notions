@@ -1,5 +1,5 @@
 import { FC, RefObject } from 'react'
-import { ISelectItemParams, IVoidClick, TDivRef } from 'types'
+import { IVoidClick, TDivRef } from 'types'
 
 export default interface OptionItemProps extends IVoidClick {
   title: string

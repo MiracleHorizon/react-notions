@@ -10,7 +10,7 @@ import { SubmitAuthParams } from './AuthForm/AuthForm.types'
 
 const Register = () => {
   const { register } = useActions()
-  const [authRegister, { data, isLoading, isSuccess, error }] = useRegisterMutation()
+  const [authRegister, { data, isSuccess, error }] = useRegisterMutation()
 
   const handleSubmitRegister = (values: SubmitAuthParams) => authRegister(values)
 

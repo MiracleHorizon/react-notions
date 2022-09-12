@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { createTransport } from 'nodemailer'
-import { MAILER_TRANSPORTER_PARAMS } from 'utils/constants'
 
 @Injectable()
 export class MailService {

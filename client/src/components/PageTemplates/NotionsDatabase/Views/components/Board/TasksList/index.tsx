@@ -5,7 +5,6 @@ import TasksListContent from './Content'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import { useUpdatePageMutation } from 'services/notions.api'
-import { useUpdateTasksListMutation } from 'services/tasksLists.api'
 import { NotionsSelector } from 'store/slices/notions/notions.selectors'
 import PropTypes from './TasksList.types'
 import Wrapper from './TasksList.styles'
@@ -22,26 +21,18 @@ const TasksList: FC<PropTypes> = memo(
 
     const [dragging, setDragging] = useState<boolean>(false)
     const [dragOver, setDragOver] = useState<boolean>(false)
-
-    const [updateTasksList] = useUpdateTasksListMutation()
     const [updatePage] = useUpdatePageMutation()
 
     const handleStartTaskCreating = () => setTaskCreating(true)
 
-    const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
-      // e.preventDefault()
-
+    const handleDragStart = () => {
       setDragging(true)
       setStartList(list)
     }
 
     const handleDragEnd = (e: DragEvent<HTMLDivElement>) => {
       e.preventDefault()
-
       setDragOver(false)
-      // if (!target.closest('[data-el="tasks-list"]')) {
-      //   setDragOver(false)
-      // }
     }
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {

@@ -1,17 +1,11 @@
 import React, { FC, memo } from 'react'
 
 import { ContentItemTypeTooltip } from 'components/ui/tooltips'
-import useActions from 'hooks/useActions'
 import useDebounceHovering from 'hooks/useDebounceHovering'
-import {
-  useCreateItemMutation,
-  useUpdateItemMutation,
-} from 'services/notions.api'
+import useCreateNotionContent from 'hooks/useCreateNotionContent'
 import handleValidContentType from 'utils/helpers/handleValidContentType'
-import NotionContentItem from 'models/pageContent/NotionContentItem'
 import PropTypes from './CreateNotionContentItemOption.types'
 import * as Option from './CreateNotionContentItemOption.styles'
-import useCreateNotionContent from '../../../../hooks/useCreateNotionContent'
 
 const CreateNotionContentItemOption: FC<PropTypes> = memo(
   ({ item, parentItemId, title, desc, imageUrl, type }) => {

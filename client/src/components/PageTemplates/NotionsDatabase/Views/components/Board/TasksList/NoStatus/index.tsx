@@ -15,7 +15,6 @@ const NoStatusTasksList: FC<{
 }> = memo(({ isHovering, handleListHovering }) => {
   const { page } = useTypedSelector(s => s.notions)
   const [taskCreating, setTaskCreating] = useState<boolean>(false)
-  const [dragOver, setDragOver] = useState<boolean>(false)
   const list = useSelector(TasksListsSelector.selectNoStatusList)
   const tasks = useSelector(NotionsSelector.selectNoStatusPages)
 
@@ -39,7 +38,7 @@ const NoStatusTasksList: FC<{
               taskCreating={taskCreating}
               setTaskCreating={setTaskCreating}
               handleStartTaskCreating={handleStartTaskCreating}
-              dragOver={dragOver}
+              dragOver={false}
             />
           </Wrapper>
         </CSSTransition>

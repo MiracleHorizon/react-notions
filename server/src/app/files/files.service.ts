@@ -4,8 +4,8 @@ import * as fs from 'fs'
 import * as uuid from 'uuid'
 
 export enum FileType {
-  AUDIO = 'audio',
-  VIDEO = 'video',
+  // AUDIO = 'audio',
+  // VIDEO = 'video',
   IMAGE = 'image',
 }
 

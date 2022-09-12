@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { alertBoxShadowPrimary, mobile } from 'assets/styles/uiKit'
+import { alertBoxShadowPrimary } from 'assets/styles/uiKit'
 
 export const Container = styled.div`
   display: flex;
