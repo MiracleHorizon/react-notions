@@ -16,20 +16,19 @@ const AppSettingsActionsBar = () => {
   const { fullName, handleChangeName } = useContext(AppSettingsContext)
   const user = useSelector(selectUser)
 
+  const handleCancelChanges = () => closeAppSettingsModal()
+
   const handleSaveChanges = () => {
-    if (fullName !== user.fullName) {
-      const body = { fullName: fullName! }
-      handleUpdateUser({ _id: user._id, body })
+    if (fullName && fullName !== user.fullName) {
+      handleUpdateUser({ _id: user._id, body: { fullName } })
     } else {
       closeAppSettingsModal()
     }
   }
 
-  const handleCancelChanges = () => closeAppSettingsModal()
-
   useEffect(() => {
-    if (isSuccess) {
-      updateUser({ fullName: fullName! })
+    if (isSuccess && fullName) {
+      updateUser({ fullName })
       closeAppSettingsModal()
     }
   }, [isSuccess, fullName, updateUser, handleChangeName, closeAppSettingsModal])

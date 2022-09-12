@@ -1,10 +1,10 @@
 import { createContext, RefObject } from 'react'
 
-interface IWorkspaceScrollContext {
+interface IWorkspaceScrollCtx {
   contentRef: RefObject<HTMLDivElement> | null
 }
 
-export const defaultValue: IWorkspaceScrollContext = {
+export const defaultValue: IWorkspaceScrollCtx = {
   contentRef: null,
 }
 

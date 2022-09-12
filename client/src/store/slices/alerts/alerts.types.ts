@@ -4,9 +4,12 @@ export default interface AlertsState {
   alreadyExist: AlertInitialState
   overLimitFileSize: OverLimitFileSizeAlertState
   fillName: AlertInitialState
+  fillEmail: AlertInitialState
+  changePassword: AlertInitialState
+  deleteAccount: AlertInitialState
   notSavedChanges: NotSavedChangesAlertState
   movedToTrashTooltip: { isActive: boolean; pageId: string }
-  clipboardCopyTooltip: { isActive: boolean }
+  clipboardCopyTooltip: { isActive: boolean; kind: 'link' | 'property' }
 }
 
 export interface AlertInitialState {

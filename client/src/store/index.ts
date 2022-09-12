@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 // api
+import { authApi } from 'services/auth.api'
 import { userApi } from 'services/user.api'
 import { notionsApi } from 'services/notions.api'
 import { tasksListsApi } from 'services/tasksLists.api'
@@ -16,6 +17,7 @@ import alerts from './slices/alerts'
 
 export const store = configureStore({
   reducer: {
+    [authApi.reducerPath]: authApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [notionsApi.reducerPath]: notionsApi.reducer,
     [tasksListsApi.reducerPath]: tasksListsApi.reducer,
@@ -29,6 +31,7 @@ export const store = configureStore({
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
+      authApi.middleware,
       userApi.middleware,
       notionsApi.middleware,
       tasksListsApi.middleware,

@@ -1,17 +1,17 @@
-import React, { FC, useRef, MouseEvent, memo, useCallback } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC, MouseEvent, memo, useCallback } from 'react'
 
 import SmallPageIcon from 'components/ui/SmallPageIcon'
-import { ChangeIconTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import IPage from 'models/page/IPage'
 import Container from './PageItemIcon.styles'
 
 const PageItemIcon: FC<IPage> = memo(
   ({ _id, iconUrl, coverUrl, content, locked }) => {
     const { openChangeIconModal } = useActions()
-    const ref = useRef<HTMLDivElement>(null)
-    const isHovering = useHover(ref)
+    const { ref, isHovering } = useDebounceHovering(200)
 
     const handleOpenIconModal = useCallback(
       (e: MouseEvent) => {
@@ -20,7 +20,7 @@ const PageItemIcon: FC<IPage> = memo(
         const invokerRect = ref.current?.getBoundingClientRect().toJSON()
         openChangeIconModal({ invokerRect, pageId: _id })
       },
-      [_id, openChangeIconModal]
+      [_id, ref, openChangeIconModal]
     )
 
     return (
@@ -30,7 +30,13 @@ const PageItemIcon: FC<IPage> = memo(
           coverUrl={coverUrl}
           content={content}
         />
-        {isHovering && <ChangeIconTooltip reference={ref} />}
+        {isHovering && (
+          <FilledTooltip
+            title='Change icon'
+            pos={ModalPosition.CENTER_BOTTOM}
+            invokerRef={ref}
+          />
+        )}
       </Container>
     )
   }

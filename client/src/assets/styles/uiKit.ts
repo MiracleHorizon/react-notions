@@ -4,7 +4,7 @@ export const mobile = '420px'
 export const tablet = '950px'
 
 export const bgTransitions = {
-  esIn20: 'transition: background 20ms ease-in', // ! Убрать transition
+  esIn20: 'transition: background 20ms ease-in',
   esInOut50: 'transition: background 50ms ease-in-out',
   esOut100: 'transition: background 0.1s ease-out',
 }
@@ -77,9 +77,21 @@ export const dFlex = {
     justify-content: flex-start;
     flex-direction: column;
   `,
+  'center-end-col': `
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+  `,
   'start-center-col': `
     display: flex;
     align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+  `,
+  'end-center-col': `
+    display: flex;
+    align-items: flex-end;
     justify-content: center;
     flex-direction: column;
   `,

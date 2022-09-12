@@ -1,10 +1,13 @@
-import React, { FC, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 
 import { AddBlockBelowTooltip } from 'components/ui/tooltips'
 import { PlusSvg } from 'components/ui/svg'
+import useDebounceHovering from 'hooks/useDebounceHovering'
 import { useCreateItemMutation } from 'services/notions.api'
-import NotionContentItem from 'models/pageContent/NotionContentItem.class'
+import { selectUser } from 'store/slices/user/auth.selectors'
+import NotionContentItem from 'models/pageContent/NotionContentItem'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import Button from './AddBlockBelowButton.styles'
 
 const AddBlockBelowButton: FC<{
@@ -14,13 +17,20 @@ const AddBlockBelowButton: FC<{
   parentItemId?: string
 }> = ({ order, parentItemId, pageId, pageLocked }) => {
   const [createContentItem] = useCreateItemMutation()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering()
+  const user = useSelector(selectUser)
 
   const handleCreateItem = () => {
     if (!pageLocked) {
-      const item = NotionContentItem.createText(pageId, parentItemId, order)
-      createContentItem(item)
+      const body = {
+        type: NotionContentItemTypes.TEXT,
+        parentPageId: pageId,
+        parentItemId,
+        author: user._id,
+        order,
+      }
+
+      createContentItem(NotionContentItem.createItem(body))
     }
   }
 

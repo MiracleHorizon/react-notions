@@ -6,7 +6,6 @@ import DecorOptions from './Options'
 import PageCoverLoader from 'components/ui/loaders/Cover'
 import PageIconLoader from 'components/ui/loaders/Icon'
 import PageDescriptionLoader from 'components/ui/loaders/Description'
-import OverLimitFileSizeAlert from 'components/ui/alerts/OverLimitFileSize'
 import IPage from 'models/page/IPage'
 import * as Panel from './PageDecorPanel.styles'
 

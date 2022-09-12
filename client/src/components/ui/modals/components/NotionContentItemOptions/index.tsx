@@ -5,7 +5,7 @@ import NotionContentItemOptionsList from './NotionContentItemOptionsList'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import Container from './NotionContentItemOptionsModal.styles'
 
@@ -17,7 +17,7 @@ const NotionContentItemOptionsModal = () => {
   const { closeNotionContentItemOptionsModal } = useActions()
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'leftCenter',
+    pos: ModalPosition.LEFT_CENTER,
     invokerRect,
   })
 

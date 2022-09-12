@@ -15,14 +15,14 @@ export const Wrapper = styled.div<{ bgColor: NotionContentItemColorsEnum }>`
 export const Container = styled.div<{ color: NotionContentItemColorsEnum }>`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: auto;
   height: 100%;
   padding: 1px 14px;
   border-left: 3px solid ${p => ContentItemColorsHandler.setColor(p.color, p.theme)};
   text-align: left;
 
   div[contenteditable] {
-    width: 100%;
+    max-width: 100%;
     height: 100%;
     font-size: 1.2em;
     white-space: pre-wrap;

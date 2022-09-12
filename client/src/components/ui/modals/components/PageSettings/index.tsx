@@ -7,7 +7,7 @@ import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './PageSettingsModal.styles'
 
@@ -18,7 +18,7 @@ const PageSettingsModal = () => {
   const { page, invokerRect } = useTypedSelector(s => s.modals.pageSettings)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'centerBottom',
+    pos: ModalPosition.CENTER_BOTTOM,
     invokerRect,
   })
 

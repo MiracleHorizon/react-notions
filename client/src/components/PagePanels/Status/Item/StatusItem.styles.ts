@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Theme } from 'themes/theme.model'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
-import handleTasksListTitleColor from 'utils/stylesHandlers/colors'
+import handleTasksListTitleColor from 'utils/stylesHandlers/handleTasksListTitleColor'
 
 export const Wrapper = styled.div`
   position: relative;

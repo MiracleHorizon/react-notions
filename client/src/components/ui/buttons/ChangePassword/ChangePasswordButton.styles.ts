@@ -5,7 +5,8 @@ const Container = styled.div`
 
   div[data-btn='outline'] {
     position: relative;
-    max-width: 120px;
+    max-width: 130px;
+    padding: 0 4px;
   }
 `
 

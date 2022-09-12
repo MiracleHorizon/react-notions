@@ -8,8 +8,8 @@ import IPage from 'models/page/IPage'
 import { Wrapper } from '../PagesList.styles'
 
 const FavoritesPagesList: FC<{ pages: IPage[] }> = memo(({ pages }) => {
-  const { isOpen } = useTypedSelector(s => s.app.favoritePagesLists)
   const { toggleFavoritePagesList } = useActions()
+  const { isOpen } = useTypedSelector(s => s.app.favoritePagesLists)
 
   const handleToggleList = () => toggleFavoritePagesList()
 

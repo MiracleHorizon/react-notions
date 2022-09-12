@@ -52,7 +52,7 @@ const NOTION_ITEM_HEADING_STYLES = {
 }
 
 export default class NotionHeadingItemStylesHandler {
-  static getContainerStyles(headingLevel: NotionContentItemTypes) {
+  public static getContainerStyles(headingLevel: NotionContentItemTypes) {
     switch (headingLevel) {
       case NotionContentItemTypes.H1:
         return NOTION_ITEM_HEADING_STYLES.h1.container
@@ -77,7 +77,7 @@ export default class NotionHeadingItemStylesHandler {
     }
   }
 
-  static getContentStyles(headingLevel: NotionContentItemTypes) {
+  public static getContentStyles(headingLevel: NotionContentItemTypes) {
     switch (headingLevel) {
       case NotionContentItemTypes.H1:
         return NOTION_ITEM_HEADING_STYLES.h1.content
@@ -102,7 +102,7 @@ export default class NotionHeadingItemStylesHandler {
     }
   }
 
-  static getPlaceHolder(headingLevel: NotionContentItemTypes): string {
+  public static getPlaceHolder(headingLevel: NotionContentItemTypes): string {
     switch (headingLevel) {
       case NotionContentItemTypes.H1:
         return 'Heading 1'

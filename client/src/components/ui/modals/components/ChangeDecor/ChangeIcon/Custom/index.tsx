@@ -52,7 +52,7 @@ const CustomIcon: FC<{ _id: string }> = memo(({ _id }) => {
     <Category.Container drag={drag} {...useDndUpload(setDrag, setIconUrl)}>
       <Category.LinkContainer>
         <OutlineInput
-          inputMode='text'
+          type='text'
           placeholder='Paste link to an image...'
           renderFocusable
           value={value}

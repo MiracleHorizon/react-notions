@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import handleContentItemTooltip from 'utils/helpers/handleContentItemTooltip'
 import PropTypes from './ContentItemTypeTooltip.types'
@@ -15,7 +15,7 @@ const ContentItemTypeTooltip: FC<PropTypes> = ({ type, invokerRef }) => {
   )
 
   const { setRef, rect, coords } = useSetModalPosition({
-    pos: 'rightCenter',
+    pos: ModalPosition.RIGHT_CENTER,
     invokerRect: invokerRef.current?.getBoundingClientRect().toJSON(),
   })
 

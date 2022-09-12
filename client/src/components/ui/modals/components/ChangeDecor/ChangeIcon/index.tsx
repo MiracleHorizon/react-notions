@@ -1,4 +1,4 @@
-import React, { useState, useMemo, lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useMemo, useState } from 'react'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import CustomDecorLoader from 'components/ui/loaders/CustomDecor'
@@ -7,7 +7,7 @@ import EmojiLists from './Emoji'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import Container from './ChangeIconModal.styles'
 
@@ -20,7 +20,7 @@ const ChangeIconModal = () => {
   const { pageId, invokerRect } = useTypedSelector(s => s.modals.icon)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'centerBottom',
+    pos: ModalPosition.CENTER_BOTTOM,
     invokerRect,
   })
 

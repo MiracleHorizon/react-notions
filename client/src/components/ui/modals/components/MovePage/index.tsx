@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDebounce } from 'usehooks-ts'
 
@@ -9,90 +9,63 @@ import InputSearchLoader from 'components/ui/loaders/InputSearch'
 import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import useSetModalPosition from 'hooks/useSetModalPosition'
-import {
-  useLazyGetPagesToMoveQuery,
-  useLazySearchPagesToMoveQuery,
-} from 'services/notions.api'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
+import useFetchPagination from 'hooks/useFetchPagination'
 import { selectMovePageModalState } from 'store/slices/modals/modals.selectors'
-import { selectUser } from 'store/slices/user/auth.selectors'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
-import IPage from 'models/page/IPage'
+import handleScrollTop from 'utils/helpers/handleScrollTop'
+import { FetchKind } from 'hooks/useFetchPagination/types'
 import * as Modal from './MovePageModal.styles'
 
 const MovePageModal = () => {
   const { closeMovePageModal } = useActions()
+  const [isScrollOnTop, setScrollTop] = useState<boolean>(true)
+  const [isScrollOnBottom, setScrollBottom] = useState<boolean>(false)
   const { pageId, coords: pointerCoords } = useSelector(selectMovePageModalState)
-  const user = useSelector(selectUser)
-
-  const [getPagesToMove, { data, isLoading, isSuccess, isError }] = useLazyGetPagesToMoveQuery()
-  const [
-    searchPagesToMove,
-    {
-      data: searchData,
-      isLoading: isSearchLoading,
-      isSuccess: isSearchSuccess,
-      isError: isSearchError,
-    },
-  ] = useLazySearchPagesToMoveQuery()
-
-  const [pages, setPages] = useState<IPage[]>([])
   const { value, handleChangeValue } = useInput('')
   const debouncedValue = useDebounce(value, 200)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'pointer',
+    pos: ModalPosition.POINTER,
     pointerCoords,
   })
 
-  useEffect(() => {
-    // Получение всех страниц для перемещения, за исключением той,
-    // у которой вызывается данное модальное окно
-    if (debouncedValue === '') {
-      getPagesToMove({
-        authorId: user._id,
-        excludePageId: pageId,
-      })
-    }
+  const handleScrollOffset = useCallback(() => {
+    if (ref) handleScrollTop({ node: ref, setScrollTop, setScrollBottom })
+  }, [ref])
 
-    // Поиск страниц для перемещения, за исключением той,
-    // у которой вызывается данное модальное окно
-    if (debouncedValue !== '') {
-      searchPagesToMove({
-        authorId: user._id,
-        excludePageId: pageId,
-        query: debouncedValue,
-      })
-    }
-  }, [user._id, pageId, debouncedValue, getPagesToMove, searchPagesToMove])
-
-  useEffect(() => {
-    if (isSuccess && data && debouncedValue === '') {
-      setPages(data)
-    }
-
-    if (isSearchSuccess && searchData && debouncedValue !== '') {
-      setPages(searchData)
-    }
-  }, [isSuccess, isSearchSuccess, data, searchData, debouncedValue])
+  const paginationParams = useMemo(() => ({
+    kind: FetchKind.MOVE_PAGE,
+    handleScrollOffset,
+    excludePageId: pageId,
+    debouncedValue,
+    offsetValue: 10,
+    node: ref,
+  }), [ref, pageId, debouncedValue, handleScrollOffset])
+  const { pages, isLoading } = useFetchPagination(paginationParams)
 
   useOnCloseModal(ref, closeMovePageModal)
 
   return (
     <ModalWrapper>
-      <Modal.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
+      <Modal.Container
+        {...coords}
+        ref={node => nodeRefHandler(node, rect, setRef)}
+        isScrollOnTop={isScrollOnTop}
+        isScrollOnBottom={isScrollOnBottom}
+      >
         <Modal.Content>
           <Modal.InputContainer>
             <OutlineInput
               renderFocusable
-              inputMode='text'
+              type='text'
               placeholder='Move page to...'
               value={value}
               onChange={handleChangeValue}
             />
-            {isSearchLoading && <InputSearchLoader />}
+            {isLoading && <InputSearchLoader />}
           </Modal.InputContainer>
-          <PagesToMoveList _id={pageId} pages={pages} />
+          {pages && <PagesToMoveList _id={pageId} pages={pages} />}
         </Modal.Content>
       </Modal.Container>
     </ModalWrapper>

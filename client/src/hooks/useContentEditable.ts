@@ -1,5 +1,6 @@
 import { KeyboardEvent, RefObject, useRef } from 'react'
 import { ContentEditableEvent } from 'react-contenteditable'
+import { useSelector } from 'react-redux'
 
 import useActions from './useActions'
 import useTypedSelector from './useTypedSelector'
@@ -8,18 +9,29 @@ import {
   useDeleteItemMutation,
   useUpdateItemMutation,
 } from 'services/notions.api'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
+import NotionContentItem from 'models/pageContent/NotionContentItem'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import IPage from 'models/page/IPage'
 
 type TFunc = (value: string) => void
 
-export default function useContentEditable(
-  initialValue: string,
-  func: TFunc,
-  ref?: RefObject<HTMLDivElement>,
-  item?: INotionContentItem,
-  page?: IPage,
-) {
+interface Params {
+  initialValue: string
+  func: TFunc
+  ref?: RefObject<HTMLDivElement>
+  item?: INotionContentItem
+  page?: IPage
+}
+
+export default function useContentEditable({
+  initialValue,
+  func,
+  ref,
+  item,
+  page,
+}: Params) {
   const {
     openCreateNotionContentItemModal,
     closeCreateNotionContentItemModal,
@@ -29,6 +41,7 @@ export default function useContentEditable(
   const [createContentItem] = useCreateItemMutation()
   const [updateContentItem] = useUpdateItemMutation()
   const [deleteContentItem] = useDeleteItemMutation()
+  const user = useSelector(selectUser)
 
   const handleChange = (e: ContentEditableEvent) => {
     value.current = e.target.value
@@ -36,14 +49,27 @@ export default function useContentEditable(
     if (!item || !ref || initialValue === value.current) return
     const lastWord = e.target.value.split(' ').pop()
 
-    if (lastWord?.startsWith('/') && !isOpen) {
+    if (
+      (lastWord?.startsWith('/') || e.target.value.endsWith('/')) &&
+      !isOpen
+    ) {
       const invokerRect = ref.current?.getBoundingClientRect().toJSON()
-      openCreateNotionContentItemModal({ item, invokerRect })
+      const params = {
+        parentItemId: item.parentItemId ? item.parentItemId : undefined,
+        invokerRect,
+        item,
+      }
+
+      openCreateNotionContentItemModal(params)
     } else {
       closeCreateNotionContentItemModal()
     }
 
     if (lastWord?.startsWith('/') && lastWord.length > 5) {
+      closeCreateNotionContentItemModal()
+    }
+
+    if (e.target.value === '') {
       closeCreateNotionContentItemModal()
     }
   }
@@ -76,7 +102,17 @@ export default function useContentEditable(
     if (e.code === 'Backspace' && value.current === '') deleteContentItem(_id)
 
     if (e.code === 'Enter') {
-      // createContentItem({parentItemId})
+      e.preventDefault()
+
+      const body = {
+        type: NotionContentItemTypes.TEXT,
+        parentPageId: page._id,
+        parentItemId: item.parentItemId ? item.parentItemId : undefined,
+        order: item.order + 1,
+        author: user._id,
+      }
+
+      createContentItem(NotionContentItem.createItem(body))
     }
   }
 

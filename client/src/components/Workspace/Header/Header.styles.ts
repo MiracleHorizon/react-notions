@@ -14,9 +14,3 @@ export const Container = styled.div`
   width: 100%;
   height: 45px;
 `
-
-export const Panel = styled.div<{ isSidebarOpen: boolean }>`
-  ${dFlex['center-s-between']};
-  width: 100%;
-  ${p => p.isSidebarOpen && 'margin-left: 8px'};
-`

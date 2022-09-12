@@ -2,20 +2,21 @@ import { useMemo, useRef, useState } from 'react'
 import { ElementCoords } from 'types'
 import ModalCoordsHandler from 'utils/ModalCoordsHandler'
 
-type TPos =
-  | 'centerBottom'
-  | 'centerTop'
-  | 'leftCenter'
-  | 'rightCenter'
-  | 'rightTop'
-  | 'rightBottom'
-  | 'pointer'
-  | 'rename'
-  | 'changeStatus'
-  | 'resizeSb' // В enum
+export enum ModalPosition {
+  CENTER_BOTTOM = 'centerBottom',
+  CENTER_TOP = 'centerTop',
+  LEFT_CENTER = 'leftCenter',
+  RIGHT_CENTER = 'rightCenter',
+  RIGHT_TOP = 'rightTop',
+  RIGHT_BOTTOM = 'rightBottom',
+  POINTER = 'pointer',
+  RENAME = 'rename',
+  CHANGE_STATUS = 'changeStatus',
+  RESIZER_SIDEBAR = 'resizeSb',
+}
 
 interface Params {
-  pos: TPos
+  pos: ModalPosition
   invokerRect?: string
   pointerCoords?: ElementCoords
 }
@@ -36,25 +37,25 @@ export default function useSetModalPosition({
     )
 
     switch (pos) {
-      case 'centerBottom':
+      case ModalPosition.CENTER_BOTTOM:
         return modalCoords.centerBottom
-      case 'centerTop':
+      case ModalPosition.CENTER_TOP:
         return modalCoords.centerTop
-      case 'leftCenter':
+      case ModalPosition.LEFT_CENTER:
         return modalCoords.leftCenter
-      case 'rightCenter':
+      case ModalPosition.RIGHT_CENTER:
         return modalCoords.rightCenter
-      case 'rightTop':
+      case ModalPosition.RIGHT_TOP:
         return modalCoords.rightTop
-      case 'rightBottom':
+      case ModalPosition.RIGHT_BOTTOM:
         return modalCoords.rightBottom
-      case 'pointer':
+      case ModalPosition.POINTER:
         return modalCoords.pointer
-      case 'rename':
+      case ModalPosition.RENAME:
         return modalCoords.rename
-      case 'changeStatus':
+      case ModalPosition.CHANGE_STATUS:
         return modalCoords.changeStatus
-      case 'resizeSb':
+      case ModalPosition.RESIZER_SIDEBAR:
         return modalCoords.resizeSb
       default:
         throw new Error()

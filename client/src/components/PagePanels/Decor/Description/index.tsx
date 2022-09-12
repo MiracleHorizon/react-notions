@@ -12,14 +12,15 @@ const PageDescription: FC<{
   const [updatePage] = useUpdatePageMutation()
   const ref = useRef<HTMLElement>(null)
 
-  const {
-    value,
-    handleChange,
-    handleEnterKey,
-    handleBlur
-  } = useContentEditable(description, (description: string) => {
-    updatePage({ _id, body: { description } })
-  })
+  const handleUpdateDescription = (descValue: string) => {
+    updatePage({ _id, body: { description: descValue } })
+  }
+
+  const { value, handleChange, handleEnterKey, handleBlur } =
+    useContentEditable({
+      initialValue: description,
+      func: handleUpdateDescription,
+    })
 
   useEffect(() => {
     description === '' && ref.current?.focus()

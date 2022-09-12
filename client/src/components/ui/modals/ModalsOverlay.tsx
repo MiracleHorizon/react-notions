@@ -18,6 +18,8 @@ import NotionContentItemOptionsModal from './components/NotionContentItemOptions
 import CreateNotionContentItemModal from './components/CreateNotionContentItem'
 import QuickSearchModal from './components/QuickSearch'
 import CreateWebBookmarkModal from './components/CreateWebBookmark'
+import ChangePasswordModal from './components/ChangePassword'
+import ChangeEmailModal from './components/ChangeEmail'
 import useTypedSelector from 'hooks/useTypedSelector'
 
 const ModalsOverlay = () => {
@@ -33,6 +35,8 @@ const ModalsOverlay = () => {
     webBookmark: { isOpen: isWebBookmarkModalOpen },
     pageOptions: { isOpen: isPageOptionsModalOpen },
     changeStatus: { isOpen: isChangeStatusModalOpen },
+    changePassword: { isOpen: isChangePasswordModalOpen },
+    changeEmail: { isOpen: isChangeEmailModalOpen },
     pageSettings: { isOpen: isPageSettingsModalOpen },
     hiddenTasksList: { isOpen: isHiddenTasksListModalOpen },
     tasksListOptions: { isOpen: isTasksListOptionsModalOpen },
@@ -56,6 +60,8 @@ const ModalsOverlay = () => {
       {isPageOptionsModalOpen && <PageOptionsModal />}
       {isPageSettingsModalOpen && <PageSettingsModal />}
       {isChangeStatusModalOpen && <ChangeStatusModal />}
+      {isChangePasswordModalOpen && <ChangePasswordModal />}
+      {isChangeEmailModalOpen && <ChangeEmailModal />}
       {isHiddenTasksListModalOpen && <HiddenTasksListModal />}
       {isTasksListOptionsModalOpen && <TasksListOptionsModal />}
       {isHandleTasksListTitleModalOpen && <HandleTasksListTitleModal />}

@@ -1,17 +1,17 @@
-import React, { FC, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC } from 'react'
 
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { DoubleChevronSvg, HamburgerMenuSvg } from 'components/ui/svg'
-import { OpenSidebarTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import Button from './ToggleSidebarButton.styles'
 
 const OpenSidebarButton: FC<{ isParentHovering: boolean }> = ({
   isParentHovering,
 }) => {
   const { openSidebar } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering()
 
   const handleOpenSidebar = () => openSidebar()
 
@@ -21,11 +21,18 @@ const OpenSidebarButton: FC<{ isParentHovering: boolean }> = ({
       role='button'
       data-btn='open-sb'
       dest='open'
-      isHovering={true}
+      isSidebarHovering={true}
       onClick={handleOpenSidebar}
     >
       {isParentHovering ? <DoubleChevronSvg /> : <HamburgerMenuSvg />}
-      {isHovering && <OpenSidebarTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Lock sidebar open'
+          desc='Ctrl+\'
+          pos={ModalPosition.RIGHT_TOP}
+          invokerRef={ref}
+        />
+      )}
     </Button>
   )
 }

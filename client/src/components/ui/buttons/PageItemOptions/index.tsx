@@ -1,17 +1,17 @@
-import React, { useRef, MouseEvent, FC, memo } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { MouseEvent, FC, memo } from 'react'
 
-import { PageOptionsTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { DotsSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import setCoordsByPointer from 'utils/helpers/setCoordsByPointer'
 import IPage from 'models/page/IPage'
 import Button from './PageItemOptionsButton.styles'
 
 const PageItemOptionsButton: FC<IPage> = memo(page => {
   const { openPageOptionsModal } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering(250)
 
   const handleOpenOptionsModal = (e: MouseEvent) => {
     e.preventDefault()
@@ -27,7 +27,13 @@ const PageItemOptionsButton: FC<IPage> = memo(page => {
       onContextMenu={handleOpenOptionsModal}
     >
       <DotsSvg />
-      {isHovering && <PageOptionsTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Remove, rename, and more...'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={ref}
+        />
+      )}
     </Button>
   )
 })

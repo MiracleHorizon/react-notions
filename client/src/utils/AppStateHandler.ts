@@ -71,7 +71,6 @@ export default class AppStateHandler {
     startOpen: AppStateHandler.getStartOpenOption(),
     lastPageId: AppStateHandler.getLastPageId(),
     selectedView: 'Board' as PageView,
-    loadings: { savePage: false },
     sidebar: AppStateHandler.getSidebarState(),
     favoritePagesLists: AppStateHandler.getFavoritePagesListState(),
     commonPagesLists: AppStateHandler.getCommonPagesListState(),

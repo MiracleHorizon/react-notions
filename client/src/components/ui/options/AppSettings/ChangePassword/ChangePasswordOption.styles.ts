@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   padding: 14px 0;
 
   div[data-btn='outline'] {
-    max-width: 120px;
+    max-width: 130px;
     margin-top: 12px;
   }
 `

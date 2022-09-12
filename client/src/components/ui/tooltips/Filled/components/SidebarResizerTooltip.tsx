@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import TooltipWrapper from 'components/ui/tooltips/Tooltip'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import { ElementCoords, TDivRef } from 'types'
 import * as Tooltip from '../FilledTooltip.styles'
@@ -13,7 +13,7 @@ const SidebarResizerTooltip: FC<{
   const { setRef, rect, coords } = useSetModalPosition({
     invokerRect: reference.current?.getBoundingClientRect().toJSON(),
     pointerCoords,
-    pos: 'resizeSb',
+    pos: ModalPosition.RESIZER_SIDEBAR,
   })
 
   return (

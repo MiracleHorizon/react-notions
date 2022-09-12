@@ -1,7 +1,6 @@
-import React, { FC, memo, useCallback, useMemo, useState } from 'react'
+import React, { FC, memo, useCallback, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 
-import AllDeletedPagesList from './AllDeletedPagesList'
 import SearchDeletedPagesList from './SearchDeletedPagesList'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
 import * as List from './DeletedPagesList.styles'
@@ -15,25 +14,17 @@ const DeletedPagesList: FC<{ value: string }> = memo(({ value }) => {
     if (node) handleScrollTop({ node, setScrollBottom })
   }, [node])
 
-  const paginationParams = useMemo(() => ({
-    handleScrollOffset,
-    debouncedValue,
-    offsetValue: 20,
-    node,
-  }), [handleScrollOffset, debouncedValue, node])
-
-
   return (
     <List.Wrapper
       ref={node => node && setNode(node)}
       isScrollOnBottom={isScrollOnBottom}
     >
       <List.Container>
-        {debouncedValue === '' ? (
-          <AllDeletedPagesList paginationParams={paginationParams} />
-        ) : (
-          <SearchDeletedPagesList paginationParams={paginationParams} />
-        )}
+        <SearchDeletedPagesList
+          node={node}
+          debouncedValue={debouncedValue}
+          handleScrollOffset={handleScrollOffset}
+        />
       </List.Container>
     </List.Wrapper>
   )

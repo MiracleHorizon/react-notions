@@ -41,9 +41,9 @@ const NotionItemToggleWrapper: FC<PropTypes> = memo(
           {childrenTitle}
         </Item.TitleContainer>
         <Item.Content>
-          {expanded &&
-            (contentLength === 0 ? <EmptyToggleBlock _id={_id} /> : children)}
+          {expanded && (contentLength === 0 ? <EmptyToggleBlock _id={_id} /> : children)}
         </Item.Content>
+        {/*<>Create item bar</>*/}
       </Item.Wrapper>
     )
   }

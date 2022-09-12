@@ -6,7 +6,7 @@ import PageOptionsList from './OptionsList'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './PageOptionsModal.styles'
 
@@ -17,7 +17,7 @@ const PageOptionsModal = () => {
   const { page, coords: pointerCoords } = useTypedSelector(s => s.modals.pageOptions)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'pointer',
+    pos: ModalPosition.POINTER,
     pointerCoords,
   })
 

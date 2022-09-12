@@ -55,6 +55,8 @@ const initialState: ModalsState = {
     list: {} as ITasksList,
     task: {} as IPage,
   },
+  changePassword: { isOpen: false },
+  changeEmail: { isOpen: false },
   tasksListOptions: {
     isOpen: false,
     invokerRect: '',
@@ -80,7 +82,7 @@ const initialState: ModalsState = {
     isOpen: false,
     invokerRect: '',
     page: {} as IPage,
-    item: {} as INotionContentItem
+    item: {} as INotionContentItem,
   },
   notionItemDecor: {
     isOpen: false,
@@ -165,6 +167,12 @@ const modalsSlice = createSlice({
       state.changeStatus.list = action.payload.list
       state.changeStatus.task = action.payload.task
       state.changeStatus.invokerRect = action.payload.invokerRect
+    },
+    openChangePasswordModal(state) {
+      state.changePassword.isOpen = true
+    },
+    openChangeEmailModal(state) {
+      state.changeEmail.isOpen = true
     },
     openTasksListsOptionsModal(
       state,
@@ -279,6 +287,12 @@ const modalsSlice = createSlice({
     closeChangeStatusModal(state) {
       state.changeStatus.isOpen = false
     },
+    closeChangePasswordModal(state) {
+      state.changePassword.isOpen = false
+    },
+    closeChangeEmailModal(state) {
+      state.changeEmail.isOpen = false
+    },
     closeTasksListsOptionsModal(state) {
       state.tasksListOptions.isOpen = false
     },
@@ -359,6 +373,8 @@ export const {
   openChangeCoverModal,
   openChangeIconModal,
   openChangeStatusModal,
+  openChangePasswordModal,
+  openChangeEmailModal,
   openTasksListsOptionsModal,
   openHiddenTasksListModal,
   openHandleTasksListTitleModal,
@@ -378,6 +394,8 @@ export const {
   closeChangeCoverModal,
   closeChangeIconModal,
   closeChangeStatusModal,
+  closeChangePasswordModal,
+  closeChangeEmailModal,
   closeTasksListsOptionsModal,
   closeHiddenTasksListModal,
   closeHandleTasksListTitleModal,

@@ -2,10 +2,10 @@ import { TDecorDest } from 'components/ui/modals/components/ChangeDecor/Navbar/A
 import GetRandom from './GetRandom'
 
 export default class PageDecorActionsHandler {
-  static remove = (dest: TDecorDest) =>
+  public static remove = (dest: TDecorDest) =>
     dest === 'cover' ? { coverUrl: null, coverPosition: 50 } : { iconUrl: null }
 
-  static random = (dest: TDecorDest) =>
+  public static random = (dest: TDecorDest) =>
     dest === 'cover'
       ? { coverUrl: GetRandom.cover() }
       : { iconUrl: GetRandom.icon() }

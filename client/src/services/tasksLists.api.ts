@@ -9,7 +9,7 @@ export const tasksListsApi = createApi({
   reducerPath: 'tasksLists/api',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: `${SERVER_API}/workspace/lists`,
+    baseUrl: `${SERVER_API}/lists`,
   }),
 
   tagTypes: ['Lists'], // + Tasks

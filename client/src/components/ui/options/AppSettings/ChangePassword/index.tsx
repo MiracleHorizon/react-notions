@@ -11,8 +11,7 @@ const ChangePasswordOption = () => (
       <Option.Container>
         <Option.Title>Password</Option.Title>
         <Option.Description>
-          You can set a permanent password if you don&apos;t want to use
-          temporary login codes.
+          You can change your password here.
         </Option.Description>
       </Option.Container>
       <ChangePasswordButton />

@@ -25,6 +25,7 @@ const RenameTasksListOption: FC<{ _id: string }> = memo(({ _id }) => {
     <Option.Container>
       <Option.Form onSubmit={handleRenameList}>
         <OutlineInput
+          type='text'
           value={title}
           renderFocusable
           renderSelectable

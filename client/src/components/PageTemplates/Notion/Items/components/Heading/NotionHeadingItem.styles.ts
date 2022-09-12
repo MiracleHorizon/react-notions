@@ -11,20 +11,25 @@ const Container = styled.div<
   }
 >`
   ${dFlex['center-start']};
-  min-height: ${p => NotionHeadingItemStylesHandler.getContainerStyles(p.type).containerHeight};
+  min-height: ${p =>
+    NotionHeadingItemStylesHandler.getContainerStyles(p.type).containerHeight};
   width: 100%;
-  margin-bottom: ${p => NotionHeadingItemStylesHandler.getContainerStyles(p.type).marginBottom};
+  margin-bottom: ${p =>
+    NotionHeadingItemStylesHandler.getContainerStyles(p.type).marginBottom};
   padding: 3px 2px;
   background: ${p => ContentItemColorsHandler.setBgColor(p.bgColor, p.theme)};
   z-index: 10;
 
   div[contenteditable] {
-    width: 100%;
-    font-size: ${p => NotionHeadingItemStylesHandler.getContentStyles(p.type).fontSize};
+    max-width: 100%;
+    width: auto;
+    height: 100%;
+    font-size: ${p =>
+      NotionHeadingItemStylesHandler.getContentStyles(p.type).fontSize};
     font-weight: 600;
+    line-height: 24px;
     white-space: pre-wrap;
     word-break: break-word;
-    overflow: hidden;
     color: ${p => ContentItemColorsHandler.setColor(p.color, p.theme)};
     caret-color: ${p => p.theme.colors['caret-primary']};
 

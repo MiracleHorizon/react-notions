@@ -5,7 +5,7 @@ import CreateNotionContentItemOption from 'components/ui/options/CreateNotionCon
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
 import { NOTION_CONTENT_ITEM_TYPE_OPTIONS } from 'utils/constants/notionContentItems'
@@ -20,7 +20,7 @@ const CreateNotionContentItemModal = () => {
   const [isScrollOnBottom, setScrollBottom] = useState<boolean>(false)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'rightBottom',
+    pos: ModalPosition.RIGHT_BOTTOM,
     invokerRect,
   })
 

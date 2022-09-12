@@ -4,6 +4,6 @@ import { StartOpenOptionEnum } from 'store/slices/app/app.types'
 export default interface DropdownProps {
   options: string[]
   activeOption: string
-  setOption: SetState<StartOpenOptionEnum> | SetState<string> //! Кринж
+  setOption: SetState<StartOpenOptionEnum> | SetState<string>
   type: 'theme' | 'startOpen'
 }

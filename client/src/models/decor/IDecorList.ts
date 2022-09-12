@@ -7,4 +7,5 @@ export default interface IDecorList {
 export interface IDecorItem {
   imgUrl: string
   tooltipTitle: string
+  tooltipDescription?: string
 }

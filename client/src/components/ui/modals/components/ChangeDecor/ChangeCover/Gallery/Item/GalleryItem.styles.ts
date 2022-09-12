@@ -4,6 +4,10 @@ export const Wrapper = styled.div`
   position: relative;
   width: 25%;
   padding: 2px;
+
+  div[data-el='cover-item-tooltip'] {
+    max-width: 123px;
+  }
 `
 
 export const Container = styled.div`
@@ -12,7 +16,7 @@ export const Container = styled.div`
   height: 64px;
 
   &:hover {
-    opacity: 0.85;
+    opacity: 0.9;
   }
 `
 

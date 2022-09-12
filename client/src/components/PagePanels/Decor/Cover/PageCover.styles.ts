@@ -6,10 +6,10 @@ export const Wrapper = styled.div<CoverWrapperProps>`
   position: relative;
   cursor: ${p => (p.isRepositionEnabled ? 'all-scroll' : 'default')};
   ${dFlex['center-col']};
-  min-height: 0;
+  min-height: 30px;
   width: 100%;
   height: ${p => (p.template === 'Notion' ? 290 : 195)}px;
-` // Заменить на проценты
+`
 
 export const Image = styled.img<{ imagePosition: number }>`
   display: block;

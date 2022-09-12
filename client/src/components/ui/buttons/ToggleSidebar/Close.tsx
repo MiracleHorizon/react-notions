@@ -1,17 +1,17 @@
-import React, { FC, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC } from 'react'
 
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { DoubleChevronSvg } from 'components/ui/svg'
-import { CloseSidebarTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import Button from './ToggleSidebarButton.styles'
 
 const CloseSidebarButton: FC<{ isSidebarHovering: boolean }> = ({
   isSidebarHovering,
 }) => {
   const { closeSidebar } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering()
 
   const handleOpenSidebar = () => closeSidebar()
 
@@ -21,11 +21,18 @@ const CloseSidebarButton: FC<{ isSidebarHovering: boolean }> = ({
       role='button'
       data-btn='close-sb'
       dest='close'
-      isHovering={isSidebarHovering}
+      isSidebarHovering={isSidebarHovering}
       onClick={handleOpenSidebar}
     >
       <DoubleChevronSvg />
-      {isHovering && <CloseSidebarTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Close sidebar'
+          desc='Ctrl+\'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={ref}
+        />
+      )}
     </Button>
   )
 }

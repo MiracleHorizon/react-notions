@@ -1,11 +1,12 @@
 import React from 'react'
 
+import useActions from 'hooks/useActions'
 import * as Button from './ChangeEmailButton.styles'
 
 const ChangeEmailButton = () => {
-  const handleOpenChangeEmailModal = () => {
-    console.log()
-  }
+  const { openChangeEmailModal } = useActions()
+
+  const handleOpenChangeEmailModal = () => openChangeEmailModal()
 
   return (
     <Button.Container onClick={handleOpenChangeEmailModal}>

@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   position: relative;
   align-self: flex-start;
   margin-left: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   
   svg {
     position: absolute;

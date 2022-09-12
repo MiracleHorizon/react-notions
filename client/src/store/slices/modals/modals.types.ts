@@ -23,6 +23,8 @@ export default interface ModalsState {
   notionItemDecor: ModalWithNotionContentItemId & IInvokerRect
   webBookmark: { _id: string } & IInvokerRect & ModalInitialState
   changeStatus: ChangeStatusModalState
+  changePassword: ModalInitialState
+  changeEmail: ModalInitialState
   dropdown: DropdownPopupState
 }
 
@@ -70,20 +72,23 @@ export interface DropdownPopupState {
 }
 
 export interface TasksListOptionsModalState
-  extends ModalWithListId, IInvokerRect {
+  extends ModalWithListId,
+    IInvokerRect {
   color: string
   hidden: boolean | null
   template: 'default' | 'taskModal'
 }
 
 export interface HandleTasksListTitleModalState
-  extends ModalWithListId, IInvokerRect {
+  extends ModalWithListId,
+    IInvokerRect {
   title: string
   dest: 'edit' | 'create'
 }
 
 export interface ChangeStatusModalState
-  extends ModalInitialState, IInvokerRect {
+  extends ModalInitialState,
+    IInvokerRect {
   list: ITasksList
   task: IPage
 }

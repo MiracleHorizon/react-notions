@@ -3,7 +3,7 @@ import { NOTION_CONTENT_ITEM_COLORS } from 'utils/constants/colors'
 import ITheme, { Theme } from 'themes/theme.model'
 
 export default class ContentItemColorsHandler {
-  static setColor(color: NotionContentItemColorsEnum, theme: ITheme) {
+  public static setColor(color: NotionContentItemColorsEnum, theme: ITheme) {
     const { colors } = NOTION_CONTENT_ITEM_COLORS
 
     switch (color) {
@@ -64,7 +64,7 @@ export default class ContentItemColorsHandler {
     }
   }
 
-  static setBgColor(color: NotionContentItemColorsEnum, theme: ITheme) {
+  public static setBgColor(color: NotionContentItemColorsEnum, theme: ITheme) {
     const { bgColors } = NOTION_CONTENT_ITEM_COLORS
 
     switch (color) {

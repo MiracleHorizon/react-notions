@@ -32,6 +32,7 @@ export const selectHiddenTasksListModalClosable = (
   state: RootState
 ): boolean => {
   const {
+    notionTask: { isOpen: isNotionsTaskModalOpen },
     pageOptions: { isOpen: isPageOptionsModalOpen },
     handleTasksList: { isOpen: isHandleTasksListTitleModalOpen },
     tasksListOptions: { isOpen: isTasksListOptionsModalOpen },
@@ -41,6 +42,7 @@ export const selectHiddenTasksListModalClosable = (
   } = state.alerts
 
   return (
+    !isNotionsTaskModalOpen &&
     !isTasksListOptionsModalOpen &&
     !isHandleTasksListTitleModalOpen &&
     !isPageOptionsModalOpen &&
@@ -51,13 +53,30 @@ export const selectHiddenTasksListModalClosable = (
 export const selectMovePageModalState = (state: RootState) =>
   state.modals.movePage
 
-export const selectIsDropdownsClose = (state: RootState): boolean => {
+export const selectAppSettingsModalClosable = (state: RootState): boolean => {
   const {
-    theme: { isOpen: isOpenThemeDropdownOpen },
-    startOpen: { isOpen: isStartOpenDropdownOpen },
-  } = state.modals.dropdown
+    dropdown: {
+      theme: { isOpen: isOpenThemeDropdownOpen },
+      startOpen: { isOpen: isStartOpenDropdownOpen },
+    },
+    changePassword: { isOpen: isChangePasswordModalOpen },
+    changeEmail: { isOpen: isChangeEmailModalOpen },
+  } = state.modals
+  const {
+    fillEmail: { isOpen: isFillEmailAlertOpen },
+    deleteAccount: { isOpen: isDeleteAccountAlertOpen },
+    changePassword: { isOpen: isChangePasswordAlertOpen },
+  } = state.alerts
 
-  return !isOpenThemeDropdownOpen && !isStartOpenDropdownOpen
+  return (
+    !isOpenThemeDropdownOpen &&
+    !isStartOpenDropdownOpen &&
+    !isChangePasswordModalOpen &&
+    !isChangeEmailModalOpen &&
+    !isFillEmailAlertOpen &&
+    !isDeleteAccountAlertOpen &&
+    !isChangePasswordAlertOpen
+  )
 }
 
 export const selectEmptyPageItemSelectable = (state: RootState): boolean => {

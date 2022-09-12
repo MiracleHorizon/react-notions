@@ -14,10 +14,6 @@ export const Wrapper = styled.div<{ bgColor: NotionContentItemColorsEnum }>`
   height: auto;
   padding-bottom: 10px;
   background: ${p => ContentItemColorsHandler.setBgColor(p.bgColor, p.theme)};
-
-  div[data-el='notion-item'] {
-    width: 100%;
-  }
 `
 
 export const TitleContainer = styled.div`

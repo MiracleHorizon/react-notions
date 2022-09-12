@@ -1,23 +1,20 @@
-import React, { FC, memo, useRef, useState } from 'react'
+import React, { FC, memo } from 'react'
 import { useNavigate } from 'react-router'
 
-import { ToggleFavoriteTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { FavoriteStarSvg, UnfavoriteStarSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
 import { useUpdatePageMutation } from 'services/notions.api'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import IPage from 'models/page/IPage'
 import Button from './ToggleFavoriteButton.styles'
 
 const ToggleFavoriteButton: FC<IPage> = memo(({ _id, favorite }) => {
   const { closeNotionTaskModal } = useActions()
-  const [isHovering, setHovering] = useState<boolean>(false)
+  const { ref, isHovering, setHovering } = useDebounceHovering()
   const [updatePage] = useUpdatePageMutation()
-  const ref = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
-
-  const handleMouseEnter = () => setHovering(true)
-
-  const handleMouseLeave = () => setHovering(false)
 
   const handleToggleFavorite = async () => {
     const body = {
@@ -39,12 +36,18 @@ const ToggleFavoriteButton: FC<IPage> = memo(({ _id, favorite }) => {
       role='button'
       data-btn='toggle-fav'
       onClick={handleToggleFavorite}
-      onMouseOver={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       {favorite ? <FavoriteStarSvg /> : <UnfavoriteStarSvg />}
       {isHovering && (
-        <ToggleFavoriteTooltip reference={ref} favorite={favorite} />
+        <FilledTooltip
+          title={`${
+            favorite ? 'Remove this page from' : 'Pin this page in'
+          } your favorites`}
+          desc='Ctrl+Alt+Shift+F'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={ref}
+          itemsCenter
+        />
       )}
     </Button>
   )

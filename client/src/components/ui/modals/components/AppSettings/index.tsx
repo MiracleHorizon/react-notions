@@ -10,22 +10,23 @@ import useActions from 'hooks/useActions'
 import useCloseModal from 'hooks/useCloseModal'
 import { AppSettingsContext } from 'context/AppSettings'
 import { selectUser } from 'store/slices/user/auth.selectors'
-import { selectIsDropdownsClose } from 'store/slices/modals/modals.selectors'
+import { selectAppSettingsModalClosable } from 'store/slices/modals/modals.selectors'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
 import * as Modal from './AppSettingsModal.styles'
 
 const AppSettingsModal = () => {
   const { closeAppSettingsModal, showFillNameAlert, showNotSavedChangesAlert } = useActions()
-  const isDropdownsClose = useSelector(selectIsDropdownsClose)
+  const isClosable = useSelector(selectAppSettingsModalClosable)
   const { fullName: userFullName } = useSelector(selectUser)
   const [fullName, setFullName] = useState<string | null>(userFullName)
-  const [isScrollOnTop, setScrollTop] = useState<boolean>(false)
+  const [isScrollOnTop, setScrollTop] = useState<boolean>(true)
   const ref = useRef<HTMLDivElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   const handleChangeName = (value: string) => setFullName(value)
 
   const handleCloseModal = () => {
-    if (fullName === '') {
+    if (userFullName === '') {
       return showFillNameAlert()
     }
 
@@ -36,23 +37,23 @@ const AppSettingsModal = () => {
     closeAppSettingsModal()
   }
 
-  useCloseModal(ref, isDropdownsClose ? handleCloseModal : null)
+  useCloseModal(ref, isClosable ? handleCloseModal : null)
 
   useEventListener(
     'scroll',
-    () => handleScrollTop({ node: ref.current, setScrollTop }),
-    ref
+    () => handleScrollTop({ node: contentRef.current, setScrollTop }),
+    contentRef
   )
 
   return (
     <ModalWrapper inset>
-      <Modal.Container ref={ref} isScrollOnTop={isScrollOnTop}>
+      <Modal.Container ref={ref}>
         <AppSettingsContext.Provider value={{ fullName, handleChangeName }}>
-          <Modal.Content>
-            <AppSettings />
-            <AccountSettings />
-          </Modal.Content>
-          <AppSettingsActionsBar />
+        <Modal.Content ref={contentRef} isScrollOnTop={isScrollOnTop}>
+          <AppSettings />
+          <AccountSettings />
+        </Modal.Content>
+        <AppSettingsActionsBar />
         </AppSettingsContext.Provider>
       </Modal.Container>
     </ModalWrapper>

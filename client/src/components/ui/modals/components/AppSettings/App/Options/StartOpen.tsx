@@ -8,9 +8,9 @@ import * as Option from './AppSettingsOption.styles'
 
 const StartOpenOption = () => {
   const { setStartOpenOption } = useActions()
+  const dropdownOptions = useMemo(() => Object.values(StartOpenOptionEnum), [])
   const { startOpen } = useTypedSelector(s => s.app)
   const [startOption, setStartOption] = useState<StartOpenOptionEnum>(startOpen)
-  const dropdownOptions = useMemo(() => Object.values(StartOpenOptionEnum), [])
 
   useEffect(() => {
     setStartOption(startOption)

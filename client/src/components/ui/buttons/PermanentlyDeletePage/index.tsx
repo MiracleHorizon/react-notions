@@ -1,15 +1,15 @@
-import React, { FC, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC } from 'react'
 
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { DeleteTrashSvg } from 'components/ui/svg'
-import { PermanentlyDeletePageTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import Button from './PermanentlyDeletePageButton.styles'
 
 const PermanentlyDeletePageButton: FC<{ _id: string }> = ({ _id }) => {
   const { showDeletePageAlert } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering()
 
   const handleOpenDeletePageAlert = () => showDeletePageAlert(_id)
 
@@ -21,7 +21,13 @@ const PermanentlyDeletePageButton: FC<{ _id: string }> = ({ _id }) => {
       onClick={handleOpenDeletePageAlert}
     >
       <DeleteTrashSvg />
-      {isHovering && <PermanentlyDeletePageTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Delete permanently'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={ref}
+        />
+      )}
     </Button>
   )
 }

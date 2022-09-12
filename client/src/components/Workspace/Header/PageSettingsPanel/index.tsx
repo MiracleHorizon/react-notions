@@ -1,20 +1,25 @@
-import React, { FC, memo, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC, memo,  } from 'react'
 
 import ToggleFavoriteButton from 'components/ui/buttons/ToggleFavorite'
 import OptionsButton from 'components/ui/buttons/Options'
-import { PageSettingsTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import IPage from 'models/page/IPage'
 import Container from './PageSettingsPanel.styles'
 
 const PageSettingsPanel: FC<IPage> = memo(page => {
   const { openPageSettingsModal } = useActions()
-  const optionsButtonRef = useRef<HTMLDivElement>(null)
-  const isOptionsButtonHovering = useHover(optionsButtonRef)
+  const {
+    ref: optionsButtonRef,
+    isHovering: isOptionsButtonHovering
+  } = useDebounceHovering()
 
   const handleOpenPageSettingsModal = () => {
-    const invokerRect = optionsButtonRef.current?.getBoundingClientRect().toJSON()
+    const invokerRect = optionsButtonRef.current
+      ?.getBoundingClientRect()
+      .toJSON()
     openPageSettingsModal({ invokerRect, page })
   }
 
@@ -29,7 +34,11 @@ const PageSettingsPanel: FC<IPage> = memo(page => {
         onClickAction={handleOpenPageSettingsModal}
       />
       {isOptionsButtonHovering && (
-        <PageSettingsTooltip reference={optionsButtonRef} />
+        <FilledTooltip
+          title='Styles, delete, and more...'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={optionsButtonRef}
+        />
       )}
     </Container>
   )

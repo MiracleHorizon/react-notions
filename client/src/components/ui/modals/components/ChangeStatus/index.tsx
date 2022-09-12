@@ -7,7 +7,7 @@ import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './ChangeStatusModal.styles'
 
@@ -20,7 +20,7 @@ const ChangeStatusModal = () => {
   const { value, handleChangeValue } = useInput('')
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'changeStatus',
+    pos: ModalPosition.CHANGE_STATUS,
     invokerRect,
   })
 

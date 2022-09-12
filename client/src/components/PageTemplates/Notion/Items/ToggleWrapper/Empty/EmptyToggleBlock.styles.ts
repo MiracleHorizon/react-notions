@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: 30px;
   margin-top: 8px;
   margin-left: -2px;
-  padding: 3px 2px;
+  padding: 3px;
   border-radius: 3px;
   ${bgTransitions.esInOut50};
   z-index: 1;

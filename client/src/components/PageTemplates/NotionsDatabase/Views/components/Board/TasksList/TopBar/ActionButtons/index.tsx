@@ -1,10 +1,11 @@
 import React, { FC, memo, useCallback, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
 
 import OptionsButton from 'components/ui/buttons/Options'
-import { CreatePageTooltipBoard } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import PlusButton from 'components/ui/buttons/Plus'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import PropTypes from './TasksListActionButtons.types'
 import * as Bar from './TasksListActionButtons.styles'
 
@@ -12,8 +13,10 @@ const TasksListActionButtons: FC<PropTypes> = memo(
   ({ _id, color, hidden, isHovering, pageLocked, onClickAction }) => {
     const { openTasksListsOptionsModal } = useActions()
     const optionsButtonRef = useRef<HTMLDivElement>(null)
-    const newPageButtonRef = useRef<HTMLDivElement>(null)
-    const isNewPageButtonHovering = useHover(newPageButtonRef)
+    const {
+      ref: newPageButtonRef,
+      isHovering: isNewPageButtonHovering
+    } = useDebounceHovering()
 
     const handleOpenListOptionModal = useCallback(() => {
       const invokerRect = optionsButtonRef.current
@@ -43,7 +46,11 @@ const TasksListActionButtons: FC<PropTypes> = memo(
         <Bar.ButtonContainer ref={newPageButtonRef}>
           <PlusButton onClickAction={onClickAction} />
           {isNewPageButtonHovering && (
-            <CreatePageTooltipBoard reference={newPageButtonRef} />
+            <FilledTooltip
+              title='Create new page'
+              pos={ModalPosition.CENTER_TOP}
+              invokerRef={newPageButtonRef}
+            />
           )}
         </Bar.ButtonContainer>
       </Bar.Wrapper>

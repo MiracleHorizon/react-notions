@@ -11,7 +11,10 @@ export default interface InputPropTypes
   reference?: RefObject<HTMLInputElement>
   renderFocusable?: boolean
   renderSelectable?: boolean
+  type: 'text' | 'email' | 'password' | 'url'
   register?: UseFormRegisterReturn<any>
+  isEmpty?: boolean
+  disabled?: boolean
 }
 
 export interface IInputParams {

@@ -1,18 +1,17 @@
-import React, { memo, useCallback, useRef } from 'react'
+import React, { memo } from 'react'
 import { useNavigate } from 'react-router'
-import { useHover } from 'usehooks-ts'
 
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { OpenFullPageSvg } from 'components/ui/svg'
-import { OpenFullPageTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import Container from './OpenFullPageButton.styles'
 
 const OpenFullPageButton = memo(({ _id }: { _id: string }) => {
   const { closeNotionTaskModal } = useActions()
+  const { ref, isHovering } = useDebounceHovering()
   const navigate = useNavigate()
-
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
 
   const handleOpenFullPage = () => {
     navigate(`/workspace/${_id}`)
@@ -27,7 +26,14 @@ const OpenFullPageButton = memo(({ _id }: { _id: string }) => {
       onClick={handleOpenFullPage}
     >
       <OpenFullPageSvg />
-      {isHovering && <OpenFullPageTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Open in full page'
+          desc='Ctrl+↵'
+          pos={ModalPosition.CENTER_TOP}
+          invokerRef={ref}
+        />
+      )}
     </Container>
   )
 })

@@ -24,7 +24,7 @@ const MovePageItem: FC<PropTypes> = memo(
       ) : (
         <PageSvg />
       )}
-      <Option.Title>{title}</Option.Title>
+      <Option.Title>{title === '' ? 'Untitled' : title}</Option.Title>
     </Option.Container>
   )
 )

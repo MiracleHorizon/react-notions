@@ -1,4 +1,4 @@
-import React, { FC, memo, useRef, useState } from 'react'
+import React, { FC, memo, useRef } from 'react'
 import { useHover } from 'usehooks-ts'
 
 import NotionItemOptionButtons from './OptionButtons'
@@ -10,7 +10,6 @@ import NotionQuoteItem from './components/Quote'
 import NotionPageLinkItem from './components/PageLink'
 import NotionWebBookmarkItem from './components/WebBookmark'
 import NotionDividerItem from './components/Divider'
-import DndHighlight from 'components/ui/DndHighlight'
 import contentItemDatasetHandler from 'utils/helpers/contentItemDatasetHandler'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
 import PropTypes from './NotionContentItem.types'

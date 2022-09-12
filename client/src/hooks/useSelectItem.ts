@@ -1,11 +1,5 @@
 import { useCallback, useState } from 'react'
 
-export interface ISelectItemState<T> {
-  isSelected: boolean
-  handleSelectItem: (item: T) => void
-  handleKeydownSelect: (e: KeyboardEvent, func?: () => void) => void
-}
-
 export default function useSelectItem<T>(initialValue: T, items?: T[]) {
   const [selectedItem, setSelectedItem] = useState<T>(initialValue)
 

@@ -3,7 +3,7 @@ import { dFlex } from 'assets/styles/uiKit'
 import { FilledTooltipContainerProps } from './FilledTooltip.types'
 
 export const Container = styled.div<FilledTooltipContainerProps>`
-  position: absolute;
+  position: ${p => (p.fixed ? 'fixed' : 'absolute')};
   top: ${p => p.coords?.top}px;
   left: ${p => p.coords?.left}px;
   display: flex;

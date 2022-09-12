@@ -12,5 +12,6 @@ export default interface ICreatePageContentItemBody {
   completed: boolean | null
   iconUrl: string | null
   pageId: string | null
+  author: string
   order?: number
 }

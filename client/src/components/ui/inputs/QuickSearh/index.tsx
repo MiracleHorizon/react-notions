@@ -8,7 +8,7 @@ const QuickSearchInput: FC<PropTypes> = params => {
 
   useEffect(() => ref.current?.focus(), [])
 
-  return <Input ref={ref} inputMode='text' {...params} />
+  return <Input ref={ref} {...params} />
 }
 
 export default QuickSearchInput

@@ -3,7 +3,7 @@ import { dFlex } from 'assets/styles/uiKit'
 import { PanelContainerProps } from './PageDecorPanel.types'
 
 export const Wrapper = styled.div`
-  ${dFlex['center-col']};
+  ${dFlex['center-start-col']};
   width: 100%;
   user-select: none;
 `

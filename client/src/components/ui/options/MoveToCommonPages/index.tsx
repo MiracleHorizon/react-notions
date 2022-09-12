@@ -20,9 +20,7 @@ const MoveToCommonPagesOption: FC<PropTypes> = memo(
         {user.avatarUrl ? (
           <Option.Icon src={handleImageUrl(user.avatarUrl)} alt='icon' />
         ) : (
-          <EmptyUserAvatar
-            firstChar={user.fullName ? user.fullName[0] : user.email[0]}
-          />
+          <EmptyUserAvatar firstChar={user.fullName[0]} />
         )}
         <Option.Title>
           Move to

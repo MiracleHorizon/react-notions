@@ -27,7 +27,7 @@ const HiddenTasksListModalTopBar: FC<PropTypes> = memo(
       />
       <OutlineInput
         renderFocusable
-        inputMode='text'
+        type='text'
         placeholder='Search for a page...'
         value={value}
         onChange={handleChangeValue}

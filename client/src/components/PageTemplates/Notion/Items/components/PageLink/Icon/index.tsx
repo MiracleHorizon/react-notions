@@ -1,9 +1,10 @@
-import React, { FC, memo, MouseEvent, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC, memo, MouseEvent } from 'react'
 
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { PageLinkIndicatorSvg, PageSvg } from 'components/ui/svg'
-import { ChangeIconTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import handleImageUrl from 'utils/helpers/handleImageUrl'
 import * as Icon from './NotionPageLinkItemIcon.styles'
 
@@ -12,8 +13,7 @@ const NotionPageLinkItemIcon: FC<{
   iconUrl: string | null
 }> = memo(({ _id, iconUrl }) => {
   const { openChangeIconModal } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering(200)
 
   const handleOpenChangeIconModal = (e: MouseEvent) => {
     e.stopPropagation()
@@ -32,7 +32,13 @@ const NotionPageLinkItemIcon: FC<{
         )}
       </Icon.IconContainer>
       <PageLinkIndicatorSvg />
-      {isHovering && <ChangeIconTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Change icon'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={ref}
+        />
+      )}
     </Icon.IconWrapper>
   )
 })

@@ -10,8 +10,8 @@ import * as Option from './ChangeNameOption.styles'
 
 const ChangeNameOption = () => {
   const { handleChangeName } = useContext(AppSettingsContext)
-  const { fullName, email } = useSelector(selectUser)
-  const { value, handleChangeValue } = useInput(fullName ? fullName : email)
+  const { fullName } = useSelector(selectUser)
+  const { value, handleChangeValue } = useInput(fullName)
   const debouncedValue = useDebounce(value, 100)
 
   const handleBlur = () => {
@@ -21,15 +21,17 @@ const ChangeNameOption = () => {
   }
 
   useEffect(() => {
-    handleChangeName(debouncedValue)
-  }, [debouncedValue, handleChangeName])
+    if (debouncedValue !== fullName) {
+      handleChangeName(debouncedValue)
+    }
+  }, [debouncedValue, fullName, handleChangeName])
 
   return (
     <Option.Wrapper>
       <Option.Container>
         <Option.Title>Preferred name</Option.Title>
         <OutlineInput
-          inputMode='text'
+          type='text'
           value={value}
           onChange={handleChangeValue}
           onBlur={handleBlur}

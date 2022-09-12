@@ -4,7 +4,7 @@ import PropTypes from '../types'
 import Input from './DefaultInput.styles'
 
 const DefaultInput: FC<PropTypes> = ({
-  inputMode,
+  type,
   placeholder,
   value,
   reference,
@@ -12,7 +12,7 @@ const DefaultInput: FC<PropTypes> = ({
 }) => (
   <Input
     ref={reference}
-    type={inputMode}
+    type={type}
     value={value}
     placeholder={placeholder}
     onChange={onChange}

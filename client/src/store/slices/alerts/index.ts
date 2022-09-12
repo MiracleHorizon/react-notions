@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import AlertsState from './alerts.types'
+import DeleteAccountAlert from '../../../components/ui/alerts/DeleteAccount'
+import { RootState } from '../../index'
+import useTypedSelector from '../../../hooks/useTypedSelector'
 
 const initialState: AlertsState = {
   deletePage: {
@@ -15,13 +18,16 @@ const initialState: AlertsState = {
     isOpen: false,
     dest: 'icon',
   },
-  notSavedChanges: { isOpen: false, fullNameValue: '' },
   fillName: { isOpen: false },
+  fillEmail: { isOpen: false },
+  changePassword: { isOpen: false },
+  deleteAccount: { isOpen: false },
+  notSavedChanges: { isOpen: false, fullNameValue: '' },
   movedToTrashTooltip: {
     isActive: false,
     pageId: '',
   },
-  clipboardCopyTooltip: { isActive: false },
+  clipboardCopyTooltip: { isActive: false, kind: 'property' },
 }
 
 const alertsSlice = createSlice({
@@ -48,19 +54,33 @@ const alertsSlice = createSlice({
       state.overLimitFileSize.isOpen = true
       state.overLimitFileSize.dest = action.payload.dest
     },
-    showMovedToTrashTooltip(state, action: PayloadAction<string>) {
-      state.movedToTrashTooltip.isActive = true
-      state.movedToTrashTooltip.pageId = action.payload
+    showFillNameAlert(state) {
+      state.fillName.isOpen = true
     },
-    showClipboardCopyTooltip(state) {
-      state.clipboardCopyTooltip.isActive = true
+    showFillEmailAlert(state) {
+      state.fillEmail.isOpen = true
+    },
+    showChangePasswordAlert(state) {
+      state.changePassword.isOpen = true
+    },
+    showDeleteAccountAlert(state) {
+      state.deleteAccount.isOpen = true
     },
     showNotSavedChangesAlert(state, action: PayloadAction<string>) {
       state.notSavedChanges.isOpen = true
       state.notSavedChanges.fullNameValue = action.payload
     },
-    showFillNameAlert(state) {
-      state.fillName.isOpen = true
+
+    showMovedToTrashTooltip(state, action: PayloadAction<string>) {
+      state.movedToTrashTooltip.isActive = true
+      state.movedToTrashTooltip.pageId = action.payload
+    },
+    showClipboardCopyTooltip(
+      state,
+      action: PayloadAction<{ kind: 'link' | 'property' }>
+    ) {
+      state.clipboardCopyTooltip.kind = action.payload.kind
+      state.clipboardCopyTooltip.isActive = true
     },
 
     hideDeletePageAlert(state) {
@@ -77,11 +97,20 @@ const alertsSlice = createSlice({
     hideOverLimitFileSizeAlert(state) {
       state.overLimitFileSize.isOpen = false
     },
-    hideNotSavedChangesAlert(state) {
-      state.notSavedChanges.isOpen = false
-    },
     hideFillNameAlert(state) {
       state.fillName.isOpen = false
+    },
+    hideFillEmailAlert(state) {
+      state.fillEmail.isOpen = false
+    },
+    hideChangePasswordAlert(state) {
+      state.changePassword.isOpen = false
+    },
+    hideDeleteAccountAlert(state) {
+      state.deleteAccount.isOpen = false
+    },
+    hideNotSavedChangesAlert(state) {
+      state.notSavedChanges.isOpen = false
     },
 
     hideMovedToTrashTooltip(state) {
@@ -98,18 +127,37 @@ export const {
   showDeleteTasksListAlert,
   showAlreadyExistAlert,
   showOverLimitFileSizeAlert,
+  showFillNameAlert,
+  showFillEmailAlert,
+  showChangePasswordAlert,
+  showDeleteAccountAlert,
+  showNotSavedChangesAlert,
   showMovedToTrashTooltip,
   showClipboardCopyTooltip,
-  showNotSavedChangesAlert,
-  showFillNameAlert,
   hideDeletePageAlert,
   hideDeleteTasksListAlert,
   hideAlreadyExistAlert,
   hideOverLimitFileSizeAlert,
-  hideNotSavedChangesAlert,
   hideFillNameAlert,
+  hideFillEmailAlert,
+  hideChangePasswordAlert,
+  hideDeleteAccountAlert,
+  hideNotSavedChangesAlert,
   hideMovedToTrashTooltip,
   hideClipboardCopyTooltip,
 } = alertsSlice.actions
 
 export default alertsSlice.reducer
+
+export const selectDeleteAccountAlertClosable = (state: RootState): boolean => {
+  const {
+    alerts: {
+      fillEmail: { isOpen: isFillEmailAlertOpen },
+    },
+    modals: {
+      quickSearch: { isOpen: isQuickSearchModalOpen },
+    },
+  } = state
+
+  return !isFillEmailAlertOpen && !isQuickSearchModalOpen
+}

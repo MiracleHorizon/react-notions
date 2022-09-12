@@ -1,20 +1,18 @@
-import React, { lazy, Suspense, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import AuthLayout from 'layouts/Auth'
-import AuthFormLoader from 'components/ui/loaders/AuthForm'
+import Auth from './index'
+import DefaultRedError from 'components/ui/errors/DefaultRed'
 import useActions from 'hooks/useActions'
-import { useLoginMutation } from 'services/user.api'
-import { SubmitAuthParams } from './Form/AuthForm.types'
-
-const AuthForm = lazy(() => import('./Form'))
+import { useLoginMutation } from 'services/auth.api'
+import IErrorResponseData from 'models/api/response/IErrorResponseData'
+import { SubmitAuthParams } from './AuthForm/AuthForm.types'
 
 const Login = () => {
   const { login } = useActions()
-  const [authLogin, { data, isLoading, isSuccess, isError }] = useLoginMutation()
+  const [authLogin, { data, isLoading, isSuccess, error }] = useLoginMutation()
 
-  const handleSubmitLogin = (params: SubmitAuthParams) => {
-    authLogin(params)
-  }
+  const handleSubmitLogin = (params: SubmitAuthParams) => authLogin(params)
 
   useEffect(() => {
     if (isSuccess && data) login(data)
@@ -22,10 +20,12 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <Suspense fallback={<AuthFormLoader />}>
-        <AuthForm onSubmit={handleSubmitLogin} />
-        {isError && <span>Ошибка авторизации</span>}
-      </Suspense>
+      <>
+        <Auth onSubmit={handleSubmitLogin} />
+        {error && 'data' in error && (
+          <DefaultRedError title={(error.data as IErrorResponseData).message} />
+        )}
+      </>
     </AuthLayout>
   )
 }

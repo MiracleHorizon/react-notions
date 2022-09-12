@@ -7,7 +7,7 @@ import { CLIPBOARD_COPY_TOOLTIP_HIDE_DELAY } from 'utils/constants/app'
 
 const OutgoingClipboardCopyTooltip = () => {
   const { hideClipboardCopyTooltip } = useActions()
-  const { isActive } = useTypedSelector(s => s.alerts.clipboardCopyTooltip)
+  const { isActive, kind } = useTypedSelector(s => s.alerts.clipboardCopyTooltip)
 
   useEffect(() => {
     setTimeout(() => {
@@ -16,7 +16,10 @@ const OutgoingClipboardCopyTooltip = () => {
   }, [hideClipboardCopyTooltip])
 
   return (
-    <OutgoingTooltip title='Copied property to clipboard' isActive={isActive} />
+    <OutgoingTooltip
+      title={`Copied ${kind} to clipboard`}
+      isActive={isActive}
+    />
   )
 }
 

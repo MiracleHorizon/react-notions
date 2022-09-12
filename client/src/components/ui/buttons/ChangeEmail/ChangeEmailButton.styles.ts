@@ -5,7 +5,7 @@ export const Container = styled.div`
   cursor: pointer;
   ${dFlex.center};
   max-width: 85px;
-  height: 21px;
+  height: 24px;
   margin-left: 12px;
   padding: 0 5px;
   border-radius: 3px;

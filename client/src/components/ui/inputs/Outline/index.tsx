@@ -5,13 +5,15 @@ import PropTypes from '../types'
 import { Wrapper, Input } from './OutlineInput.styles'
 
 const OutlineInput: FC<PropTypes> = ({
+  register,
   value,
+  type,
+  isEmpty,
+  disabled,
+  placeholder,
   onChange,
   onClear,
   onBlur,
-  inputMode,
-  register,
-  placeholder,
   renderFocusable,
   renderSelectable,
 }) => {
@@ -27,14 +29,17 @@ const OutlineInput: FC<PropTypes> = ({
       <Input
         data-input='outline'
         ref={ref}
-        type={inputMode}
+        type={type}
+        disabled={disabled}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
         {...register}
       />
-      {value !== '' && onClear && <ClearInputButton onClickAction={onClear} />}
+      {(isEmpty !== undefined ? !isEmpty : value !== '') && onClear && (
+        <ClearInputButton onClickAction={onClear} />
+      )}
     </Wrapper>
   )
 }

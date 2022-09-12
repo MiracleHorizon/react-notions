@@ -30,7 +30,7 @@ const PagesTrashModal = () => {
         <Modal.InputContainer>
           <OutlineInput
             renderFocusable
-            inputMode='text'
+            type='text'
             placeholder='Filter by page title...'
             value={value}
             onChange={handleChangeValue}

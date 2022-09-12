@@ -15,6 +15,7 @@ export default interface INotionContentItem {
   order: number
   createdAt: string
   updatedAt: string
+  author: string
   // Toggle.
   expanded: boolean | null
   dependencies: INotionContentItem[]

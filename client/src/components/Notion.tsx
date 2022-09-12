@@ -27,19 +27,21 @@ const Notion = () => {
   }, [pathname, getPage])
 
   useEffect(() => {
-    if (isSuccess && page) setCurrentPage(page)
-    if (isError) navigate(`/workspace/${redirectPage}`)
-
-    return () => {
-      if (page) window.localStorage.setItem('lastPageId', page._id)
+    if (isSuccess && page) {
+      setCurrentPage(page)
+      window.localStorage.setItem('lastPageId', page._id)
     }
+
+    if (isError) navigate(`/workspace/${redirectPage}`)
   }, [page, navigate, isSuccess, isError, redirectPage, setCurrentPage])
 
   useEffect(() => {
     searchParams.get('p') ? openNotionTaskModal() : closeNotionTaskModal()
   }, [searchParams, openNotionTaskModal, closeNotionTaskModal])
 
-  if (page && user._id !== page.author) return null
+  // На данный момент стоит блокировка просмотра страницы для других пользователей.
+  // В будущем, скорее всего, данная функциональность будет реализована.
+  if (page && user._id !== page.author) navigate('*')
 
   return (
     <WorkspaceContent>

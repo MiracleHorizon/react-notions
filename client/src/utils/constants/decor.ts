@@ -41,7 +41,7 @@ export const PAGE_COVERS_URLS: string[] = [
   'covers/solid_colors_and_gradients/solid_red.png',
 ]
 
-export const EMOJIS_URLS: string[] = [
+export const PAGE_EMOJIS_URLS: string[] = [
   'emoji/smileys/smiley.svg',
   'emoji/smileys/cold-face.svg',
   'emoji/smileys/pile-of-poo.svg',

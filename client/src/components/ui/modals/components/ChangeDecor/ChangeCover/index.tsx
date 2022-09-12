@@ -8,7 +8,7 @@ import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import * as Modal from './ChangeCoverModal.styles'
 
 const CoverUploader = lazy(() => import('./Upload'))
@@ -21,7 +21,7 @@ const ChangeCoverModal = memo(() => {
   const { pageId, invokerRect } = useTypedSelector(s => s.modals.cover)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'centerBottom',
+    pos: ModalPosition.CENTER_BOTTOM,
     invokerRect,
   })
 

@@ -8,26 +8,17 @@ import handleImageUrl from 'utils/helpers/handleImageUrl'
 import * as Panel from './UserPanel.styles'
 
 const UserPanel: FC<{ isHovering: boolean }> = memo(({ isHovering }) => {
-  const user = useSelector(selectUser)
+  const { avatarUrl, fullName } = useSelector(selectUser)
 
   return (
     <Panel.Wrapper>
-      {user && (
-        <>
-          {user.avatarUrl ? (
-            <Panel.Avatar src={handleImageUrl(user.avatarUrl)} alt='avatar' />
-          ) : (
-            <EmptyUserAvatar
-              firstChar={user.fullName ? user.fullName[0] : user.email[0]}
-            />
-          )}
-          <Panel.Title>
-            {user.fullName ? user.fullName : user.email.split('@')[0]}&apos;s
-            Notion
-          </Panel.Title>
-          <CloseSidebarButton isSidebarHovering={isHovering} />
-        </>
+      {avatarUrl ? (
+        <Panel.Avatar src={handleImageUrl(avatarUrl)} alt='avatar' />
+      ) : (
+        <EmptyUserAvatar firstChar={fullName[0]} />
       )}
+      <Panel.Title>{fullName}&apos;s Notion</Panel.Title>
+      <CloseSidebarButton isSidebarHovering={isHovering} />
     </Panel.Wrapper>
   )
 })

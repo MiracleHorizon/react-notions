@@ -5,43 +5,49 @@ import DeletedPageItem from '../Item'
 import EmptyPagesTrash from '../Empty'
 import PaginationLoader from 'components/ui/loaders/Pagination'
 import useSelectItem from 'hooks/useSelectItem'
-import useFetchPagination, { FetchKind } from 'hooks/useFetchPagination'
+import useFetchPagination from 'hooks/useFetchPagination'
+import { FetchKind } from 'hooks/useFetchPagination/types'
 import PropTypes from './DeletedPagesList.types'
 
-const SearchDeletedPagesList: FC<PropTypes> = memo(({ paginationParams }) => {
-  const { pages, isLoading } = useFetchPagination({
-    kind: FetchKind.SEARCH_DELETED_PAGES,
-    ...paginationParams,
-  })
-  const pagesIds = useMemo(
-    () => pages?.map(page => page._id),
-    [pages]
-  )
-  const {
-    selectedItem,
-    handleSelectItem,
-    handleKeydownSelect
-  } = useSelectItem('', pagesIds)
+const SearchDeletedPagesList: FC<PropTypes> = memo(
+  ({ debouncedValue, node, handleScrollOffset }) => {
+    const paginationParams = useMemo(() => ({
+      kind: FetchKind.SEARCH_DELETED_PAGES,
+      handleScrollOffset,
+      debouncedValue,
+      offsetValue: 20,
+      node,
+    }), [handleScrollOffset, debouncedValue, node])
+    const { pages, isLoading, isSuccess, isError } = useFetchPagination(paginationParams)
+    const pagesIds = useMemo(() => pages?.map(page => page._id), [pages])
 
-  useEventListener('keydown', e => handleKeydownSelect(e))
+    const {
+        selectedItem,
+        handleSelectItem,
+        handleKeydownSelect
+    } = useSelectItem('', pagesIds)
 
-  if (pages?.length === 0) {
-    return <EmptyPagesTrash />
+    useEventListener('keydown', e => handleKeydownSelect(e))
+
+    return (
+      <>
+        {isSuccess && pages && (
+          <>
+            {pages.map(page => (
+              <DeletedPageItem
+                key={page._id}
+                {...page}
+                isSelected={selectedItem === page._id}
+                handleSelectItem={handleSelectItem}
+              />
+            ))}
+            {pages.length === 0 && <EmptyPagesTrash />}
+          </>
+        )}
+        {isLoading && <PaginationLoader />}
+      </>
+    )
   }
-
-  return (
-    <>
-      {pages?.map(page => (
-        <DeletedPageItem
-          key={page._id}
-          {...page}
-          isSelected={selectedItem === page._id}
-          handleSelectItem={handleSelectItem}
-        />
-      ))}
-      {isLoading && <PaginationLoader/>}
-    </>
-  )
-})
+)
 
 export default SearchDeletedPagesList

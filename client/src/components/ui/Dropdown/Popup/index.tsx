@@ -6,7 +6,7 @@ import { CheckSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
 import useSelectItem from 'hooks/useSelectItem'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import PropTypes from './DropdownPopup.types'
 import * as Popup from './DropdownPopup.styles'
@@ -27,7 +27,7 @@ const DropdownPopup: FC<PropTypes> = ({
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
     invokerRect: invokerRef.current?.getBoundingClientRect().toJSON(),
-    pos: 'rightCenter',
+    pos: ModalPosition.RIGHT_CENTER,
   })
 
   const handleSelectOption = (option: any) => {

@@ -7,8 +7,7 @@ const View = styled.div`
   gap: 16px;
   width: 100%;
   height: auto;
-  margin-bottom: 200px;
-  padding: 16px 90px 0 90px;
+  padding: 16px 90px 100px 90px;
 `
 
 export default View

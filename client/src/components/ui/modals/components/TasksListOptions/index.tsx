@@ -9,7 +9,7 @@ import useActions from 'hooks/useActions'
 import useSelectItem from 'hooks/useSelectItem'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
 import ITheme from 'themes/theme.model'
@@ -40,7 +40,7 @@ const TasksListOptionsModal = () => {
   } = useSelectItem(color, options)
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'centerBottom',
+    pos: ModalPosition.CENTER_BOTTOM,
     invokerRect,
   })
 

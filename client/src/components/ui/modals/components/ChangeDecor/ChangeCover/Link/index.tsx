@@ -23,7 +23,7 @@ const CoverLink: FC<{ _id: string }> = ({ _id }) => {
     <Link.Wrapper>
       <OutlineInput
         renderFocusable
-        inputMode='text'
+        type='text'
         placeholder='Paste an image link...'
         value={value}
         onChange={handleChangeValue}

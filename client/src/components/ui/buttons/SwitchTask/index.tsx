@@ -1,14 +1,14 @@
-import React, { FC, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC } from 'react'
 
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { ChevronDownRoundedSvg, ChevronUpRoundedSvg } from 'components/ui/svg'
-import { SwitchTaskTooltip } from 'components/ui/tooltips'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import PropTypes from './SwitchTaskButton.types'
 import * as Button from './SwitchTaskButton.styles'
 
 const SwitchTaskButton: FC<PropTypes> = ({ dest, isActive, onClickAction }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering(250)
 
   return (
     <Button.Wrapper
@@ -19,7 +19,14 @@ const SwitchTaskButton: FC<PropTypes> = ({ dest, isActive, onClickAction }) => {
     >
       <Button.Container onClick={onClickAction}>
         {dest === 'prev' ? <ChevronUpRoundedSvg /> : <ChevronDownRoundedSvg />}
-        {isHovering && <SwitchTaskTooltip reference={ref} dest={dest} />}
+        {isHovering && (
+          <FilledTooltip
+            title={`${dest === 'prev' ? 'Previous' : 'Next'} page`}
+            desc={`Alt+${dest === 'prev' ? 'K' : 'J'}`}
+            pos={ModalPosition.CENTER_TOP}
+            invokerRef={ref}
+          />
+        )}
       </Button.Container>
     </Button.Wrapper>
   )

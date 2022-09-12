@@ -7,7 +7,7 @@ import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import { useUpdateItemMutation } from 'services/notions.api'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import * as Modal from './CreateWebBookmarkModal.styles'
@@ -19,7 +19,7 @@ const CreateWebBookmarkModal = () => {
   const { value, handleChangeValue, handleClearValue } = useInput('')
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'centerBottom',
+    pos: ModalPosition.CENTER_BOTTOM,
     invokerRect,
   })
 
@@ -35,7 +35,7 @@ const CreateWebBookmarkModal = () => {
       <Modal.Container ref={node => nodeRefHandler(node, rect, setRef)} {...coords}>
         <OutlineInput
           renderFocusable
-          inputMode='url'
+          type='url'
           placeholder='Paste in https://...'
           value={value}
           onChange={handleChangeValue}

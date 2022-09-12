@@ -1,6 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common'
-import { TokenService } from '../auth/token/token.service'
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response } from 'express'
+
+import { TokenService } from 'app/user/token/token.service'
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
@@ -9,7 +10,6 @@ export class AuthMiddleware implements NestMiddleware {
   use(req: any, res: Response, next: NextFunction) {
     const authorizationHeader = req.headers.authorization
     if (!authorizationHeader) {
-      // throw new Error('Unauthorized')
       return res.json({ message: 'Пользователь не авторизован' })
     }
 

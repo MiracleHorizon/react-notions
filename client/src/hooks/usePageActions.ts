@@ -54,6 +54,7 @@ const usePageActions = ({
     openMovePageModal,
     closePageSettingsModal,
     showMovedToTrashTooltip,
+    showClipboardCopyTooltip,
     updatePageSettingsModalState,
   } = useActions()
 
@@ -138,6 +139,8 @@ const usePageActions = ({
         .then(() => closePageSettingsModal())
         .catch(() => console.error('Ошибка копирования'))
     }
+
+    showClipboardCopyTooltip({ kind: 'link' })
   }
 
   const handleOpenMovePageModal = () => {

@@ -3,8 +3,9 @@ import React, { FC, useCallback, useMemo, useState } from 'react'
 import GalleryList from './List'
 import PaginationLoader from 'components/ui/loaders/Pagination'
 import DefaultErrorExposition from 'components/ui/expositions/DefaultErrorExposition'
-import useFetchPagination, { FetchKind } from 'hooks/useFetchPagination'
+import useFetchPagination from 'hooks/useFetchPagination'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
+import { FetchKind } from 'hooks/useFetchPagination/types'
 import Wrapper from './CoverGallery.styles'
 
 const CoversGallery: FC<{ _id: string }> = ({ _id }) => {

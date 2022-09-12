@@ -38,7 +38,7 @@ const Global = createGlobalStyle<{ theme: ITheme }>`
   h3,
   h4,
   h5 {
-    color: black;
+    color: ${p => p.theme.colors['text-primary']};
   }
 
   h1 {

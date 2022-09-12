@@ -1,16 +1,16 @@
-import React, { memo, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { memo } from 'react'
 
 import OptionItem from 'components/ui/options/OptionItem'
-import { PagesTrashTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { TrashSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import Container from './PagesTrashPanel.styles'
 
 const PagesTrashPanel = memo(() => {
   const { openPagesTrashModal } = useActions()
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering()
 
   const handleOpenPagesTrashModal = () => openPagesTrashModal()
 
@@ -22,7 +22,13 @@ const PagesTrashPanel = memo(() => {
         StartSvg={TrashSvg}
         onClickAction={handleOpenPagesTrashModal}
       />
-      {isHovering && <PagesTrashTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Restore deleted pages.'
+          pos={ModalPosition.RIGHT_CENTER}
+          invokerRef={ref}
+        />
+      )}
     </Container>
   )
 })

@@ -1,10 +1,11 @@
 import styled from 'styled-components'
-import SidebarStylesHandler from 'utils/stylesHandlers/sidebar'
+import SidebarStylesHandler from 'utils/stylesHandlers/SidebarStylesHandler'
 import { bgTransitions, dFlex } from 'assets/styles/uiKit'
+import { Theme } from 'themes/theme.model'
 
 const Button = styled.div<{
   dest: 'open' | 'close'
-  isHovering: boolean
+  isSidebarHovering: boolean
 }>`
   cursor: pointer;
   ${p => SidebarStylesHandler.setToggleButtonParams(p.dest)};
@@ -12,7 +13,10 @@ const Button = styled.div<{
   width: 24px;
   height: 24px;
   border-radius: 3px;
-  opacity: ${p => (p.dest !== 'open' ? (p.isHovering ? 1 : 0) : 1)};
+  opacity: ${p => (p.dest !== 'open' ? (p.isSidebarHovering ? 1 : 0) : 1)};
+  fill: ${p => p.theme.identifier === Theme.LIGHT
+      ? p.theme.svgFills.primary
+      : p.theme.svgFills.secondary};
   ${bgTransitions.esIn20 + ', opacity 0.15s ease-in-out'};
 
   &:hover {

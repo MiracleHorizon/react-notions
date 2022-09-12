@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback } from 'react'
+import React, { FC, memo, useCallback, useMemo } from 'react'
 import { useEventListener } from 'usehooks-ts'
 import { useSelector } from 'react-redux'
 
@@ -10,9 +10,11 @@ import {
 } from 'services/notions.api'
 import useSelectItem from 'hooks/useSelectItem'
 import { selectEmptyPageItemSelectable } from 'store/slices/modals/modals.selectors'
+import { selectUser } from 'store/slices/user/auth.selectors'
 import handleUpdatePageTemplate from 'utils/helpers/handleUpdatePageTemplate'
 import { UPDATE_PAGE_TEMPLATES_OPTIONS } from 'utils/constants/app'
-import NotionContentItem from 'models/pageContent/NotionContentItem.class'
+import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import NotionContentItem from 'models/pageContent/NotionContentItem'
 import IPage from 'models/page/IPage'
 import Description from './EmptyPageContent.styles'
 
@@ -20,19 +22,33 @@ const EmptyPageContent: FC<IPage> = memo(({ _id, status }) => {
   const isSelectable = useSelector(selectEmptyPageItemSelectable)
   const [createContentItem] = useCreateItemMutation()
   const [updatePage] = useUpdatePageMutation()
-  const {
-    selectedItem,
-    handleSelectItem,
-    handleKeydownSelect
-  } = useSelectItem('', UPDATE_PAGE_TEMPLATES_OPTIONS.map(option => option.title))
+  const user = useSelector(selectUser)
+
+  const options = useMemo(() => {
+    return [
+      ...UPDATE_PAGE_TEMPLATES_OPTIONS.map(option => option.title),
+      'Notions database',
+    ]
+  }, [])
+  const { selectedItem, handleSelectItem, handleKeydownSelect } = useSelectItem(
+    '',
+    options
+  )
 
   const handleSelectTemplate = useCallback(
     (template: string) => {
+      const createItemBody = {
+        type: NotionContentItemTypes.TEXT,
+        parentPageId: _id,
+        author: user._id,
+        order: 0,
+      }
+
       template === 'Empty page'
-        ? createContentItem(NotionContentItem.createText(_id))
+        ? createContentItem(NotionContentItem.createItem(createItemBody))
         : updatePage({ _id, body: handleUpdatePageTemplate(template) })
     },
-    [_id, createContentItem, updatePage]
+    [_id, user._id, createContentItem, updatePage]
   )
 
   useEventListener('keydown', e => {
@@ -57,9 +73,9 @@ const EmptyPageContent: FC<IPage> = memo(({ _id, status }) => {
       ))}
       {status === null && (
         <EmptyPageItem
-          title='Notions List'
+          title='Notions database'
           StartSvg={PageSvg}
-          isSelected={selectedItem === 'Notions List'}
+          isSelected={selectedItem === 'Notions database'}
           handleSelectItem={handleSelectItem}
           onClickAction={handleSelectTemplate}
         />

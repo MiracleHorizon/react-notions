@@ -46,9 +46,6 @@ const appSlice = createSlice({
     setNotionsDatabaseView(state, action: PayloadAction<PageView>) {
       state.selectedView = action.payload
     },
-    setSavePageLoading(state, action: PayloadAction<boolean>) {
-      state.loadings.savePage = action.payload
-    },
 
     setSidebarWidth(state, action: PayloadAction<number>) {
       state.sidebar.width = action.payload
@@ -94,7 +91,6 @@ export const {
   closeSidebar,
   toggleSidebar,
   setNotionsDatabaseView,
-  setSavePageLoading,
 } = appSlice.actions
 
 export default appSlice.reducer

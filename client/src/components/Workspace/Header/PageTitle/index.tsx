@@ -2,7 +2,6 @@ import React, { FC, memo, useContext, useRef, useState } from 'react'
 
 import ParentPageTitle from './ParentPageTitle'
 import ToggleLockedButton from 'components/ui/buttons/ToggleLocked'
-import SavePageLoading from 'components/ui/SavePageLoading'
 import useActions from 'hooks/useActions'
 import WorkspaceScrollContext from 'context/WorkspaceScroll'
 import handleImageUrl from 'utils/helpers/handleImageUrl'
@@ -44,7 +43,6 @@ const HeaderPageTitle: FC<IPage> = memo(page => {
           setReLock={setReLock}
         />
       )}
-      <SavePageLoading />
     </Title.Wrapper>
   )
 })

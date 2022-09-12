@@ -5,7 +5,6 @@ export default interface AppState {
   selectedView: PageView
   startOpen: StartOpenOptionEnum
   lastPageId: string | null
-  loadings: { savePage: boolean }
   sidebar: SidebarState
   favoritePagesLists: PagesListState
   commonPagesLists: PagesListState

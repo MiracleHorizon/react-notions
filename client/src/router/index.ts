@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import HomePage from 'pages/Home'
 import RegisterPage from 'pages/Register'
 import LoginPage from 'pages/Login'
-import WorkspacePage from 'pages/Workspace'
+import ResetPasswordPage from 'pages/ResetPassword'
+import ActivateAccountPage from 'pages/ActivateAccount'
 import NotionPage from 'pages/Notion'
 
 export interface IRoute {
@@ -10,21 +10,24 @@ export interface IRoute {
   element: FC
 }
 
-export enum RouteNames {
-  HOME = '/',
+enum PublicRoutes {
   REGISTER = '/register',
   LOGIN = '/login',
-  WORKSPACE = '/workspace',
+  RESET_PASSWORD = '/reset',
+}
+
+enum PrivateRoutes {
   NOTION = '/workspace/:id',
+  ACTIVATE_ACCOUNT = '/activate',
 }
 
 export const publicRoutes: IRoute[] = [
-  // { path: RouteNames.HOME, element: HomePage },
-  { path: RouteNames.REGISTER, element: RegisterPage },
-  { path: RouteNames.LOGIN, element: LoginPage },
+  { path: PublicRoutes.REGISTER, element: RegisterPage },
+  { path: PublicRoutes.LOGIN, element: LoginPage },
+  { path: PublicRoutes.RESET_PASSWORD, element: ResetPasswordPage },
 ]
 
 export const privateRoutes: IRoute[] = [
-  { path: RouteNames.WORKSPACE, element: WorkspacePage },
-  { path: RouteNames.NOTION, element: NotionPage },
+  { path: PrivateRoutes.ACTIVATE_ACCOUNT, element: ActivateAccountPage },
+  { path: PrivateRoutes.NOTION, element: NotionPage },
 ]

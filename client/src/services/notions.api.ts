@@ -8,21 +8,21 @@ import ICreatePageContentItemBody from 'models/api/pageContent/ICreatePageConten
 import IUpdatePageContentItemParams from 'models/api/pageContent/IUpdatePageContentItemParams'
 import INotionContentItem from 'models/pageContent/INotionContentItem'
 import IUploadImage from 'models/api/IUploadImage'
-import ISearchDeletedPagesParams from 'models/api/pagination/ISearchDeletedPagesParams'
-import IGetDeletedPagesParams from 'models/api/pages/IGetDeletedPagesParams'
+import ISearchPagesParams from 'models/api/pagination/ISearchPagesParams'
 import IPagePaginationResponse from 'models/api/response/IPagePaginationResponse'
+import ISearchParams from 'models/api/pagination/ISearchParams'
 
 export const notionsApi = createApi({
   reducerPath: 'pages/api',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: `${SERVER_API}/workspace/pages`,
+    baseUrl: `${SERVER_API}/notions`,
   }),
 
-  tagTypes: ['Pages', 'Page', 'Trash'], //!
+  tagTypes: ['Pages', 'Page', 'Trash', 'List'],
 
   endpoints: build => ({
-    // Page.
+    // Notion.
     createPage: build.mutation<IPage, ICreatePageBody>({
       query: body => ({
         url: '',
@@ -33,27 +33,8 @@ export const notionsApi = createApi({
     }),
 
     getAllPages: build.query<IPage[], string>({
-      query: userId => `/user/${userId}`,
+      query: userId => `/all/${userId}`,
       providesTags: () => ['Pages'],
-    }),
-
-    getDeletedPages: build.query<IPagePaginationResponse, IGetDeletedPagesParams>({
-      query: ({ author, offset }) => ({
-        url: `/user/trash/${author}?limit=20&offset=${offset}`,
-      }),
-      // transformResponse: (pages: IPage[], meta) => ({
-      //   totalCount: Number(meta?.response?.headers.get('X-Total-Count')),
-      //   pages,
-      // }),
-      providesTags: () => ['Trash'],
-    }),
-
-    getPagesToMove: build.query<
-      IPage[],
-      { authorId: string; excludePageId: string }
-    >({
-      query: ({ authorId, excludePageId }) =>
-        `/move/${authorId}/${excludePageId}`,
     }),
 
     getByList: build.query<IPage[], string>({
@@ -67,7 +48,6 @@ export const notionsApi = createApi({
       providesTags: () => ['Pages'],
     }),
 
-    //!
     updatePage: build.mutation<string, IUpdatePageParams>({
       query: ({ _id, body }) => ({
         url: `/${_id}`,
@@ -83,7 +63,7 @@ export const notionsApi = createApi({
         method: 'PATCH',
         body: { deleted: true },
       }),
-      invalidatesTags: ['Pages'],
+      invalidatesTags: ['Pages', 'List'],
     }),
 
     restorePage: build.mutation<string, string>({
@@ -121,13 +101,14 @@ export const notionsApi = createApi({
       invalidatesTags: ['Trash'],
     }),
 
-    searchPages: build.query<IPage[], { author: string; query: string }>({
-      query: ({ author, query }) => `/search/${author}?query=${query}`,
+    searchPages: build.query<IPagePaginationResponse, ISearchPagesParams>({
+      query: ({ author, query, offset }) =>
+        `/search/${author}?query=${query}&offset=${offset}`,
     }),
 
     searchDeletedPages: build.query<
       IPagePaginationResponse,
-      ISearchDeletedPagesParams
+      ISearchPagesParams
     >({
       query: ({ author, query, offset }) =>
         `/search/trash/${author}?query=${query}&limit=20&offset=${offset}`,
@@ -135,22 +116,23 @@ export const notionsApi = createApi({
     }),
 
     searchPagesByList: build.query<
-      IPage[],
-      { author: string; listId: string; query: string }
+      IPagePaginationResponse,
+      { listId: string } & ISearchParams
     >({
-      query: ({ author, listId, query }) =>
-        `/search/${author}/list/${listId}?query=${query}`,
+      query: ({ listId, query, offset }) =>
+        `/search/list/${listId}?query=${query}&limit=10&offset=${offset}`,
+      providesTags: () => ['List'],
     }),
 
     searchPagesToMove: build.query<
-      IPage[],
-      { authorId: string; excludePageId: string; query: string }
+      IPagePaginationResponse,
+      { author: string; excludePageId: string } & ISearchParams
     >({
-      query: ({ authorId, excludePageId, query }) =>
-        `/search/move/${authorId}/${excludePageId}?query=${query}`,
+      query: ({ author, excludePageId, query, offset }) =>
+        `/search/move/${author}/${excludePageId}?query=${query}&limit=10&offset=${offset}`,
     }),
 
-    // Notion(page) content items.
+    // Notion content items.
     createItem: build.mutation<INotionContentItem, ICreatePageContentItemBody>({
       query: body => ({
         url: `/content`,
@@ -160,7 +142,6 @@ export const notionsApi = createApi({
       invalidatesTags: ['Pages'],
     }),
 
-    //! any
     updateItem: build.mutation<string, IUpdatePageContentItemParams>({
       query: ({ _id, body }) => ({
         url: `/content/${_id}`,
@@ -182,20 +163,16 @@ export const notionsApi = createApi({
 
 // Main.
 export const {
-  useCreatePageMutation,
   useGetAllPagesQuery,
+  useLazyGetOnePageQuery,
+  useCreatePageMutation,
   useUpdatePageMutation,
+  useMovePageToTrashMutation,
+  useRestorePageMutation,
   useDeletePageMutation,
   useCreateItemMutation,
   useUpdateItemMutation,
   useDeleteItemMutation,
-} = notionsApi
-
-// Main lazy.
-export const {
-  useLazyGetDeletedPagesQuery,
-  useLazyGetOnePageQuery,
-  useLazyGetPagesToMoveQuery,
 } = notionsApi
 
 // Search.
@@ -206,10 +183,5 @@ export const {
   useLazySearchPagesToMoveQuery,
 } = notionsApi
 
-// Support.
-export const {
-  useMovePageToTrashMutation,
-  useRestorePageMutation,
-  useUploadCoverMutation,
-  useUploadIconMutation,
-} = notionsApi
+// Upload files.
+export const { useUploadCoverMutation, useUploadIconMutation } = notionsApi

@@ -14,7 +14,7 @@ const ModalWrapper = ({
       {children}
       {inset && <Inset />}
     </Wrapper>,
-    document.getElementById('root') as HTMLElement
+    document.getElementById('modal') as HTMLElement
   )
 
 export default ModalWrapper

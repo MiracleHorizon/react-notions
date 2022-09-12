@@ -1,13 +1,20 @@
-import React, { FC, useEffect, useState, lazy, Suspense } from 'react'
-import { useSelector } from 'react-redux'
-import { useDebounce } from 'usehooks-ts'
+import React, {
+  FC,
+  useState,
+  useMemo,
+  lazy,
+  Suspense,
+  useCallback,
+} from 'react'
+import { useNavigate } from 'react-router'
+import { useEventListener } from 'usehooks-ts'
 
 import QuickSearchPageItem from './Item'
 import DefaultLoader from 'components/ui/loaders/Default'
+import useActions from 'hooks/useActions'
 import useSelectItem from 'hooks/useSelectItem'
-import { useLazySearchPagesQuery } from 'services/notions.api'
-import { selectUser } from 'store/slices/user/auth.selectors'
-import IPage from 'models/page/IPage'
+import useFetchPagination from 'hooks/useFetchPagination'
+import { FetchKind } from 'hooks/useFetchPagination/types'
 import Container from './QuickSearchPagesList.styles'
 
 const NoResultExposition = lazy(
@@ -17,35 +24,55 @@ const SearchErrorExposition = lazy(
   () => import('components/ui/expositions/SearchErrorExposition')
 )
 
-const QuickSearchPagesList: FC<{ value: string }> = ({ value }) => {
-  const [searchPages, { data, isLoading, isSuccess, isError }] = useLazySearchPagesQuery()
-  const [pages, setPages] = useState<IPage[]>([])
-  const { selectedItem, handleSelectItem } = useSelectItem('')
-  const debouncedValue = useDebounce(value, 250)
-  const user = useSelector(selectUser)
+const QuickSearchPagesList: FC<{ debouncedValue: string }> = ({
+  debouncedValue,
+}) => {
+  const { closeQuickSearchModal } = useActions()
+  const [node, setNode] = useState<HTMLDivElement | null>(null)
+  const navigate = useNavigate()
 
-  useEffect(() => {
-    searchPages({ author: user._id, query: debouncedValue })
-  }, [user._id, debouncedValue, searchPages])
+  const paginationParams = useMemo(() => ({
+    kind: FetchKind.QUICK_SEARCH,
+    offsetValue: 15,
+    debouncedValue,
+    node,
+  }), [debouncedValue, node])
+  const { pages, isLoading, isSuccess, isError } = useFetchPagination(paginationParams)
+  const pagesIds = useMemo(() => pages ?  pages.map(page => page._id) : [], [pages])
 
-  useEffect(() => {
-    if (isSuccess && data) setPages(data)
-  }, [data, isSuccess])
+  const {
+    selectedItem,
+    handleSelectItem,
+    handleKeydownSelect
+  } = useSelectItem('', pagesIds)
+
+  const handleSelectPage = useCallback(() => {
+    navigate(`/workspace/${selectedItem}`)
+    closeQuickSearchModal()
+  }, [navigate, selectedItem, closeQuickSearchModal])
+
+  useEventListener('keydown', e => handleKeydownSelect(e, handleSelectPage))
 
   return (
-    <Container>
+    <Container ref={node => node && setNode(node)}>
       <Suspense fallback={<DefaultLoader isLarge={false} />}>
         {isLoading && <DefaultLoader isLarge={false} />}
         {isError && <SearchErrorExposition />}
-        {isSuccess && pages.map(page => (
-            <QuickSearchPageItem
-              key={page._id}
-              isSelected={page._id === selectedItem}
-              handleSelectItem={handleSelectItem}
-              {...page}
-            />
-          ))}
-        {pages.length === 0 && <NoResultExposition />}
+        {isSuccess && pages && (
+          <>
+            {pages.map(page => (
+              <QuickSearchPageItem
+                key={page._id}
+                page={page}
+                isSelected={page._id === selectedItem}
+                handleSelectItem={handleSelectItem}
+                handleSelectPage={handleSelectPage}
+                parentNode={node}
+              />
+            ))}
+            {pages.length === 0 && <NoResultExposition />}
+          </>
+        )}
       </Suspense>
     </Container>
   )

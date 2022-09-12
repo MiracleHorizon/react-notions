@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useTheme } from 'styled-components'
 
-import stylesHandler from 'utils/stylesHandlers/outlineButton'
+import stylesHandler from 'utils/stylesHandlers/outlineButtonStylesHandler'
 import ITheme from 'themes/theme.model'
 import PropTypes from './OutlineButton.types'
 import Button from './OutlineButton.styles'

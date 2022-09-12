@@ -7,19 +7,17 @@ import handleImageUrl from 'utils/helpers/handleImageUrl'
 import * as Option from './UploadAccountPhotoOption.styles'
 
 const UploadAccountPhotoOption = () => {
-  const user = useSelector(selectUser)
+  const { fullName, avatarUrl } = useSelector(selectUser)
 
   return (
     <Option.Wrapper>
       <Option.Container>
         <Option.Title>Photo</Option.Title>
-        {user.avatarUrl ? (
-          <Option.Avatar src={handleImageUrl(user.avatarUrl)} alt='avatar' />
+        {avatarUrl ? (
+          <Option.Avatar src={handleImageUrl(avatarUrl)} alt='avatar' />
         ) : (
           <Option.EmptyAvatar>
-            <Option.EmptyAvatarTitle>
-              {user.fullName ? user.fullName[0] : user.email[0]}
-            </Option.EmptyAvatarTitle>
+            <Option.EmptyAvatarTitle>{fullName[0]}</Option.EmptyAvatarTitle>
           </Option.EmptyAvatar>
         )}
         <AvatarFileUploaderButton />

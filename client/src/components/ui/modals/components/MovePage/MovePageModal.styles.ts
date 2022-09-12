@@ -2,11 +2,13 @@ import styled from 'styled-components'
 import { ElementCoords } from 'types'
 import { modalBoxShadowPrimary } from 'assets/styles/uiKit'
 
-export const Container = styled.div<ElementCoords>`
+export const Container = styled.div<
+  ElementCoords & { isScrollOnTop: boolean; isScrollOnBottom: boolean }
+>`
   position: absolute;
   top: ${p => p.top}px;
   left: ${p => p.left}px;
-  max-height: 15vh;
+  max-height: 40vh;
   width: 220px;
   height: max-content;
   border-radius: 4px;
@@ -14,14 +16,22 @@ export const Container = styled.div<ElementCoords>`
   background: ${p => p.theme.colors['bg-modal-primary']};
   user-select: none;
   overflow: auto;
+
+  &::-webkit-scrollbar-track {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-top-right-radius: ${p => (p.isScrollOnTop ? 4 : 0)}px;
+    border-bottom-right-radius: ${p => (p.isScrollOnBottom ? 4 : 0)}px;
+  }
 `
 
 export const Content = styled.div`
   position: relative;
-  height: max-content;
-  max-height: 100%;
   width: 100%;
-  overflow: auto;
+  height: 100%;
 `
 
 export const InputContainer = styled.div`

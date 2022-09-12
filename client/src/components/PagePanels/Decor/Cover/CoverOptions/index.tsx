@@ -14,7 +14,7 @@ const CoverOptionsPanel: FC<PropTypes> = ({
   <Panel.Wrapper fullWidth={fullWidth}>
     <Panel.Options isHovering={isHovering}>
       <ChangeCoverOption _id={_id} {...reposition} />
-      <RepositionOption {...reposition} />
+      <RepositionOption _id={_id} {...reposition} />
     </Panel.Options>
   </Panel.Wrapper>
 )

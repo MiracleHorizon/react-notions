@@ -27,6 +27,7 @@ const PagesToMoveList: FC<PropTypes> = ({ _id, pages }) => {
   const items = useMemo(() => {
     return ['common', ...pages.map(page => page._id)]
   }, [pages])
+
   const {
     selectedItem,
     handleSelectItem,
@@ -66,24 +67,22 @@ const PagesToMoveList: FC<PropTypes> = ({ _id, pages }) => {
 
   return (
     <Container ref={ref} isScrollOnBottom={isScrollOnBottom}>
+      <MoveToCommonPagesOption
+        isSelected={selectedItem === 'common'}
+        handleSelectItem={handleSelectItem}
+        handleMovePage={handleMovePage}
+      />
       {pages.length > 0 ? (
-        <>
-          <MoveToCommonPagesOption
-            isSelected={selectedItem === 'common'}
+        pages.map(page => (
+          <MovePageItem
+            key={page._id}
+            {...page}
+            pageForMoveId={page._id}
+            isSelected={selectedItem === page._id}
             handleSelectItem={handleSelectItem}
             handleMovePage={handleMovePage}
           />
-          {pages.map(page => (
-            <MovePageItem
-              key={page._id}
-              {...page}
-              pageForMoveId={page._id}
-              isSelected={selectedItem === page._id}
-              handleSelectItem={handleSelectItem}
-              handleMovePage={handleMovePage}
-            />
-          ))}
-        </>
+        ))
       ) : (
         <DefaultNoResultsExposition />
       )}

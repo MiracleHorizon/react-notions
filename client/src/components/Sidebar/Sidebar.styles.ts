@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import SidebarStylesHandler from 'utils/stylesHandlers/sidebar'
+import SidebarStylesHandler from 'utils/stylesHandlers/SidebarStylesHandler'
 import { SidebarWrapperProps } from './Sidebar.types'
 import { Theme } from 'themes/theme.model'
 

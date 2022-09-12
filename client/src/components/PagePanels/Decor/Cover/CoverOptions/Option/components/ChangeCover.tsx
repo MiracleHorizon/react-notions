@@ -14,7 +14,7 @@ const ChangeCoverOption: FC<PropTypes> = ({
 
   const handleOpenChangeCoverModal = () => {
     const invokerRect = ref.current?.getBoundingClientRect().toJSON()
-    openChangeCoverModal({ invokerRect, pageId: _id! })
+    openChangeCoverModal({ invokerRect, pageId: _id })
   }
 
   const handleSavePosition = () => setReposition(false)

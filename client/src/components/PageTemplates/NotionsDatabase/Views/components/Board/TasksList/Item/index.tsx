@@ -1,4 +1,4 @@
-import React, { FC, memo, MouseEvent, DragEvent, useCallback, useRef } from 'react'
+import React, { FC, memo, MouseEvent, useCallback, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useHover } from 'usehooks-ts'
 
@@ -17,8 +17,7 @@ const BoardItem: FC<IPage> = memo(page => {
   const ref = useRef<HTMLDivElement>(null)
   const isHovering = useHover(ref)
 
-  const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
-    // setStartList(parentList)
+  const handleDragStart = () => {
     setStartItem(page)
   }
 
@@ -55,50 +54,3 @@ const BoardItem: FC<IPage> = memo(page => {
 })
 
 export default BoardItem
-
-// import useTypedSelector from 'hooks/useTypedSelector'
-// import { useUpdateTasksListMutation } from 'store/slices/tasksLists/tasksLists.api'
-// import { useUpdatePageMutation } from 'store/slices/pages/pages.api'
-
-// const parentList = useTypedSelector(state =>
-//   state.tasksLists.tasksLists.filter(list => list._id === page.parentListId)
-// )[0]
-
-// Попробовать компонент высшего порядка.
-// const [updateTasksList] = useUpdateTasksListMutation()
-// const [updatePage] = useUpdatePageMutation()
-// const { startList, startItem } = useTypedSelector(state => state.tasksLists)
-//
-// const handleDragEnd = () => {}
-//
-// const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-//   e.preventDefault()
-// }
-//
-// const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
-//   if (!startList || !startItem || startList._id === parentList._id) return
-//
-//   await updatePage({
-//     _id: startItem._id,
-//     body: {
-//       parentListId: parentList._id,
-//       taskOrder: parentList.dependencies.length,
-//     },
-//   })
-//
-//   const dependencies = startList.dependencies.filter(
-//     id => id !== startItem._id
-//   )
-//   await updateTasksList({ _id: startList._id, body: { dependencies } })
-//
-//   e.preventDefault()
-// }
-
-// onDragLeave={handleDragEnd}
-// onDragEnd={handleDragEnd}
-// onDragOver={handleDragOver}
-// onDrop={handleDrop}
-
-// const navigate = useNavigate()
-// const handleDoubleClick = () => navigate(`${href}/task/${page._id}`)
-// onDoubleClick={handleDoubleClick}

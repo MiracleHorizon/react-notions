@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import TooltipWrapper from 'components/ui/tooltips/Tooltip'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import { TDivRef } from 'types'
 import * as Tooltip from '../FilledTooltip.styles'
@@ -11,7 +11,7 @@ const NotionContentItemOptionsTooltip: FC<{ reference: TDivRef }> = ({
 }) => {
   const { rect, coords, setRef } = useSetModalPosition({
     invokerRect: reference.current?.getBoundingClientRect().toJSON(),
-    pos: 'centerBottom',
+    pos: ModalPosition.CENTER_BOTTOM,
   })
 
   return (

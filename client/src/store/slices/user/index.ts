@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import AuthState from './auth.types'
 import IAuthResponse from 'models/api/response/IAuthResponse'
 import IUser from 'models/IUser'
-import IUpdateUserBody from '../../../models/api/user/IUpdateUserBody'
+import IUpdateUserBody from 'models/api/user/IUpdateUserBody'
 
 const initialState: AuthState = {
   user: {} as IUser,
@@ -56,7 +56,12 @@ const authSlice = createSlice({
   },
 })
 
-export const { login, register, setAuthCheck, logout, updateUser } =
-  authSlice.actions
+export const {
+  login,
+  register,
+  setAuthCheck,
+  logout,
+  updateUser,
+} = authSlice.actions
 
 export default authSlice.reducer

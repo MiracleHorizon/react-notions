@@ -1,8 +1,9 @@
-import React, { FC, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC } from 'react'
 
-import { CreateDepPageTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { PlusSvg } from 'components/ui/svg'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import PropTypes from './CreateNewPageButton.types'
 import Button from './CreateNewPageButton.styles'
 
@@ -11,8 +12,7 @@ const CreateNewPageButton: FC<PropTypes> = ({
   absolute,
   onClickAction,
 }) => {
-  const ref = useRef<HTMLDivElement>(null)
-  const isHovering = useHover(ref)
+  const { ref, isHovering } = useDebounceHovering(250)
 
   return (
     <Button
@@ -24,7 +24,13 @@ const CreateNewPageButton: FC<PropTypes> = ({
       coords={coords}
     >
       <PlusSvg />
-      {isHovering && <CreateDepPageTooltip reference={ref} />}
+      {isHovering && (
+        <FilledTooltip
+          title='Quickly add a page inside'
+          pos={ModalPosition.CENTER_BOTTOM}
+          invokerRef={ref}
+        />
+      )}
     </Button>
   )
 }

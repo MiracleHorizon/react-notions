@@ -1,41 +1,30 @@
-import React, { FC, memo, useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React, { FC, memo } from 'react'
 
 import { ContentItemTypeTooltip } from 'components/ui/tooltips'
 import useActions from 'hooks/useActions'
-import useTypedSelector from 'hooks/useTypedSelector'
+import useDebounceHovering from 'hooks/useDebounceHovering'
 import {
   useCreateItemMutation,
   useUpdateItemMutation,
 } from 'services/notions.api'
 import handleValidContentType from 'utils/helpers/handleValidContentType'
-import NotionContentItem from 'models/pageContent/NotionContentItem.class'
+import NotionContentItem from 'models/pageContent/NotionContentItem'
 import PropTypes from './CreateNotionContentItemOption.types'
 import * as Option from './CreateNotionContentItemOption.styles'
+import useCreateNotionContent from '../../../../hooks/useCreateNotionContent'
 
 const CreateNotionContentItemOption: FC<PropTypes> = memo(
   ({ item, parentItemId, title, desc, imageUrl, type }) => {
-    const { closeCreateNotionContentItemModal } = useActions()
-    const { page } = useTypedSelector(s => s.notions)
-    const [createNotionItem] = useCreateItemMutation()
-    const [updateNotionItem] = useUpdateItemMutation()
-
-    const ref = useRef<HTMLDivElement>(null)
-    const isHovering = useHover(ref)
-
-    const handleCreateNotionContentItem = () => {
-      if (!page) return
-
-      updateNotionItem(NotionContentItem.update(type, item._id))
-      closeCreateNotionContentItemModal()
-      // parentItemId
-      //   ? createNotionItem(NotionContentItem.create(type, item._id, parentItemId))
-      //   : updateNotionItem(NotionContentItem.update(type, item._id))
-    }
+    const { ref, isHovering } = useDebounceHovering()
+    const { handleCreate } = useCreateNotionContent({
+      parentItemId,
+      item,
+      type,
+    })
 
     return (
       <Option.Wrapper ref={ref} disabled={handleValidContentType(type)}>
-        <Option.Container onClick={handleCreateNotionContentItem}>
+        <Option.Container onClick={handleCreate}>
           <Option.ImageContainer>
             <Option.Image src={imageUrl} />
           </Option.ImageContainer>

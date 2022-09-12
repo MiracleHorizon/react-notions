@@ -2,8 +2,9 @@ import React, { FC, useCallback, useMemo, useState } from 'react'
 
 import EmojiList from './List'
 import PaginationLoader from 'components/ui/loaders/Pagination'
-import useFetchPagination, { FetchKind } from 'hooks/useFetchPagination'
+import useFetchPagination from 'hooks/useFetchPagination'
 import handleScrollTop from 'utils/helpers/handleScrollTop'
+import { FetchKind } from 'hooks/useFetchPagination/types'
 import Wrapper from './EmojiLists.styles'
 
 const EmojiLists: FC<{ _id: string }> = ({ _id }) => {

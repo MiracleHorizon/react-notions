@@ -1,63 +1,79 @@
-import React, { FC } from 'react'
-import { useNavigate } from 'react-router'
+import React, { FC, memo, useRef } from 'react'
+import { useEventListener } from 'usehooks-ts'
 
 import SmallPageIcon from 'components/ui/SmallPageIcon'
 import { EnterSvg } from 'components/ui/svg'
-import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
-import { ISelectItemParams } from 'types'
-import IPage from 'models/page/IPage'
+import { NotionsSelector } from 'store/slices/notions/notions.selectors'
+import handleSelectedItemOffsetTop from 'utils/helpers/handleSelectedItemOffsetTop'
+import PropTypes from './QuickSearchPageItem.types'
 import * as Item from './QuickSearchPageItem.styles'
 
-const QuickSearchPageItem: FC<IPage & ISelectItemParams<string>> = ({
-  _id,
-  parentPageId,
-  title,
-  iconUrl,
-  coverUrl,
-  content,
-  isSelected,
-  handleSelectItem,
-}) => {
-  const navigate = useNavigate()
-  const parentPage = useTypedSelector(s => s.notions.pages).find(page => {
-    return page._id === parentPageId
-  })
-  const { closeQuickSearchModal } = useActions()
+const QuickSearchPageItem: FC<PropTypes> = memo(
+  ({
+    page: { _id, parentPageId, title, iconUrl, coverUrl, content },
+    isSelected,
+    handleSelectItem,
+    handleSelectPage,
+    parentNode,
+  }) => {
+    const ref = useRef<HTMLDivElement>(null)
+    const parentPage = useTypedSelector(s => {
+      if (parentPageId) {
+        return NotionsSelector.selectParentPage(s, parentPageId)
+      }
+    })
 
-  const handleSelectPage = () => {
-    navigate(`/workspace/${_id}`)
-    closeQuickSearchModal()
+    useEventListener('keydown', e => {
+      if (!isSelected || !parentNode || !ref.current) return
+
+      const node = ref.current
+      const PARENT_NODE_PADDING = 12
+      const ITEM_MARGIN_TOP = 1
+
+      const params = {
+        e,
+        node,
+        parentNode,
+        parentPadding: PARENT_NODE_PADDING,
+        marginTop: ITEM_MARGIN_TOP,
+      }
+
+      handleSelectedItemOffsetTop(params)
+    })
+
+    return (
+      <Item.Wrapper
+        ref={ref}
+        isSelected={isSelected}
+        onClick={handleSelectPage}
+        onMouseEnter={() => handleSelectItem(_id)}
+      >
+        <Item.Container>
+          <Item.IconContainer isHasParent={Boolean(parentPage)}>
+            <SmallPageIcon
+              iconUrl={iconUrl}
+              coverUrl={coverUrl}
+              content={content}
+            />
+          </Item.IconContainer>
+          <Item.TitlesContainer>
+            <Item.Title>{title === '' ? 'Untitled' : title}</Item.Title>
+            {parentPage && (
+              <Item.ParentTitle>
+                {parentPage.title === '' ? 'Untitled' : parentPage.title}
+              </Item.ParentTitle>
+            )}
+          </Item.TitlesContainer>
+        </Item.Container>
+        {isSelected && (
+          <Item.EnterContainer>
+            <EnterSvg />
+          </Item.EnterContainer>
+        )}
+      </Item.Wrapper>
+    )
   }
-
-  return (
-    <Item.Wrapper
-      isSelected={isSelected}
-      onClick={handleSelectPage}
-      onMouseEnter={() => handleSelectItem(_id)}
-    >
-      <Item.Container>
-        <Item.IconContainer isHasParent={Boolean(parentPage)}>
-          <SmallPageIcon
-            iconUrl={iconUrl}
-            coverUrl={coverUrl}
-            content={content}
-          />
-        </Item.IconContainer>
-        <Item.TitlesContainer>
-          <Item.Title>{title}</Item.Title>
-          {parentPage && (
-            <Item.ParentTitle>{parentPage.title}</Item.ParentTitle>
-          )}
-        </Item.TitlesContainer>
-      </Item.Container>
-      {isSelected && (
-        <Item.EnterContainer>
-          <EnterSvg />
-        </Item.EnterContainer>
-      )}
-    </Item.Wrapper>
-  )
-}
+)
 
 export default QuickSearchPageItem

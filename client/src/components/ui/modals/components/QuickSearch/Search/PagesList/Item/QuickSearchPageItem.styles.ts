@@ -47,7 +47,6 @@ export const ParentTitle = styled.p`
 export const IconContainer = styled.div<{ isHasParent: boolean }>`
   ${dFlex.center};
   width: 40px;
-  height: 20px;
   ${p => p.isHasParent && 'margin-top: -15px;'}
 `
 

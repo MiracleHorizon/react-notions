@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { useEventListener } from 'usehooks-ts'
 import { useDeviceData } from 'react-device-detect'
+
 import useActions from 'hooks/useActions'
 import { TDivRef } from 'types'
 

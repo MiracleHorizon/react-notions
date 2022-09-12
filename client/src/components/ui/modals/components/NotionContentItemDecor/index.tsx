@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
 import NotionContentItemDecorModalContent from './NotionContentItemDecorModalContent'
 import useActions from 'hooks/useActions'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import useOnCloseModal from 'hooks/useOnCloseModal'
 import useTypedSelector from 'hooks/useTypedSelector'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
@@ -19,7 +19,7 @@ const NotionContentItemDecorModal = () => {
   )
 
   const { ref, setRef, rect, coords } = useSetModalPosition({
-    pos: 'rightCenter',
+    pos: ModalPosition.RIGHT_CENTER,
     invokerRect,
   })
 

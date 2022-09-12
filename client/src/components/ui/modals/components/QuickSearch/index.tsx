@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
+import { useDebounce } from 'usehooks-ts'
 
 import ModalWrapper from 'components/ui/modals/ModalWrapper'
-import AllPagesList from './AllPagesList'
 import QuickSearchForm from './Search/Form'
 import QuickSearchPagesList from './Search/PagesList'
 import QuickSearchHotkeysBar from './HotkeysBar'
@@ -15,7 +15,7 @@ const QuickSearchModal = () => {
   const { closeQuickSearchModal } = useActions()
   const { isOpen: isAppSettingsModalOpen } = useTypedSelector(s => s.modals.appSettings)
   const { value, handleChangeValue, handleClearValue } = useInput('')
-  const contentRef = useRef<HTMLDivElement>(null)
+  const debouncedValue = useDebounce(value, 250)
   const ref = useRef<HTMLDivElement>(null)
 
   useCloseModal(ref, !isAppSettingsModalOpen ? closeQuickSearchModal : null)
@@ -24,16 +24,13 @@ const QuickSearchModal = () => {
     <ModalWrapper inset>
       <Modal.Container ref={ref}>
         <QuickSearchForm
+          type='text'
           value={value}
           onChange={handleChangeValue}
           onClear={handleClearValue}
         />
-        <Modal.Content ref={contentRef}>
-          {value === '' ? (
-            <AllPagesList />
-          ) : (
-            <QuickSearchPagesList value={value} />
-          )}
+        <Modal.Content>
+          <QuickSearchPagesList debouncedValue={debouncedValue} />
         </Modal.Content>
         <QuickSearchHotkeysBar />
       </Modal.Container>

@@ -7,7 +7,7 @@ import useInput from 'hooks/useInput'
 import useActions from 'hooks/useActions'
 import useTypedSelector from 'hooks/useTypedSelector'
 import useOnCloseModal from 'hooks/useOnCloseModal'
-import useSetModalPosition from 'hooks/useSetModalPosition'
+import useSetModalPosition, { ModalPosition } from 'hooks/useSetModalPosition'
 import nodeRefHandler from 'utils/helpers/nodeRefHandler'
 import { useUpdatePageMutation } from 'services/notions.api'
 import * as Modal from './RenamePageModal.styles'
@@ -30,7 +30,7 @@ const RenamePageModal = () => {
     coords,
     ref: iconRef,
     setRef: setIconRef,
-  } = useSetModalPosition({ pos: 'rename', invokerRect })
+  } = useSetModalPosition({ pos: ModalPosition.RENAME, invokerRect })
 
   const handleSubmitChanges = (e: FormEvent) => {
     e.preventDefault()
@@ -65,7 +65,7 @@ const RenamePageModal = () => {
         </Modal.IconContainer>
         <Modal.Form onSubmit={handleSubmitChanges}>
           <DefaultInput
-            inputMode='text'
+            type='text'
             placeholder='Untitled'
             value={value}
             reference={inputRef}

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { bgTransitions, dFlex, txtOflow } from 'assets/styles/uiKit'
 import { TasksListTitleColorsEnum } from 'models/decor/TasksListTitleColorsEnum'
-import handleTasksListTitleColor from 'utils/stylesHandlers/colors'
+import handleTasksListTitleColor from 'utils/stylesHandlers/handleTasksListTitleColor'
 
 export const Container = styled.div`
   cursor: pointer;

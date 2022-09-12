@@ -1,23 +1,23 @@
 import styled from 'styled-components'
 import { dFlex } from 'assets/styles/uiKit'
 import NotionContentItemTypes from 'models/pageContent/NotionContentItemTypes'
+import ReactTransitionGroup from '../../../../../libs/react-transition-group'
 
-const Container = styled.div<{
-  type: NotionContentItemTypes
-  isHovering: boolean
-}>`
+export const appearDuration = 300
+
+const Container = styled.div<{ type: NotionContentItemTypes }>`
   cursor: grab;
   position: absolute;
   top: ${p => handleOptionButtonOffsetTop(p.type)}px;
   left: -45px;
   ${dFlex.center};
   margin-right: 2px;
-  opacity: ${p => (p.isHovering ? 1 : 0)};
-  transition: opacity 0.1s ease-in;
 
   svg {
     fill: ${p => p.theme.svgFills.secondary} !important;
   }
+
+  ${ReactTransitionGroup.setDefaultAnimation(appearDuration)}
 `
 
 export default Container

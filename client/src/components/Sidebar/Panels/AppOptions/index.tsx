@@ -1,19 +1,24 @@
-import React, { useRef } from 'react'
-import { useHover } from 'usehooks-ts'
+import React from 'react'
 
 import OptionItem from 'components/ui/options/OptionItem'
-import { QuickSearchTooltip, AppSettingsTooltip } from 'components/ui/tooltips'
+import FilledTooltip from 'components/ui/tooltips/Filled'
 import { LoupeSvg, GearSvg } from 'components/ui/svg'
 import useActions from 'hooks/useActions'
+import useDebounceHovering from 'hooks/useDebounceHovering'
+import { ModalPosition } from 'hooks/useSetModalPosition'
 import * as Panel from './AppOptionsPanel.styles'
 
 const AppOptionsPanel = () => {
   const { openQuickSearchModal, openAppSettingsModal } = useActions()
-  const quickSearchOptionRef = useRef<HTMLDivElement>(null)
-  const isQuickSearchOptionHovering = useHover(quickSearchOptionRef)
 
-  const appSettingsOptionRef = useRef<HTMLDivElement>(null)
-  const isAppSettingsOptionHovering = useHover(appSettingsOptionRef)
+  const {
+    ref: quickSearchOptionRef,
+    isHovering: isQuickSearchOptionHovering
+  } = useDebounceHovering()
+  const {
+    ref: appSettingsOptionRef,
+    isHovering: isAppSettingsOptionHovering
+  } = useDebounceHovering()
 
   const handleOpenQuickSearchModal = () => openQuickSearchModal()
 
@@ -36,10 +41,20 @@ const AppOptionsPanel = () => {
         />
       </Panel.Container>
       {isQuickSearchOptionHovering && (
-        <QuickSearchTooltip reference={quickSearchOptionRef} />
+        <FilledTooltip
+          title='Search and quickly jump to a page'
+          desc='Ctrl+P'
+          pos={ModalPosition.RIGHT_CENTER}
+          invokerRef={quickSearchOptionRef}
+        />
       )}
       {isAppSettingsOptionHovering && (
-        <AppSettingsTooltip reference={appSettingsOptionRef} />
+        <FilledTooltip
+          title='Change theme, avatar, and more...'
+          desc='Ctrl+O'
+          pos={ModalPosition.RIGHT_CENTER}
+          invokerRef={appSettingsOptionRef}
+        />
       )}
     </Panel.Wrapper>
   )

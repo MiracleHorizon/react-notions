@@ -86,7 +86,7 @@ export default class ModalCoordsHandler {
       return { leftCenter: {}, rightCenter: {}, rightTop: {}, rightBottom: {} }
     }
 
-    const invRect = invokerRect as unknown as DOMRect // JSON(DOMRect).
+    const invRect = invokerRect as unknown as DOMRect // JSON (DOMRect).
     const bodyWidth = document.body.offsetWidth
     const bodyHeight = document.body.offsetHeight
 
@@ -230,5 +230,5 @@ export default class ModalCoordsHandler {
     ...this.setRenameModalCoords({ rect, invokerRect }),
     ...this.setChangeStatusModalCoords({ rect, invokerRect }),
     ...this.setResizeSbTooltipCoords({ rect, invokerRect, pointerCoords }),
-  })
+  }) // Переработать через switch.
 }
